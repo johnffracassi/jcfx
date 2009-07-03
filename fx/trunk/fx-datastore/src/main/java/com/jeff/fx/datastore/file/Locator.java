@@ -10,7 +10,7 @@ import com.jeff.fx.common.Period;
 
 public class Locator 
 {
-	private String dataRoot = "d:/dev/jeff/fx";
+	private String dataRoot = "d:/dev/data/fx";
 	private String extension = "txt";
 
 	public File locate(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period)
