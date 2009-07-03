@@ -1,8 +1,10 @@
 package com.jeff.fx.common;
 
-public class CandleDataPoint extends AbstractFXDataPoint
+import java.io.Serializable;
+
+public class CandleDataPoint extends AbstractFXDataPoint implements Serializable
 {
-	private String period;
+	private Period period;
 	
 	private double buyOpen;
 	private double buyHigh;
@@ -180,12 +182,12 @@ public class CandleDataPoint extends AbstractFXDataPoint
 		this.sellClose = sellClose;
 	}
 
-	public String getPeriod()
+	public Period getPeriod()
     {
     	return period;
     }
 
-	public void setPeriod(String period)
+	public void setPeriod(Period period)
     {
     	this.period = period;
     }

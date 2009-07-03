@@ -5,7 +5,7 @@ import org.joda.time.LocalDateTime;
 public interface FXDataPoint
 {
 	FXDataSource getDataSource();
-	String getInstrument();
+	Instrument getInstrument();
 	LocalDateTime getDate();
 
 	long getBuyVolume();

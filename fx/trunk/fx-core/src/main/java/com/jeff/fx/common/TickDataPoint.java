@@ -1,6 +1,8 @@
 package com.jeff.fx.common;
 
-public class TickDataPoint extends AbstractFXDataPoint
+import java.io.Serializable;
+
+public class TickDataPoint extends AbstractFXDataPoint implements Serializable
 {
 	private double buy;
 	private double sell;

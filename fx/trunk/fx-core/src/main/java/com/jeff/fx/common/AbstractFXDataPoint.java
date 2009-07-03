@@ -1,11 +1,13 @@
 package com.jeff.fx.common;
 
+import java.io.Serializable;
+
 import org.joda.time.LocalDateTime;
 
-public abstract class AbstractFXDataPoint implements FXDataPoint, Comparable<AbstractFXDataPoint>
+public abstract class AbstractFXDataPoint implements FXDataPoint, Comparable<AbstractFXDataPoint>, Serializable
 {
 	private int jobId;
-	private String instrument;
+	private Instrument instrument;
 	private FXDataSource dataSource;
 	private LocalDateTime date;
 	private long buyVolume;
@@ -54,12 +56,12 @@ public abstract class AbstractFXDataPoint implements FXDataPoint, Comparable<Abs
     	this.sellVolume = sellVolume;
     }
 
-	public String getInstrument()
+	public Instrument getInstrument()
 	{
 		return instrument;
 	}
 
-	public void setInstrument(String instrument)
+	public void setInstrument(Instrument instrument)
 	{
 		this.instrument = instrument;
 	}
