@@ -6,18 +6,39 @@ import org.joda.time.LocalDateTime;
 
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
-import com.jeff.fx.common.TimeUnit;
+import com.jeff.fx.common.Period;
 
 public class Locator 
 {
-	// TODO move this to a config file
-	private String dataRoot = "/dev/jeff/fx";
-	
-	public File locate(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, TimeUnit unit)
+	private String dataRoot = "d:/dev/jeff/fx";
+	private String extension = "txt";
+
+	public File locate(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period)
 	{
 		String pathStr = String.format("/%s/%s/%4d/%2d/%2d/%2d", dataSource, instrument, dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(), dateTime.getHourOfDay());
-		String filename = String.format("%s.txt", unit);
+		String filename = String.format("%s.%s", period.key, getExtension());
 		
 		return new File(dataRoot + pathStr, filename);
 	}
+	
+	public String getDataRoot()
+	{
+		return dataRoot;
+	}
+
+	public void setDataRoot(String dataRoot)
+	{
+		this.dataRoot = dataRoot;
+	}
+
+	public String getExtension()
+	{
+		return extension;
+	}
+
+	public void setExtension(String extension)
+	{
+		this.extension = extension;
+	}
+
 }
