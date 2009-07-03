@@ -1,12 +1,13 @@
 package com.jeff.fx.common;
 
-import java.util.Date;
+import org.joda.time.LocalDateTime;
 
 public interface FXDataPoint
 {
+	FXDataSource getDataSource();
+	String getInstrument();
+	LocalDateTime getDate();
+
 	long getBuyVolume();
 	long getSellVolume();
-	String getInstrument();
-	FXDataSource getDataSource();
-	Date getDate();
 }

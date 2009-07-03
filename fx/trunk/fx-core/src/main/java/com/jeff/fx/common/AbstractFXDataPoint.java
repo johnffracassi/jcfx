@@ -1,33 +1,31 @@
 package com.jeff.fx.common;
 
-import java.util.Date;
-
 import org.joda.time.LocalDateTime;
 
-public abstract class DataPoint implements FXDataPoint, Comparable<DataPoint>
+public abstract class AbstractFXDataPoint implements FXDataPoint, Comparable<AbstractFXDataPoint>
 {
 	private int jobId;
 	private String instrument;
 	private FXDataSource dataSource;
-	private Date date;
+	private LocalDateTime date;
 	private long buyVolume;
 	private long sellVolume;
 
-	public DataPoint()
+	public AbstractFXDataPoint()
 	{
 	}
 
-	public DataPoint(DataPoint dataPoint)
+	public AbstractFXDataPoint(AbstractFXDataPoint dataPoint)
 	{
 		this.jobId = dataPoint.jobId;
 		this.instrument = dataPoint.instrument;
 		this.dataSource = dataPoint.dataSource;
-		this.date = (dataPoint.date == null ? null : (Date)dataPoint.date.clone());
+		this.date = new LocalDateTime(date);
 		this.buyVolume = dataPoint.buyVolume;
 		this.sellVolume = dataPoint.sellVolume;
 	}
 	
-	public int compareTo(DataPoint o)
+	public int compareTo(AbstractFXDataPoint o)
     {
 		int instrumentCompare = instrument.compareTo(o.instrument);
 		if(instrumentCompare != 0) return instrumentCompare;
@@ -86,17 +84,12 @@ public abstract class DataPoint implements FXDataPoint, Comparable<DataPoint>
 		this.jobId = jobId;
 	}
 
-	public LocalDateTime getLocalDateTime()
-	{
-		return new LocalDateTime(getDate().getTime());
-	}
-	
-	public Date getDate()
+	public LocalDateTime getDate()
 	{
 		return date;
 	}
 	
-	public void setDate(Date date)
+	public void setDate(LocalDateTime date)
 	{
 		this.date = date;
 	}

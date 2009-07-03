@@ -1,6 +1,6 @@
 package com.jeff.fx.common;
 
-public class CandleStickDataPoint extends DataPoint
+public class CandleDataPoint extends AbstractFXDataPoint
 {
 	private String period;
 	
@@ -17,11 +17,11 @@ public class CandleStickDataPoint extends DataPoint
 	private int tickCount;
 
 	
-	public CandleStickDataPoint()
+	public CandleDataPoint()
 	{
 	}
 
-	public CandleStickDataPoint(CandleStickDataPoint candle)
+	public CandleDataPoint(CandleDataPoint candle)
 	{
 		super(candle);
 		
@@ -43,7 +43,7 @@ public class CandleStickDataPoint extends DataPoint
 		return String.format("[%s/%s/%s] %s / %.4f,%.4f,%.4f,%.4f", getInstrument(), getDataSource(), period, getDate(), buyOpen, buyHigh, buyLow, buyClose);
 	}
 	
-	public void merge(CandleStickDataPoint newClose)
+	public void merge(CandleDataPoint newClose)
 	{
 		buyClose = newClose.buyClose;
 		sellClose = newClose.sellClose;
@@ -78,7 +78,7 @@ public class CandleStickDataPoint extends DataPoint
 		return tick;
 	}
 	
-	public void setApproximatedValues(CandleStickDataPoint candle)
+	public void setApproximatedValues(CandleDataPoint candle)
 	{
 		setPeriod(candle.getPeriod());
 		setInstrument(candle.getInstrument());

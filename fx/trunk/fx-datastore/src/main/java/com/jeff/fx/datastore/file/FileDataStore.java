@@ -1,4 +1,4 @@
-package com.jeff.fx.datastore;
+package com.jeff.fx.datastore.file;
 
 import java.io.File;
 import java.util.Collections;
@@ -8,11 +8,12 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.jeff.fx.common.CandleStickDataPoint;
+import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.TickDataPoint;
+import com.jeff.fx.datastore.DataStore;
 
 @Component
-public class FileDataStore
+public class FileDataStore implements DataStore
 {
 	@Autowired
 	private String dataStorePath;
@@ -25,12 +26,12 @@ public class FileDataStore
 		}
 	}
 
-	public List<CandleStickDataPoint> loadCandles(LocalDate date)
+	public List<CandleDataPoint> loadCandles(LocalDate date)
 	{
-		return Collections.emptyList();
+		return Collections.<CandleDataPoint>emptyList();
 	}
 	
-	public void storeCandles(List<CandleStickDataPoint> candles)
+	public void storeCandles(List<CandleDataPoint> candles)
 	{
 		
 	}

@@ -1,6 +1,6 @@
 package com.jeff.fx.common;
 
-public enum Unit 
+public enum TimeUnit 
 {
     Second(1000L, "s", "Sec", "Second"),
     Minute(60 * 1000L, "m", "Min", "Minute"),
@@ -11,7 +11,7 @@ public enum Unit
 
     private long interval;
 
-    private Unit(long interval, String shortDescription, String compactDescription, String longDescription) 
+    private TimeUnit(long interval, String shortDescription, String compactDescription, String longDescription) 
     {
         this.interval = interval;
     }

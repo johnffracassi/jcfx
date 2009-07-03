@@ -1,6 +1,6 @@
 package com.jeff.fx.common;
 
-public class TickDataPoint extends DataPoint
+public class TickDataPoint extends AbstractFXDataPoint
 {
 	private double buy;
 	private double sell;

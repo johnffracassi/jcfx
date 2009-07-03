@@ -15,8 +15,6 @@ public class Downloader
 	public static byte[] download(String urlStr)
 	    throws MalformedURLException, IOException
 	{
-		System.out.println("  Download binary file - " + urlStr);
-		
 		BufferedInputStream bis = null;
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(4 * 1024);
 		
