@@ -54,6 +54,7 @@
 	<modules>
 		<module>fx-core</module>
 		<module>fx-datastore</module>
+		<module>fx-datasource</module>
 	</modules>
 
 	<repositories>
