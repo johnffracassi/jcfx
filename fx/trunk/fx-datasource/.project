@@ -1,7 +1,9 @@
 <projectDescription>
   <name>fx-datasource</name>
   <comment>FX Advisor - Data Sources</comment>
-  <projects/>
+  <projects>
+    <project>fx-core</project>
+  </projects>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>

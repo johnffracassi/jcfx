@@ -13,4 +13,12 @@
 	<version>0.1-SNAPSHOT</version>
 	<description>FX Advisor - Data Sources</description>
 	
+	<dependencies>
+			<dependency>
+			<groupId>com.jeff.fx</groupId>
+			<artifactId>fx-core</artifactId>
+			<version>0.1-SNAPSHOT</version>
+		</dependency> 
+	</dependencies>
+	
 </project>
