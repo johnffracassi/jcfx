@@ -3,7 +3,7 @@
 
 	<groupId>com.jeff.fx</groupId>
 	<artifactId>fx-datastore</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>${jcfx.version}</version>
 	<packaging>jar</packaging>
 	<name>FX Advisor - Datastore</name>
 	<url>http://www.siebentag.com/maven/site/fx/fx-datastore</url>
@@ -17,7 +17,7 @@
 	<parent>
 		<artifactId>fx-proj</artifactId>
 		<groupId>com.jeff.fx</groupId>
-		<version>0.1-SNAPSHOT</version>
+		<version>1.0</version>
 	</parent>
 
 	<dependencies>
@@ -29,7 +29,6 @@
 		<dependency>
 			<groupId>com.jeff.fx</groupId>
 			<artifactId>fx-core</artifactId>
-			<version>0.1-SNAPSHOT</version>
 		</dependency> 
 	</dependencies>
 

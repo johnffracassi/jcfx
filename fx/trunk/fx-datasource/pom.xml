@@ -3,21 +3,20 @@
 	<parent>
 		<artifactId>fx-proj</artifactId>
 		<groupId>com.jeff.fx</groupId>
-		<version>0.1-SNAPSHOT</version>
+		<version>1.0</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jeff.fx</groupId>
 	<artifactId>fx-datasource</artifactId>
 	<name>FX Advisor - Data Sources</name>
-	<version>0.1-SNAPSHOT</version>
+	<version>${jcfx.version}</version>
 	<description>FX Advisor - Data Sources</description>
 	
 	<dependencies>
 			<dependency>
 			<groupId>com.jeff.fx</groupId>
 			<artifactId>fx-core</artifactId>
-			<version>0.1-SNAPSHOT</version>
 		</dependency> 
 	</dependencies>
 	
