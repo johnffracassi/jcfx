@@ -18,7 +18,26 @@ public interface DataStore<T extends FXDataPoint>
 	 */
 	public void store(List<T> data) throws Exception;
 
+	/**
+	 * 
+	 * 
+	 * @param dataSource
+	 * @param instrument
+	 * @param dateTime
+	 * @param period
+	 * @return
+	 * @throws Exception
+	 */
 	public List<T> load(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period) throws Exception;
 	
+	/**
+	 * 
+	 * 
+	 * @param dataSource
+	 * @param instrument
+	 * @param dateTime
+	 * @param period
+	 * @return
+	 */
 	public boolean exists(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period);
 }
