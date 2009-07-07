@@ -11,42 +11,45 @@ public class DownloadCache implements Downloader, Cache<byte[]> {
 
 	private File cacheRoot;
 
-	public static void main(String[] args) {
-
-		String url = "http://www.gain.com/forex/2009/02 Jan/week1.zip";
-
-		DownloadCache dc = new DownloadCache();
-		dc.setCacheRoot(new File("c:/dev/jeff/cache/"));
-		dc.exists(url);
-		System.out.println(dc.transformUrlToPath(url));
-	}
-
-	public byte[] download(String url) throws IOException {
+	public byte[] download(String url) throws IOException 
+	{
 		return retrieve(url);
 	}
 
-	public void store(String url, byte[] bytes) throws IOException {
+	public void store(String url, byte[] bytes) throws IOException 
+	{
 
 		File file = transformUrlToFile(url);
 		FileUtil.saveFile(bytes, file);
 	}
 
-	public byte[] retrieve(String key) throws IOException {
-		return FileUtil.readBinaryFile(transformUrlToFile(key));
+	public byte[] retrieve(String key) throws IOException 
+	{
+		if(exists(key))
+		{
+			return FileUtil.readBinaryFile(transformUrlToFile(key));
+		}
+		else
+		{
+			return null;
+		}
 	}
 
-	public boolean exists(String url) {
+	public boolean exists(String url) 
+	{
 		String fileStr = transformUrlToPath(url);
 		File file = new File(cacheRoot, fileStr);
 		System.out.println(file);
 		return file.exists();
 	}
 
-	private File transformUrlToFile(String url) {
+	private File transformUrlToFile(String url) 
+	{
 		return new File(getCacheRoot(), transformUrlToPath(url));
 	}
 
-	private String transformUrlToPath(String url) {
+	private String transformUrlToPath(String url) 
+	{
 		url = url.toLowerCase();
 
 		String path = url.substring(0, url.lastIndexOf('/'));
@@ -59,11 +62,13 @@ public class DownloadCache implements Downloader, Cache<byte[]> {
 		return path + filename;
 	}
 
-	public File getCacheRoot() {
+	public File getCacheRoot() 
+	{
 		return cacheRoot;
 	}
 
-	public void setCacheRoot(File cacheRoot) {
+	public void setCacheRoot(File cacheRoot) 
+	{
 		this.cacheRoot = cacheRoot;
 	}
 
