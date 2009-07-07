@@ -1,0 +1,22 @@
+<shot name="Leg Side Chip" powMin="0.1" powMax="0.8" angMin="235" angMax="315">
+	<zones>
+		<zone name="Sweet" priority="20">
+			<consequence type="com.siebentag.cj.game.shot.Hit">
+				<param name="power" value="1.6" />
+				<param name="accuracy" value="0.8" />
+			</consequence>
+			<probability type="com.siebentag.cj.game.math.prob.Linear">
+				<param name="maximum" value="90" />
+				<param name="minimum" value="30" />
+			</probability>
+			<shape>
+				<point>-0.59,0.00</point>
+				<point>-0.65,0.50</point>
+				<point>-0.43,1.04</point>
+				<point>-0.08,0.84</point>
+				<point>0.05,0.22</point>
+				<point>-0.08,0.00</point>
+			</shape>
+		</zone>
+	</zones>
+</shot>

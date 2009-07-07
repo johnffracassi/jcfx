@@ -1,0 +1,24 @@
+<shot name="Cover Drive" powMin="0.5" angMin="30" angMax="80">
+	<zones>
+		<zone name="Sweet" priority="20">
+			<consequence type="com.siebentag.cj.game.shot.Hit">
+				<param name="power" value="2.0" />
+				<param name="accuracy" value="0.8" />
+			</consequence>
+			<probability type="com.siebentag.cj.game.math.prob.Linear">
+				<param name="maximum" value="90" />
+				<param name="minimum" value="25" />
+			</probability>
+			<shape>
+				<point>0.36,0.40</point>
+				<point>0.88,0.29</point>
+				<point>1.18,0.55</point>
+				<point>1.33,1.04</point>
+				<point>0.86,1.57</point>
+				<point>0.36,1.34</point>
+				<point>0.22,0.68</point>
+			</shape>
+		</zone>
+	</zones>
+</shot>
+

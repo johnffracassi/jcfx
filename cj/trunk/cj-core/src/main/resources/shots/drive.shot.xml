@@ -1,0 +1,39 @@
+<shot name="Drive" powMin="0.3" angMin="315" angMax="45" elevMin="-20" elevMax="115">
+	<zones>
+		<zone name="Sweet" priority="15">
+			<consequence type="com.siebentag.cj.game.shot.Hit">
+				<param name="power" value="2.0" />
+				<param name="accuracy" value="0.7" />
+			</consequence>
+			<probability type="com.siebentag.cj.game.math.prob.Linear">
+				<param name="maximum" value="90" />
+				<param name="minimum" value="30" />
+			</probability>
+			<shape>
+				<point>0.295,0.000</point>
+				<point>0.505,0.685</point>
+				<point>0.460,1.165</point>
+				<point>0.160,1.465</point>
+				<point>-0.260,0.555</point>
+				<point>-0.095,0.000</point>
+			</shape>
+		</zone>
+		
+		<zone name="OK" priority="10">
+			<consequence type="com.siebentag.cj.game.shot.EdgeToKeeper" />
+			<probability type="com.siebentag.cj.game.math.prob.Linear">
+				<param name="maximum" value="70" />
+				<param name="minimum" value="40" />
+			</probability>
+			<shape>
+				<point>0.315,0.000</point>
+				<point>0.470,0.755</point>
+				<point>0.470,1.110</point>
+				<point>0.585,0.735</point>
+				<point>0.660,0.325</point>
+				<point>0.390,0.000</point>
+			</shape>
+		</zone>
+	</zones>
+</shot>
+

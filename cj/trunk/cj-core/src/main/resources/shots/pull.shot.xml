@@ -1,0 +1,52 @@
+<shot name="Pull Shot" powMin="0.4" angMin="230" angMax="290">
+	<zones>
+		<zone name="Sweet" priority="20">
+			<consequence type="com.siebentag.cj.game.shot.Hit">
+				<param name="power" value="2.0" />
+				<param name="accuracy" value="0.8" />
+			</consequence>
+			<probability type="com.siebentag.cj.game.math.prob.Linear">
+				<param name="maximum" value="50" />
+				<param name="minimum" value="8" />
+			</probability>
+			<shape>
+				<point>-0.415,1.205</point>
+				<point>-0.450,1.385</point>
+				<point>-0.120,1.590</point>
+				<point>0.070,1.590</point>
+				<point>0.250,1.590</point>
+				<point>0.375,1.585</point>
+				<point>0.600,1.475</point>
+				<point>0.575,1.305</point>
+				<point>0.490,1.170</point>
+				<point>0.255,1.115</point>
+				<point>0.050,1.020</point>
+				<point>-0.200,1.085</point>
+			</shape>
+		</zone>
+
+		<zone name="Average" priority="10">
+			<consequence type="com.siebentag.cj.game.shot.Hit">
+				<param name="power" value="1.0" />
+				<param name="accuracy" value="0.7" />
+			</consequence>
+			<probability type="com.siebentag.cj.game.math.prob.Linear">
+				<param name="maximum" value="80" />
+				<param name="minimum" value="15" />
+			</probability>
+			<shape>
+				<point>0.015,0.845</point>
+				<point>0.395,0.920</point>
+				<point>0.700,1.135</point>
+				<point>0.755,1.505</point>
+				<point>0.485,1.650</point>
+				<point>0.120,1.665</point>
+				<point>-0.365,1.620</point>
+				<point>-0.705,1.410</point>
+				<point>-0.725,1.085</point>
+				<point>-0.690,0.715</point>
+				<point>-0.330,0.625</point>
+			</shape>
+		</zone>
+	</zones>
+</shot>  

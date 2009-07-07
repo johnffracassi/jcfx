@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       		http://www.springframework.org/schema/beans 
+       		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       		http://www.springframework.org/schema/context
+       		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean name="batsmanRenderer" class="com.siebentag.cj.graphics.renderer.BatsmanRenderer" autowire="autodetect" />
+
+	<bean id="batsmanIdle" class="com.siebentag.cj.graphics.animation.LoopedAnimation">
+		<property name="frames">
+			<list>
+				<value>0,2,5.0</value>
+				<value>0,5,0.3</value>
+				<value>0,2,0.1</value>
+				<value>0,5,0.3</value>
+				<value>0,2,0.1</value>
+				<value>0,5,0.2</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="shot" class="com.siebentag.cj.graphics.animation.OneShotAnimation">
+		<property name="frames">
+			<list>
+				<value>0,7,0.1</value>
+				<value>0,6,0.1</value>
+				<value>0,7,0.1</value>
+				<value>0,8,0.1</value>
+				<value>0,2,1.0</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="batsmanSprite" class="com.siebentag.cj.graphics.sprite.Sprite">
+		<property name="animations">
+			<map>
+				<entry key="Idle">
+					<ref bean="batsmanIdle" />
+				</entry>
+				
+				<entry key="PlayRUpperOffShot">
+					<ref bean="shot" />
+				</entry>
+				
+				<entry key="PlayRLowerOffShot">
+					<ref bean="shot" />
+				</entry>
+				
+				<entry key="PlayRUpperStraightShot">
+					<ref bean="shot" />
+				</entry>
+				
+				<entry key="PlayRLowerStraightShot">
+					<ref bean="shot" />
+				</entry>
+				
+				<entry key="PlayRUpperLegShot">
+					<ref bean="shot" />
+				</entry>
+				
+				<entry key="PlayRLowerLegShot">
+					<bean class="com.siebentag.cj.graphics.animation.OneShotAnimation">
+						<property name="frames">
+							<list>
+								<value>0,0,0.08</value>
+								<value>0,11,0.08</value>
+								<value>0,10,0.08</value>
+								<value>0,12,0.08</value>
+								<value>0,13,0.08</value>
+								<value>0,10,0.10</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+
+				<entry key="PlayLUpperOffShot">
+					<ref bean="shot" />
+				</entry>
+				
+				<entry key="PlayLLowerOffShot">
+					<ref bean="shot" />
+				</entry>
+				
+				<entry key="PlayLUpperStraightShot">
+					<ref bean="shot" />
+				</entry>
+				
+				<entry key="PlayLLowerStraightShot">
+					<ref bean="shot" />
+				</entry>
+				
+				<entry key="PlayLUpperLegShot">
+					<ref bean="shot" />
+				</entry>
+				
+				<entry key="PlayLLowerLegShot">
+					<ref bean="shot" />
+				</entry>
+
+				<entry key="LeaveROff">
+					<bean class="com.siebentag.cj.graphics.animation.OneShotAnimation">
+						<property name="frames">
+							<list>
+								<value>0,9,1.5</value>
+								<value>0,2,1.5</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+
+				<entry key="LeaveRLeg">
+					<bean class="com.siebentag.cj.graphics.animation.OneShotAnimation">
+						<property name="frames">
+							<list>
+								<value>0,10,1.5</value>
+								<value>0,2,1.5</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+
+				<entry key="LeaveLOff">
+					<ref bean="shot" />
+				</entry>
+
+				<entry key="LeaveLLeg">
+					<ref bean="shot" />
+				</entry>
+				
+				<entry key="StrikerWaiting">
+					<bean class="com.siebentag.cj.graphics.animation.LoopedAnimation">
+						<property name="frames">
+							<list>
+								<value>0,1,0.5</value>
+								<value>0,0,0.2</value>
+								<value>0,1,0.2</value>
+								<value>0,0,0.1</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				
+				<entry key="Running">
+					<bean class="com.siebentag.cj.graphics.animation.LoopedAnimation">
+						<property name="frames">
+							<list>
+								<value>0,3,0.15</value>
+								<value>0,4,0.15</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+</beans>

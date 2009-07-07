@@ -1,0 +1,39 @@
+<player id="hogg-gb">
+	<profile>
+		<displayName>GB Hogg</displayName>
+		<firstName>Brad</firstName>
+		<surname>Hogg</surname>
+	</profile>
+	
+	<attributes>
+		<height>1.83</height>
+
+		<runningSpeed>6.0</runningSpeed>
+		<walkingSpeed>2.75</walkingSpeed>
+		<throwingPower>135.0</throwingPower>
+	
+		<catchingAbility>80.0</catchingAbility>
+		<throwingAbility>95.0</throwingAbility>
+		<reachZ>2.1</reachZ>
+		<reachXY>1.1</reachXY>
+	
+		<isKeeper>false</isKeeper>
+		<isBowler>true</isBowler>
+		
+		<bowlingHand>Left</bowlingHand>
+		<battingHand>Left</battingHand>
+		<throwingHand>Left</throwingHand>
+		<bowlingStyle>LegSpin</bowlingStyle>
+	
+		<bowlingQuality>83.0</bowlingQuality>
+		<bowlingAccuracy>80.0</bowlingAccuracy>
+		<bowlingStamina>90.0</bowlingStamina>
+	
+		<battingAbility>80.0</battingAbility>
+		<battingPower>65.0</battingPower>
+		<battingStamina>90.0</battingStamina>
+		<battingOffsideSkill>80.0</battingOffsideSkill>
+		<battingLegsideSkill>80.0</battingLegsideSkill>
+		<battingShortSkill>80.0</battingShortSkill>
+	</attributes>
+</player>

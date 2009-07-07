@@ -1,0 +1,39 @@
+<player id="bell-i">
+	<profile>
+		<displayName>I Bell</displayName>
+		<firstName>Ian</firstName>
+		<surname>Bell</surname>
+	</profile>
+	
+	<attributes>
+		<height>1.87</height>
+
+		<runningSpeed>6.0</runningSpeed>
+		<walkingSpeed>2.75</walkingSpeed>
+		<throwingPower>135.0</throwingPower>
+	
+		<catchingAbility>80.0</catchingAbility>
+		<throwingAbility>80.0</throwingAbility>
+		<reachZ>2.3</reachZ>
+		<reachXY>1.1</reachXY>
+	
+		<isKeeper>false</isKeeper>
+		<isBowler>false</isBowler>
+		
+		<bowlingHand>Right</bowlingHand>
+		<battingHand>Right</battingHand>
+		<throwingHand>Right</throwingHand>
+		<bowlingStyle>MediumFast</bowlingStyle>
+	
+		<bowlingQuality>75.0</bowlingQuality>
+		<bowlingAccuracy>80.0</bowlingAccuracy>
+		<bowlingStamina>80.0</bowlingStamina>
+	
+		<battingAbility>80.0</battingAbility>
+		<battingPower>80.0</battingPower>
+		<battingStamina>80.0</battingStamina>
+		<battingOffsideSkill>80.0</battingOffsideSkill>
+		<battingLegsideSkill>80.0</battingLegsideSkill>
+		<battingShortSkill>80.0</battingShortSkill>
+	</attributes>
+</player>

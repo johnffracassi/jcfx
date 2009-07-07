@@ -1,0 +1,22 @@
+<shot name="Leg Glance" powMin="0.1" powMax="0.8" angMin="190" angMax="290">
+	<zones>
+		<zone name="Sweet" priority="20">
+			<consequence type="com.siebentag.cj.game.shot.Hit">
+				<param name="power" value="1.5" />
+				<param name="accuracy" value="1.0" />
+			</consequence>
+			<probability type="com.siebentag.cj.game.math.prob.Linear">
+				<param name="maximum" value="90" />
+				<param name="minimum" value="30" />
+			</probability>
+			<shape>
+				<point>0.130,0.0</point>
+				<point>0.125,1.005</point>
+				<point>-0.025,1.440</point>
+				<point>-0.620,1.280</point>
+				<point>-0.725,0.605</point>
+				<point>-0.540,0.0</point>
+			</shape>
+		</zone>
+	</zones>
+</shot>

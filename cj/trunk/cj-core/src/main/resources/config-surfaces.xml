@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       		http://www.springframework.org/schema/beans 
+       		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       		http://www.springframework.org/schema/context
+       		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean id="pitchSurfaceModel" class="com.siebentag.cj.util.math.PitchSurfaceModel">
+		<property name="bounceEfficiency" value="0.8" />
+		<property name="ZOrder" value="3" />
+	</bean>
+
+	<bean id="pitchSquareSurfaceModel" class="com.siebentag.cj.util.math.PitchSquareSurfaceModel">
+		<property name="bounceEfficiency" value="0.65" />
+		<property name="ZOrder" value="2" />
+	</bean>
+
+	<bean id="fieldSurfaceModel" class="com.siebentag.cj.util.math.FieldSurfaceModel">
+		<property name="bounceEfficiency" value="0.45" />
+		<property name="ZOrder" value="1" />
+	</bean>
+
+</beans>

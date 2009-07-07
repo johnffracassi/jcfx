@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       		http://www.springframework.org/schema/beans 
+       		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       		http://www.springframework.org/schema/context
+       		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean id="formatter" class="com.siebentag.cj.util.format.Formatter">
+		<property name="formats">
+			<map>
+				<entry key="score.full" value="${team.name} - ${wickets} for ${runs} (${overs} ov)" />
+				<entry key="score.short" value="${team.shortName} ${wickets}/${runs}" />
+				<entry key="Point2D" value="[${x},${y}]" />
+				<entry key="Point3D" value="[${x},${y},${z}]" />
+			</map>
+		</property>
+		
+		<property name="dateFormatPattern" value="d/M/yyyy" />
+		
+		<property name="decimalFormatPattern" value="0.00" />
+		
+		<property name="expressionEvaluator">
+			<bean class="org.apache.commons.el.ExpressionEvaluatorImpl" />
+		</property>
+	</bean>
+	
+</beans>

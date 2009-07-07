@@ -1,0 +1,39 @@
+<player id="symonds-a">
+	<profile>
+		<displayName>A Symonds</displayName>
+		<firstName>Andrew</firstName>
+		<surname>Symonds</surname>
+	</profile>
+	
+	<attributes>
+		<height>1.85</height>
+
+		<runningSpeed>7.0</runningSpeed>
+		<walkingSpeed>2.75</walkingSpeed>
+		<throwingPower>135.0</throwingPower>
+	
+		<catchingAbility>90.0</catchingAbility>
+		<throwingAbility>99.0</throwingAbility>
+		<reachZ>2.4</reachZ>
+		<reachXY>1.3</reachXY>
+	
+		<isKeeper>false</isKeeper>
+		<isBowler>true</isBowler>
+		
+		<bowlingHand>Right</bowlingHand>
+		<battingHand>Right</battingHand>
+		<throwingHand>Right</throwingHand>
+		<bowlingStyle>Medium</bowlingStyle>
+	
+		<bowlingQuality>75.0</bowlingQuality>
+		<bowlingAccuracy>80.0</bowlingAccuracy>
+		<bowlingStamina>90.0</bowlingStamina>
+	
+		<battingAbility>82.0</battingAbility>
+		<battingPower>95.0</battingPower>
+		<battingStamina>80.0</battingStamina>
+		<battingOffsideSkill>85.0</battingOffsideSkill>
+		<battingLegsideSkill>70.0</battingLegsideSkill>
+		<battingShortSkill>80.0</battingShortSkill>
+	</attributes>
+</player>
