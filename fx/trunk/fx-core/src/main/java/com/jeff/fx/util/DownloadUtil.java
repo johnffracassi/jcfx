@@ -15,11 +15,15 @@ public class DownloadUtil
 	public static byte[] download(String urlStr)
 	    throws MalformedURLException, IOException
 	{
+		System.out.println("Downloading '" + urlStr + "'");
+		
 		BufferedInputStream bis = null;
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(4 * 1024);
 		
 		try
 		{
+			urlStr = urlStr.replace(" ", "%20");
+			
 			URL url = new URL(urlStr);
 			URLConnection urlc = url.openConnection();
 	
