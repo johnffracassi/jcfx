@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class TickDataPoint extends AbstractFXDataPoint implements Serializable
 {
+	private static final long serialVersionUID = -1314194431212144949L;
+
 	private double buy;
 	private double sell;
 
@@ -35,5 +37,10 @@ public class TickDataPoint extends AbstractFXDataPoint implements Serializable
 	public String toString()
 	{
 		return getInstrument() + " - " + getDate() + " - " + buy + "/" + sell + " (" + getBuyVolume() + "/" + getSellVolume() + ")";
+	}
+
+	public Period getPeriod() 
+	{
+		return Period.Tick;
 	}
 }

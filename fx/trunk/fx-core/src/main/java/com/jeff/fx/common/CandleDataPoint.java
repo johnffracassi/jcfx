@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class CandleDataPoint extends AbstractFXDataPoint implements Serializable
 {
+	private static final long serialVersionUID = -1074171723478713829L;
+
 	private Period period;
 	
 	private double buyOpen;
