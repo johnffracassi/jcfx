@@ -1,0 +1,17 @@
+fullName 		= Generic Fill-in
+dob 			= 
+currentAge		= 
+flag 			= england.gif
+origin 			= England
+teams	 		= Steamboat Willies CC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 
+lastGame		= 
+nicknames		= 
+profile			= 
+specialMove		= 
+registered		= 0
+retired			= Yes

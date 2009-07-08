@@ -1,0 +1,17 @@
+fullName 		= Hassan 
+dob 			= 
+currentAge		= 
+flag 			= pk.gif
+origin 			= Pakistan / England 
+teams	 		= Steamboat Willies CC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 
+lastGame		= 
+nicknames		= Hassan
+profile			= 
+specialMove		= 
+registered		= 0
+retired			= Yes

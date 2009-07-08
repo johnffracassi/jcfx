@@ -1,0 +1,593 @@
+<html xmlns:Date="http://www.oracle.com/XSL/Transform/java/java.util.Date" xmlns:sw="http://www.zendurl.com/sw">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>Official Website of Steamboat Willies ICC</title>
+      <link rel="stylesheet" type="text/css" href="style/steamboat.css">
+      <link rel="stylesheet" type="text/css" href="style/shadow.css">
+      <link rel="stylesheet" type="text/css" href="style/sort.css"><script type="text/javascript" src="script/sorter.js"></script><script type="text/javascript">
+						
+						function init()
+						{
+							if(document.getElementById('sortTable'))
+							{
+								var TableSorter1 = new TSorter;
+								TableSorter1.init('sortTable');
+							}
+						}
+						
+						function load()
+						{
+							init();
+						
+							if(document.playerSelect)
+							{
+								document.playerSelect.player.selectedIndex = 0;
+								playerChanged();
+							}
+						}
+						
+						function playerChanged()
+						{
+							var playerIdx = document.playerSelect.player.selectedIndex;
+							var playerId = document.playerSelect.player.options[playerIdx].value;
+							var el = document.getElementsByTagName("tr");
+					
+							for(var i=0; i < el.length; i++)
+							{
+								if(el[i].childNodes[0].tagName != "th")
+								{
+									if(el[i].id.indexOf(playerId) != -1)
+									{
+										el[i].className = 'focus';
+									}
+									else
+									{
+										if(i % 2 == 1) 
+											el[i].className = 'odd';
+										else 
+											el[i].className = 'even';
+									}
+								}
+							}
+						} 
+						
+					</script></head>
+   <body onLoad="load()">
+      <table class="layout">
+         <tr>
+            <td class="header"><a href="index.html"><img src="images/sw-small.png" style="border: 0px;"></a></td>
+            <td class="header">Steamboat Willies ICC</td>
+         </tr>
+         <tr>
+            <td class="navbar">
+               <ul class="makeMenu">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="results.html">Results</a></li>
+                  <li><a href="http://playonsports.spawtz.com/SpawtzSkin/Fixtures/Fixtures.aspx?LeagueId=58&amp;SeasonId=25">Fixtures »</a></li>
+                  <li><a href="http://playonsports.spawtz.com/SpawtzSkin/Fixtures/Standings.aspx?LeagueId=58&amp;SeasonId=25">Table »</a></li>
+                  <li>Profiles (Current)
+                     				
+                     <ul>
+                        <li><a href="profile-adnan.html">Adnan Pujani</a></li>
+                        <li><a href="profile-brad.html">Brad Kuypers</a></li>
+                        <li><a href="profile-charlie.html">Charles Norman Lees</a></li>
+                        <li><a href="profile-corban.html">Corban</a></li>
+                        <li><a href="profile-d1.html">Dave "Liability" McCairney</a></li>
+                        <li><a href="profile-dillo.html">Dillo</a></li>
+                        <li><a href="profile-adonis.html">Donis</a></li>
+                        <li><a href="profile-f1.html">Generic Fill-in</a></li>
+                        <li><a href="profile-jade.html">Jade Smythe</a></li>
+                        <li><a href="profile-jeff.html">Jeffrey Cann</a></li>
+                        <li><a href="profile-jimmy.html">Jimmy Ahmad</a></li>
+                        <li><a href="profile-kat.html">Kat</a></li>
+                        <li><a href="profile-kumaran.html">Kumaran Sivapathasuntharam</a></li>
+                        <li><a href="profile-matt.html">Matt Hale</a></li>
+                        <li><a href="profile-max.html">Max Murray</a></li>
+                        <li><a href="profile-mick.html">Michael Riley</a></li>
+                        <li><a href="profile-nathan.html">Nathan "The Womp" Chambers</a></li>
+                        <li><a href="profile-neal.html">Neal Erstich</a></li>
+                        <li><a href="profile-neil.html">Neil Mariott-Smith</a></li>
+                        <li><a href="profile-nick.html">Nick Walker</a></li>
+                        <li><a href="profile-oli.html">Oliver "Weasel" Sherwell</a></li>
+                        <li><a href="profile-pav.html">Pavan Vyas</a></li>
+                        <li><a href="profile-rudy.html">Rudy</a></li>
+                        <li><a href="profile-sandeep.html">Sandeep</a></li>
+                        <li><a href="profile-temur.html">Temur Ahmad</a></li>
+                        <li><a href="profile-tim2.html">Tim Urqhardt</a></li>
+                     </ul>
+                  </li>
+                  <li>Profiles (RIP)
+                     				
+                     <ul>
+                        <li><a href="profile-alistair.html">Alistair McSomeone</a></li>
+                        <li><a href="profile-chez.html">Andrew "Chezney" Bell</a></li>
+                        <li><a href="profile-aspi.html">Aspi Irani</a></li>
+                        <li><a href="profile-barrett.html">Barrett Bristowe</a></li>
+                        <li><a href="profile-carlton.html">Carlton Boulter</a></li>
+                        <li><a href="profile-chris.html">Chris Grover</a></li>
+                        <li><a href="profile-craig.html">Craig Archer</a></li>
+                        <li><a href="profile-dan.html">Daniel Holmes</a></li>
+                        <li><a href="profile-d2.html">David Card</a></li>
+                        <li><a href="profile-greg.html">Gregory Chester</a></li>
+                        <li><a href="profile-hasnat.html">Hasnat Shah</a></li>
+                        <li><a href="profile-hassan.html">Hassan</a></li>
+                        <li><a href="profile-jz.html">Jamie Zanardo</a></li>
+                        <li><a href="profile-john.html">John Leyton</a></li>
+                        <li><a href="profile-kev.html">Kevin Kim</a></li>
+                        <li><a href="profile-mg.html">Mark Goodson</a></li>
+                        <li><a href="profile-m2.html">Mark Robinson</a></li>
+                        <li><a href="profile-dick.html">Richard Lee</a></li>
+                        <li><a href="profile-sanj.html">Sange</a></li>
+                        <li><a href="profile-spud.html">Spud Tait</a></li>
+                        <li><a href="profile-steve.html">Stephen Bristow</a></li>
+                        <li><a href="profile-steve c.html">Steve C</a></li>
+                        <li><a href="profile-steve m.html">Steve Morgan</a></li>
+                        <li><a href="profile-sam.html">Stuart 'Sammy' Jones</a></li>
+                        <li><a href="profile-tim.html">Tim Sellick</a></li>
+                        <li><a href="profile-trent.html">Trent Malcolm</a></li>
+                     </ul>
+                  </li>
+                  <li>Batting Records
+                     				
+                     <ul>
+                        <li><a href="bat-summary-career.html">Career</a></li>
+                        <li><a href="bat-summary-season.html">Season</a></li>
+                        <li><a href="bat-inns-best.html">Best Innings</a></li>
+                        <li><a href="bat-inns-worst.html">Worst Innings</a></li>
+                        <li><a href="bat-most-runs.html">Most Runs</a></li>
+                        <li><a href="bat-best-over.html">Most Runs Off An Over</a></li>
+                        <li><a href="bat-ps-best.html">Best Partnerships</a></li>
+                        <li><a href="bat-ps-worst.html">Worst Partnerships</a></li>
+                        <li><a href="bat-most-ps-runs.html">Most Partnership Runs</a></li>
+                        <li><a href="bat-ps-combo-agg.html">Most Successful Partnerships</a></li>
+                        <li><a href="bat-most-bf.html">Most Balls Faced (Career)</a></li>
+                        <li><a href="bat-most-bf-inns.html">Most Balls Faced (Inns)</a></li>
+                        <li><a href="bat-least-bf-inns.html">Least Balls Faced (Inns)</a></li>
+                        <li><a href="bat-most-6s.html">Most 6s Hit</a></li>
+                        <li><a href="bat-most-dots.html">Most Dot Balls</a></li>
+                        <li><a href="bat-most-outs.html">Most Dismissed</a></li>
+                        <li><a href="bat-run-outs.html">Run-out Liability Factor</a></li>
+                        <li><a href="most-lbws.html">Most LBWs</a></li>
+                     </ul>
+                  </li>
+                  <li>Bowling Records
+                     				
+                     <ul>
+                        <li><a href="bowl-summary-career.html">Career</a></li>
+                        <li><a href="bowl-summary-season.html">Season</a></li>
+                        <li><a href="bowl-figures-best.html">Best Match Figures</a></li>
+                        <li><a href="bowl-figures-worst.html">Worst Match Figures</a></li>
+                        <li><a href="bowl-over-best.html">Best Overs</a></li>
+                        <li><a href="bowl-over-worst.html">Worst Overs</a></li>
+                        <li><a href="bowl-most-outs.html">Most Wickets</a></li>
+                        <li><a href="bowl-most-runs.html">Most Runs Conceeded</a></li>
+                        <li><a href="bowl-most-6s.html">Most 6s Conceeded</a></li>
+                        <li><a href="bowl-most-dots.html">Most Dots Bowled</a></li>
+                        <li><a href="bowl-most-extras.html">Most Extras Conceeded</a></li>
+                        <li><a href="over-breakdown.html">Over by Over</a></li>
+                        <li><a href="bat-ps-best-against.html">Best Partnerships Against</a></li>
+                        <li><a href="bat-ps-worst-against.html">Worst Partnerships Against</a></li>
+                     </ul>
+                  </li>
+                  <li>General Records
+                     				
+                     <ul>
+                        <li><a href="net-career.html">Net Runs (Career)</a></li>
+                        <li><a href="net-season.html">Net Runs (Season)</a></li>
+                        <li><a href="net-best.html">Best Performances</a></li>
+                        <li><a href="net-worst.html">Worst Performances</a></li>
+                        <li><a href="most-nicknames.html">Most Nicknames</a></li>
+                        <li><a href="most-beers-won.html">Most Beers Won</a></li>
+                        <li><a href="ps-skin-win.html">Best Skins</a></li>
+                        <li><a href="ps-skin-loss.html">Worst Skins</a></li>
+                     </ul>
+                  </li>
+               </ul>
+            </td>
+            <td class="content"><br><center><img align="center" valign="top" src="http://www.usairways.com/awa/resources/_images/homepage_logo.gif"></center><br><hr>
+               <div align="right" width="100%">
+                  <form name="playerSelect">
+                     				Highlight player: 
+                     				<select name="player" onChange="playerChanged()">
+                        <option value="xxx">- Select player -</option>
+                        <option value="adnan">Adnan Pujani</option>
+                        <option value="alistair">Alistair McSomeone</option>
+                        <option value="chez">Andrew "Chezney" Bell</option>
+                        <option value="aspi">Aspi Irani</option>
+                        <option value="barrett">Barrett Bristowe</option>
+                        <option value="brad">Brad Kuypers</option>
+                        <option value="carlton">Carlton Boulter</option>
+                        <option value="charlie">Charles Norman Lees</option>
+                        <option value="chris">Chris Grover</option>
+                        <option value="corban">Corban</option>
+                        <option value="craig">Craig Archer</option>
+                        <option value="dan">Daniel Holmes</option>
+                        <option value="d1">Dave "Liability" McCairney</option>
+                        <option value="d2">David Card</option>
+                        <option value="dillo">Dillo</option>
+                        <option value="adonis">Donis</option>
+                        <option value="f1">Generic Fill-in</option>
+                        <option value="greg">Gregory Chester</option>
+                        <option value="hasnat">Hasnat Shah</option>
+                        <option value="hassan">Hassan</option>
+                        <option value="jade">Jade Smythe</option>
+                        <option value="jz">Jamie Zanardo</option>
+                        <option value="jeff">Jeffrey Cann</option>
+                        <option value="jimmy">Jimmy Ahmad</option>
+                        <option value="john">John Leyton</option>
+                        <option value="kat">Kat</option>
+                        <option value="kev">Kevin Kim</option>
+                        <option value="kumaran">Kumaran Sivapathasuntharam</option>
+                        <option value="mg">Mark Goodson</option>
+                        <option value="m2">Mark Robinson</option>
+                        <option value="matt">Matt Hale</option>
+                        <option value="max">Max Murray</option>
+                        <option value="mick">Michael Riley</option>
+                        <option value="nathan">Nathan "The Womp" Chambers</option>
+                        <option value="neal">Neal Erstich</option>
+                        <option value="neil">Neil Mariott-Smith</option>
+                        <option value="nick">Nick Walker</option>
+                        <option value="oli">Oliver "Weasel" Sherwell</option>
+                        <option value="pav">Pavan Vyas</option>
+                        <option value="dick">Richard Lee</option>
+                        <option value="rudy">Rudy</option>
+                        <option value="sandeep">Sandeep</option>
+                        <option value="sanj">Sange</option>
+                        <option value="spud">Spud Tait</option>
+                        <option value="steve">Stephen Bristow</option>
+                        <option value="steve c">Steve C</option>
+                        <option value="steve m">Steve Morgan</option>
+                        <option value="sam">Stuart 'Sammy' Jones</option>
+                        <option value="temur">Temur Ahmad</option>
+                        <option value="tim">Tim Sellick</option>
+                        <option value="tim2">Tim Urqhardt</option>
+                        <option value="trent">Trent Malcolm</option></select></form>
+               </div>
+               <table class="stats2" border="0" cellspacing="1" cellpadding="3">
+                  <caption>Bowling - Most Dot Balls</caption>
+                  <tr>
+                     <th class="number left">#</th>
+                     <th class="text">Player</th>
+                     <th class="number">Overs</th>
+                     <th class="number">Dots</th>
+                     <th class="number">Average</th>
+                  </tr>
+                  <tr id="[jeff]">
+                     <td class="number left">1</td>
+                     <td class="text"><img src="images/au.gif"><a title="Jeffrey Cann" href="profile-jeff.html">Jeff</a></td>
+                     <td class="number">114</td>
+                     <td class="number">144</td>
+                     <td class="number">1.263</td>
+                  </tr>
+                  <tr id="[neil]">
+                     <td class="number left">2</td>
+                     <td class="text"><img src="images/england.gif"><a title="Neil Mariott-Smith" href="profile-neil.html">Neil (Snr)</a></td>
+                     <td class="number">119</td>
+                     <td class="number">128</td>
+                     <td class="number">1.076</td>
+                  </tr>
+                  <tr id="[max]">
+                     <td class="number left">3</td>
+                     <td class="text"><img src="images/scotland.gif"><a title="Max Murray" href="profile-max.html">Maxipads</a></td>
+                     <td class="number">96</td>
+                     <td class="number">124</td>
+                     <td class="number">1.292</td>
+                  </tr>
+                  <tr id="[mick]">
+                     <td class="number left">4</td>
+                     <td class="text"><img src="images/au.gif"><a title="Michael Riley" href="profile-mick.html">Mick</a></td>
+                     <td class="number">103</td>
+                     <td class="number">92</td>
+                     <td class="number">0.893</td>
+                  </tr>
+                  <tr id="[greg]">
+                     <td class="number left">5</td>
+                     <td class="text"><img src="images/nz.gif"><a title="Gregory Chester" href="profile-greg.html">Chester Molester</a></td>
+                     <td class="number">80</td>
+                     <td class="number">76</td>
+                     <td class="number">0.950</td>
+                  </tr>
+                  <tr id="[dick]">
+                     <td class="number left">6</td>
+                     <td class="text"><img src="images/wales.gif"><a title="Richard Lee" href="profile-dick.html">Dickie</a></td>
+                     <td class="number">83</td>
+                     <td class="number">60</td>
+                     <td class="number">0.723</td>
+                  </tr>
+                  <tr id="[d1]">
+                     <td class="number left">7</td>
+                     <td class="text"><img src="images/au.gif"><a title="Dave &#34;Liability&#34; McCairney" href="profile-d1.html">Sightscreen Bob</a></td>
+                     <td class="number">62</td>
+                     <td class="number">58</td>
+                     <td class="number">0.935</td>
+                  </tr>
+                  <tr id="[craig]">
+                     <td class="number left">8</td>
+                     <td class="text"><img src="images/nz.gif"><a title="Craig Archer" href="profile-craig.html">Craig</a></td>
+                     <td class="number">52</td>
+                     <td class="number">51</td>
+                     <td class="number">0.981</td>
+                  </tr>
+                  <tr id="[nick]">
+                     <td class="number left">9</td>
+                     <td class="text"><img src="images/england.gif"><a title="Nick Walker" href="profile-nick.html">Dr Nick</a></td>
+                     <td class="number">54</td>
+                     <td class="number">51</td>
+                     <td class="number">0.944</td>
+                  </tr>
+                  <tr id="[d2]">
+                     <td class="number left">10</td>
+                     <td class="text"><img src="images/england.gif"><a title="David Card" href="profile-d2.html">Dave 2</a></td>
+                     <td class="number">49</td>
+                     <td class="number">49</td>
+                     <td class="number">1.000</td>
+                  </tr>
+                  <tr id="[mg]">
+                     <td class="number left">11</td>
+                     <td class="text"><img src="images/nz.gif"><a title="Mark Goodson" href="profile-mg.html">MG</a></td>
+                     <td class="number">45</td>
+                     <td class="number">46</td>
+                     <td class="number">1.022</td>
+                  </tr>
+                  <tr id="[barrett]">
+                     <td class="number left">12</td>
+                     <td class="text"><img src="images/nz.gif"><a title="Barrett Bristowe" href="profile-barrett.html">Baz</a></td>
+                     <td class="number">37</td>
+                     <td class="number">44</td>
+                     <td class="number">1.189</td>
+                  </tr>
+                  <tr id="[charlie]">
+                     <td class="number left">13</td>
+                     <td class="text"><img src="images/au.gif"><a title="Charles Norman Lees" href="profile-charlie.html">Chuck</a></td>
+                     <td class="number">44</td>
+                     <td class="number">38</td>
+                     <td class="number">0.864</td>
+                  </tr>
+                  <tr id="[steve]">
+                     <td class="number left">14</td>
+                     <td class="text"><img src="images/england.gif"><a title="Stephen Bristow" href="profile-steve.html">Dirty B</a></td>
+                     <td class="number">66</td>
+                     <td class="number">31</td>
+                     <td class="number">0.470</td>
+                  </tr>
+                  <tr id="[kumaran]">
+                     <td class="number left">15</td>
+                     <td class="text"><img src="images/nz.gif"><a title="Kumaran Sivapathasuntharam" href="profile-kumaran.html">Kumaran</a></td>
+                     <td class="number">28</td>
+                     <td class="number">26</td>
+                     <td class="number">0.929</td>
+                  </tr>
+                  <tr id="[nathan]">
+                     <td class="number left">16</td>
+                     <td class="text"><img src="images/au.gif"><a title="Nathan &#34;The Womp&#34; Chambers" href="profile-nathan.html">The Womp</a></td>
+                     <td class="number">16</td>
+                     <td class="number">21</td>
+                     <td class="number">1.312</td>
+                  </tr>
+                  <tr id="[neal]">
+                     <td class="number left">17</td>
+                     <td class="text"><img src="images/nz.gif"><a title="Neal Erstich" href="profile-neal.html">Neal (Jnr)</a></td>
+                     <td class="number">17</td>
+                     <td class="number">19</td>
+                     <td class="number">1.118</td>
+                  </tr>
+                  <tr id="[spud]">
+                     <td class="number left">18</td>
+                     <td class="text"><img src="images/au.gif"><a title="Spud Tait" href="profile-spud.html">Spud</a></td>
+                     <td class="number">40</td>
+                     <td class="number">19</td>
+                     <td class="number">0.475</td>
+                  </tr>
+                  <tr id="[dillo]">
+                     <td class="number left">19</td>
+                     <td class="text"><img src="images/au.gif"><a title="Dillo" href="profile-dillo.html">Dillo</a></td>
+                     <td class="number">16</td>
+                     <td class="number">16</td>
+                     <td class="number">1.000</td>
+                  </tr>
+                  <tr id="[carlton]">
+                     <td class="number left">20</td>
+                     <td class="text"><img src="images/england.gif"><a title="Carlton Boulter" href="profile-carlton.html">Carlton</a></td>
+                     <td class="number">17</td>
+                     <td class="number">14</td>
+                     <td class="number">0.824</td>
+                  </tr>
+                  <tr id="[trent]">
+                     <td class="number left">21</td>
+                     <td class="text"><img src="images/au.gif"><a title="Trent Malcolm" href="profile-trent.html">Trenty</a></td>
+                     <td class="number">29</td>
+                     <td class="number">14</td>
+                     <td class="number">0.483</td>
+                  </tr>
+                  <tr id="[tim2]">
+                     <td class="number left">22</td>
+                     <td class="text"><img src="images/au.gif"><a title="Tim Urqhardt" href="profile-tim2.html">Tim</a></td>
+                     <td class="number">14</td>
+                     <td class="number">13</td>
+                     <td class="number">0.929</td>
+                  </tr>
+                  <tr id="[john]">
+                     <td class="number left">23</td>
+                     <td class="text"><img src="images/au.gif"><a title="John Leyton" href="profile-john.html">John</a></td>
+                     <td class="number">15</td>
+                     <td class="number">12</td>
+                     <td class="number">0.800</td>
+                  </tr>
+                  <tr id="[steve c]">
+                     <td class="number left">24</td>
+                     <td class="text"><img src="images/nz.gif"><a title="Steve C" href="profile-steve c.html">Grizzly Adams</a></td>
+                     <td class="number">14</td>
+                     <td class="number">12</td>
+                     <td class="number">0.857</td>
+                  </tr>
+                  <tr id="[f1]">
+                     <td class="number left">25</td>
+                     <td class="text"><img src="images/england.gif"><a title="Generic Fill-in" href="profile-f1.html">Generic Fill-in</a></td>
+                     <td class="number">8</td>
+                     <td class="number">11</td>
+                     <td class="number">1.375</td>
+                  </tr>
+                  <tr id="[jade]">
+                     <td class="number left">26</td>
+                     <td class="text"><img src="images/nz.gif"><a title="Jade Smythe" href="profile-jade.html">Jade Goody</a></td>
+                     <td class="number">12</td>
+                     <td class="number">10</td>
+                     <td class="number">0.833</td>
+                  </tr>
+                  <tr id="[kev]">
+                     <td class="number left">27</td>
+                     <td class="text"><img src="images/au.gif"><a title="Kevin Kim" href="profile-kev.html">Big Kev</a></td>
+                     <td class="number">19</td>
+                     <td class="number">10</td>
+                     <td class="number">0.526</td>
+                  </tr>
+                  <tr id="[aspi]">
+                     <td class="number left">28</td>
+                     <td class="text"><img src="images/england.gif"><a title="Aspi Irani" href="profile-aspi.html">Aspi</a></td>
+                     <td class="number">10</td>
+                     <td class="number">9</td>
+                     <td class="number">0.900</td>
+                  </tr>
+                  <tr id="[pav]">
+                     <td class="number left">29</td>
+                     <td class="text"><img src="images/nz.gif"><a title="Pavan Vyas" href="profile-pav.html">Pav</a></td>
+                     <td class="number">14</td>
+                     <td class="number">9</td>
+                     <td class="number">0.643</td>
+                  </tr>
+                  <tr id="[chris]">
+                     <td class="number left">30</td>
+                     <td class="text"><img src="images/england.gif"><a title="Chris Grover" href="profile-chris.html">Chris</a></td>
+                     <td class="number">4</td>
+                     <td class="number">8</td>
+                     <td class="number">2.000</td>
+                  </tr>
+                  <tr id="[matt]">
+                     <td class="number left">31</td>
+                     <td class="text"><img src="images/au.gif"><a title="Matt Hale" href="profile-matt.html">Matt</a></td>
+                     <td class="number">15</td>
+                     <td class="number">8</td>
+                     <td class="number">0.533</td>
+                  </tr>
+                  <tr id="[dan]">
+                     <td class="number left">32</td>
+                     <td class="text"><img src="images/england.gif"><a title="Daniel Holmes" href="profile-dan.html">Armadillo Dan</a></td>
+                     <td class="number">8</td>
+                     <td class="number">4</td>
+                     <td class="number">0.500</td>
+                  </tr>
+                  <tr id="[hassan]">
+                     <td class="number left">33</td>
+                     <td class="text"><img src="images/pk.gif"><a title="Hassan" href="profile-hassan.html">Hassan</a></td>
+                     <td class="number">4</td>
+                     <td class="number">4</td>
+                     <td class="number">1.000</td>
+                  </tr>
+                  <tr id="[oli]">
+                     <td class="number left">34</td>
+                     <td class="text"><img src="images/za.gif"><a title="Oliver &#34;Weasel&#34; Sherwell" href="profile-oli.html">The Weasel</a></td>
+                     <td class="number">8</td>
+                     <td class="number">4</td>
+                     <td class="number">0.500</td>
+                  </tr>
+                  <tr id="[temur]">
+                     <td class="number left">35</td>
+                     <td class="text"><img src="images/pk.gif"><a title="Temur Ahmad" href="profile-temur.html">Temur</a></td>
+                     <td class="number">6</td>
+                     <td class="number">4</td>
+                     <td class="number">0.667</td>
+                  </tr>
+                  <tr id="[adnan]">
+                     <td class="number left">36</td>
+                     <td class="text"><img src="images/ke.gif"><a title="Adnan Pujani" href="profile-adnan.html">Adnan</a></td>
+                     <td class="number">2</td>
+                     <td class="number">3</td>
+                     <td class="number">1.500</td>
+                  </tr>
+                  <tr id="[rudy]">
+                     <td class="number left">37</td>
+                     <td class="text"><img src="images/nz.gif"><a title="Rudy" href="profile-rudy.html">Rudy</a></td>
+                     <td class="number">2</td>
+                     <td class="number">3</td>
+                     <td class="number">1.500</td>
+                  </tr>
+                  <tr id="[chez]">
+                     <td class="number left">38</td>
+                     <td class="text"><img src="images/wales.gif"><a title="Andrew &#34;Chezney&#34; Bell" href="profile-chez.html">Chezney Hawkes</a></td>
+                     <td class="number">2</td>
+                     <td class="number">2</td>
+                     <td class="number">1.000</td>
+                  </tr>
+                  <tr id="[hasnat]">
+                     <td class="number left">39</td>
+                     <td class="text"><img src="images/pk.gif"><a title="Hasnat Shah" href="profile-hasnat.html">Hasnat</a></td>
+                     <td class="number">2</td>
+                     <td class="number">2</td>
+                     <td class="number">1.000</td>
+                  </tr>
+                  <tr id="[jimmy]">
+                     <td class="number left">40</td>
+                     <td class="text"><img src="images/pk.gif"><a title="Jimmy Ahmad" href="profile-jimmy.html">Jimmy</a></td>
+                     <td class="number">2</td>
+                     <td class="number">2</td>
+                     <td class="number">1.000</td>
+                  </tr>
+                  <tr id="[jz]">
+                     <td class="number left">41</td>
+                     <td class="text"><img src="images/au.gif"><a title="Jamie Zanardo" href="profile-jz.html">JZ</a></td>
+                     <td class="number">5</td>
+                     <td class="number">2</td>
+                     <td class="number">0.400</td>
+                  </tr>
+                  <tr id="[m2]">
+                     <td class="number left">42</td>
+                     <td class="text"><img src="images/nz.gif"><a title="Mark Robinson" href="profile-m2.html">Mark 2</a></td>
+                     <td class="number">8</td>
+                     <td class="number">2</td>
+                     <td class="number">0.250</td>
+                  </tr>
+                  <tr id="[corban]">
+                     <td class="number left">43</td>
+                     <td class="text"><img src="images/nz.gif"><a title="Corban" href="profile-corban.html">Corban</a></td>
+                     <td class="number">2</td>
+                     <td class="number">1</td>
+                     <td class="number">0.500</td>
+                  </tr>
+                  <tr id="[sandeep]">
+                     <td class="number left">44</td>
+                     <td class="text"><img src="images/nz.gif"><a title="Sandeep" href="profile-sandeep.html">Sandeep</a></td>
+                     <td class="number">4</td>
+                     <td class="number">1</td>
+                     <td class="number">0.250</td>
+                  </tr>
+                  <tr id="[sanj]">
+                     <td class="number left">45</td>
+                     <td class="text"><img src="images/in.gif"><a title="Sange" href="profile-sanj.html">Sanj</a></td>
+                     <td class="number">2</td>
+                     <td class="number">1</td>
+                     <td class="number">0.500</td>
+                  </tr>
+                  <tr id="[steve m]">
+                     <td class="number left">46</td>
+                     <td class="text"><img src="images/nz.gif"><a title="Steve Morgan" href="profile-steve m.html">Captain Morgan</a></td>
+                     <td class="number">2</td>
+                     <td class="number">1</td>
+                     <td class="number">0.500</td>
+                  </tr>
+                  <tr id="[tim]">
+                     <td class="number left">47</td>
+                     <td class="text"><img src="images/england.gif"><a title="Tim Sellick" href="profile-tim.html">Magnum PI</a></td>
+                     <td class="number">4</td>
+                     <td class="number">1</td>
+                     <td class="number">0.250</td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+         <tr>
+            <td class="footer" colspan="2">
+               								© 2005-2008 Steamboat Willies ICC (Toot toot!)<br><small>Generated: Tue Dec 02 21:43:34 GMT 2008</small></td>
+         </tr>
+      </table>
+   </body>
+</html>

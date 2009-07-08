@@ -1,0 +1,16 @@
+fullName 		= Greg Dillon
+dob 			= 
+currentAge		= Youngster
+flag 			= au.gif
+origin 			= Australia
+teams	 		= Steamboat Willies ICC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 9/10/2008
+lastGame		= Current
+nicknames		= Dillo
+profile			= 
+specialMove		= 
+registered		= 0

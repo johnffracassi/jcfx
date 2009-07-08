@@ -1,0 +1,106 @@
+<project name="steamboat" default="all" basedir="..">
+
+	<property name="src"			location="./src" />
+	<property name="classes"		value="bin" />
+	<property name="xsl.dir" 		location="./xsl" />					<!-- Stylesheet location 						-->
+	<property name="web.dir" 		location="./web" />					<!-- Files to be copied to output directory 	-->
+	<property name="profile.dir" 	location="./data/profile" />		<!-- Player profiles 							-->
+	<property name="game.dir" 		location="./data/game" />			<!-- Game data 									-->
+	<property name="templates.dir" 	location="./templates" />			<!-- Page layout template and include files 	-->
+	
+	<property name="xsl.file" location="${xsl.dir}/steamboat.xsl" />	<!-- Root stylesheet 							-->
+
+	<property name="work.dir" value="c:/temp/steamboat" />	
+	<property name="app.dir" value="bin/app" />	<!-- Web application output directory 			-->
+	<property name="xml.file" value="data.xml" />			<!-- Output location for data model 			-->
+	<property name="out.file" value="steamboat.html" />	<!-- Output HTML file, pre-split 				-->
+	
+	
+	
+	<target name="init">
+		<available property="linux" file="/usr" />
+		
+		<condition property="tmp.dir" value="${work.dir}" else="c:/temp/steamboat">
+			<isset property="linux" />
+		</condition>
+		
+		<echo message="Output directory: ${tmp.dir}" />
+		<mkdir dir="${tmp.dir}" />
+	</target>
+
+	<!-- ========================================================================== -->
+	<!-- Generate and deploy														-->
+	<!-- ========================================================================== -->
+	<target name="all" depends="init, clean, compile, generate, chart, deploy" />
+
+	<!-- ========================================================================== -->
+	<!-- Deploy to SteamboatWillies.com												-->
+	<!-- ========================================================================== -->
+	<target name="deploy">
+		<copy todir="C:/Program Files (x86)/Apache Software Foundation/Tomcat 6.0/webapps/steamboat" overwrite="true">
+			<fileset dir="${work.dir}/bin/app" />
+		</copy>
+	</target>
+	
+
+	<!-- ========================================================================== -->
+	<!-- Compile helper classes														-->
+	<!-- ========================================================================== -->
+	<path id="cp">
+		<fileset dir="./lib" includes="**/*.jar" />
+	</path>
+	
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" includes="**/*.java" destdir="${tmp.dir}/${classes}" classpathref="cp" />
+	</target>
+	
+
+	<!-- ========================================================================== -->
+	<!-- Generate the static content												-->
+	<!-- ========================================================================== -->
+	<target name="generate" depends="init, data-model">
+		<mkdir dir="${tmp.dir}" />
+		<mkdir dir="${tmp.dir}/split" />
+		<mkdir dir="${tmp.dir}/${app.dir}" />
+		
+		<touch file="${xsl.file}" />
+		<xslt style="${xsl.file}" in="${tmp.dir}/${xml.file}" out="${tmp.dir}/${out.file}" force="true" />
+		<copy todir="${tmp.dir}/${app.dir}">
+			<fileset dir="${web.dir}" />
+		</copy>
+	</target>
+
+	
+	<!-- ========================================================================== -->
+	<!-- Build the XML data model													-->
+	<!-- ========================================================================== -->
+	<target name="data-model" depends="init, compile">
+		<taskdef name="convert" classname="com.jeff.sw.DataConverter" classpath="${tmp.dir}/${classes}" />
+		<convert gameDir="${game.dir}" profileDir="${profile.dir}" outputFile="${tmp.dir}/${xml.file}" />
+	</target>
+	
+
+	<!-- ========================================================================== -->
+	<!-- Generate and resterise the charts											-->
+	<!-- ========================================================================== -->
+	<target name="chart" depends="init, data-model">
+		<xslt style="${xsl.dir}/bat-charts.xsl" in="${tmp.dir}/${xml.file}" out="${tmp.dir}/tmp.svg" force="true" />
+
+		<taskdef name="rasterise" classname="org.apache.tools.ant.taskdefs.optional.RasterizerTask" />
+		<rasterise result="image/png" destdir="${tmp.dir}/${app.dir}/charts/png" width="700" height="300">
+			<fileset dir="${tmp.dir}/${app.dir}/charts/svg" includes="*.svg" />
+		</rasterise>
+	</target>
+		
+
+	<!-- ========================================================================== -->
+	<!-- Clean out temp and build directories										-->
+	<!-- ========================================================================== -->
+	<target name="clean" depends="init">
+		<delete dir="${tmp.dir}" />
+		<mkdir dir="${tmp.dir}/${app.dir}" />
+		<mkdir dir="${tmp.dir}/${classes}" />
+	</target>
+	
+</project>
+	

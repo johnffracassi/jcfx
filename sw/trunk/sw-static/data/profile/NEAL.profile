@@ -1,0 +1,16 @@
+fullName 		= Neal Erstich
+dob 			= 
+currentAge		= 
+flag 			= nz.gif
+origin 			= New Zealand
+teams	 		= Steamboat Willies ICC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 6/10/2008
+lastGame		= Current
+nicknames		= Neal (Jnr)
+profile			= 
+specialMove		= 
+registered		= 0

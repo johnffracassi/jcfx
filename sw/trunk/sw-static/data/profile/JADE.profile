@@ -1,0 +1,17 @@
+fullName 		= Jade Smythe
+dob 			= 
+currentAge		= 
+picture			= bob.jpg
+flag 			= nz.gif
+origin 			= New Zealand
+teams	 		= Steamboat Willies ICC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 6/10/2008
+lastGame		= Current
+nicknames		= Jade Goody
+profile			= 
+specialMove		= 
+registered		= 0

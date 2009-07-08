@@ -1,0 +1,17 @@
+fullName 		= Nathan "The Womp" Chambers
+dob 			= 
+currentAge		= 30
+picture			= nathan.jpg
+flag 			= au.gif
+origin 			= Australia
+teams	 		= Steamboat Willies ICC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 9/10/2008
+lastGame		= Current
+nicknames		= The Womp
+profile			= 
+specialMove		= 
+registered		= 1

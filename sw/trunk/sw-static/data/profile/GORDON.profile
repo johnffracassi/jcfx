@@ -1,0 +1,16 @@
+fullName 		= Gordon Collins
+dob 			= 
+currentAge		= 
+flag 			= nz.gif
+origin 			= Australia
+teams	 		= Steamboat Willies ICC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 29/1/2009
+lastGame		= Current
+nicknames		= Gordon
+profile			= 
+specialMove		= 
+registered		= 0

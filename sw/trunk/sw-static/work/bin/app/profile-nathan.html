@@ -1,0 +1,562 @@
+<html xmlns:Date="http://www.oracle.com/XSL/Transform/java/java.util.Date" xmlns:sw="http://www.zendurl.com/sw">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>Official Website of Steamboat Willies ICC</title>
+      <link rel="stylesheet" type="text/css" href="style/steamboat.css">
+      <link rel="stylesheet" type="text/css" href="style/shadow.css">
+      <link rel="stylesheet" type="text/css" href="style/sort.css"><script type="text/javascript" src="script/sorter.js"></script><script type="text/javascript">
+						
+						function init()
+						{
+							if(document.getElementById('sortTable'))
+							{
+								var TableSorter1 = new TSorter;
+								TableSorter1.init('sortTable');
+							}
+						}
+						
+						function load()
+						{
+							init();
+						
+							if(document.playerSelect)
+							{
+								document.playerSelect.player.selectedIndex = 0;
+								playerChanged();
+							}
+						}
+						
+						function playerChanged()
+						{
+							var playerIdx = document.playerSelect.player.selectedIndex;
+							var playerId = document.playerSelect.player.options[playerIdx].value;
+							var el = document.getElementsByTagName("tr");
+					
+							for(var i=0; i < el.length; i++)
+							{
+								if(el[i].childNodes[0].tagName != "th")
+								{
+									if(el[i].id.indexOf(playerId) != -1)
+									{
+										el[i].className = 'focus';
+									}
+									else
+									{
+										if(i % 2 == 1) 
+											el[i].className = 'odd';
+										else 
+											el[i].className = 'even';
+									}
+								}
+							}
+						} 
+						
+					</script></head>
+   <body onLoad="load()">
+      <table class="layout">
+         <tr>
+            <td class="header"><a href="index.html"><img src="images/sw-small.png" style="border: 0px;"></a></td>
+            <td class="header">Steamboat Willies ICC</td>
+         </tr>
+         <tr>
+            <td class="navbar">
+               <ul class="makeMenu">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="results.html">Results</a></li>
+                  <li><a href="http://playonsports.spawtz.com/SpawtzSkin/Fixtures/Fixtures.aspx?LeagueId=58&amp;SeasonId=25">Fixtures »</a></li>
+                  <li><a href="http://playonsports.spawtz.com/SpawtzSkin/Fixtures/Standings.aspx?LeagueId=58&amp;SeasonId=25">Table »</a></li>
+                  <li>Profiles (Current)
+                     				
+                     <ul>
+                        <li><a href="profile-adnan.html">Adnan Pujani</a></li>
+                        <li><a href="profile-brad.html">Brad Kuypers</a></li>
+                        <li><a href="profile-charlie.html">Charles Norman Lees</a></li>
+                        <li><a href="profile-corban.html">Corban</a></li>
+                        <li><a href="profile-d1.html">Dave "Liability" McCairney</a></li>
+                        <li><a href="profile-dillo.html">Dillo</a></li>
+                        <li><a href="profile-adonis.html">Donis</a></li>
+                        <li><a href="profile-f1.html">Generic Fill-in</a></li>
+                        <li><a href="profile-jade.html">Jade Smythe</a></li>
+                        <li><a href="profile-jeff.html">Jeffrey Cann</a></li>
+                        <li><a href="profile-jimmy.html">Jimmy Ahmad</a></li>
+                        <li><a href="profile-kat.html">Kat</a></li>
+                        <li><a href="profile-kumaran.html">Kumaran Sivapathasuntharam</a></li>
+                        <li><a href="profile-matt.html">Matt Hale</a></li>
+                        <li><a href="profile-max.html">Max Murray</a></li>
+                        <li><a href="profile-mick.html">Michael Riley</a></li>
+                        <li><a href="profile-nathan.html">Nathan "The Womp" Chambers</a></li>
+                        <li><a href="profile-neal.html">Neal Erstich</a></li>
+                        <li><a href="profile-neil.html">Neil Mariott-Smith</a></li>
+                        <li><a href="profile-nick.html">Nick Walker</a></li>
+                        <li><a href="profile-oli.html">Oliver "Weasel" Sherwell</a></li>
+                        <li><a href="profile-pav.html">Pavan Vyas</a></li>
+                        <li><a href="profile-rudy.html">Rudy</a></li>
+                        <li><a href="profile-sandeep.html">Sandeep</a></li>
+                        <li><a href="profile-temur.html">Temur Ahmad</a></li>
+                        <li><a href="profile-tim2.html">Tim Urqhardt</a></li>
+                     </ul>
+                  </li>
+                  <li>Profiles (RIP)
+                     				
+                     <ul>
+                        <li><a href="profile-alistair.html">Alistair McSomeone</a></li>
+                        <li><a href="profile-chez.html">Andrew "Chezney" Bell</a></li>
+                        <li><a href="profile-aspi.html">Aspi Irani</a></li>
+                        <li><a href="profile-barrett.html">Barrett Bristowe</a></li>
+                        <li><a href="profile-carlton.html">Carlton Boulter</a></li>
+                        <li><a href="profile-chris.html">Chris Grover</a></li>
+                        <li><a href="profile-craig.html">Craig Archer</a></li>
+                        <li><a href="profile-dan.html">Daniel Holmes</a></li>
+                        <li><a href="profile-d2.html">David Card</a></li>
+                        <li><a href="profile-greg.html">Gregory Chester</a></li>
+                        <li><a href="profile-hasnat.html">Hasnat Shah</a></li>
+                        <li><a href="profile-hassan.html">Hassan</a></li>
+                        <li><a href="profile-jz.html">Jamie Zanardo</a></li>
+                        <li><a href="profile-john.html">John Leyton</a></li>
+                        <li><a href="profile-kev.html">Kevin Kim</a></li>
+                        <li><a href="profile-mg.html">Mark Goodson</a></li>
+                        <li><a href="profile-m2.html">Mark Robinson</a></li>
+                        <li><a href="profile-dick.html">Richard Lee</a></li>
+                        <li><a href="profile-sanj.html">Sange</a></li>
+                        <li><a href="profile-spud.html">Spud Tait</a></li>
+                        <li><a href="profile-steve.html">Stephen Bristow</a></li>
+                        <li><a href="profile-steve c.html">Steve C</a></li>
+                        <li><a href="profile-steve m.html">Steve Morgan</a></li>
+                        <li><a href="profile-sam.html">Stuart 'Sammy' Jones</a></li>
+                        <li><a href="profile-tim.html">Tim Sellick</a></li>
+                        <li><a href="profile-trent.html">Trent Malcolm</a></li>
+                     </ul>
+                  </li>
+                  <li>Batting Records
+                     				
+                     <ul>
+                        <li><a href="bat-summary-career.html">Career</a></li>
+                        <li><a href="bat-summary-season.html">Season</a></li>
+                        <li><a href="bat-inns-best.html">Best Innings</a></li>
+                        <li><a href="bat-inns-worst.html">Worst Innings</a></li>
+                        <li><a href="bat-most-runs.html">Most Runs</a></li>
+                        <li><a href="bat-best-over.html">Most Runs Off An Over</a></li>
+                        <li><a href="bat-ps-best.html">Best Partnerships</a></li>
+                        <li><a href="bat-ps-worst.html">Worst Partnerships</a></li>
+                        <li><a href="bat-most-ps-runs.html">Most Partnership Runs</a></li>
+                        <li><a href="bat-ps-combo-agg.html">Most Successful Partnerships</a></li>
+                        <li><a href="bat-most-bf.html">Most Balls Faced (Career)</a></li>
+                        <li><a href="bat-most-bf-inns.html">Most Balls Faced (Inns)</a></li>
+                        <li><a href="bat-least-bf-inns.html">Least Balls Faced (Inns)</a></li>
+                        <li><a href="bat-most-6s.html">Most 6s Hit</a></li>
+                        <li><a href="bat-most-dots.html">Most Dot Balls</a></li>
+                        <li><a href="bat-most-outs.html">Most Dismissed</a></li>
+                        <li><a href="bat-run-outs.html">Run-out Liability Factor</a></li>
+                        <li><a href="most-lbws.html">Most LBWs</a></li>
+                     </ul>
+                  </li>
+                  <li>Bowling Records
+                     				
+                     <ul>
+                        <li><a href="bowl-summary-career.html">Career</a></li>
+                        <li><a href="bowl-summary-season.html">Season</a></li>
+                        <li><a href="bowl-figures-best.html">Best Match Figures</a></li>
+                        <li><a href="bowl-figures-worst.html">Worst Match Figures</a></li>
+                        <li><a href="bowl-over-best.html">Best Overs</a></li>
+                        <li><a href="bowl-over-worst.html">Worst Overs</a></li>
+                        <li><a href="bowl-most-outs.html">Most Wickets</a></li>
+                        <li><a href="bowl-most-runs.html">Most Runs Conceeded</a></li>
+                        <li><a href="bowl-most-6s.html">Most 6s Conceeded</a></li>
+                        <li><a href="bowl-most-dots.html">Most Dots Bowled</a></li>
+                        <li><a href="bowl-most-extras.html">Most Extras Conceeded</a></li>
+                        <li><a href="over-breakdown.html">Over by Over</a></li>
+                        <li><a href="bat-ps-best-against.html">Best Partnerships Against</a></li>
+                        <li><a href="bat-ps-worst-against.html">Worst Partnerships Against</a></li>
+                     </ul>
+                  </li>
+                  <li>General Records
+                     				
+                     <ul>
+                        <li><a href="net-career.html">Net Runs (Career)</a></li>
+                        <li><a href="net-season.html">Net Runs (Season)</a></li>
+                        <li><a href="net-best.html">Best Performances</a></li>
+                        <li><a href="net-worst.html">Worst Performances</a></li>
+                        <li><a href="most-nicknames.html">Most Nicknames</a></li>
+                        <li><a href="most-beers-won.html">Most Beers Won</a></li>
+                        <li><a href="ps-skin-win.html">Best Skins</a></li>
+                        <li><a href="ps-skin-loss.html">Worst Skins</a></li>
+                     </ul>
+                  </li>
+               </ul>
+            </td>
+            <td class="content"><br><center><img align="center" valign="top" src="http://www.usairways.com/awa/resources/_images/homepage_logo.gif"></center><br><hr><br xmlns:Math="http://www.oracle.com/XSL/Transform/java/java.lang.Math"><table xmlns:Math="http://www.oracle.com/XSL/Transform/java/java.lang.Math" class="stats">
+                  <caption class="stats"><img src="images/au.gif" class="flag"><span style="font-size: 18pt; padding-left: 18px; padding-right: 18px; padding-top: 6px; padding-bottom: 6px;">Nathan "The Womp" Chambers</span><img src="images/au.gif"></caption>
+                  <tr>
+                     <td>
+                        <table class="profile" style="width: 100%;">
+                           <tr>
+                              <th>Full name</th>
+                              <td>Nathan "The Womp" Chambers</td>
+                           </tr>
+                           <tr>
+                              <th>Origin</th>
+                              <td>Australia</td>
+                           </tr>
+                           <tr>
+                              <th>DOB</th>
+                              <td></td>
+                           </tr>
+                           <tr>
+                              <th>Age</th>
+                              <td>30</td>
+                           </tr>
+                           <tr>
+                              <th>Major Teams</th>
+                              <td>Steamboat Willies ICC</td>
+                           </tr>
+                           <tr>
+                              <th>Team Role</th>
+                              <td></td>
+                           </tr>
+                           <tr>
+                              <th>Batting Style</th>
+                              <td></td>
+                           </tr>
+                           <tr>
+                              <th>Bowling Style</th>
+                              <td></td>
+                           </tr>
+                           <tr>
+                              <th>Height</th>
+                              <td></td>
+                           </tr>
+                        </table>
+                     </td>
+                     <td class="picture">
+                        <div><img src="./images/nathan.jpg" style="border: 1px solid black;" height="150" width="117"></div>
+                     </td>
+                     <td style="widthL 100px;"><span></span></td>
+                  </tr>
+               </table><br xmlns:Math="http://www.oracle.com/XSL/Transform/java/java.lang.Math"><table xmlns:Math="http://www.oracle.com/XSL/Transform/java/java.lang.Math" class="stats" cellpadding="2" cellspacing="0">
+                  <caption class="stats">Batting Statistics</caption>
+                  <tr>
+                     <th class="season" rowspan="2">Season</th>
+                     <th class="lb num2" rowspan="2">Inns</th>
+                     <th class="lb centre" colspan="8">Player</th>
+                     <th class="lb centre" colspan="5">Partnership</th>
+                     <th class="lb centre" colspan="5">Out</th>
+                     <th class="lb num2" rowspan="2">Dot</th>
+                     <th class="num2" rowspan="2">6s</th>
+                     <th class="num2" rowspan="2">W</th>
+                     <th class="num2" rowspan="2">NB</th>
+                     <th class="num2" rowspan="2">Ext</th>
+                  </tr>
+                  <tr class="bb">
+                     <th class="lb num3">Runs</th>
+                     <th class="num3">BF</th>
+                     <th class="num3">Avg</th>
+                     <th class="num2">HS</th>
+                     <th class="num2">LS</th>
+                     <th class="num2">&lt;0</th>
+                     <th class="num2">&gt;15</th>
+                     <th class="num2">&gt;25</th>
+                     <th class="lb num3">Runs</th>
+                     <th class="num3">Avg</th>
+                     <th class="num2">HS</th>
+                     <th class="num2">LS</th>
+                     <th class="num2">&gt;30</th>
+                     <th class="lb num2">Total</th>
+                     <th class="num2">B</th>
+                     <th class="num2">C</th>
+                     <th class="num2">RO</th>
+                     <th class="num2">S</th>
+                  </tr>
+                  <tr>
+                     <td class="season">Winter 2008 (Monday)</td>
+                     <td class="lb num2">2</td>
+                     <td class="lb num3">16</td>
+                     <td class="num3">23</td>
+                     <td class="num3">8.00</td>
+                     <td class="num2">11</td>
+                     <td class="num2">5</td>
+                     <td class="num2">0</td>
+                     <td class="num2">0</td>
+                     <td class="num2">0</td>
+                     <td class="lb num3">42</td>
+                     <td class="num3">21.00</td>
+                     <td class="num2">25</td>
+                     <td class="num2">17</td>
+                     <td class="num2">0</td>
+                     <td class="lb num2">4</td>
+                     <td class="num2">1</td>
+                     <td class="num2">1</td>
+                     <td class="num2">2</td>
+                     <td class="num2">0</td>
+                     <td class="lb num2">3</td>
+                     <td class="num2">1</td>
+                     <td class="num2">1</td>
+                     <td class="num2">1</td>
+                     <td class="num2">4</td>
+                  </tr>
+                  <tr>
+                     <td class="season">Winter 2008 (Thursday)</td>
+                     <td class="lb num2">6</td>
+                     <td class="lb num3">72</td>
+                     <td class="num3">65</td>
+                     <td class="num3">12.00</td>
+                     <td class="num2">20</td>
+                     <td class="num2">3</td>
+                     <td class="num2">0</td>
+                     <td class="num2">2</td>
+                     <td class="num2">0</td>
+                     <td class="lb num3">133</td>
+                     <td class="num3">22.17</td>
+                     <td class="num2">35</td>
+                     <td class="num2">0</td>
+                     <td class="num2">2</td>
+                     <td class="lb num2">4</td>
+                     <td class="num2">0</td>
+                     <td class="num2">2</td>
+                     <td class="num2">2</td>
+                     <td class="num2">0</td>
+                     <td class="lb num2">10</td>
+                     <td class="num2">0</td>
+                     <td class="num2">5</td>
+                     <td class="num2">3</td>
+                     <td class="num2">16</td>
+                  </tr>
+                  <tr class="total">
+                     <td><i> Total</i></td>
+                     <td class="lb num2">8</td>
+                     <td class="lb num3">88</td>
+                     <td class="num3">88</td>
+                     <td class="num3">11.00</td>
+                     <td class="num2">20</td>
+                     <td class="num2">3</td>
+                     <td class="num2">0</td>
+                     <td class="num2">2</td>
+                     <td class="num2">0</td>
+                     <td class="lb num3">175</td>
+                     <td class="num3">21.88</td>
+                     <td class="num2">35</td>
+                     <td class="num2">0</td>
+                     <td class="num2">2</td>
+                     <td class="lb num2">8</td>
+                     <td class="num2">1</td>
+                     <td class="num2">3</td>
+                     <td class="num2">4</td>
+                     <td class="num2">0</td>
+                     <td class="lb num2">13</td>
+                     <td class="num2">1</td>
+                     <td class="num2">6</td>
+                     <td class="num2">4</td>
+                     <td class="num2">20</td>
+                  </tr>
+               </table><br xmlns:Math="http://www.oracle.com/XSL/Transform/java/java.lang.Math"><table xmlns:Math="http://www.oracle.com/XSL/Transform/java/java.lang.Math" class="stats" cellpadding="2" cellspacing="0">
+                  <caption class="stats">Bowling Statistics</caption>
+                  <tr>
+                     <th class="left">Season</th>
+                     <th class="lb num3">Overs</th>
+                     <th class="num3">Balls</th>
+                     <th class="num3">RC</th>
+                     <th class="num3">RPO</th>
+                     <th class="num3">Best</th>
+                     <th class="num3">Worst</th>
+                     <th class="lb num2">Wick</th>
+                     <th class="num2">B</th>
+                     <th class="num2">C</th>
+                     <th class="num2">RO</th>
+                     <th class="num2">S</th>
+                     <th class="lb num2">Dot</th>
+                     <th class="num2">6s</th>
+                     <th class="num2">W</th>
+                     <th class="num2">NB</th>
+                     <th class="num2">Ext</th>
+                     <th class="lb num2">&lt;0</th>
+                     <th class="num2">&gt;12</th>
+                  </tr>
+                  <tr>
+                     <td class="season">Winter 2008 (Monday)</td>
+                     <td class="lb num3">4</td>
+                     <td class="num3">22</td>
+                     <td class="num3">29</td>
+                     <td class="num3">7.25</td>
+                     <td class="num3">2</td>
+                     <td class="num3">11</td>
+                     <td class="lb num2">2</td>
+                     <td class="num2">0</td>
+                     <td class="num2">0</td>
+                     <td class="num2">2</td>
+                     <td class="num2">0</td>
+                     <td class="lb num2">3</td>
+                     <td class="num2">1</td>
+                     <td class="num2">6</td>
+                     <td class="num2">1</td>
+                     <td class="num2">14</td>
+                     <td class="lb num2">0</td>
+                     <td class="num2">0</td>
+                  </tr>
+                  <tr>
+                     <td class="season">Winter 2008 (Thursday)</td>
+                     <td class="lb num3">12</td>
+                     <td class="num3">75</td>
+                     <td class="num3">55</td>
+                     <td class="num3">4.58</td>
+                     <td class="num3">-6</td>
+                     <td class="num3">15</td>
+                     <td class="lb num2">9</td>
+                     <td class="num2">1</td>
+                     <td class="num2">3</td>
+                     <td class="num2">4</td>
+                     <td class="num2">1</td>
+                     <td class="lb num2">18</td>
+                     <td class="num2">0</td>
+                     <td class="num2">7</td>
+                     <td class="num2">1</td>
+                     <td class="num2">16</td>
+                     <td class="lb num2">4</td>
+                     <td class="num2">2</td>
+                  </tr>
+                  <tr class="total">
+                     <td class="season"><i> Total</i></td>
+                     <td class="lb num3">16</td>
+                     <td class="num3">97</td>
+                     <td class="num3">84</td>
+                     <td class="num3">5.25</td>
+                     <td class="num3">-6</td>
+                     <td class="num3">15</td>
+                     <td class="lb num2">11</td>
+                     <td class="num2">1</td>
+                     <td class="num2">3</td>
+                     <td class="num2">6</td>
+                     <td class="num2">1</td>
+                     <td class="lb num2">21</td>
+                     <td class="num2">1</td>
+                     <td class="num2">13</td>
+                     <td class="num2">2</td>
+                     <td class="num2">30</td>
+                     <td class="lb num2">4</td>
+                     <td class="num2">2</td>
+                  </tr>
+               </table><br xmlns:Math="http://www.oracle.com/XSL/Transform/java/java.lang.Math"><table xmlns:Math="http://www.oracle.com/XSL/Transform/java/java.lang.Math" class="stats" cellpadding="2" cellspacing="0">
+                  <caption class="stats">Profile</caption>
+                  <tr>
+                     <td class="profile">Debut</td>
+                     <td>9/10/2008</td>
+                  </tr>
+                  <tr>
+                     <td class="profile">Last Game</td>
+                     <td>Current</td>
+                  </tr>
+                  <tr>
+                     <td class="profile">Net Runs</td>
+                     <td>4</td>
+                  </tr>
+                  <tr>
+                     <td class="profile">Special Move</td>
+                     <td></td>
+                  </tr>
+                  <tr>
+                     <td class="profile">Profile</td>
+                     <td></td>
+                  </tr>
+               </table><br xmlns:Math="http://www.oracle.com/XSL/Transform/java/java.lang.Math"><table xmlns:Math="http://www.oracle.com/XSL/Transform/java/java.lang.Math" class="stats" cellpadding="2" cellspacing="0">
+                  <caption class="stats">Batting Partners</caption>
+                  <thead>
+                     <tr>
+                        <th class="num" rowspan="2">Pos</th>
+                        <th class="text" rowspan="2">Partner</th>
+                        <th class="num" rowspan="2">Inns</th>
+                        <th class="num" rowspan="2">Runs</th>
+                        <th class="num" rowspan="2">Balls</th>
+                        <th style="text-align:center;" colspan="5">Contribution</th>
+                     </tr>
+                     <tr>
+                        <th class="num">Avg</th>
+                        <th class="num">Runs</th>
+                        <th class="num">BF</th>
+                        <th class="num">Runs%</th>
+                        <th class="num">BF%</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td class="num">1</td>
+                        <td class="text"><img src="images/au.gif"><a title="Charles Norman Lees" href="profile-charlie.html">Chuck</a></td>
+                        <td class="number">2</td>
+                        <td class="number">49</td>
+                        <td class="number">49</td>
+                        <td class="number">24.50</td>
+                        <td class="number">19</td>
+                        <td class="number">27</td>
+                        <td class="number">38.8%</td>
+                        <td class="number">55.1%</td>
+                     </tr>
+                     <tr>
+                        <td class="num">2</td>
+                        <td class="text"><img src="images/za.gif"><a title="Oliver &#34;Weasel&#34; Sherwell" href="profile-oli.html">The Weasel</a></td>
+                        <td class="number">2</td>
+                        <td class="number">42</td>
+                        <td class="number">48</td>
+                        <td class="number">21.00</td>
+                        <td class="number">20</td>
+                        <td class="number">18</td>
+                        <td class="number">47.6%</td>
+                        <td class="number">37.5%</td>
+                     </tr>
+                     <tr>
+                        <td class="num">3</td>
+                        <td class="text"><img src="images/au.gif"><a title="Dillo" href="profile-dillo.html">Dillo</a></td>
+                        <td class="number">2</td>
+                        <td class="number">35</td>
+                        <td class="number">49</td>
+                        <td class="number">17.50</td>
+                        <td class="number">23</td>
+                        <td class="number">25</td>
+                        <td class="number">65.7%</td>
+                        <td class="number">51.0%</td>
+                     </tr>
+                     <tr>
+                        <td class="num">4</td>
+                        <td class="text"><img src="images/nz.gif"><a title="Kumaran Sivapathasuntharam" href="profile-kumaran.html">Kumaran</a></td>
+                        <td class="number">1</td>
+                        <td class="number">32</td>
+                        <td class="number">25</td>
+                        <td class="number">32.00</td>
+                        <td class="number">15</td>
+                        <td class="number">9</td>
+                        <td class="number">46.9%</td>
+                        <td class="number">36.0%</td>
+                     </tr>
+                     <tr>
+                        <td class="num">5</td>
+                        <td class="text"><img src="images/england.gif"><a title="Nick Walker" href="profile-nick.html">Dr Nick</a></td>
+                        <td class="number">1</td>
+                        <td class="number">17</td>
+                        <td class="number">21</td>
+                        <td class="number">17.00</td>
+                        <td class="number">11</td>
+                        <td class="number">9</td>
+                        <td class="number">64.7%</td>
+                        <td class="number">42.9%</td>
+                     </tr>
+                  </tbody>
+                  <tfoot>
+                     <tr>
+                        <th class="text" colspan="2">Total</th>
+                        <th class="number">8</th>
+                        <th class="number">175</th>
+                        <th class="number">192</th>
+                        <th class="number">21.88</th>
+                        <th class="number">88</th>
+                        <th class="number">88</th>
+                        <th class="number">50.3%</th>
+                        <th class="number">45.8%</th>
+                     </tr>
+                  </tfoot>
+               </table><br xmlns:Math="http://www.oracle.com/XSL/Transform/java/java.lang.Math"><hr xmlns:Math="http://www.oracle.com/XSL/Transform/java/java.lang.Math">
+               <center xmlns:Math="http://www.oracle.com/XSL/Transform/java/java.lang.Math"><br><img src="charts/png/bat-history-career-nathan.png"><br><br><img src="charts/png/bowl-history-career-nathan.png"><br><br><img src="charts/png/net-history-career-nathan.png"><br></center>
+            </td>
+         </tr>
+         <tr>
+            <td class="footer" colspan="2">
+               								© 2005-2008 Steamboat Willies ICC (Toot toot!)<br><small>Generated: Tue Dec 02 21:42:34 GMT 2008</small></td>
+         </tr>
+      </table>
+   </body>
+</html>

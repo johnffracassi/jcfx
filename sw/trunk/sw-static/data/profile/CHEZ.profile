@@ -1,0 +1,17 @@
+fullName 		= Andrew "Chezney" Bell
+dob 			= 
+currentAge		= Sperm
+flag 			= wales.gif
+origin 			= Wales
+teams	 		= Steamboat Willies CC, HECC
+role 			= Pretty boy
+battingStyle 	= Solid, Carltonesque
+bowlingStyle 	= Unrefined
+height			= Reasonable
+debut			= 28/3/2008
+lastGame		= 28/3/2008
+nicknames		= Chezney Hawkes
+profile			= 
+specialMove		= The Barracuda
+registered		= 0
+retired			= Yes

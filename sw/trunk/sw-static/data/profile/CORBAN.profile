@@ -1,0 +1,16 @@
+fullName 		= Corban
+dob 			= 
+currentAge		= 
+flag 			= nz.gif
+origin 			= New Zealand
+teams	 		= Steamboat Willies ICC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 30/10/2008
+lastGame		= Current
+nicknames		= Corban
+profile			= 
+specialMove		= 
+registered		= 0

@@ -1,0 +1,17 @@
+fullName 		= Sange
+dob 			= 
+currentAge		= 
+flag 			= in.gif
+origin 			= India / England
+teams	 		= Steamboat Willies CC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 
+lastGame		= 
+nicknames		= Sanj
+profile			= 
+specialMove		= 
+registered		= 0
+retired			= Yes

@@ -1,0 +1,16 @@
+fullName 		= Rod "Rocket" Scotton
+dob 			= 
+currentAge		= 
+flag 			= au.gif
+origin 			= Australia
+teams	 		= Steamboat Willies
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 6/3/2009
+lastGame		= Current
+nicknames		= Rocket
+profile			= 
+specialMove		= 
+registered		= 0

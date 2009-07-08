@@ -1,0 +1,17 @@
+fullName 		= Tim Urqhardt
+dob 			= 
+currentAge		= 
+picture			= bob.jpg
+flag 			= au.gif
+origin 			= Australia
+teams	 		= Steamboat Willies CC, HECC
+role 			= 
+battingStyle 	= Solid
+bowlingStyle 	= Medium 
+height			= 
+debut			= 9/10/2008
+lastGame		= 
+nicknames		= Tim
+profile			= 
+specialMove		= 
+registered		= 1

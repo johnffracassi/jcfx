@@ -1,0 +1,16 @@
+fullName 		= Alistair McSomeone
+dob 			= 
+currentAge		= 
+flag 			= england.gif
+origin 			= 
+teams	 		= Ringer
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 
+lastGame		= 
+nicknames		= 
+profile			= 
+specialMove		= 
+registered		= 0

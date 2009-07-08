@@ -1,0 +1,16 @@
+fullName 		= Doug's Mate Dave
+dob 			= 
+currentAge		= 
+flag 			= au.gif
+origin 			= Australia
+teams	 		= Steamboat Willies ICC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 19/2/2009
+lastGame		= Current
+nicknames		= Dave 3
+profile			= 
+specialMove		= 
+registered		= 0

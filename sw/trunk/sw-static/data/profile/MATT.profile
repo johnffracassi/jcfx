@@ -1,0 +1,17 @@
+fullName 		= Matt Hale
+dob 			= 1981
+currentAge		= 27ish
+picture			= bob.jpg
+flag 			= au.gif
+origin 			= Australia
+teams	 		= Steamboat Willies ICC
+role 			= 
+battingStyle 	= Sturdy
+bowlingStyle 	= Tidy
+height			= 6ft+
+debut			= 9/10/2008
+lastGame		= Current
+nicknames		= Matt
+profile			= 
+specialMove		= 
+registered		= 1

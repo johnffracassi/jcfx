@@ -1,0 +1,81 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Official Website of ${teamname.inc}</title>
+		<link rel="stylesheet" type="text/css" href="steamboat.css">
+		<link rel="stylesheet" type="text/css" href="shadow.css">
+		
+		<script type="text/javascript">
+			function load()
+			{
+				if(document.playerSelect)
+				{
+					document.playerSelect.player.selectedIndex = 0;
+					playerChanged();
+				}
+			}
+			
+			function playerChanged()
+			{
+				var playerIdx = document.playerSelect.player.selectedIndex;
+				var playerId = document.playerSelect.player.options[playerIdx].value;
+				var el = document.getElementsByTagName("tr");
+		
+				for(var i=0; i<el.length; i++)
+				{
+					if(el[i].childNodes[0].tagName != "th")
+					{
+						if(el[i].id.indexOf(playerId) != -1)
+						{
+							el[i].className = 'focus';
+						}
+						else
+						{
+							if(i % 2 == 1) 
+								el[i].className = 'odd';
+							else 
+								el[i].className = 'even';
+						}
+					}
+				}
+			}
+		</script>
+	</head>
+
+	<body onLoad="load()">
+		<table class="layout">
+			<tr>
+				<td class="header" colspan="2">
+					${teamname.inc}
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="navbar">
+					${navbar.inc}
+				</td>
+				
+				<td class="content">
+					<!-- 
+					<br/>
+					<center>
+						<img align="center" valign="top" src="${sponsor.inc}" />
+					</center>
+					<br/>
+ 					-->
+ 					
+					<hr/>
+
+					${content}
+
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="footer" colspan="2">
+					&copy;2005-2007 ${teamname.inc} Inc.
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,16 @@
+fullName 		= Temur Ahmad
+dob 			= 1988
+currentAge		= Youngster
+flag 			= pk.gif
+origin 			= Pakistan
+teams	 		= HECC, Steamboat Willies ICC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 9/10/2008
+lastGame		= Current
+nicknames		= Temur
+profile			= 
+specialMove		= 
+registered		= 0

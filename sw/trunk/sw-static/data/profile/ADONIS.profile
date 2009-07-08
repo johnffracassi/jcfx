@@ -1,0 +1,16 @@
+fullName 		= Donis
+dob 			= 
+currentAge		= 
+flag 			= au.gif
+origin 			= Australia
+teams	 		= Steamboat Willies ICC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 6/11/2008
+lastGame		= Current
+nicknames		= Adonis, Donis Kebab
+profile			= 
+specialMove		= 
+registered		= 0
