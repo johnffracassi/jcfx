@@ -1,0 +1,16 @@
+<?xml version="1.0"?><project>
+  <parent>
+    <artifactId>cj-pom</artifactId>
+    <groupId>com.siebentag</groupId>
+    <version>0.1-SNAPSHOT</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>com.siebentag.cj</groupId>
+  <artifactId>cj-scorer</artifactId>
+  <name>CricketJ - Scorer</name>
+  <version>0.1-SNAPSHOT</version>
+  <url>http://siebentag.com/cricketj/scorer</url>
+  
+</project>
