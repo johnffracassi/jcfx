@@ -1,0 +1,321 @@
+body {
+	font-family: Helvetica;
+	font-size: 9pt;
+}
+
+a, a:link, a:visited, a:active {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: red;
+	text-decoration: none;
+}
+
+td.header {
+	font:32px/120% normal Verdana,Arial,sans-serif;
+	text-align: left;
+	background-color: navy;
+	color: white;
+	height: 66px;
+	padding-left: 24px;
+	font-variant: small-caps;
+}
+
+td.navbar {
+	text-align: left;
+	vertical-align: top;
+	background-color: #cccccc;
+	width: 125px;
+}
+
+td.content {
+	text-align: left;
+	vertical-align: top;
+	background-color: white;
+	width: 888px;
+	height: 100%;
+}
+
+td.footer {
+	font-size: 8pt;
+	text-align: center;
+	color: #aaaaaa;
+	height: 75px;
+}
+
+table.layout {
+	height: 100%;
+	border: 1px solid black;
+}
+
+span.h3 {
+	font-size: 14pt;
+}
+
+.normal {
+	font-size: 9pt;
+}
+
+table.stats {
+	border: 1px solid #aaaaaa;
+}
+
+caption {
+	background-color: #909090;
+	color: white;
+	font-size: 11px;
+	font-weight: bold;
+	font-variant: small-caps;
+	vertical-align: middle;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+th {
+	background-color: #cccccc;
+	font-size: 9px;
+	font-weight: normal;
+	font-variant: small-caps;
+	text-align: right;
+}
+
+table.profile th {
+	width: 125px;
+	text-align: left;
+}
+
+table.profile td {
+	width: 425px;
+	text-align: left;
+}
+
+table.profile td.picture {
+	width: 175px;
+}
+
+table.stats tr.total td {
+	border-top: 1px solid #dddddd;
+}
+
+tr.win td {
+	background-color: #ddffdd;
+}
+
+tr.loss td {
+	background-color: #ffdddd;
+}
+
+tr.tie td {
+	background-color: #ffffdd;
+}
+
+table.stats td.lb {
+	border-left: 1px solid #dddddd;
+}
+
+table.stats th.lb {
+	border-left: 1px solid #aaaaaa;
+}
+
+.br {
+	border-right: 1px solid #aaaaaa;
+}
+
+td {
+	font-size: 8pt;
+}
+
+.focus-col {
+	font-weight: bold;
+}
+
+
+table.stats tr.odd td {
+	background-color: #f4f4f4;
+}
+
+table.stats tr.even td {
+	background-color: white;
+}
+
+table.stats2 tr.odd td {
+	background-color: #eeeeee;
+}
+
+table.stats2 tr.even td {
+	background-color: #ffffff;
+}
+
+table.stats2 tr.focus td {
+	background-color: #ccccff;
+}
+
+table.stats2 tr.hover td {
+	background-color: #9999ff;
+}
+
+.date {
+	width: 75px;
+	text-align: right;
+}
+
+.number {
+	width: 40px;
+	text-align: right;
+}
+
+.numleft {
+	width: 40px;
+	text-align: left;
+}
+
+.centre {
+	text-align: center;
+}
+
+.left {
+	text-align: left;
+}
+
+.right {
+	text-align: right;
+}
+
+.text {
+	width: 150px;
+	text-align: left;
+}
+
+.skinny-text {
+	width: 40px;
+	text-align: left;
+}
+
+.season {
+	width: 125px;
+	text-align: left;
+}
+
+.num2 {
+	width: 20px;
+	text-align: right;
+}
+
+.num3 {
+	width: 35px;
+	text-align: right;
+}
+
+span.head {
+	font-weight: bold;
+}
+
+td.head {
+	font-weight: bold;
+	text-align: left;
+	width: 125px;
+}
+
+td.left {
+	font-weight: normal;
+	text-align: left;			
+}
+
+img.photo {
+	border: 1px solid black;
+	width: 110px;
+	height: 133px;
+}
+
+table.stats tr.firsts td {
+	background-color: #bbffbb;
+}
+
+table.stats tr.seconds td {
+	background-color: #d8ffd8;
+}
+
+table.stats tr.thirds td {
+	background-color: #eeffee;
+}
+
+
+###############################
+# Match report
+###############################
+
+table.match-result * td.indName { width: 140px; text-align: left; }
+td.indOver { width: 15px; background-color:#f7f7f7; }
+td.indTotal { width: 40px; background-color:#f7f7f7; }
+td.psOver { width: 15px; background-color:#f7f7f7; border-bottom: 1px solid #888888; }
+td.psTotal { font-weight:bold; width: 40px; background-color:#eee; border-bottom: 1px solid #888888; }
+td.wick  { background-color: #fcc; }
+td.nb  { color: red; }
+td.wd  { color: red; }
+td.six  { background-color: #afa; }
+td.four { background-color: #dfd; }
+
+table.match-result {
+	border: 1px solid black;
+}
+
+table.match-result td {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-left: solid 1px #eee;
+	text-align: center;
+}
+
+table.match-result td.indName {
+	text-align: left;
+}
+
+td.ball {
+	text-align: center;
+	width: 15px;
+}
+
+table.match-result tr.odd td {
+	border-bottom: 1px solid #dddddd;
+	padding: 3px 2px 3px 1px;
+}
+
+table.match-result tr.even td {
+	border-bottom: 1px solid #888888;
+	padding: 3px 2px 3px 1px;
+}
+
+table.match-result td.over-break {
+	border-right: 1px solid #888888;
+}
+
+table.match-result td.non-over-break {
+	border-right: 1px solid #dddddd;
+}
+
+
+
+###############################
+# Menus
+###############################
+ul.makeMenu, ul.makeMenu ul, { margin: 0px; padding: 0px; }
+
+ul.makeMenu, ul.makeMenu ul { 
+	width: 125px; border: none; background-color: #bbb; padding-left: 0px; cursor: default; margin-left: 0px; 
+}
+
+ul.makeMenu ul { 
+	width: 200px; border: solid 1px black; background-color: #e2e2e2; padding-left: 0px; cursor: default; margin-left: 0px; 
+}
+
+ul.makeMenu li { list-style-type: none; margin: 0px; position: relative; color: #000; padding: 3px; }
+ul.makeMenu li > ul { display: none; position: absolute; top: 2px; left: 118px; }
+ul.makeMenu li:hover, ul.makeMenu li.CSStoHighlight { background-color: #ffa; color: #000; }
+ul.makeMenu ul.CSStoShow { display: block; }
+ul.makeMenu li:hover > ul { display: block; }
+ul.makeMenu li a { color: #000; display: block; width: 100%; text-decoration: none; }
+ul.makeMenu li a:hover { color: #000; }
+ul.makeMenu li { behavior: url( iemen.htc ); }
+ul.makeMenu ul { display: none; position: absolute; top: 2px; left: 118px; }

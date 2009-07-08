@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="dao" class="com.siebentag.sw.BasicDAO" autowire="byType" />
+	<bean id="dataLoader" class="com.siebentag.sw.DataLoader" autowire="byType" />
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost/sw1" />
+		<property name="username" value="sw" />
+ 		<property name="password" value="sw" />
+	</bean>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.siebentag.cj.model.Attributes</value>
+				<value>com.siebentag.cj.model.Ball</value>
+				<value>com.siebentag.cj.model.BallCollection</value>
+				<value>com.siebentag.cj.model.BatsmanInnings</value>
+				<value>com.siebentag.cj.model.BatsmanInningsCollection</value>
+				<value>com.siebentag.cj.model.BattingAttributes</value>
+				<value>com.siebentag.cj.model.BoundaryType</value>
+				<value>com.siebentag.cj.model.BowlerInnings</value>
+				<value>com.siebentag.cj.model.BowlerInningsCollection</value>
+				<value>com.siebentag.cj.model.Extra</value>
+				<value>com.siebentag.cj.model.Match</value>
+				<value>com.siebentag.cj.model.MatchCollection</value>
+				<value>com.siebentag.cj.model.MatchInnings</value>
+				<value>com.siebentag.cj.model.Over</value>
+				<value>com.siebentag.cj.model.OverCollection</value>
+				<value>com.siebentag.cj.model.Partnership</value>
+				<value>com.siebentag.cj.model.Player</value>
+				<value>com.siebentag.cj.model.PlayerCollection</value>
+				<value>com.siebentag.cj.model.Season</value>
+				<value>com.siebentag.cj.model.Team</value>
+				<value>com.siebentag.cj.model.Wicket</value>
+				<value>com.siebentag.cj.model.WicketType</value>
+				<value>com.siebentag.cj.model.Location</value>
+				<value>com.siebentag.cj.model.Country</value>
+				<value>com.siebentag.cj.model.Competition</value>
+				<value>com.siebentag.cj.model.SeasonCollection</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>

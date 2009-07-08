@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd
+http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/persistence">
+    <persistence-unit name="com.siebentag.cj.model">
+        <class>com.siebentag.cj.model.Attributes</class>
+        <class>com.siebentag.cj.model.Ball</class>
+        <class>com.siebentag.cj.model.BallCollection</class>
+        <class>com.siebentag.cj.model.BatsmanInnings</class>
+        <class>com.siebentag.cj.model.BatsmanInningsCollection</class>
+        <class>com.siebentag.cj.model.BattingAttributes</class>
+        <class>com.siebentag.cj.model.BowlerInnings</class>
+        <class>com.siebentag.cj.model.BowlerInningsCollection</class>
+        <class>com.siebentag.cj.model.Competition</class>
+        <class>com.siebentag.cj.model.Country</class>
+        <class>com.siebentag.cj.model.Extra</class>
+        <class>com.siebentag.cj.model.Location</class>
+        <class>com.siebentag.cj.model.Match</class>
+        <class>com.siebentag.cj.model.MatchCollection</class>
+        <class>com.siebentag.cj.model.MatchInnings</class>
+        <class>com.siebentag.cj.model.Over</class>
+        <class>com.siebentag.cj.model.OverCollection</class>
+        <class>com.siebentag.cj.model.Partnership</class>
+        <class>com.siebentag.cj.model.Player</class>
+        <class>com.siebentag.cj.model.PlayerCollection</class>
+        <class>com.siebentag.cj.model.Season</class>
+        <class>com.siebentag.cj.model.SeasonCollection</class>
+        <class>com.siebentag.cj.model.Team</class>
+        <class>com.siebentag.cj.model.Wicket</class>
+    </persistence-unit>
+</persistence>
