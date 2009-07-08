@@ -12,6 +12,8 @@ public class DateUtil
 	private static SimpleDateFormat mysqlDate = new SimpleDateFormat("yyyy-MM-dd");
 	private static SimpleDateFormat mysqlFull = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 	
+	public static String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+	
 	public static String format(Date date)
 	{
 		return shortDf.format(date);
