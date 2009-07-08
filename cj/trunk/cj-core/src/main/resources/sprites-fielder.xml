@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       		http://www.springframework.org/schema/beans 
+       		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       		http://www.springframework.org/schema/context
+       		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean name="fielderRenderer" class="com.siebentag.cj.graphics.renderer.FielderRenderer" autowire="autodetect" />
+
+
+	<!-- ===| Sprite Animations |=============================================================== -->
+	<bean id="fielderSprite" class="com.siebentag.cj.graphics.sprite.Sprite">
+		<property name="animations">
+			<map>
+				<entry key="Idle">
+					<ref bean="standingAnimation" />
+				</entry>
+				<entry key="Standing">
+					<ref bean="standingAnimation" />
+				</entry>
+				<entry key="Walking">
+					<ref bean="runningAnimation" />
+				</entry>
+				<entry key="Running">
+					<ref bean="runningAnimation" />
+				</entry>
+				<entry key="RunningAndCelebrating">
+					<bean class="com.siebentag.cj.graphics.animation.LoopedAnimation">
+						<property name="frames">
+							<list>
+								<value>1,13,0.1</value>
+								<value>1,14,0.1</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="PickingUpBallLegside">
+					<bean class="com.siebentag.cj.graphics.animation.OneShotAnimation">
+						<property name="frames">
+							<list>
+								<value>4,9,0.2</value>
+								<value>4,8,0.2</value>
+								<value>4,12,0.1</value>
+								<value>4,11,0.1</value>
+								<value>4,10,0.1</value>
+								<value>4,11,0.1</value>
+								<value>1,0,0.1</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="PickingUpBallOffside">
+					<bean class="com.siebentag.cj.graphics.animation.OneShotAnimation">
+						<property name="frames">
+							<list>
+								<value>1,11,0.2</value>
+								<value>1,12,0.2</value>
+								<value>1,8,0.1</value>
+								<value>1,9,0.1</value>
+								<value>1,10,0.1</value>
+								<value>1,9,0.1</value>
+								<value>1,0,0.1</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="CatchingBallLegside">
+					<bean class="com.siebentag.cj.graphics.animation.OneShotAnimation">
+						<property name="frames">
+							<list>
+								<value>1,6,1.0</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="CatchingBallOffside">
+					<bean class="com.siebentag.cj.graphics.animation.OneShotAnimation">
+						<property name="frames">
+							<list>
+								<value>1,5,1.0</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>

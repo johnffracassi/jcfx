@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       		http://www.springframework.org/schema/beans 
+       		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       		http://www.springframework.org/schema/context
+       		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean name="umpireRenderer" class="com.siebentag.cj.graphics.renderer.UmpireRenderer" autowire="autodetect" />
+
+	<bean id="umpireSprite" class="com.siebentag.cj.graphics.sprite.Sprite">
+		<property name="animations">
+			<map>
+				<entry key="SignalFour">
+					<bean class="com.siebentag.cj.graphics.animation.LoopedAnimation">
+						<property name="frames">
+							<list>
+								<value>2,2,0.3</value>
+								<value>2,3,0.3</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="SignalSix">
+					<bean class="com.siebentag.cj.graphics.animation.SingleFrameAnimation">
+						<property name="frame">
+							<value>2,1</value>
+						</property>
+					</bean>
+				</entry>
+				<entry key="Idle">
+					<bean class="com.siebentag.cj.graphics.animation.SingleFrameAnimation">
+						<property name="frame">
+							<value>2,0</value>
+						</property>
+					</bean>
+				</entry>
+				<entry key="SignalOut">
+					<bean class="com.siebentag.cj.graphics.animation.SingleFrameAnimation">
+						<property name="frame">
+							<value>2,4</value>
+						</property>
+					</bean>
+				</entry>
+				<entry key="SignalBye">
+					<bean class="com.siebentag.cj.graphics.animation.SingleFrameAnimation">
+						<property name="frame">
+							<value>2,8</value>
+						</property>
+					</bean>
+				</entry>
+				<entry key="SignalLegBye">
+					<bean class="com.siebentag.cj.graphics.animation.LoopedAnimation">
+						<property name="frames">
+							<list>
+								<value>2,7,0.3</value>
+								<value>2,6,0.3</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="SignalNoball">
+					<bean class="com.siebentag.cj.graphics.animation.SingleFrameAnimation">
+						<property name="frame">
+							<value>2,3</value>
+						</property>
+					</bean>
+				</entry>
+				<entry key="SignalWide">
+					<bean class="com.siebentag.cj.graphics.animation.SingleFrameAnimation">
+						<property name="frame">
+							<value>2,5</value>
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>

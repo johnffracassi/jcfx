@@ -1,0 +1,39 @@
+<player id="lee-b">
+	<profile>
+		<displayName>B Lee</displayName>
+		<firstName>Brett</firstName>
+		<surname>Lee</surname>
+	</profile>
+	
+	<attributes>
+		<height>1.85</height>
+
+		<runningSpeed>6.0</runningSpeed>
+		<walkingSpeed>2.75</walkingSpeed>
+		<throwingPower>135.0</throwingPower>
+	
+		<catchingAbility>80.0</catchingAbility>
+		<throwingAbility>80.0</throwingAbility>
+		<reachZ>2.3</reachZ>
+		<reachXY>1.1</reachXY>
+	
+		<isKeeper>false</isKeeper>
+		<isBowler>true</isBowler>
+		
+		<bowlingHand>Right</bowlingHand>
+		<battingHand>Right</battingHand>
+		<throwingHand>Right</throwingHand>
+		<bowlingStyle>DemonFast</bowlingStyle>
+	
+		<bowlingQuality>83.0</bowlingQuality>
+		<bowlingAccuracy>80.0</bowlingAccuracy>
+		<bowlingStamina>90.0</bowlingStamina>
+	
+		<battingAbility>40.0</battingAbility>
+		<battingPower>90.0</battingPower>
+		<battingStamina>40.0</battingStamina>
+		<battingOffsideSkill>60.0</battingOffsideSkill>
+		<battingLegsideSkill>40.0</battingLegsideSkill>
+		<battingShortSkill>40.0</battingShortSkill>
+	</attributes>
+</player>

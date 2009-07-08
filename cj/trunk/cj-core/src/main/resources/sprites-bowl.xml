@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       		http://www.springframework.org/schema/beans 
+       		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       		http://www.springframework.org/schema/context
+       		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean name="bowlerRenderer" class="com.siebentag.cj.graphics.renderer.BowlerRenderer" autowire="byName" />
+	
+	<bean id="bowlerSprite" class="com.siebentag.cj.graphics.sprite.Sprite">
+		<property name="animations">
+			<map>
+				<entry key="Standing">
+					<ref bean="standingAnimation" /> 
+				</entry>
+				<entry key="Running">
+					<ref bean="runningAnimation" /> 
+				</entry>
+				<entry key="Walking">
+					<ref bean="runningAnimation" /> 
+				</entry>
+				<entry key="Delivery">
+					<bean class="com.siebentag.cj.graphics.animation.OneShotAnimation">
+						<property name="frames">
+							<list>
+								<value>3,0,0.09</value>
+								<value>3,1,0.09</value>
+								<value>3,2,0.09</value>
+								<value>3,3,0.09</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="Waiting">
+					<bean class="com.siebentag.cj.graphics.animation.LoopedAnimation">
+						<property name="frames">
+							<list>
+								<value>1,0,6.0</value>
+								<value>3,4,0.25</value>
+								<value>3,5,0.25</value>
+								<value>3,4,0.25</value>
+								<value>3,5,0.25</value>
+								<value>3,4,0.25</value>
+								<value>3,5,0.25</value>
+								<value>3,4,0.25</value>
+								<value>3,5,0.25</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="RunUp">
+					<ref bean="runningAnimation" />
+				</entry>
+				<entry key="ActionSlow">
+					<bean class="com.siebentag.cj.graphics.animation.OneShotAnimation">
+						<property name="frames">
+							<list>
+								<value>3,0,0.15</value>
+								<value>3,1,0.15</value>
+								<value>3,2,0.15</value>
+								<value>3,3,0.15</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="ActionFast">
+					<bean class="com.siebentag.cj.graphics.animation.OneShotAnimation">
+						<property name="frames">
+							<list>
+								<value>3,0,0.09</value>
+								<value>3,1,0.09</value>
+								<value>3,2,0.09</value>
+								<value>3,3,0.09</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="FollowThrough">
+					<ref bean="runningAnimation" />
+				</entry>
+				<entry key="AfterFollowThrough">
+					<ref bean="standingAnimation" />
+				</entry>
+				<entry key="Appealing">
+					<ref bean="standingAnimation" />
+				</entry>
+				<entry key="SendOff">
+					<bean class="com.siebentag.cj.graphics.animation.OneShotAnimation">
+						<property name="frames">
+							<list>
+								<value>1,5,1.5</value>
+								<value>1,3,1.5</value>
+								<value>1,5,2.0</value>
+								<value>1,3,2.0</value>
+								<value>1,0,1.0</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>

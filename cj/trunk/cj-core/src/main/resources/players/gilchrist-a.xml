@@ -1,0 +1,39 @@
+<player id="gilchrist-a">
+	<profile>
+		<displayName>A Gilchrist</displayName>
+		<firstName>Adam</firstName>
+		<surname>Gilchrist</surname>
+	</profile>
+	
+	<attributes>
+		<height>1.85</height>
+
+		<runningSpeed>6.0</runningSpeed>
+		<walkingSpeed>2.75</walkingSpeed>
+		<throwingPower>115.0</throwingPower>
+	
+		<catchingAbility>97.0</catchingAbility>
+		<throwingAbility>80.0</throwingAbility>
+		<reachZ>2.4</reachZ>
+		<reachXY>1.3</reachXY>
+	
+		<isKeeper>true</isKeeper>
+		<isBowler>false</isBowler>
+		
+		<bowlingHand>Right</bowlingHand>
+		<battingHand>Left</battingHand>
+		<throwingHand>Right</throwingHand>
+		<bowlingStyle>OffSpin</bowlingStyle>
+	
+		<bowlingQuality>10.0</bowlingQuality>
+		<bowlingAccuracy>40.0</bowlingAccuracy>
+		<bowlingStamina>40.0</bowlingStamina>
+	
+		<battingAbility>90.0</battingAbility>
+		<battingPower>95.0</battingPower>
+		<battingStamina>90.0</battingStamina>
+		<battingOffsideSkill>90.0</battingOffsideSkill>
+		<battingLegsideSkill>90.0</battingLegsideSkill>
+		<battingShortSkill>90.0</battingShortSkill>
+	</attributes>
+</player>

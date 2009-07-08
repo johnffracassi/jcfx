@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       		http://www.springframework.org/schema/beans 
+       		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       		http://www.springframework.org/schema/context
+       		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean id="menu" class="com.siebentag.gui.JMenuBarSpring">
+		<property name="menus">
+			<list>
+				<ref bean="fileMenu" />
+				<ref bean="helpMenu" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="aboutAction" class="com.siebentag.cj.action.AboutAction" />
+	<bean id="exitAction" class="com.siebentag.cj.action.ExitAction" />
+	<bean id="newMatchAction" class="com.siebentag.cj.action.NewMatchAction" />
+
+	<bean id="fileMenu" class="com.siebentag.gui.JMenuSpring">
+		<property name="text" value="File" />
+		<property name="actions">
+			<list>
+				<ref bean="newMatchAction" />
+				<ref bean="exitAction" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="helpMenu" class="com.siebentag.gui.JMenuSpring">
+		<property name="text" value="Help" />
+		<property name="actions">
+			<list>
+				<ref bean="aboutAction" />
+			</list>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,39 @@
+<player id="panesar-m">
+	<profile>
+		<displayName>M Panesar</displayName>
+		<firstName>Monty</firstName>
+		<surname>Panesar</surname>
+	</profile>
+	
+	<attributes>
+		<height>1.85</height>
+
+		<runningSpeed>5.0</runningSpeed>
+		<walkingSpeed>2.75</walkingSpeed>
+		<throwingPower>135.0</throwingPower>
+	
+		<catchingAbility>90.0</catchingAbility>
+		<throwingAbility>99.0</throwingAbility>
+		<reachZ>2.4</reachZ>
+		<reachXY>1.3</reachXY>
+	
+		<isKeeper>false</isKeeper>
+		<isBowler>true</isBowler>
+		
+		<bowlingHand>Right</bowlingHand>
+		<battingHand>Right</battingHand>
+		<throwingHand>Right</throwingHand>
+		<bowlingStyle>OffSPin</bowlingStyle>
+	
+		<bowlingQuality>75.0</bowlingQuality>
+		<bowlingAccuracy>80.0</bowlingAccuracy>
+		<bowlingStamina>90.0</bowlingStamina>
+	
+		<battingAbility>22.0</battingAbility>
+		<battingPower>25.0</battingPower>
+		<battingStamina>20.0</battingStamina>
+		<battingOffsideSkill>25.0</battingOffsideSkill>
+		<battingLegsideSkill>20.0</battingLegsideSkill>
+		<battingShortSkill>20.0</battingShortSkill>
+	</attributes>
+</player>

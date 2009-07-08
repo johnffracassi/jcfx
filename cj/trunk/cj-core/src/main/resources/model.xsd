@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.siebentag.com/steamboat/xsd" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:sw="http://www.siebentag.com/steamboat/xsd"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="1.0">
+
+  <annotation>
+    <appinfo>
+      <jaxb:globalBindings generateIsSetMethod="true"/>
+      <jaxb:schemaBindings>
+        <jaxb:package name="com.siebentag.cj.model"/>
+      </jaxb:schemaBindings>
+    </appinfo>
+  </annotation>
+  
+  <annotation>
+    <documentation xml:lang="en">
+      Copyright 2008
+    </documentation>
+  </annotation>
+  
+    <complexType name="Entity">
+    	<attribute name="id" type="sw:Id" />
+    	<attribute name="owner" type="sw:Username" />
+    	<attribute name="createdDate" type="dateTime" />
+    </complexType>
+
+
+    <simpleType name="Id">
+    	<restriction base="int">
+    		<minInclusive value="1" />
+    	</restriction>
+    </simpleType>
+
+    <simpleType name="Username">
+    	<restriction base="string">
+    		<minLength value="4" />
+    		<maxLength value="16" />
+    		<whiteSpace value="collapse" />
+    		<pattern value="\w[\w\d]{3,15}" />
+    	</restriction>
+    </simpleType>
+
+    <complexType name="Ball">
+    	<sequence>
+    		<element name="ordinal" type="int" />
+    	
+    		<element name="striker" type="sw:Player" />
+    		<element name="nonStriker" type="sw:Player" />
+    		<element name="bowler" type="sw:Player" />
+    		<element name="fielder" type="sw:Player" />
+    		<element name="keeper" type="sw:Player" />
+
+    		<element name="wicket" type="sw:Wicket" />
+    		<element name="extra" type="sw:Extra" />
+
+    		<element name="ballCountsForBowler" type="int" />
+    		<element name="ballCountsForBatsman" type="int" />
+    		<element name="runsForBowler" type="int" />
+    		<element name="runsForBatsman" type="int" />
+    		<element name="runsForTeam" type="int" />
+    		
+    		<element name="boundaryType" type="sw:BoundaryType" />
+    	</sequence>
+    </complexType>
+
+    <complexType name="Wicket">
+    	<sequence>
+    		<element name="batsman" type="sw:Player" />
+    		<element name="wicketType" type="sw:WicketType" />
+    		<element name="isOut" type="boolean" />
+    	</sequence>
+    </complexType>
+    
+    <complexType name="Extra">
+    	<sequence>
+    		<element name="wide" type="int" />
+    		<element name="noball" type="int" />
+    		<element name="legbye" type="int" />
+    		<element name="bye" type="int" />
+    		<element name="other" type="int" />
+    	</sequence>
+    </complexType>
+
+	<simpleType name="BoundaryType">
+    	<restriction base="string">
+    		<enumeration value="None" />
+    		<enumeration value="Four" />
+    		<enumeration value="Six" />
+    	</restriction>
+	</simpleType>
+
+    <simpleType name="WicketType">
+    	<restriction base="string">
+    		<enumeration value="Bowled" />
+    		<enumeration value="Caught" />
+    		<enumeration value="CaughtBehind" />
+    		<enumeration value="CaughtAndBowled" />
+    		<enumeration value="RunOut" />
+    		<enumeration value="LBW" />
+    		<enumeration value="Stumped" />
+    		<enumeration value="HitWicket" />
+    		<enumeration value="NotOut" />
+    		<enumeration value="Retired" />
+    		<enumeration value="RetiredHurt" />
+    	</restriction>
+    </simpleType>
+
+	<complexType name="Season">
+		<sequence>
+    		<element name="ordinal" type="int" />
+    		<element name="key" type="string" />
+    		<element name="description" type="string" />
+    		<element name="startDate" type="date" />
+    		<element name="endDate" type="date" />
+    		<element name="matches" type="sw:MatchCollection" />
+		</sequence>
+	</complexType>
+
+	<complexType name="MatchCollection">
+		<sequence>
+			<element name="matches" type="sw:Match" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="Match">
+		<sequence>
+    		<element name="ordinal" type="int" />
+    		<element name="description" type="string" />
+    		<element name="startDate" type="dateTime" />
+    		<element name="homeTeam" type="sw:Team"	/>
+    		<element name="awayTeam" type="sw:Team"	/>
+    		<element name="innings" type="sw:MatchInnings" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="MatchInnings">
+    	<sequence>
+    		<element name="ordinal" type="int" />
+    		<element name="batting" type="sw:BatsmanInningsCollection" />
+    		<element name="bowling" type="sw:BowlerInningsCollection" />
+    	</sequence>
+	</complexType>
+
+    <complexType name="Partnership">
+    	<sequence>
+    		<element name="ordinal" type="int" />
+    		<element name="batsman1" type="sw:Player" />
+    		<element name="batsman2" type="sw:Player" />
+    		<element name="balls" type="sw:BallCollection" />
+    	</sequence>
+    </complexType>
+
+    <complexType name="BatsmanInningsCollection">
+    	<sequence>
+    		<element name="innings" minOccurs="0" maxOccurs="unbounded" type="sw:BatsmanInnings"/>
+    	</sequence>
+    </complexType>
+
+    <complexType name="BatsmanInnings">
+    	<sequence>
+    		<element name="ordinal" type="int" />
+    		<element name="player" type="sw:Player" />
+    		<element name="balls" type="sw:BallCollection" />
+    		<element name="wicket" type="sw:Wicket" />
+    	</sequence>
+    </complexType>
+    
+    <complexType name="BowlerInningsCollection">
+    	<sequence>
+    		<element name="innings" minOccurs="0" maxOccurs="unbounded" type="sw:BowlerInnings"/>
+    	</sequence>
+    </complexType>
+
+    <complexType name="BowlerInnings">
+    	<sequence>
+    		<element name="ordinal" type="int" />
+    		<element name="player" type="sw:Player" />
+    		<element name="overs" type="sw:OverCollection" />
+    	</sequence>
+    </complexType>
+    
+    <complexType name="OverCollection">
+    	<sequence>
+    		<element name="overs" minOccurs="0" maxOccurs="unbounded" type="sw:Over"/>
+    	</sequence>
+    </complexType>
+
+    <complexType name="Over">
+    	<sequence>
+    		<element name="ordinal" type="int" />
+    		<element name="balls" type="sw:BallCollection" />
+    	</sequence>
+    </complexType>
+
+    <complexType name="BallCollection">
+    	<sequence>
+    		<element name="balls" minOccurs="0" maxOccurs="unbounded" type="sw:Ball"/>
+    	</sequence>
+    </complexType>
+
+	<complexType name="Team">
+    	<sequence>
+    		<element name="name" type="string" />
+    		<element name="players" type="sw:PlayerCollection" />
+    	</sequence>
+	</complexType>
+
+    <complexType name="PlayerCollection">
+    	<sequence>
+    		<element name="players" minOccurs="0" maxOccurs="unbounded" type="sw:Player"/>
+    	</sequence>
+    </complexType>
+
+    <complexType name="Player">
+    	<sequence>
+    		<element name="key" type="string" />
+    		<element name="firstName" type="string" />
+    		<element name="surname" type="string" />
+    		<element name="origin" type="string" />
+    		<element name="attributes" type="sw:Attributes" />
+    	</sequence>
+    </complexType>
+    
+    <complexType name="Attributes">
+    	<sequence>
+    		<element name="batting" type="sw:BattingAttributes" />
+    	</sequence>
+    </complexType>
+    
+    <complexType name="BattingAttributes">
+    	<sequence>
+    		<element name="ability" type="int" />
+    		<element name="timing" type="int" />
+    		<element name="power" type="int" />
+    	</sequence>
+    </complexType>
+</schema>
