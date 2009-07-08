@@ -1,8 +1,0 @@
-<shot name="No Shot" powMax="0.1">
-	<zones>
-		<zone id="default-zone" priority="1" />
-		<zone id="stumps" priority="2" />
-		<zone id="body" priority="3" />
-		<zone id="head" priority="4" />
-	</zones>
-</shot>  
