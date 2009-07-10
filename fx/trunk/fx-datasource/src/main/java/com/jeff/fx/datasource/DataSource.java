@@ -1,4 +1,4 @@
-package com.jeff.fx.datasource.gain;
+package com.jeff.fx.datasource;
 
 import java.util.List;
 

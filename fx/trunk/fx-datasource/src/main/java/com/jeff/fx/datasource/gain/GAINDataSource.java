@@ -9,6 +9,7 @@ import org.joda.time.LocalDateTime;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.common.TickDataPoint;
+import com.jeff.fx.datasource.DataSource;
 import com.jeff.fx.datasource.DownloadManager;
 import com.jeff.fx.util.ZipUtil;
 
@@ -21,7 +22,7 @@ public class GAINDataSource implements DataSource<TickDataPoint>
 	public static void main(String[] args) throws Exception 
 	{
 		GAINDataSource gds = new GAINDataSource();
-		List<TickDataPoint> ticks = gds.load(Instrument.AUDUSD, new LocalDateTime(2009, 6, 3, 0, 0, 0), Period.Tick);
+		List<TickDataPoint> ticks = gds.load(Instrument.AUDUSD, new LocalDateTime(2009, 5, 29, 0, 0, 0), Period.Tick);
 		
 		for(TickDataPoint tick : ticks)
 		{
@@ -40,22 +41,18 @@ public class GAINDataSource implements DataSource<TickDataPoint>
 	{
 		List<TickDataPoint> dataPoints = new ArrayList<TickDataPoint>();
 		
-		List<String> urls = locate(instrument, dateTime, period);
-		
-		for(String url : urls)
-		{
-			byte[] compressed = download(url);
-			byte[] uncompressed = process(compressed);
-			List<TickDataPoint> newPoints = parse(uncompressed);
-			dataPoints.addAll(newPoints);
-		}
+		String url = locate(instrument, dateTime, period);
+		byte[] compressed = download(url);
+		byte[] uncompressed = process(compressed);
+		List<TickDataPoint> newPoints = parse(uncompressed);
+		dataPoints.addAll(newPoints);
 		
 		return dataPoints;
 	}
 	
-	public List<String> locate(Instrument instrument, LocalDateTime date, Period period) 
+	public String locate(Instrument instrument, LocalDateTime date, Period period) 
 	{
-		return locator.generateUrls(instrument, date, period);
+		return locator.generateUrl(instrument, date, period);
 	}
 
 	public byte[] download(String url) throws IOException
