@@ -13,31 +13,33 @@ import com.jeff.fx.common.FXDataPoint;
 
 public abstract class GenericLineReader<T extends FXDataPoint> {
 
-	private int count = 0;
-
 	public abstract FXDataPoint line(String str, int count) throws Exception;
 
 	@SuppressWarnings("unchecked")
-	public List<T> readFile(File file) throws IOException {
-		count = 0;
+	public List<T> readFile(File file) throws IOException 
+	{
+		int count = 0;
 
 		FileInputStream fstream = new FileInputStream(file);
 		DataInputStream in = new DataInputStream(fstream);
-		BufferedReader br = new BufferedReader(new InputStreamReader(in,
-				getCharEncoding()));
+		BufferedReader br = new BufferedReader(new InputStreamReader(in, getCharEncoding()));
 
 		List<T> list = new ArrayList<T>();
 		String strLine;
-		while ((strLine = br.readLine()) != null) {
+		while ((strLine = br.readLine()) != null) 
+		{
 			count++;
 
-			try {
+			try 
+			{
 				FXDataPoint data = line(strLine, count);
 
-				if (data != null) {
+				if (data != null) 
+				{
 					list.add((T) data);
 				}
-			} catch (Exception ex) {
+			} catch (Exception ex) 
+			{
 				ex.printStackTrace();
 			}
 		}
@@ -47,7 +49,32 @@ public abstract class GenericLineReader<T extends FXDataPoint> {
 		return list;
 	}
 
-	public String getCharEncoding() {
+	@SuppressWarnings("unchecked")
+	public List<T> readFile(String data) 
+	{
+		List<T> list = new ArrayList<T>();
+		String[] lines = data.split("\n");
+		for(int i=0; i<lines.length; i++) 
+		{
+			try 
+			{
+				FXDataPoint dataPoint = line(lines[i], i+1);
+
+				if (dataPoint != null) 
+				{
+					list.add((T)dataPoint);
+				}
+			} catch (Exception ex) 
+			{
+				ex.printStackTrace();
+			}
+		}
+
+		return list;	
+	}
+	
+	public String getCharEncoding() 
+	{
 		return "UTF8";
 	}
 }

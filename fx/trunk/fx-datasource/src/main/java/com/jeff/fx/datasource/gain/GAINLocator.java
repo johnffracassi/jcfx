@@ -16,9 +16,11 @@ public class GAINLocator
 	
 	public List<String> generateUrls(Instrument instrument, LocalDateTime date, Period period)
 	{
-		String pattern = "http://%s/%4d/%2d %s/%s_%s_Week%d.zip";
+		String pattern = "http://%s/%4d/%02d %s/%s_%s_Week%d.zip";
 		
 		List<String> urls = new ArrayList<String>(5);
+//		urls.add(String.format(pattern, domain, date.getYear(), date.getMonthOfYear(), DateUtil.MONTHS[date.getMonthOfYear()-1], instrument.toString().substring(0, 3), instrument.toString().substring(3), 1));
+		
 		for(int i=1; i<=5; i++)
 		{
 			urls.add(String.format(pattern, domain, date.getYear(), date.getMonthOfYear(), DateUtil.MONTHS[date.getMonthOfYear()-1], instrument.toString().substring(0, 3), instrument.toString().substring(3), i));

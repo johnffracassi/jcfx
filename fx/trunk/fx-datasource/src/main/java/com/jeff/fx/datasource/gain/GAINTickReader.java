@@ -12,14 +12,19 @@ import com.jeff.fx.datasource.GenericLineReader;
 
 public class GAINTickReader extends GenericLineReader<TickDataPoint>
 {
-	private DateTimeFormatter df1 = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS");
-	private DateTimeFormatter df2 = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+	private static DateTimeFormatter df1 = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS");
+	private static DateTimeFormatter df2 = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 	
-	private String encoding = "UTF8";
-	private FXDataSource dataSource = FXDataSource.GAIN;
+	private static String encoding = "UTF8";
+	private static FXDataSource dataSource = FXDataSource.GAIN;
 	
 	public FXDataPoint line(String str, int count) throws Exception
     {
+		if(count == 1)
+		{
+			return null;
+		}
+		
 		String[] fields = str.split(",");
 
 		if(fields.length != 6)
