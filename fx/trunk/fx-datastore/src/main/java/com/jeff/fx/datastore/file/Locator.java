@@ -10,12 +10,12 @@ import com.jeff.fx.common.Period;
 
 public class Locator 
 {
-	private String dataRoot = "d:/dev/data/fx";
+	private String dataRoot = "c:/dev/jeff/cache/fx";
 	private String extension = "txt";
 
 	public File locate(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period)
 	{
-		String pathStr = String.format("/%s/%s/%4d/%2d/%2d/%2d", dataSource, instrument, dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(), dateTime.getHourOfDay());
+		String pathStr = String.format("/%s/%s/%04d/%02d/%02d/%02d", dataSource, instrument, dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(), dateTime.getHourOfDay());
 		String filename = String.format("%s.%s", period.key, getExtension());
 		
 		return new File(dataRoot + pathStr, filename);

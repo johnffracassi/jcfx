@@ -4,10 +4,11 @@ import java.io.File;
 import java.io.IOException;
 
 import com.jeff.fx.util.Cache;
+import com.jeff.fx.util.DownloadUtil;
 import com.jeff.fx.util.Downloader;
 import com.jeff.fx.util.FileUtil;
 
-public class DownloadCache implements Downloader, Cache<byte[]> {
+public class CachedDownloader implements Downloader, Cache<byte[]> {
 
 	private File cacheRoot;
 
@@ -18,7 +19,6 @@ public class DownloadCache implements Downloader, Cache<byte[]> {
 
 	public void store(String url, byte[] bytes) throws IOException 
 	{
-
 		File file = transformUrlToFile(url);
 		FileUtil.saveFile(bytes, file);
 	}
@@ -31,7 +31,9 @@ public class DownloadCache implements Downloader, Cache<byte[]> {
 		}
 		else
 		{
-			return null;
+			byte[] data = DownloadUtil.download(key);
+			store(key, data);
+			return data;
 		}
 	}
 

@@ -30,7 +30,7 @@ public class SerialiserDataStore<T extends FXDataPoint> implements DataStore<T>
 	
 	public boolean exists(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period)
 	{
-		return true;
+		return false;
 	}
 
 	@SuppressWarnings("unchecked")

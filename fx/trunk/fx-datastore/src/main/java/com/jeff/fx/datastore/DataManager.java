@@ -23,6 +23,15 @@ public class DataManager
 	private Map<FXDataSource,DataSource<TickDataPoint>> tickDataSources;
 	private Map<FXDataSource,DataSource<CandleDataPoint>> candleDataSources;
 	
+	public static void main(String[] args) throws Exception 
+	{
+		DataManager dm = new DataManager();
+		dm.init();
+		
+		List<TickDataPoint> ticks = dm.loadTicks(FXDataSource.GAIN, Instrument.AUDUSD, new LocalDateTime(2009, 6, 1, 0, 0, 0));
+		System.out.println("Loaded " + ticks.size() + " ticks");
+	}
+	
 	public void init()
 	{
 		tickDataStore = new TickSerialiserDataStore();
@@ -55,7 +64,9 @@ public class DataManager
 	public List<TickDataPoint> loadTicks(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime) throws Exception
 	{
 		DataSource<TickDataPoint> ds = tickDataSources.get(dataSource);
-		return ds.load(instrument, dateTime, Period.Tick);
+		List<TickDataPoint> ticks = ds.load(instrument, dateTime, Period.Tick);
+		storeTicks(ticks);
+		return ticks;
 	}
 	
 	public void storeTicks(List<TickDataPoint> data) throws Exception 

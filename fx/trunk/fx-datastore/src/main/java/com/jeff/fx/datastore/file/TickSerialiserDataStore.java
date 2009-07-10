@@ -21,6 +21,6 @@ public class TickSerialiserDataStore extends SerialiserDataStore<TickDataPoint>
 	
 	public boolean exists(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period)
 	{
-		return true;
+		return false;
 	}
 }

@@ -18,7 +18,7 @@ public class DownloadManager implements Downloader
 	
 	public DownloadManager()
 	{
-		DownloadCache cache = new DownloadCache();
+		CachedDownloader cache = new CachedDownloader();
 		cache.setCacheRoot(new File("c:/dev/jeff/cache/"));
 		
 		DownloaderImpl downloader = new DownloaderImpl(cache);
