@@ -3,6 +3,7 @@ package com.jeff.fx.util;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.Deflater;
@@ -29,6 +30,33 @@ public class ZipUtil
 		{
 			baos.write(bytes, 0, bytesRead);
 		}
+		
+		return baos.toByteArray();
+	}
+	
+	public static byte[] unzipBytes(byte[] fileBytes) throws IOException
+	{
+		File temp = new File("temp" + System.nanoTime());
+		FileOutputStream fos = new FileOutputStream(temp);
+		fos.write(fileBytes);
+		fos.close();
+		
+		FileInputStream fis = new FileInputStream(temp);
+		ZipInputStream zis = new ZipInputStream(fis);
+		ZipEntry ze = zis.getNextEntry();		
+		ZipFile zf = new ZipFile(temp);
+		InputStream is = zf.getInputStream(ze);
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream(4096);
+		
+		int bytesRead = 0;
+		byte[] bytes = new byte[4096];
+		while((bytesRead = is.read(bytes)) > 0)
+		{
+			baos.write(bytes, 0, bytesRead);
+		}
+		
+		temp.delete();
 		
 		return baos.toByteArray();
 	}
@@ -69,7 +97,7 @@ public class ZipUtil
         return compressedData;
     }
     
-    public static byte[] uncompressByteArray(byte[] compressedData) throws Exception 
+    public static byte[] uncompressByteArray(byte[] compressedData) throws IOException 
     {
     	System.out.println("  uncompressing byte array (" + compressedData.length + "b)");
     	
@@ -96,13 +124,7 @@ public class ZipUtil
         	e.printStackTrace();
         }
         
-        try 
-        {
-            bos.close();
-        } 
-        catch (IOException e) 
-        {
-        }
+        bos.close();
 
         // Get the decompressed data
         byte[] decompressedData = bos.toByteArray();
