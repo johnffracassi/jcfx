@@ -1,12 +1,13 @@
 package com.jeff.fx.datasource.gain;
 
 import org.joda.time.LocalDateTime;
+import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.util.DateUtil;
 
-
+@Component
 public class GAINLocator
 {
 	private String domain = "ratedata.gaincapital.com";

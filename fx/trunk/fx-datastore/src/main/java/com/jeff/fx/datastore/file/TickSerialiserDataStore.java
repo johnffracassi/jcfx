@@ -24,6 +24,11 @@ public class TickSerialiserDataStore extends SerialiserDataStore<TickDataPoint>
 	
 	private static DateTimeFormatter df = DateTimeFormat.forPattern("yyyyMMddHH");
 	
+	public TickSerialiserDataStore()
+	{
+		super();
+	}
+	
 	@Override
 	public void store(List<TickDataPoint> data) throws Exception 
 	{

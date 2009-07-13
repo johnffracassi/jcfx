@@ -1,11 +1,12 @@
 package com.jeff.fx.datastore;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.joda.time.LocalDateTime;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.FXDataSource;
@@ -13,9 +14,6 @@ import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.common.TickDataPoint;
 import com.jeff.fx.datasource.DataSource;
-import com.jeff.fx.datasource.gain.GAINDataSource;
-import com.jeff.fx.datastore.file.CandleSerialiserDataStore;
-import com.jeff.fx.datastore.file.TickSerialiserDataStore;
 
 public class DataManager
 {
@@ -28,25 +26,12 @@ public class DataManager
 	
 	public static void main(String[] args) throws Exception 
 	{
-		DataManager dm = new DataManager();
-		dm.init();
-		
-		List<TickDataPoint> ticks = dm.loadTicks(FXDataSource.GAIN, Instrument.AUDUSD, new LocalDateTime(2009, 6, 1, 0, 0, 0));
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-datastore.xml");
+		DataManager dm = (DataManager)ctx.getBean("dataManager");
+				
+		List<TickDataPoint> ticks = dm.loadTicks(FXDataSource.GAIN, Instrument.EURUSD, new LocalDateTime(2009, 6, 8, 11, 0, 0));
 		
 		log.debug("Loaded " + ticks.size() + " ticks");
-	}
-	
-	public void init()
-	{
-		log.info("initialising DataManager");
-		
-		tickDataStore = new TickSerialiserDataStore();
-		candleDataStore = new CandleSerialiserDataStore();
-		
-		tickDataSources = new HashMap<FXDataSource, DataSource<TickDataPoint>>();
-		tickDataSources.put(FXDataSource.GAIN, new GAINDataSource());
-
-		candleDataSources = new HashMap<FXDataSource, DataSource<CandleDataPoint>>();
 	}
 	
 	public boolean exists(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period) 
@@ -99,5 +84,47 @@ public class DataManager
 	{
 		log.info("storing " + data.size() + " candles in data store");
 		candleDataStore.store(data);
+	}
+
+	public DataStore<TickDataPoint> getTickDataStore() 
+	{
+		return tickDataStore;
+	}
+
+	public void setTickDataStore(DataStore<TickDataPoint> tickDataStore) 
+	{
+		this.tickDataStore = tickDataStore;
+	}
+
+	public DataStore<CandleDataPoint> getCandleDataStore() 
+	{
+		return candleDataStore;
+	}
+
+	public void setCandleDataStore(DataStore<CandleDataPoint> candleDataStore) 
+	{
+		this.candleDataStore = candleDataStore;
+	}
+
+	public Map<FXDataSource, DataSource<TickDataPoint>> getTickDataSources() 
+	{
+		return tickDataSources;
+	}
+
+	public void setTickDataSources(
+			Map<FXDataSource, DataSource<TickDataPoint>> tickDataSources) 
+	{
+		this.tickDataSources = tickDataSources;
+	}
+
+	public Map<FXDataSource, DataSource<CandleDataPoint>> getCandleDataSources() 
+	{
+		return candleDataSources;
+	}
+
+	public void setCandleDataSources(
+			Map<FXDataSource, DataSource<CandleDataPoint>> candleDataSources) 
+	{
+		this.candleDataSources = candleDataSources;
 	}
 }

@@ -5,36 +5,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.common.TickDataPoint;
 import com.jeff.fx.datasource.DataSource;
-import com.jeff.fx.datasource.DownloadManager;
+import com.jeff.fx.util.Downloader;
 import com.jeff.fx.util.ZipUtil;
 
+@Component("gain")
 public class GAINDataSource implements DataSource<TickDataPoint> 
 {
+	@Autowired
 	private GAINLocator locator;
-	private GAINTickReader parser;
-	private DownloadManager downloader;
-
-	public static void main(String[] args) throws Exception 
-	{
-		GAINDataSource gds = new GAINDataSource();
-		List<TickDataPoint> ticks = gds.load(Instrument.AUDUSD, new LocalDateTime(2009, 5, 29, 0, 0, 0), Period.Tick);
-		
-		for(TickDataPoint tick : ticks)
-		{
-			System.out.println(tick);
-		}
-	}
 	
+	@Autowired
+	private GAINTickReader parser;
+	
+	@Autowired
+	@Qualifier("downloader")
+	private Downloader downloader;
+
 	public GAINDataSource()
 	{
-		downloader = new DownloadManager();
-		locator = new GAINLocator();
-		parser = new GAINTickReader();
 	}
 	
 	public List<TickDataPoint> load(Instrument instrument, LocalDateTime dateTime, Period period) throws Exception 

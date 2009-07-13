@@ -27,8 +27,6 @@ public class SerialiserDataStore<T extends FXDataPoint> implements DataStore<T>
 	
 	public SerialiserDataStore()
 	{
-		locator = new Locator();
-		locator.setExtension("ser");
 	}
 	
 	public boolean exists(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period)
@@ -104,5 +102,15 @@ public class SerialiserDataStore<T extends FXDataPoint> implements DataStore<T>
 		{
 			log.warn("null or empty list of data points supplied, not creating store");
 		}
+	}
+
+	public Locator getLocator() 
+	{
+		return locator;
+	}
+
+	public void setLocator(Locator locator) 
+	{
+		this.locator = locator;
 	}
 }

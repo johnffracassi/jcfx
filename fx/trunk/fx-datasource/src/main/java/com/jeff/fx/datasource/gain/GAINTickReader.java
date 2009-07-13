@@ -2,6 +2,7 @@ package com.jeff.fx.datasource.gain;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.FXDataPoint;
 import com.jeff.fx.common.FXDataSource;
@@ -9,7 +10,7 @@ import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.TickDataPoint;
 import com.jeff.fx.datasource.GenericLineReader;
 
-
+@Component
 public class GAINTickReader extends GenericLineReader<TickDataPoint>
 {
 	private static DateTimeFormatter df1 = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS");
