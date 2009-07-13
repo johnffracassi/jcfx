@@ -36,7 +36,10 @@ public class ZipUtil
 	
 	public static byte[] unzipBytes(byte[] fileBytes) throws IOException
 	{
-		File temp = new File("temp" + System.nanoTime());
+		File temp = new File("c:/temp/temp" + System.nanoTime());
+		temp.getParentFile().mkdirs();
+		temp.deleteOnExit();
+		
 		FileOutputStream fos = new FileOutputStream(temp);
 		fos.write(fileBytes);
 		fos.close();
