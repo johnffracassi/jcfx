@@ -18,7 +18,7 @@ public class Locator
 
 	public File locate(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period)
 	{
-		String pathStr = String.format("/%s/%s/%04d/%02d/%02d/%02d", dataSource, instrument, dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(), dateTime.getHourOfDay());
+		String pathStr = String.format("/ser/%s/%s/y%04d/m%02d/d%02d/h%02d", dataSource, instrument, dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(), dateTime.getHourOfDay());
 		String filename = String.format("%s.%s", period.key, getExtension());
 		File store = new File(dataRoot + pathStr, filename);
 		
