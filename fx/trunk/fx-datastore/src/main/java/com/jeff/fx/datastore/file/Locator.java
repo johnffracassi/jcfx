@@ -2,6 +2,7 @@ package com.jeff.fx.datastore.file;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
 import org.joda.time.LocalDateTime;
 
 import com.jeff.fx.common.FXDataSource;
@@ -10,6 +11,8 @@ import com.jeff.fx.common.Period;
 
 public class Locator 
 {
+	private static Logger log = Logger.getLogger(Locator.class);
+
 	private String dataRoot = "c:/dev/jeff/cache/fx";
 	private String extension = "txt";
 
@@ -17,8 +20,11 @@ public class Locator
 	{
 		String pathStr = String.format("/%s/%s/%04d/%02d/%02d/%02d", dataSource, instrument, dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(), dateTime.getHourOfDay());
 		String filename = String.format("%s.%s", period.key, getExtension());
+		File store = new File(dataRoot + pathStr, filename);
 		
-		return new File(dataRoot + pathStr, filename);
+		log.debug("[" + dataSource + "/" + instrument + "/" + period + "/" + dateTime + "] => " + store);
+		
+		return store;
 	}
 	
 	public String getDataRoot()

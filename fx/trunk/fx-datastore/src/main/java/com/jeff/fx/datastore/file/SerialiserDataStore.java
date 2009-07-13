@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,8 @@ import com.jeff.fx.datastore.DataStore;
 @Component
 public class SerialiserDataStore<T extends FXDataPoint> implements DataStore<T>
 {
+	private static Logger log = Logger.getLogger(SerialiserDataStore.class);
+	
 	private Locator locator;
 	
 	public SerialiserDataStore()
@@ -30,7 +33,12 @@ public class SerialiserDataStore<T extends FXDataPoint> implements DataStore<T>
 	
 	public boolean exists(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period)
 	{
-		return false;
+		File file = locator.locate(dataSource, instrument, dateTime, period);
+		boolean exists = file.exists();
+
+		log.debug("file " + file + " does" + (exists?"":" not") + " exist in data store");
+		
+		return exists;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -41,7 +49,7 @@ public class SerialiserDataStore<T extends FXDataPoint> implements DataStore<T>
 			// locate the data file
 			File file = locator.locate(dataSource, instrument, dateTime, period);
 
-			// deserialise the list of candles
+			// deserialise the list of data points
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 			List<T> list = (List<T>)ois.readObject();
 			ois.close();
@@ -50,6 +58,7 @@ public class SerialiserDataStore<T extends FXDataPoint> implements DataStore<T>
 		}
 		else
 		{
+			log.warn("file does not exist in store, returning empty list of data points");
 			return Collections.<T>emptyList();
 		}
 	}
@@ -68,16 +77,19 @@ public class SerialiserDataStore<T extends FXDataPoint> implements DataStore<T>
 			
 			// locate the data file
 			File file = locator.locate(dataSource, instrument, dateTime, sample.getPeriod());
+			log.debug("locating data store at " + file);
 			
 			// if the file exists, delete and replace (check for existence should be performed beforehand)
 			if(file.exists())
 			{
+				log.info("store exists already, over-writing file " + file);
 				file.delete();
 			}
 			
 			// check that the parent directory exists, if not, create it
 			if(!file.getParentFile().exists())
 			{
+				log.info("creating directory for store - " + file.getParentFile());
 				file.getParentFile().mkdirs();
 			}
 			
@@ -85,6 +97,12 @@ public class SerialiserDataStore<T extends FXDataPoint> implements DataStore<T>
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 			oos.writeObject(data);
 			oos.close();
+			
+			log.info("successfully wrote " + data.size() + " data points to store");
+		}
+		else
+		{
+			log.warn("null or empty list of data points supplied, not creating store");
 		}
 	}
 }
