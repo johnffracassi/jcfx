@@ -29,6 +29,11 @@
 		<appender-ref ref="Console" />
     </logger>
 
+	<logger name="org.springframework" additivity="false">
+		<level value="info" />
+		<appender-ref ref="Console" />
+	</logger>
+
     <logger name="com.jeff.fx.datasource" additivity="false">
         <level value="debug"/> 
 		<appender-ref ref="Console" />

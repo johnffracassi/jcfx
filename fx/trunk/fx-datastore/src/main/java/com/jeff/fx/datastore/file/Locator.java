@@ -33,20 +33,9 @@ public class Locator
 		return store;
 	}
 	
-	public File[] locate(FXDataRequest request)
+	public File locate(FXDataRequest request)
 	{
-		String dataSource = request.getDataSource().toString();
-		String instrument = request.getInstrument().toString();
-		LocalDate dateTime = request.getDate();
-		Period period = request.getPeriod();
-		
-		String pathStr = String.format(filenamePattern, dataSource, instrument, dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
-		String filename = String.format("%s.%s", period.key, getExtension());
-		File store = new File(dataRoot + pathStr, filename);
-		
-		log.debug("[" + dataSource + "/" + instrument + "/" + period + "/" + dateTime + "] => " + store);
-		
-		return new File[] { store };
+		return locate(request.getDataSource(), request.getInstrument(), request.getDate(), request.getPeriod());
 	}
 	
 	public String getDataRoot()
