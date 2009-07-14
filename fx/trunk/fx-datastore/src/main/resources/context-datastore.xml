@@ -34,7 +34,7 @@
 	
 	<bean id="serialiserStoreLocator" class="com.jeff.fx.datastore.file.Locator">
 		<property name="dataRoot" value="c:/dev/jeff/cache/store" />
-		<property name="filenamePattern" value="/ser/%s/%s/y%04d/m%02d/d%02d/h%02d" />
+		<property name="filenamePattern" value="/ser/%s/%s/y%04d/m%02d/d%02d" />
 		<property name="extension" value="ser" />
 	</bean>	
 

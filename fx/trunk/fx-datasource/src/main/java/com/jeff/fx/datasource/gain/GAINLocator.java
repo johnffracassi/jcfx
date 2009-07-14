@@ -1,6 +1,6 @@
 package com.jeff.fx.datasource.gain;
 
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.Instrument;
@@ -13,7 +13,7 @@ public class GAINLocator
 	private String domain = "ratedata.gaincapital.com";
 	private String pattern = "http://%s/%4d/%02d %s/%s_%s_Week%d.zip";
 	
-	public String generateUrl(Instrument instrument, LocalDateTime date, Period period)
+	public String generateUrl(Instrument instrument, LocalDate date, Period period)
 	{
 		int year = date.getYear();
 		int month = date.getMonthOfYear();
@@ -24,18 +24,18 @@ public class GAINLocator
 		return url;
 	}
 	
-	private String calculateMonth(LocalDateTime date)
+	private String calculateMonth(LocalDate date)
 	{
 		return DateUtil.MONTHS[roundDate(date).getMonthOfYear()-1];
 	}
 	
-	private int calculateWeek(LocalDateTime date)
+	private int calculateWeek(LocalDate date)
 	{
-		LocalDateTime rounded = roundDate(date);
+		LocalDate rounded = roundDate(date);
 		return (rounded.getDayOfMonth() - 1) / 7 + 1;
 	}
 	
-	private LocalDateTime roundDate(LocalDateTime date)
+	private LocalDate roundDate(LocalDate date)
 	{
 		int dayOfWeek = date.getDayOfWeek() % 7;
 		

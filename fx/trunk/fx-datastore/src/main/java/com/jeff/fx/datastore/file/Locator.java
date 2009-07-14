@@ -3,8 +3,9 @@ package com.jeff.fx.datastore.file;
 import java.io.File;
 
 import org.apache.log4j.Logger;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 
+import com.jeff.fx.common.FXDataRequest;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
@@ -13,23 +14,39 @@ public class Locator
 {
 	private static Logger log = Logger.getLogger(Locator.class);
 
-	private String dataRoot = "c:/dev/jeff/cache/fx";
-	private String filenamePattern = "/ser/%s/%s/y%04d/m%02d/d%02d/h%02d";
-	private String extension = "txt";
+	private String dataRoot;
+	private String filenamePattern;
+	private String extension;
 
 	public Locator()
 	{
 	}
 	
-	public File locate(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period)
+	public File locate(FXDataSource dataSource, Instrument instrument, LocalDate date, Period period)
 	{
-		String pathStr = String.format(filenamePattern, dataSource, instrument, dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(), dateTime.getHourOfDay());
+		String pathStr = String.format(filenamePattern, dataSource, instrument, date.getYear(), date.getMonthOfYear(), date.getDayOfMonth());
+		String filename = String.format("%s.%s", period.key, getExtension());
+		File store = new File(dataRoot + pathStr, filename);
+		
+		log.debug("[" + dataSource + "/" + instrument + "/" + period + "/" + date + "] => " + store);
+		
+		return store;
+	}
+	
+	public File[] locate(FXDataRequest request)
+	{
+		String dataSource = request.getDataSource().toString();
+		String instrument = request.getInstrument().toString();
+		LocalDate dateTime = request.getDate();
+		Period period = request.getPeriod();
+		
+		String pathStr = String.format(filenamePattern, dataSource, instrument, dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
 		String filename = String.format("%s.%s", period.key, getExtension());
 		File store = new File(dataRoot + pathStr, filename);
 		
 		log.debug("[" + dataSource + "/" + instrument + "/" + period + "/" + dateTime + "] => " + store);
 		
-		return store;
+		return new File[] { store };
 	}
 	
 	public String getDataRoot()

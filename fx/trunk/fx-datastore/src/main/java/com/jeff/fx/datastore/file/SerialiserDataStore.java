@@ -5,17 +5,19 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.FXDataPoint;
+import com.jeff.fx.common.FXDataRequest;
+import com.jeff.fx.common.FXDataResponse;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
-import com.jeff.fx.common.Period;
 import com.jeff.fx.datastore.DataStore;
 
 @Component
@@ -25,39 +27,50 @@ public class SerialiserDataStore<T extends FXDataPoint> implements DataStore<T>
 	
 	private Locator locator;
 	
-	public SerialiserDataStore()
+	public boolean exists(FXDataRequest request)
 	{
-	}
-	
-	public boolean exists(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period)
-	{
-		File file = locator.locate(dataSource, instrument, dateTime, period);
-		boolean exists = file.exists();
+		File[] files = locator.locate(request);
+		
+		boolean exists = true;
+		for(File file : files)
+		{
+			if(!file.exists())
+			{
+				exists = false;
+				break;
+			}
+		}
 
-		log.debug("file " + file + " does" + (exists?"":" not") + " exist in data store");
+		log.debug("all files " + (exists?"":"do not") + " exist in data store");
 		
 		return exists;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<T> load(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period) throws Exception
+	public FXDataResponse<T> load(FXDataRequest request) throws Exception
 	{
-		if(exists(dataSource, instrument, dateTime, period))
+		if(exists(request))
 		{
 			// locate the data file
-			File file = locator.locate(dataSource, instrument, dateTime, period);
+			File[] files = locator.locate(request);
 
-			// deserialise the list of data points
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-			List<T> list = (List<T>)ois.readObject();
-			ois.close();
+			List<T> allData = new ArrayList<T>();
+			for(File file : files)
+			{
+				// deserialise the list of data points
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+				List<T> list = (List<T>)ois.readObject();
+				ois.close();
+				
+				allData.addAll(list);
+			}
 			
-			return list;
+			return new FXDataResponse<T>(request, allData);
 		}
 		else
 		{
 			log.warn("file does not exist in store, returning empty list of data points");
-			return Collections.<T>emptyList();
+			return new FXDataResponse<T>(request, Collections.<T>emptyList());
 		}
 	}
 
@@ -71,10 +84,10 @@ public class SerialiserDataStore<T extends FXDataPoint> implements DataStore<T>
 			T sample = data.get(0);
 			FXDataSource dataSource = sample.getDataSource();
 			Instrument instrument = sample.getInstrument();
-			LocalDateTime dateTime = sample.getDate();
+			LocalDate date = sample.getDate().toLocalDate();
 			
 			// locate the data file
-			File file = locator.locate(dataSource, instrument, dateTime, sample.getPeriod());
+			File file = locator.locate(dataSource, instrument, date, sample.getPeriod());
 			log.debug("locating data store at " + file);
 			
 			// if the file exists, delete and replace (check for existence should be performed beforehand)

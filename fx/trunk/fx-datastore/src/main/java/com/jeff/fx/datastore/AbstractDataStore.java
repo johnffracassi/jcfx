@@ -2,27 +2,23 @@ package com.jeff.fx.datastore;
 
 import java.util.List;
 
-import org.joda.time.LocalDateTime;
-
 import com.jeff.fx.common.FXDataPoint;
-import com.jeff.fx.common.FXDataSource;
-import com.jeff.fx.common.Instrument;
-import com.jeff.fx.common.Period;
+import com.jeff.fx.common.FXDataRequest;
+import com.jeff.fx.common.FXDataResponse;
 
 public class AbstractDataStore<T extends FXDataPoint> implements DataStore<T> 
 {
-	public boolean exists(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period) 
+	public boolean exists(FXDataRequest request) 
 	{
 		return false;
 	}
 
-	public List<T> load(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period) throws Exception 
+	public FXDataResponse<T> load(FXDataRequest request) throws Exception 
 	{
 		return null;
 	}
 
 	public void store(List<T> data) throws Exception 
 	{
-		
 	}
 }

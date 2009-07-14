@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.jeff.fx.common.FXDataRequest;
+import com.jeff.fx.common.FXDataResponse;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.common.TickDataPoint;
@@ -29,24 +31,20 @@ public class GAINDataSource implements DataSource<TickDataPoint>
 	@Qualifier("downloader")
 	private Downloader downloader;
 
-	public GAINDataSource()
-	{
-	}
-	
-	public List<TickDataPoint> load(Instrument instrument, LocalDateTime dateTime, Period period) throws Exception 
+	public FXDataResponse<TickDataPoint> load(FXDataRequest request) throws Exception 
 	{
 		List<TickDataPoint> dataPoints = new ArrayList<TickDataPoint>();
 		
-		String url = locate(instrument, dateTime, period);
+		String url = locate(request.getInstrument(), request.getDate(), request.getPeriod());
 		byte[] compressed = download(url);
 		byte[] uncompressed = process(compressed);
 		List<TickDataPoint> newPoints = parse(uncompressed);
 		dataPoints.addAll(newPoints);
 		
-		return dataPoints;
+		return new FXDataResponse<TickDataPoint>(request, newPoints);
 	}
 	
-	public String locate(Instrument instrument, LocalDateTime date, Period period) 
+	public String locate(Instrument instrument, LocalDate date, Period period) 
 	{
 		return locator.generateUrl(instrument, date, period);
 	}

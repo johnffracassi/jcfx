@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.FXDataRequest;
+import com.jeff.fx.common.FXDataResponse;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
@@ -29,48 +31,48 @@ public class DataManager
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-datastore.xml");
 		DataManager dm = (DataManager)ctx.getBean("dataManager");
 				
-		List<TickDataPoint> ticks = dm.loadTicks(FXDataSource.GAIN, Instrument.EURUSD, new LocalDateTime(2009, 6, 8, 11, 0, 0));
+		FXDataResponse<TickDataPoint> ticks = dm.loadTicks(new FXDataRequest(FXDataSource.GAIN, Instrument.EURUSD, new LocalDate(2009, 6, 8), Period.Tick));
 		
-		log.debug("Loaded " + ticks.size() + " ticks");
+		log.debug("Loaded " + ticks.getData().size() + " ticks");
 	}
 	
-	public boolean exists(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period) 
+	public boolean exists(FXDataRequest request) 
 	{
-		log.debug("check existance of [" + dataSource + "/" + instrument + "/" + period + "/" + dateTime + "]");
+		log.debug("check existance of " + request);
 		
-		if(period == Period.Tick)
+		if(request.getPeriod() == Period.Tick)
 		{
-			return tickDataStore.exists(dataSource, instrument, dateTime, Period.Tick);
+			return tickDataStore.exists(request);
 		}
 		else
 		{
-			return candleDataStore.exists(dataSource, instrument, dateTime, period);
+			return candleDataStore.exists(request);
 		}
 	}
 
-	public List<CandleDataPoint> loadCandles(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime, Period period) throws Exception
+	public FXDataResponse<CandleDataPoint> loadCandles(FXDataRequest request) throws Exception
 	{
-		log.debug("Load candles for [" + dataSource + "/" + instrument + "/" + period + "/" + dateTime + "]");
-		DataSource<CandleDataPoint> ds = candleDataSources.get(dataSource);
-		return ds.load(instrument, dateTime, period);
+		log.debug("Load candles for " + request);
+		DataSource<CandleDataPoint> ds = candleDataSources.get(request.getDataSource());
+		return ds.load(request);
 	}
 	
-	public List<TickDataPoint> loadTicks(FXDataSource dataSource, Instrument instrument, LocalDateTime dateTime) throws Exception
+	public FXDataResponse<TickDataPoint> loadTicks(FXDataRequest request) throws Exception
 	{
-		log.debug("Load ticks for [" + dataSource + "/" + instrument + "/" + dateTime + "]");
+		log.debug("Load ticks for " + request);
 
-		if(exists(dataSource, instrument, dateTime, Period.Tick))
+		if(exists(request))
 		{
 			log.debug("returning ticks from data store");
-			return tickDataStore.load(dataSource, instrument, dateTime, Period.Tick);
+			return tickDataStore.load(request);
 		}
 		else
 		{
 			log.debug("fetching ticks from data source");
-			DataSource<TickDataPoint> ds = tickDataSources.get(dataSource);
-			List<TickDataPoint> ticks = ds.load(instrument, dateTime, Period.Tick);
-			storeTicks(ticks);
-			return ticks;
+			DataSource<TickDataPoint> ds = tickDataSources.get(request.getDataSource());
+			FXDataResponse<TickDataPoint> response = ds.load(request);
+			storeTicks(response.getData());
+			return response;
 		}
 	}
 	
