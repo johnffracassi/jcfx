@@ -25,7 +25,7 @@ public abstract class AbstractDataStore<T extends FXDataPoint> implements DataSt
 		
 		boolean exists = file.exists();
 
-		log.debug("file " + (exists?"":"do not") + " exist in data store");
+		log.debug("file does " + (exists?"":"not") + " exist in data store");
 		
 		return exists;
 	}

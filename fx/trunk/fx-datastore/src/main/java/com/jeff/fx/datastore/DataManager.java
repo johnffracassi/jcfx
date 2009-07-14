@@ -31,7 +31,7 @@ public class DataManager
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-datastore.xml");
 		DataManager dm = (DataManager)ctx.getBean("dataManager");
 				
-		FXDataResponse<TickDataPoint> ticks = dm.loadTicks(new FXDataRequest(FXDataSource.GAIN, Instrument.EURUSD, new LocalDate(2009, 6, 8), Period.Tick));
+		FXDataResponse<TickDataPoint> ticks = dm.loadTicks(new FXDataRequest(FXDataSource.GAIN, Instrument.AUDUSD, new LocalDate(2009, 6, 8), Period.Tick));
 		
 		log.debug("Loaded " + ticks.getData().size() + " ticks");
 	}

@@ -7,15 +7,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DownloadUtil
 {
+	private static Logger log = Logger.getLogger(DownloadUtil.class);
+
 	public static byte[] download(String urlStr)
 	    throws MalformedURLException, IOException
 	{
-		System.out.println("Downloading '" + urlStr + "'");
+		log.info("Downloading '" + urlStr + "'");
 		
 		BufferedInputStream bis = null;
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(4 * 1024);

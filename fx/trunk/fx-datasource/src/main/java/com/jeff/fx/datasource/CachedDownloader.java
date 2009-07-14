@@ -3,12 +3,16 @@ package com.jeff.fx.datasource;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import com.jeff.fx.util.Cache;
 import com.jeff.fx.util.DownloadUtil;
 import com.jeff.fx.util.Downloader;
 import com.jeff.fx.util.FileUtil;
 
-public class CachedDownloader implements Downloader, Cache<byte[]> {
+public class CachedDownloader implements Downloader, Cache<byte[]> 
+{
+	private static Logger log = Logger.getLogger(CachedDownloader.class);
 
 	private File cacheRoot;
 
@@ -41,8 +45,11 @@ public class CachedDownloader implements Downloader, Cache<byte[]> {
 	{
 		String fileStr = transformUrlToPath(url);
 		File file = new File(cacheRoot, fileStr);
-		System.out.println(file);
-		return file.exists();
+		boolean exists = file.exists();
+		
+		log.debug("checking cache for existence of " + file + " = " + exists);
+		
+		return exists;
 	}
 
 	private File transformUrlToFile(String url) 
