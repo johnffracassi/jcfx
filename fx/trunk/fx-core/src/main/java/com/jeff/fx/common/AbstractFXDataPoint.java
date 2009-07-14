@@ -6,6 +6,8 @@ import org.joda.time.LocalDateTime;
 
 public abstract class AbstractFXDataPoint implements FXDataPoint, Comparable<AbstractFXDataPoint>, Serializable
 {
+	private static final long serialVersionUID = 1963158717204537030L;
+
 	private int jobId;
 	private Instrument instrument;
 	private FXDataSource dataSource;
