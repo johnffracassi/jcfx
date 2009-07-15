@@ -8,7 +8,6 @@ public abstract class AbstractFXDataPoint implements FXDataPoint, Comparable<Abs
 {
 	private static final long serialVersionUID = 1963158717204537030L;
 
-	private int jobId;
 	private Instrument instrument;
 	private FXDataSource dataSource;
 	private LocalDateTime date;
@@ -21,7 +20,6 @@ public abstract class AbstractFXDataPoint implements FXDataPoint, Comparable<Abs
 
 	public AbstractFXDataPoint(AbstractFXDataPoint dataPoint)
 	{
-		this.jobId = dataPoint.jobId;
 		this.instrument = dataPoint.instrument;
 		this.dataSource = dataPoint.dataSource;
 		this.date = new LocalDateTime(date);
@@ -76,16 +74,6 @@ public abstract class AbstractFXDataPoint implements FXDataPoint, Comparable<Abs
 	public void setDataSource(FXDataSource dataSource)
 	{
 		this.dataSource = dataSource;
-	}
-
-	public int getJobId()
-	{
-		return jobId;
-	}
-
-	public void setJobId(int jobId)
-	{
-		this.jobId = jobId;
 	}
 
 	public LocalDateTime getDate()
