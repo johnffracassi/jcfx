@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.joda.time.LocalDateTime;
 import org.joda.time.Seconds;
 
@@ -14,6 +15,8 @@ import com.jeff.fx.util.DateUtil;
 
 public class TickToCandleConverter 
 {
+	private static Logger log = Logger.getLogger(TickToCandleConverter.class);
+	
 	public List<CandleDataPoint> convert(List<TickDataPoint> ticks, Period period)
 	{
 		if(ticks == null || period == null || ticks.size() == 0)
@@ -26,11 +29,12 @@ public class TickToCandleConverter
 		
 		// find the first and last tick dates
 		LocalDateTime startDateTime = DateUtil.roundDown(ticks.get(0).getDate(), period);
-		LocalDateTime endDateTime = DateUtil.roundUp(ticks.get(ticks.size()-1).getDate(), period);
+		LocalDateTime endDateTime = DateUtil.roundDown(ticks.get(ticks.size()-1).getDate(), period);
 		
 		// work out how many periods we need
 		int seconds = Seconds.secondsBetween(startDateTime, endDateTime).getSeconds();
-		int count = seconds / (int)(period.getInterval() / 1000);
+		int count = seconds / (int)(period.getInterval() / 1000) + 1;
+		log.debug("converting ticks from " + startDateTime + " to " + endDateTime + ". " + count + " periods.");
 		
 		// create and initialise the initial candles
 		TickCollection[] candles = new TickCollection[count];
@@ -44,15 +48,23 @@ public class TickToCandleConverter
 		// file each tick into its collection
 		for(TickDataPoint tick : ticks)
 		{
-			int idx = calculateIndex(startDateTime, endDateTime, period);
-			candles[idx].add(tick);
+			int idx = calculateIndex(startDateTime, tick.getDate(), period);
+			
+			if(idx >= candles.length)
+			{
+				log.error("Out of bounds: " + idx + " / " + tick.getDate());
+			}
+			else
+			{
+				candles[idx].add(tick);
+			}
 		}
 		
 		// convert each tickCollection to a candle
 		List<CandleDataPoint> candleList = new ArrayList<CandleDataPoint>(count);
 		for(int i=0; i<count; i++)
 		{
-			candleList.set(i, candles[i].toCandle(period));
+			candleList.add(candles[i].toCandle(period));
 		}
 		
 		// fix any candles without ticks in them

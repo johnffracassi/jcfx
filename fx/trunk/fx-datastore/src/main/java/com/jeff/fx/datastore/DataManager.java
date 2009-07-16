@@ -16,6 +16,7 @@ import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.common.TickDataPoint;
 import com.jeff.fx.datasource.DataSource;
+import com.jeff.fx.datastore.converter.TickToCandleConverter;
 
 public class DataManager
 {
@@ -31,9 +32,16 @@ public class DataManager
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-datastore.xml");
 		DataManager dm = (DataManager)ctx.getBean("dataManager");
 				
-		FXDataResponse<TickDataPoint> ticks = dm.loadTicks(new FXDataRequest(FXDataSource.GAIN, Instrument.AUDUSD, new LocalDate(2009, 6, 8), Period.Tick));
+		FXDataResponse<TickDataPoint> response = dm.loadTicks(new FXDataRequest(FXDataSource.GAIN, Instrument.AUDUSD, new LocalDate(2009, 6, 8), Period.Tick));
+		log.debug("Loaded " + response.getData().size() + " ticks");
 		
-		log.debug("Loaded " + ticks.getData().size() + " ticks");
+		TickToCandleConverter t2c = new TickToCandleConverter();
+		List<CandleDataPoint> candlesm1 = t2c.convert(response.getData(), Period.OneHour);
+		
+		for(CandleDataPoint candle : candlesm1)
+		{
+			System.out.println(candle);
+		}
 	}
 	
 	public boolean exists(FXDataRequest request) 
