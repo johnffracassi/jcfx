@@ -81,21 +81,36 @@ public class CandleDataPoint extends AbstractFXDataPoint implements Serializable
 		return tick;
 	}
 	
-	public void setApproximatedValues(CandleDataPoint candle)
+	public void setApproximatedValues(CandleDataPoint candle, boolean useCloseTime)
 	{
 		setPeriod(candle.getPeriod());
 		setInstrument(candle.getInstrument());
 		setDataSource(candle.getDataSource());
 		
-		buyOpen = candle.getBuyClose();
-		buyClose = candle.getBuyClose();
-		buyHigh = candle.getBuyClose();
-		buyLow = candle.getBuyClose();
-		
-		sellOpen = candle.getSellClose();
-		sellHigh = candle.getSellClose();
-		sellLow = candle.getSellClose();
-		sellClose = candle.getSellClose();
+		if(useCloseTime)
+		{
+			buyOpen = candle.getBuyClose();
+			buyClose = candle.getBuyClose();
+			buyHigh = candle.getBuyClose();
+			buyLow = candle.getBuyClose();
+			
+			sellOpen = candle.getSellClose();
+			sellHigh = candle.getSellClose();
+			sellLow = candle.getSellClose();
+			sellClose = candle.getSellClose();
+		}
+		else
+		{
+			buyOpen = candle.getBuyOpen();
+			buyClose = candle.getBuyOpen();
+			buyHigh = candle.getBuyOpen();
+			buyLow = candle.getBuyOpen();
+			
+			sellOpen = candle.getSellOpen();
+			sellHigh = candle.getSellOpen();
+			sellLow = candle.getSellOpen();
+			sellClose = candle.getSellOpen();
+		}
 		
 		setBuyVolume(0);
 		setSellVolume(0);
