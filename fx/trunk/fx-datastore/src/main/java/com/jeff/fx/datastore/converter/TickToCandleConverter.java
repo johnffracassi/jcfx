@@ -44,7 +44,8 @@ public class TickToCandleConverter
 		// file each tick into its collection
 		for(TickDataPoint tick : ticks)
 		{
-			
+			int idx = calculateIndex(startDateTime, endDateTime, period);
+			candles[idx].add(tick);
 		}
 		
 		// convert each tickCollection to a candle
@@ -59,12 +60,36 @@ public class TickToCandleConverter
 		{
 			if(candleList.get(i).getTickCount() == 0)
 			{
-				candleList.get(i).setApproximatedValues(candleList.get(i-1));
+				candleList.get(i).setApproximatedValues(candleList.get(i-1), true);
 			}
 		}
 		
 		// fix first candle if it doesn't contain ticks
+		if(candleList.get(0).getTickCount() == 0)
+		{
+			// find first non-zero candle
+			int idx = 1;
+			for(; idx < candleList.size(); idx++) 
+			{
+				if(candleList.get(idx).getTickCount() > 0)
+				{
+					break;
+				}
+			}
+			
+			// now copy back to the first element
+			for(; idx > 0; idx--)
+			{
+				candleList.get(idx).setApproximatedValues(candleList.get(idx+1), false);
+			}
+		}
 		
 		return candleList;
+	}
+	
+	private int calculateIndex(LocalDateTime startTime, LocalDateTime actualTime, Period period)
+	{
+		int secondsDiff = Seconds.secondsBetween(startTime, actualTime).getSeconds();
+		return (int)(secondsDiff / (period.getInterval() / 1000));
 	}
 }
