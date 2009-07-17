@@ -44,7 +44,7 @@ public class CandleDataPoint extends AbstractFXDataPoint implements Serializable
 	@Override
 	public String toString()
 	{
-		return String.format("[%s/%s/%s] %s / %.4f,%.4f,%.4f,%.4f", getInstrument(), getDataSource(), period, getDate(), buyOpen, buyHigh, buyLow, buyClose);
+		return String.format("[%s/%s/%s] %s / %.4f %.4f %.4f %.4f (%d ticks)", getInstrument(), getDataSource(), period.key, getDate(), buyOpen, buyHigh, buyLow, buyClose, tickCount);
 	}
 	
 	public void merge(CandleDataPoint newClose)
