@@ -24,11 +24,13 @@
 		<dependency>
 			<groupId>com.jeff.fx</groupId>
 			<artifactId>fx-core</artifactId>
+			<scope>runtime</scope>
 		</dependency> 
 
 		<dependency>
 			<groupId>com.jeff.fx</groupId>
 			<artifactId>fx-datastore</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 

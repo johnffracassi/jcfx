@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.joda.time.LocalDate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.FXDataRequest;
@@ -18,6 +19,7 @@ import com.jeff.fx.common.TickDataPoint;
 import com.jeff.fx.datasource.DataSource;
 import com.jeff.fx.datastore.converter.TickToCandleConverter;
 
+@Component("dataManager")
 public class DataManager
 {
 	private static Logger log = Logger.getLogger(DataManager.class);
