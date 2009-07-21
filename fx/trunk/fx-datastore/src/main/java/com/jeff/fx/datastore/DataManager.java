@@ -36,11 +36,11 @@ public class DataManager
 		log.debug("Loaded " + response.getData().size() + " ticks");
 		
 		TickToCandleConverter t2c = new TickToCandleConverter();
-		List<CandleDataPoint> candlesm1 = t2c.convert(response.getData(), Period.OneHour);
 		
-		for(CandleDataPoint candle : candlesm1)
+		for(Period period : new Period[] { Period.OneMin, Period.FiveMin, Period.FifteenMin, Period.ThirtyMin, Period.OneHour })
 		{
-			System.out.println(candle);
+			List<CandleDataPoint> candles = t2c.convert(response.getData(), period);
+			dm.getCandleDataStore().store(candles);
 		}
 	}
 	
