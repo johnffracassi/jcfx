@@ -9,8 +9,8 @@
 	<url>http://www.siebentag.com/maven/site/fx/fx-core</url>
 
 	<scm>
-		<connection>scm:svn:http://localhost/svn/fx/fx-datastore</connection>
-		<developerConnection>scm:svn:http://jeff:1q2w3e@localhost/svn/cj</developerConnection>
+		<connection>scm:svn:http://jcfx.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:https://jeffcann:1q2w3e@localhost/svn/cj</developerConnection>
 		<url>http://www.siebentag.com/svn/</url>
 	</scm>
 

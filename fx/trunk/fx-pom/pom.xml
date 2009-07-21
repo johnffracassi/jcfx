@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.jeff.fx</groupId>
-	<artifactId>fx-proj</artifactId>
+	<artifactId>fx-pom</artifactId>
 	<version>1.0</version>
 	<packaging>pom</packaging>
 	<name>FX Advisor</name>
@@ -10,6 +10,11 @@
 
 	<properties>
 		<jcfx.version>0.1-SNAPSHOT</jcfx.version>
+		<svn.user>jeffcann</svn.user>
+		<svn.password>NH4DZ3Zz2au6</svn.password>
+		<svn.host>jcfx.googlecode.com/svn/fx/trunk/</svn.host>
+		<svn.connection.browse>scm:svn:http://${svn.host}</svn.connection.browse>
+		<svn.connection.dev>scm:svn:https://${svn.user}:${svn.password}@${svn.host}</svn.connection.dev>
 	</properties>
 
 	<modules>
@@ -20,9 +25,9 @@
 	</modules>
 
 	<scm>
-		<connection>scm:svn:http://localhost/svn/fx/fx-datastore</connection>
-		<developerConnection>scm:svn:http://jeff:1q2w3e@localhost/svn/cj</developerConnection>
-		<url>http://www.siebentag.com/svn/</url>
+		<connection>${svn.connection.browse}/${project.artifactId}</connection>
+		<developerConnection>${svn.connection.dev}/${project.artifactId}</developerConnection>
+		<url>http://code.google.com/p/jcfx/source/browse/#svn/fx/trunk/${project.artifactId}</url>
 	</scm>
 
 	<organization>
@@ -71,7 +76,7 @@
 			<dependency>
 			    <groupId>log4j</groupId>
 			    <artifactId>log4j</artifactId>
-			    <version>1.2.15</version>
+			    <version>1.2.14</version>
 			</dependency>
 			 			
 			<dependency>
