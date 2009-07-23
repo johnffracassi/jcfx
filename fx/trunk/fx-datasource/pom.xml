@@ -1,18 +1,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<artifactId>fx-proj</artifactId>
 		<groupId>com.jeff.fx</groupId>
 		<version>1.0</version>
 	</parent>
 
-	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jeff.fx</groupId>
 	<artifactId>fx-datasource</artifactId>
 	<name>FX Advisor - Data Sources</name>
 	<version>${jcfx.version}</version>
 	<description>FX Advisor - Data Sources</description>
 	
+	<scm>
+		<connection>${svn.connection.browse}/${project.artifactId}</connection>
+		<developerConnection>${svn.connection.dev}/${project.artifactId}</developerConnection>
+		<url>${svn.url}/${project.artifactId}</url>
+	</scm>
+
 	<dependencies>
 			<dependency>
 			<groupId>com.jeff.fx</groupId>

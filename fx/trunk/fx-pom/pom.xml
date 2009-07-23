@@ -15,6 +15,7 @@
 		<svn.host>jcfx.googlecode.com/svn/fx/trunk/</svn.host>
 		<svn.connection.browse>scm:svn:http://${svn.host}</svn.connection.browse>
 		<svn.connection.dev>scm:svn:https://${svn.user}:${svn.password}@${svn.host}</svn.connection.dev>
+		<svn.url>http://code.google.com/p/jcfx/source/browse/#svn/fx/trunk</svn.url>
 	</properties>
 
 	<modules>
@@ -27,7 +28,7 @@
 	<scm>
 		<connection>${svn.connection.browse}/${project.artifactId}</connection>
 		<developerConnection>${svn.connection.dev}/${project.artifactId}</developerConnection>
-		<url>http://code.google.com/p/jcfx/source/browse/#svn/fx/trunk/${project.artifactId}</url>
+		<url>${svn.url}/${project.artifactId}</url>
 	</scm>
 
 	<organization>
