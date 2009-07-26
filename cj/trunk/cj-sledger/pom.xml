@@ -2,14 +2,14 @@
   <parent>
     <artifactId>cj-pom</artifactId>
     <groupId>com.siebentag</groupId>
-    <version>0.1-SNAPSHOT</version>
+    <version>1.0</version>
   </parent>
   
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.siebentag.cj</groupId>
   <artifactId>cj-sledger</artifactId>
   <name>CricketJ - Sledger</name>
-  <version>0.1-SNAPSHOT</version>
+  <version>${cj.version}</version>
   <url>http://siebentag.com/cricketj/sledger</url>
   
 </project>

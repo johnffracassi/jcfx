@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.siebentag</groupId>
 	<artifactId>cj-pom</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<packaging>pom</packaging>
 	<name>CricketJ</name>
 	<url>http://www.siebentag.com/cricketj/</url>
@@ -23,7 +23,10 @@
 	</distributionManagement>
 
 	<modules>
+		<module>../cj-core</module>
 		<module>../cj-model</module>
+		<module>../cj-scorer</module>
+		<module>../cj-sledger</module>
 	</modules>
 
 	<licenses>
