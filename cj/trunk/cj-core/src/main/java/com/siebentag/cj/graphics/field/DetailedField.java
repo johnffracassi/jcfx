@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import com.siebentag.cj.Config;
@@ -69,8 +70,8 @@ public class DetailedField extends AbstractCanvasEntity implements WorldChangeLi
 	{
 		try
 		{
-			unscaledImage1 = ImageIO.read(new FileInputStream(Config.getDataDir() + "/images/ground1.jpg"));
-			unscaledImage2 = ImageIO.read(new FileInputStream(Config.getDataDir() + "/images/ground1.jpg"));
+			unscaledImage1 = ImageIO.read(new ClassPathResource("/images/ground1.jpg").getFile());
+			unscaledImage2 = ImageIO.read(new ClassPathResource("/images/ground1.jpg").getFile());
 		}
 		catch(Exception ex)
 		{

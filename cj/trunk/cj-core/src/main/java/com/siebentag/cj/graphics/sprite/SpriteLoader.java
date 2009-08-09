@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import com.siebentag.cj.Config;
@@ -36,7 +37,7 @@ public class SpriteLoader extends JPanel
 
 	private BufferedImage loadImage() throws Exception
 	{
-		BufferedImage img = ImageIO.read(new File(Config.getDataDir() + "/images/sprites2.bmp"));
+		BufferedImage img = ImageIO.read(new ClassPathResource("/images/sprites2.bmp").getFile());
 		cache = parseImages(img);
 		return img;
 	}
