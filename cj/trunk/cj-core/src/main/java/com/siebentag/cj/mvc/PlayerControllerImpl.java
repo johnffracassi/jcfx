@@ -85,7 +85,7 @@ public abstract class PlayerControllerImpl implements PlayerController
 		playerLoc.put(person, location);
 		movements.remove(person);
 		
-		log.debug("set location of " + person.getSurname() + " to " + location);
+		log.debug("set location of " + person + " to " + location);
 	}
 	
 	public void doMove(PersonMovement movement)

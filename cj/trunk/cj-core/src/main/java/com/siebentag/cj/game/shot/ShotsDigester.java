@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import org.apache.commons.digester.Digester;
 import org.apache.log4j.Logger;
+import org.springframework.core.io.ClassPathResource;
 import org.xml.sax.SAXException;
 
 import com.siebentag.cj.Config;
@@ -65,7 +66,7 @@ public class ShotsDigester
 	
 	private Zones loadZones() throws IOException, SAXException
 	{
-		File file = new File(Config.getDataDir() + "/shots/zones.xml");
+		File file = new ClassPathResource("/shots/zones.xml").getFile();
 
 		log.debug("loading zones from " + file);
 
@@ -86,12 +87,11 @@ public class ShotsDigester
 	{
 		try
 		{
-			File dir = new File(Config.getDataDir() + "/shots");
-			
 			Shots shots = new Shots();
 			
 			shots.setZones(loadZones());
 			
+			File dir = new ClassPathResource("/shots/zones.xml").getFile().getParentFile();
 			for(File file : dir.listFiles(new FilenameFilter() { public boolean accept(File path, String filename) { return filename.endsWith(".shot.xml"); }}))
 			{
 				shots.addShot(loadShot(file));
