@@ -1,12 +1,12 @@
 <?xml version="1.0"?><project>
   <parent>
     <artifactId>cj-pom</artifactId>
-    <groupId>com.siebentag</groupId>
+    <groupId>com.jeff.cj</groupId>
     <version>1.0</version>
   </parent>
   
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.siebentag.cj</groupId>
+  <groupId>com.jeff.cj</groupId>
   <artifactId>cj-sledger</artifactId>
   <name>CricketJ - Sledger</name>
   <version>${cj.version}</version>
