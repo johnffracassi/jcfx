@@ -10,6 +10,7 @@
 
 	<properties>
 		<jcfx.version>0.1-SNAPSHOT</jcfx.version>
+		<scm.root>scm:svn:https://jcfx.googlecode.com/svn/fx/trunk</scm.root>
 		<svn.user>jeffcann</svn.user>
 		<svn.password>NH4DZ3Zz2au6</svn.password>
 		<svn.host>jcfx.googlecode.com/svn/fx/trunk/</svn.host>
@@ -165,7 +166,7 @@
 	</build>
 
 	<reporting>
-		<outputDirectory>fx-site</outputDirectory>
+		<outputDirectory>../fx-site</outputDirectory>
 	
 		<plugins>
 			<plugin>
