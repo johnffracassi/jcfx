@@ -2,6 +2,7 @@ package com.siebentag.cj.util.math;
 
 import com.siebentag.cj.model.Player;
 
+
 public class FielderIntersection
 {
 	private TrajectoryPoint location;
