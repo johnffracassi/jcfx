@@ -1,6 +1,7 @@
 package com.siebentag.cj.mvc;
 
 import com.siebentag.cj.game.field.FieldPosition;
+import com.siebentag.cj.model.Player;
 
 public class FielderModel extends PersonModel
 {
@@ -9,6 +10,24 @@ public class FielderModel extends PersonModel
 	private double timeOfLastStateChange;
 	private boolean isFielding;
 
+	public FielderModel() 
+	{
+	}
+	
+	public FielderModel(String name, FieldPosition pos)
+	{
+		super();
+
+		Player player = new Player();
+		player.setFirstName(name);
+		player.setKey(name);
+		player.setSurname(name);
+		setPlayer(player);
+		
+		setBaseLocation(pos.getLocation());
+		setLabel(name);
+	}
+	
 	public FielderState getFielderState()
 	{
 		return fielderState;

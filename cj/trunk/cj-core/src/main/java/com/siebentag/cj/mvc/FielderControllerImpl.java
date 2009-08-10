@@ -16,6 +16,9 @@ import com.siebentag.cj.game.action.MovementAction;
 import com.siebentag.cj.game.action.MovementActionFactory;
 import com.siebentag.cj.game.action.PersonRole;
 import com.siebentag.cj.game.event.BallPickedUpEvent;
+import com.siebentag.cj.game.event.BallStartedEvent;
+import com.siebentag.cj.game.event.InningsCompleteEvent;
+import com.siebentag.cj.game.event.InningsStartedEvent;
 import com.siebentag.cj.game.event.ShotPlayedEvent;
 import com.siebentag.cj.game.field.FieldPosition;
 import com.siebentag.cj.game.shot.NoConsequence;
@@ -70,9 +73,8 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 	
 	public FielderControllerImpl()
 	{
-		fielders = new HashMap<Player, FielderModel>();
 	}
-	
+
 	public void paint(Graphics2D g, double time)
     {
 		for(FielderModel fielder : getFielders())
@@ -438,13 +440,24 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 			{
 				fieldBall(spe.getShotResult(), spe.getTime());
 			}
+		} 
+		else if(event instanceof BallStartedEvent) 
+		{
+			resetForBall();
+		}
+		else if(event instanceof InningsStartedEvent) 
+		{
+			InningsStartedEvent isev = (InningsStartedEvent)event;
+			resetForInnings(isev.getBatting(), isev.getFielding());
 		}
     }
 
 	public Class<?>[] register()
     {
+		log.info("registering fielder controller as event listener");
+		
 	    return new Class<?>[] {
-	    	ShotPlayedEvent.class
+	    	ShotPlayedEvent.class, BallStartedEvent.class, InningsStartedEvent.class, InningsStartedEvent.class
 	    };
     }
 }

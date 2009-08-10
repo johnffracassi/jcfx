@@ -36,8 +36,13 @@ public class Manager extends Thread
 	{
 		setName("ManagerThread");
 		
-		log.info("Starting action/event queue polling");
+		log.info("Starting action/event queue polling");	
 		
+		for(EventListener event : eventListeners)
+		{
+			log.info("registered " + event.getClass() + " as event listener");
+		}
+
 		while(true)
 		{
 			// this instant of time should be used by everything 

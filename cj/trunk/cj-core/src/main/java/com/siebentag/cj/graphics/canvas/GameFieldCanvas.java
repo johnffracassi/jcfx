@@ -20,6 +20,7 @@ import com.siebentag.cj.game.BowlModel;
 import com.siebentag.cj.game.action.BowlAction;
 import com.siebentag.cj.game.action.BowlActionFactory;
 import com.siebentag.cj.game.event.BallStartedEvent;
+import com.siebentag.cj.game.event.InningsStartedEvent;
 import com.siebentag.cj.game.shot.ShotRecorder;
 import com.siebentag.cj.graphics.World;
 import com.siebentag.cj.mvc.BatsmanController;
@@ -62,7 +63,7 @@ public class GameFieldCanvas extends JComponent implements MouseMotionListener, 
     private List<CanvasElement> canvasElements;
     
     private boolean running = false;
-    private static final double FPS_TARGET = 40.0; 
+    private static final double FPS_TARGET = 60.0; 
     private static final long SLEEP_TIME = (long)(1000.0 / FPS_TARGET);
     
 	public GameFieldCanvas() 
@@ -168,7 +169,7 @@ public class GameFieldCanvas extends JComponent implements MouseMotionListener, 
 			ba.setTime(timeKeeper.getTime());
 			
 			// TODO bowl models needs to be generated somewhere meaningful
-			BowlModel model = new BowlModel(new Point3D(1, 10, 2), 20, Math.PI * 0.98, 0.1);
+			BowlModel model = new BowlModel(new Point3D(1, 10, 2), 20, Math.PI * 0.99, 0.1);
 			ba.setBowlModel(model);
 			
 			managedQueue.add(ba);
