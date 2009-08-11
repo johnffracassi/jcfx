@@ -13,10 +13,6 @@
 	<packaging>jar</packaging>
 	<name>CricketJ - Model</name>
 
-	<properties>
-		<hj.version>0.5.3</hj.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
