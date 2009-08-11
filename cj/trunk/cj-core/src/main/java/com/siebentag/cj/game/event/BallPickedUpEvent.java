@@ -2,11 +2,13 @@ package com.siebentag.cj.game.event;
 
 import com.siebentag.cj.model.Player;
 import com.siebentag.cj.queue.AbstractEvent;
+import com.siebentag.cj.util.math.Point3D;
 
 @Producer("ShotController")
 @Consumer("Umpire")
 public class BallPickedUpEvent extends AbstractEvent
 {
+	private Point3D location;
 	private Player fielder;
 	private boolean isCatch;
 	
@@ -16,7 +18,7 @@ public class BallPickedUpEvent extends AbstractEvent
 	
     public String getDescription()
     {
-	    return "Ball picked up - " + fielder;
+	    return "Ball picked up by " + fielder + " at " + location;
     }
 
     public boolean isCatch()
@@ -38,4 +40,12 @@ public class BallPickedUpEvent extends AbstractEvent
     {
     	this.isCatch = isCatch;
     }
+
+	public Point3D getLocation() {
+		return location;
+	}
+
+	public void setLocation(Point3D location) {
+		this.location = location;
+	}
 }

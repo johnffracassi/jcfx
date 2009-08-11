@@ -1,5 +1,6 @@
 package com.siebentag.cj.game.action;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.siebentag.cj.game.BowlModel;
@@ -19,6 +20,8 @@ import com.siebentag.cj.util.math.TrajectoryPath;
 
 public class BowlAction extends AbstractAction 
 {
+	private static final Logger log = Logger.getLogger(BowlAction.class);
+
 	@Autowired
 	private BowlerController bowlerController;
 
@@ -103,7 +106,7 @@ public class BowlAction extends AbstractAction
 		
 		
 		// bowler's follow through
-		Action followThroughAction = movementActionFactory.createRunToAction(
+		MovementAction followThroughAction = movementActionFactory.createRunToAction(
 				PersonRole.Bowler, bowler, 
 				FieldPosition.BowlOverRelease.getLocation(), 
 				FieldPosition.BowlOverFollowThrough.getLocation(), deliveryFinishTime);
@@ -118,6 +121,23 @@ public class BowlAction extends AbstractAction
 			}
 		};
 
+		final double followThroughFinishTime = followThroughAction.getMovement().getCompletionTime();
+		AbstractAction bowlerStateChangeFollowThroughFinishedAction = new AbstractAction() {
+			@Override public void run() {
+				bowlerController.setState(bowler, BowlerState.Waiting, followThroughFinishTime);
+            }
+			@Override public double getTime() {
+			    return followThroughFinishTime;
+			}
+		};
+		
+		log.debug("BowlAction timings:");
+		log.debug("  - start time            = " + currentTime);
+		log.debug("  - delivery start time   = " + deliveryStartTime);
+		log.debug("  - delivery finish time  = " + deliveryFinishTime);
+		log.debug("  - follow through finish = " + followThroughFinishTime);
+		log.debug("  - ball at batsman       = " + stopRecordingTime);
+
 		
 		// queue all the actions
 		managedQueue.add(runupAction);
@@ -127,6 +147,7 @@ public class BowlAction extends AbstractAction
 		managedQueue.add(ballReachedBatsmanEvent);
 		managedQueue.add(followThroughAction);
 		managedQueue.add(bowlerStateChangeFollowThroughAction);
+		managedQueue.add(bowlerStateChangeFollowThroughFinishedAction);
 	}
 
 	@Override public Scope getScope() 

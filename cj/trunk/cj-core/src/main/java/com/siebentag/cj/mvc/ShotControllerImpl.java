@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.siebentag.cj.game.event.BallCompletedEvent;
 import com.siebentag.cj.game.event.BallPickedUpEvent;
 import com.siebentag.cj.game.field.FieldPosition;
 import com.siebentag.cj.game.shot.Bowled;
@@ -36,6 +37,9 @@ public class ShotControllerImpl implements ShotController
 	
 	@Autowired 
 	private KeeperController keeperController;
+	
+	@Autowired 
+	private BatsmanController batsmanController;
 	
 	@Autowired
 	private BallController ballController;
@@ -90,31 +94,46 @@ public class ShotControllerImpl implements ShotController
 		{
 			// TODO alert the stump manager
 			// TODO alert the umpire that a wicket has fallen
-			shotResult.setOffBat(false);
+			// TODO alter the path of the ball after it hits the stumps
 			shotResult.setOffBat(false);
 		}
-		else if(consequence instanceof NoConsequence || consequence instanceof EdgeToKeeper)
+		else if(consequence instanceof NoConsequence)
 		{
-			// TODO move all of this to the keeper controller
-			
-			keeperController.moveToLineOfBall(ballPath, time);
-			
-			// TODO does the keeper take it cleanly? unclean takes for shit keepers 
-			
-			// TODO terminate the ball path when it reaches the keeper			
-			double timeBallReachesKeeper = ballPath.getTimeAtY(keeperController.getFieldPosition().getLocation().getY());
-			ballPath.setTerminateTime(timeBallReachesKeeper);
-			
-			// notify listeners when the ball is caught
-			BallPickedUpEvent bpue = new BallPickedUpEvent();
-			bpue.setFielder(keeperController.getKeeper());
-			bpue.setCatch(consequence instanceof EdgeToKeeper);
-			bpue.setTime(timeBallReachesKeeper);
-			managedQueue.add(bpue);
+			batsmanController.setState(batsman, BatsmanState.LeaveROff, time);
+			ballThroughToKeeper(ballPath, time, false);
+		}
+		else if(consequence instanceof EdgeToKeeper)
+		{
+			ballThroughToKeeper(ballPath, time, false);
 		}
 		
 		shotResult.setConsequence(consequence);
 		shotResult.setTrajectoryPath(newBallPath);
 		return shotResult;
+	}
+	
+	private void ballThroughToKeeper(TrajectoryPath ballPath, double time, boolean isCatch) 
+	{
+		// move the keeper to the path of the ball
+		keeperController.moveToLineOfBall(ballPath, time);
+		
+		// TODO does the keeper take it cleanly? unclean takes for shit keepers 
+		
+		// TODO terminate the ball path when it reaches the keeper			
+		double timeBallReachesKeeper = ballPath.getTimeAtY(keeperController.getFieldPosition().getLocation().getY());
+		ballPath.setTerminateTime(timeBallReachesKeeper);
+		
+		// notify listeners when the ball is caught
+		BallPickedUpEvent bpue = new BallPickedUpEvent();
+		bpue.setFielder(keeperController.getKeeper());
+		bpue.setCatch(isCatch);
+		bpue.setTime(timeBallReachesKeeper);
+		bpue.setLocation(ballPath.getLocation(timeBallReachesKeeper));
+		managedQueue.add(bpue);
+		
+		// raise a ball completed event
+		BallCompletedEvent bce = new BallCompletedEvent();
+		bce.setTime(time + timeBallReachesKeeper);
+		managedQueue.add(bce);
 	}
 }

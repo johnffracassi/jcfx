@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,8 @@ import com.siebentag.cj.util.math.Point3D;
 @Component
 public class BowlerControllerImpl extends PlayerControllerImpl implements BowlerController
 {
+	private static final Logger log = Logger.getLogger(BowlerControllerImpl.class);
+
 	@Autowired
 	BowlerRenderer renderer;
 
@@ -89,6 +92,7 @@ public class BowlerControllerImpl extends PlayerControllerImpl implements Bowler
 	
 	public void setState(Player player, BowlerState bowlerState, double time)
     {
+		log.debug("setting state of bowler to " + bowlerState);
 	    stateByPlayer.put(player, bowlerState);
 	    setStateChangeTime(player, time);
     }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.siebentag.cj.game.action.MovementAction;
 import com.siebentag.cj.game.action.MovementActionFactory;
 import com.siebentag.cj.game.action.PersonRole;
+import com.siebentag.cj.game.event.BallCompletedEvent;
 import com.siebentag.cj.game.event.BatsmanCompletedRunEvent;
 import com.siebentag.cj.game.field.FieldPosition;
 import com.siebentag.cj.graphics.renderer.BatsmanRenderer;
@@ -202,6 +203,13 @@ public class BatsmanControllerImpl
 		primeBatsman(event.getRole(), event.getTime());
 	}
 
+	private void handleBallCompletedEvent(BallCompletedEvent event)
+	{
+		// set the batsmen to idle, waiting for the next ball
+		setState(getBatsman(BatsmanRole.Striker), BatsmanState.Idle, event.getTime());
+		setState(getBatsman(BatsmanRole.NonStriker), BatsmanState.Idle, event.getTime());
+	}
+	
 	/**
 	 * Determine if the batsman is currently performing a run (based on state)
 	 */
@@ -234,12 +242,16 @@ public class BatsmanControllerImpl
 		{
 			handleBatsmanCompletedRunEvent((BatsmanCompletedRunEvent)event);
 		}
+		else if(event instanceof BallCompletedEvent)
+		{
+			handleBallCompletedEvent((BallCompletedEvent)event);
+		}
     }
 
 	public Class<?>[] register()
     {
 	    return new Class<?>[] { 
-	    		BatsmanCompletedRunEvent.class
+	    		BatsmanCompletedRunEvent.class, BallCompletedEvent.class
 	    };
     }
 	
