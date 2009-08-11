@@ -98,7 +98,7 @@ public class BallControllerImpl implements BallController, EventListener
     {
 		if(event instanceof BallPickedUpEvent)
 		{
-			setBallState(BallState.InFlight);
+			setBallState(BallState.InHand);
 		}
     }
 

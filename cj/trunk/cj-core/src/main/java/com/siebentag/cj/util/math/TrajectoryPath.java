@@ -1,11 +1,11 @@
 package com.siebentag.cj.util.math;
 
+import static com.siebentag.cj.util.math.Constants.RESOLUTION;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 import java.util.ArrayList;
 import java.util.List;
-import static com.siebentag.cj.util.math.Constants.*;
 
 public class TrajectoryPath
 {
@@ -86,9 +86,16 @@ public class TrajectoryPath
 		this.firstBounceTime = firstBounceTime;
 	}
 
-	public TrajectoryPoint getLocation(double travelTime)
+	public TrajectoryPoint getLocation(final double travelTime)
 	{
-		double exactIdx = travelTime / RESOLUTION;
+		double time = travelTime;
+		
+		if(hasTerminated(time))
+		{
+			time = terminationTime;
+		}
+		
+		double exactIdx = time / RESOLUTION;
 		int lower = (int)Math.floor(exactIdx);
 		int upper = (int)Math.ceil(exactIdx);
 		
@@ -96,7 +103,7 @@ public class TrajectoryPath
 		Point3D p1 = points.get(getBoundedIndex(points, lower));
 		Point3D p2 = points.get(getBoundedIndex(points, upper));
 		
-		return new TrajectoryPoint(Calculator.interpolate(p1, p2, perc), travelTime);
+		return new TrajectoryPoint(Calculator.interpolate(p1, p2, perc), time);
 	}
 
 	@SuppressWarnings("unchecked") 

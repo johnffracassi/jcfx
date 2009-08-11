@@ -84,6 +84,8 @@ public class KeeperControllerImpl extends PlayerControllerImpl implements Keeper
 	
 	public void moveToLineOfBall(TrajectoryPath path, double ballTimeAtBatsman)
 	{
+		log.debug("move keeper to line of ball (start=" + ballTimeAtBatsman + ")");
+		
 		Point3D target = path.getLocationAtY(fieldPosition.getLocation().getY());
 		
 		PersonMovement movement = new PersonMovement();

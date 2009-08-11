@@ -17,7 +17,6 @@ import com.siebentag.cj.game.action.MovementActionFactory;
 import com.siebentag.cj.game.action.PersonRole;
 import com.siebentag.cj.game.event.BallPickedUpEvent;
 import com.siebentag.cj.game.event.BallStartedEvent;
-import com.siebentag.cj.game.event.InningsCompleteEvent;
 import com.siebentag.cj.game.event.InningsStartedEvent;
 import com.siebentag.cj.game.event.ShotPlayedEvent;
 import com.siebentag.cj.game.field.FieldPosition;
@@ -180,7 +179,7 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 			fielderModel.setFieldPosition(fieldSetting[i]);
 			fielderModel.setBaseLocation(fielderModel.getFieldPosition().getLocation());
 			fielderModel.setFielderState(FielderState.Idle, 0.0);
-			fielderModel.setFielding(i > 1);
+			fielderModel.setFielding(i > 1); // keeper and bowler shouldn't be painted by this controller
 			fielders.put(player, fielderModel);
 			
 			setLocation(player, fieldSetting[i].getLocation());

@@ -9,6 +9,9 @@ import com.siebentag.cj.util.math.Point3D;
 @Component("orthographicPointTranslator")
 public class Orthographic extends AbstractPointTranslator
 {
+	private double scalex = 1.0;
+	private double zoomFactor = 2.0;
+	
 	public Point2D convert(Point3D point)
 	{
 		if(point == null)
@@ -20,9 +23,8 @@ public class Orthographic extends AbstractPointTranslator
         double x3 = point.getX();
         double z3 = point.getZ();
         
-        double scale = getZoom() * 2.0 * (double)(getWidth() / 2) / (100.0 * getLowerSkew());
+        double scale = getZoom() * zoomFactor * (double)(getWidth() / 2) / (100.0 * getLowerSkew());
         double scaley = getYRot() / 90.0;
-        double scalex = 1.1;
         
         double x2 = scale * (x3 * scalex) + (getWidth() / 2);
         double y2 = scale * (-(y3 * scaley) - (z3 * scalex)) + (getHeight() / 2);
@@ -39,9 +41,8 @@ public class Orthographic extends AbstractPointTranslator
 			return new Point3D(0,0,0);
 		}
 		
-        double scale = getZoom() * 2.0 * (double)(getWidth() / 2) / (100.0 * getLowerSkew());
+        double scale = getZoom() * zoomFactor * (double)(getWidth() / 2) / (100.0 * getLowerSkew());
         double scaley = (90.0 / getYRot());
-        double scalex = 1.1;
 
         double x2 = point.getX();
 		double y2 = point.getY();

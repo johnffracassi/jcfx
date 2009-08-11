@@ -97,11 +97,11 @@ public class ShotControllerImpl implements ShotController
 		{
 			// TODO move all of this to the keeper controller
 			
-			keeperController.moveToLineOfBall(ballPath, ballTimeAtBatsman);
+			keeperController.moveToLineOfBall(ballPath, time);
 			
-			// does the keeper take it cleanly? 
-			// terminate the ball bath when it reaches the keeper
-			// TODO unclean takes for shit keepers
+			// TODO does the keeper take it cleanly? unclean takes for shit keepers 
+			
+			// TODO terminate the ball path when it reaches the keeper			
 			double timeBallReachesKeeper = ballPath.getTimeAtY(keeperController.getFieldPosition().getLocation().getY());
 			ballPath.setTerminateTime(timeBallReachesKeeper);
 			

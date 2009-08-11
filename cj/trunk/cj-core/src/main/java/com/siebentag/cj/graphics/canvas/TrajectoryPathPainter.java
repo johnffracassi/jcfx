@@ -5,14 +5,13 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.siebentag.cj.graphics.World;
 import com.siebentag.cj.mvc.BallController;
 import com.siebentag.cj.util.math.TrajectoryPath;
 import com.siebentag.cj.util.math.TrajectoryPoint;
 
-@Component
+//@Component
 public class TrajectoryPathPainter extends AbstractCanvasEntity
 {
 	@Autowired
