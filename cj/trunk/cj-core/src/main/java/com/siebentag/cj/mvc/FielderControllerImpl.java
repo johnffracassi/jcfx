@@ -73,6 +73,7 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 	
 	public FielderControllerImpl()
 	{
+		fielders = new HashMap<Player, FielderModel>();
 	}
 
 	public void paint(Graphics2D g, double time)
@@ -179,6 +180,7 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 			fielderModel.setFieldPosition(fieldSetting[i]);
 			fielderModel.setBaseLocation(fielderModel.getFieldPosition().getLocation());
 			fielderModel.setFielderState(FielderState.Idle, 0.0);
+			fielderModel.setFielding(i > 1);
 			fielders.put(player, fielderModel);
 			
 			setLocation(player, fieldSetting[i].getLocation());
@@ -454,8 +456,6 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 
 	public Class<?>[] register()
     {
-		log.info("registering fielder controller as event listener");
-		
 	    return new Class<?>[] {
 	    	ShotPlayedEvent.class, BallStartedEvent.class, InningsStartedEvent.class, InningsStartedEvent.class
 	    };
