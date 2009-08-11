@@ -13,6 +13,7 @@
 
 	<properties>
 		<cj.version>0.1-SNAPSHOT</cj.version>
+		<hj.version>0.5.3</hj.version>
 	</properties>
 	
 	<distributionManagement>
@@ -60,6 +61,12 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>com.jeff.cj</groupId>
+				<artifactId>cj-model</artifactId>
+				<version>${cj.version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
