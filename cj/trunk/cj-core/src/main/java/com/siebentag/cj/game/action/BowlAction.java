@@ -144,6 +144,7 @@ public class BowlAction extends AbstractAction
 		managedQueue.add(bowlerStateChangeRunUpAction);
 		managedQueue.add(bowlerStateChangeDeliveryAction);
 		managedQueue.add(releaseBallAction);
+		managedQueue.add(bowlerReleasedBallEvent);
 		managedQueue.add(ballReachedBatsmanEvent);
 		managedQueue.add(followThroughAction);
 		managedQueue.add(bowlerStateChangeFollowThroughAction);

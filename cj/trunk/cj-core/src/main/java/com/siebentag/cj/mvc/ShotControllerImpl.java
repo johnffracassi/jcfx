@@ -54,6 +54,7 @@ public class ShotControllerImpl implements ShotController
 	{
 		// get recorded shot
 		List<Point2D> shotPoints = shotRecorder.getShotPoints();
+		shotRecorder.reset();
 		
 		// analyse shot
 		ShotModel attemptedShotModel = shotAnalyser.analyse(shotPoints);

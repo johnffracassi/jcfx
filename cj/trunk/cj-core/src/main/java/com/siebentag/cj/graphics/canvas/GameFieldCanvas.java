@@ -20,7 +20,6 @@ import com.siebentag.cj.game.BowlModel;
 import com.siebentag.cj.game.action.BowlAction;
 import com.siebentag.cj.game.action.BowlActionFactory;
 import com.siebentag.cj.game.event.BallStartedEvent;
-import com.siebentag.cj.game.event.InningsStartedEvent;
 import com.siebentag.cj.game.shot.ShotRecorder;
 import com.siebentag.cj.graphics.World;
 import com.siebentag.cj.mvc.BatsmanController;

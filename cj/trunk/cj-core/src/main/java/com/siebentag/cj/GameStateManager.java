@@ -1,5 +1,6 @@
 package com.siebentag.cj;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,8 @@ import com.siebentag.cj.queue.ManagedQueue;
 @Component
 public class GameStateManager implements EventListener
 {
+	private static final Logger log = Logger.getLogger(GameStateManager.class);
+
 	private boolean performRendering = true;
 	private boolean recordingShot = false;
 	private boolean allowRunning = false;
@@ -41,12 +44,14 @@ public class GameStateManager implements EventListener
 			ballInProgress = true;
 			allowRunning = false;
 			recordingShot = false;
+			log.debug("not recording shot, no running, ball in progress");
 		}
 		else if(event instanceof BallCompletedEvent)
 		{
 			ballInProgress = false;
 			allowRunning = false;
 			recordingShot = false;
+			log.debug("not recording shot, no running, ball is dead");
 		}
 		else if(event instanceof BallReachedBatsmanEvent)
 		{
@@ -58,6 +63,8 @@ public class GameStateManager implements EventListener
 			allowRunning = true;
 			recordingShot = false;
 			
+			log.debug("stopped recording shot, allowing running, ball in progress");
+			
 			ShotPlayedEvent spe = new ShotPlayedEvent();
 			spe.setTime(event.getTime());
 			spe.setShotResult(shotResult);
@@ -68,6 +75,7 @@ public class GameStateManager implements EventListener
 			ballInProgress = true;
 			allowRunning = false;
 			recordingShot = true;
+			log.debug("start recording shot, no running, ball in progress");
 		}
     }
 

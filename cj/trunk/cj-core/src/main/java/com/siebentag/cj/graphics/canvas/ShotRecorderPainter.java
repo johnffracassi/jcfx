@@ -41,6 +41,8 @@ public class ShotRecorderPainter extends AbstractCanvasEntity
     			{
 					g.drawLine((int)prevPt.getX(), (int)prevPt.getY(), (int)nextPt.getX(), (int)nextPt.getY());
     			}
+    			
+				prevPt = nextPt;
     		}
     		
     		// draw joints
