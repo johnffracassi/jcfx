@@ -1,16 +1,17 @@
-<?xml version="1.0"?><project>
-  <parent>
-    <artifactId>cj-pom</artifactId>
-    <groupId>com.jeff.cj</groupId>
-    <version>1.0</version>
-  </parent>
+<?xml version="1.0"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
 
-  <modelVersion>4.0.0</modelVersion>
-  
-  <groupId>com.jeff.cj</groupId>
-  <artifactId>cj-scorer</artifactId>
-  <name>CricketJ - Scorer</name>
-  <version>${cj.version}</version>
-  <url>http://siebentag.com/cricketj/scorer</url>
-  
+	<parent>
+		<artifactId>cj-pom</artifactId>
+		<groupId>com.jeff.cj</groupId>
+		<version>1.0</version>
+	</parent>
+
+	<groupId>com.jeff.cj</groupId>
+	<artifactId>cj-scorer</artifactId>
+	<name>CricketJ - Scorer</name>
+	<version>${cj.version}</version>
+	<url>http://siebentag.com/cricketj/scorer</url>
+
 </project>
