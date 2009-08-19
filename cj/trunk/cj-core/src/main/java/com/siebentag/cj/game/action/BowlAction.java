@@ -98,7 +98,7 @@ public class BowlAction extends AbstractAction
 		
 		// notify that the ball has reached the batsman
 		final double stopRecordingTime = deliveryFinishTime + trajectoryPath.getTimeAtY(-10); // TODO shot terminate y-loc should come from config
-		final Point3D ballLocWhenPassingBatsman = trajectoryPath.getLocation(stopRecordingTime);
+		final Point3D ballLocWhenPassingBatsman = trajectoryPath.getLocation(trajectoryPath.getTimeAtY(-10));
 		boolean hasBounced = trajectoryPath.hasBounced(stopRecordingTime);
 		BallReachedBatsmanEvent ballReachedBatsmanEvent = new BallReachedBatsmanEvent(ballLocWhenPassingBatsman, hasBounced);
 		ballReachedBatsmanEvent.setTime(stopRecordingTime);

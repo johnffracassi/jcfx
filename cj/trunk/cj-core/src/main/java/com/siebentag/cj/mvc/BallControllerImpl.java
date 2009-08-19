@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,8 @@ import com.siebentag.cj.util.math.TrajectoryPath;
 @Component
 public class BallControllerImpl implements BallController, EventListener
 {
+	private static final Logger log = Logger.getLogger(BallControllerImpl.class);
+
 	@Autowired
 	private World world;
 	
@@ -69,6 +72,8 @@ public class BallControllerImpl implements BallController, EventListener
 
 	public void setTrajectoryPath(TrajectoryPath trajectoryPath, double time)
 	{
+		log.debug("new trajectory set for ball (" + trajectoryPath.getPoints().size() + ")");
+		
 		this.trajectoryPath = trajectoryPath;
 		this.trajectoryStartTime = time;
 		setBallState(BallState.InFlight);

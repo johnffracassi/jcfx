@@ -303,7 +303,7 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 	 */
 	public FielderIntersection getClosestFielder(TrajectoryPath path)
 	{
-		log.debug("    finding closest fielder to path");
+		log.debug("finding closest fielder to path (path has " + path.getPoints().size() + " points)");
 		
 		FielderIntersection intersection = new FielderIntersection();
 		double fastestTimeToIntersection = Double.MAX_VALUE;
@@ -313,8 +313,10 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 			if(fielder.isFielding())
 			{
 				TrajectoryPoint intersectionPoint = calculateFirstPointOfIntersection(fielder, path);
-				
-				if(intersection != null)
+
+				log.debug("testing how close " + fielder + " is to the path. Intersection=" + intersectionPoint);
+
+				if(intersectionPoint != null)
 				{
 					double timeToIntersection = calculateTimeToRunTo(fielder, intersectionPoint);
 					
@@ -328,11 +330,11 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 						fastestTimeToIntersection = timeToIntersection;
 					}
 
-					log.debug("      " + fielder + " will take " + timeToIntersection + "s");
+					log.debug(fielder + " will take " + timeToIntersection + "s");
 				}
 				else
 				{
-					log.debug("      " + fielder + " can't make it to the path");
+					log.debug(fielder + " can't make it to the path");
 				}
 				
 			}
@@ -394,13 +396,13 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 				// fielder has to be able to get to the point before the ball can
 				if(timeToRunTo < ballTravelTime)
 				{
-					log.debug("      closest POI for " + fielder + " is " + ballLoc);
+					log.debug("closest PoI for " + fielder + " is " + ballLoc);
 					return ballLoc;
 				}
 			}
 		}
 		
-		log.debug("      no path intersection for " + fielder);
+		log.debug("no path intersection for " + fielder);
 		return null;
 	}
 	
@@ -414,8 +416,6 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 	 */
 	private double calculateTimeToRunTo(FielderModel fielder, Point3D destination)
 	{
-		log.debug("      calculate time for " + fielder + "/" + fielder.getFieldPosition() + " to run to " + destination);
-		
 		// where is the fielder? TODO this should be the current location, not necessarily the base loc
 		Point3D loc = fielder.getFieldPosition().getLocation();
 		
@@ -428,7 +428,7 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 		// how long will it take?
 		double time = distance / speed;
 		
-		return time * 1000;
+		return time;
 	}
 	
 	public void event(Event event)

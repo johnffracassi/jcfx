@@ -3,6 +3,7 @@ package com.siebentag.cj.mvc;
 import java.awt.geom.Point2D;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +30,8 @@ import com.siebentag.cj.util.math.TrajectoryPath;
 @Component
 public class ShotControllerImpl implements ShotController
 {
+	private static final Logger log = Logger.getLogger(ShotControllerImpl.class);
+
 	@Autowired
 	private ShotRecorder shotRecorder; 
 
@@ -56,20 +59,22 @@ public class ShotControllerImpl implements ShotController
 		List<Point2D> shotPoints = shotRecorder.getShotPoints();
 		shotRecorder.reset();
 		
+		// find out some information about where the ball is
+		TrajectoryPath ballPath = ballController.getTrajectoryPath();
+		double ballTimeAtBatsman = ballPath.getTimeAtY(FieldPosition.BatStrikerRight.getLocation().getY());
+		double velocityAtBatsman = ballPath.getVelocityAtTime(ballTimeAtBatsman);
+
 		// analyse shot
 		ShotModel attemptedShotModel = shotAnalyser.analyse(shotPoints);
+		attemptedShotModel.setVelocity(velocityAtBatsman);
 		
 		// select shot and consequence
 		ShotModel actualShotModel = shotAnalyser.chooseShot(batsman, initialLoc, attemptedShotModel);
 		Consequence consequence = actualShotModel.getConsequence();
-		
-		// find out some information about where the ball is
-		TrajectoryPath ballPath = ballController.getTrajectoryPath();
-		double ballTimeAtBatsman = ballPath.getTimeAtY(FieldPosition.BatStrikerRight.getLocation().getY());
 
 		// result object. default to ball going through to keeper
 		ShotResult shotResult = new ShotResult();
-		TrajectoryPath newBallPath = ballPath.subPath(ballTimeAtBatsman);
+		TrajectoryPath newBallPath = null;
 
 		if(consequence instanceof HitBatsman)
 		{
@@ -77,17 +82,18 @@ public class ShotControllerImpl implements ShotController
 			// TODO lower batsman confidence
 			shotResult.setOffBat(false);
 			shotResult.setOffBody(true);
+			newBallPath = ballPath.subPath(ballTimeAtBatsman);
 		}
 		else if(consequence instanceof LBWAppeal)
 		{
 			// TODO check for lbw
+			newBallPath = ballPath.subPath(ballTimeAtBatsman);
 		}
 		else if(consequence instanceof Hit)
 		{
 			// create a trajectory based on the shot
 			TrajectoryModel trajectory = actualShotModel.getTrajectory();			
 			newBallPath = trajectoryManager.calculate(trajectory);
-			shotResult.setTrajectoryPath(newBallPath);
 			shotResult.setOffBat(true);
 			shotResult.setOffBody(false);
 		}
@@ -97,19 +103,25 @@ public class ShotControllerImpl implements ShotController
 			// TODO alert the umpire that a wicket has fallen
 			// TODO alter the path of the ball after it hits the stumps
 			shotResult.setOffBat(false);
+			newBallPath = ballPath.subPath(ballTimeAtBatsman);
 		}
 		else if(consequence instanceof NoConsequence)
 		{
+			newBallPath = ballPath.subPath(ballTimeAtBatsman);
 			batsmanController.setState(batsman, BatsmanState.LeaveROff, time);
 			ballThroughToKeeper(ballPath, time, false);
 		}
 		else if(consequence instanceof EdgeToKeeper)
 		{
+			newBallPath = ballPath.subPath(ballTimeAtBatsman);
 			ballThroughToKeeper(ballPath, time, false);
 		}
 		
 		shotResult.setConsequence(consequence);
 		shotResult.setTrajectoryPath(newBallPath);
+		
+		ballController.setTrajectoryPath(newBallPath, time);
+		
 		return shotResult;
 	}
 	

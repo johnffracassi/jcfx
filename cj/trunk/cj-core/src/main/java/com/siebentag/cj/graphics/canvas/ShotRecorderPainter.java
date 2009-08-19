@@ -55,8 +55,9 @@ public class ShotRecorderPainter extends AbstractCanvasEntity
 
     		// draw points
 			g.setColor(pointColour);
-    		for(Point2D pt : points)
+    		for(int i=0; i<points.size(); i++) // don't use iterator, it will through concurrent modification exception
     		{
+    			Point2D pt = points.get(i);
     			int x = (int)pt.getX();
     			int y = (int)pt.getY();
 				g.fillArc(x, y, 4, 4, 0, 360);

@@ -16,70 +16,29 @@ public class ShotModel extends TrajectoryModel
 	private double desiredPower;
 	
 	private Consequence consequence;
-	private double actualAngle;
-	private double actualElevation;
-	private double actualPower;
+	private double power;
 	
 	private Shot shot;
 
-	public void calculate()
-	{
-		setAngle(getDesiredAngle());
-		setElevation(getDesiredElevation());
-//		setVelocity();
-	}
-	
 	public TrajectoryModel getTrajectory()
 	{
 		return new TrajectoryModel(getVelocity(), getAngle(), getElevation());
 	}
 	
 	/**
-     * @return the actualAngle
-     */
-    public double getActualAngle()
-    {
-    	return actualAngle;
-    }
-
-	/**
-     * @param actualAngle the actualAngle to set
-     */
-    public void setActualAngle(double actualAngle)
-    {
-    	this.actualAngle = actualAngle;
-    }
-
-	/**
-     * @return the actualElevation
-     */
-    public double getActualElevation()
-    {
-    	return actualElevation;
-    }
-
-	/**
-     * @param actualElevation the actualElevation to set
-     */
-    public void setActualElevation(double ang)
-    {
-    	this.actualElevation = fixElev(ang);
-    }
-
-	/**
      * @return the actualPower
      */
-    public double getActualPower()
+    public double getPower()
     {
-    	return actualPower;
+    	return power;
     }
 
 	/**
-     * @param actualPower the actualPower to set
+     * @param power the actualPower to set
      */
-    public void setActualPower(double actualPower)
+    public void setPower(double power)
     {
-    	this.actualPower = actualPower;
+    	this.power = power;
     }
 
 	/**
@@ -96,7 +55,7 @@ public class ShotModel extends TrajectoryModel
     public void setDesiredAngle(double desiredAngle)
     {
     	this.desiredAngle = desiredAngle;
-    	this.actualAngle = desiredAngle;
+    	setAngle(desiredAngle);
     }
 
 	/**
@@ -125,7 +84,7 @@ public class ShotModel extends TrajectoryModel
     public void setDesiredElevation(double ang)
     {
     	this.desiredElevation = fixElev(ang);
-    	this.actualElevation = fixElev(ang);
+    	setElevation(fixElev(ang));
     }
 
 	/**
@@ -142,7 +101,7 @@ public class ShotModel extends TrajectoryModel
     public void setDesiredPower(double desiredPower)
     {
     	this.desiredPower = desiredPower;
-    	this.actualPower = desiredPower;
+    	this.power = desiredPower;
     }
 
 	/**

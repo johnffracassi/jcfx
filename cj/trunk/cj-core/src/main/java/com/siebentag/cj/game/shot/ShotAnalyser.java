@@ -3,7 +3,7 @@
  */
 package com.siebentag.cj.game.shot;
 
-import static java.lang.Math.*;
+import static java.lang.Math.sqrt;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -106,43 +106,50 @@ public class ShotAnalyser
 	/**
 	 * 
 	 * @param batsman
-	 * @param model
+	 * @param desiredShotModel
 	 * @param shot
 	 * @param loc
 	 * @return
 	 */
-	private ShotModel playShot(Player batsman, ShotModel model, Shot shot, Point3D loc)
+	private ShotModel playShot(Player batsman, ShotModel desiredShotModel, Shot shot, Point3D loc)
 	{
 		log.debug("playing the shot - " + shot);
 		
 		Consequence con = chooseConsequence(batsman, shot, loc);
 		log.debug("Consequence => " + con);
-		
-		if(model != null) // no shot offered
+
+		ShotModel actualShotModel = new ShotModel();
+
+		if(desiredShotModel != null) // no shot offered
 		{
-			model.setConsequence(con);
+			actualShotModel.setShot(shot);
+			actualShotModel.setConsequence(con);
 			
 			if(con instanceof Hit)
 			{
 				Hit hit = (Hit)con;
 				
-				double newAng = applyAccuracyMod(model.getDesiredAngle(), hit.getAccuracy());
-				model.setActualAngle(newAng);
-				log.debug("=> angle - desired:" + model.getDesiredAngle() + " shot:" + newAng);
-				log.debug("=> elev  - desired:" + model.getDesiredElevation() + " shot:" + model.getActualElevation());
+				double newAng = applyAccuracyMod(desiredShotModel.getDesiredAngle(), hit.getAccuracy());
+				actualShotModel.setAngle(newAng);
+				log.debug("=> angle - desired=" + desiredShotModel.getDesiredAngle() + " shot=" + newAng);
+
+				actualShotModel.setElevation(desiredShotModel.getDesiredElevation());
+				log.debug("=> elev  - desired=" + desiredShotModel.getDesiredElevation() + " shot=" + actualShotModel.getElevation());
 				
-				double pow = hit.getPower() * model.getDesiredPower();
-				log.debug("=> power - desired:" + model.getDesiredPower() + " shot:" + hit.getPower() + " = " + pow);
-				model.setActualPower(pow);
+				double pow = hit.getPower() * desiredShotModel.getDesiredPower();
+				log.debug("=> power - desired=" + desiredShotModel.getDesiredPower() + " shot=" + hit.getPower() + "*" + desiredShotModel.getDesiredPower());
+				actualShotModel.setPower(pow);
+				
+				double velocity = desiredShotModel.getVelocity() * pow;
+				actualShotModel.setVelocity(velocity);
 			}
 		}
 		else
 		{
-			model = new ShotModel();
-			model.setConsequence(con);
+			actualShotModel.setConsequence(con);
 		}
 		
-		return model;
+		return actualShotModel;
 	}
 	
 	private double applyAccuracyMod(double angleDegrees, double acc)
@@ -265,6 +272,8 @@ public class ShotAnalyser
 		model.setDesiredAngle(angle);
 		model.setDesiredElevation(diff);
 		model.setDesiredPower(distance * 2 / diagonal);
+		
+		log.debug(String.format("Shot analysis: angle=%.1f elev=%.1f power=%.1f", model.getDesiredAngle(), model.getDesiredElevation(), model.getDesiredPower()));
 		
 		return model;
 	}

@@ -1,6 +1,7 @@
 package com.siebentag.cj.util.math;
 
 
+
 @SuppressWarnings("serial")
 public class TrajectoryPoint extends Point3D
 {
@@ -17,6 +18,11 @@ public class TrajectoryPoint extends Point3D
     	this.time = t;
     }
 
+    @Override
+    public String toString() {
+    	return String.format("%s@%.2f", super.toString(), time);
+    }
+    
 	public double getTime()
 	{
 		return time;

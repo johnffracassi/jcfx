@@ -168,7 +168,7 @@ public class GameFieldCanvas extends JComponent implements MouseMotionListener, 
 			ba.setTime(timeKeeper.getTime());
 			
 			// TODO bowl models needs to be generated somewhere meaningful
-			BowlModel model = new BowlModel(new Point3D(1, 10, 2), 20, Math.PI * 0.99, 0.1);
+			BowlModel model = new BowlModel(new Point3D(1, 10, 2), 22, Math.PI * 1.007, 0.08);
 			ba.setBowlModel(model);
 			
 			managedQueue.add(ba);

@@ -43,10 +43,10 @@ public class ShotVisualiserPanel extends JPanel
 			final int ox = getWidth() / 2;
 			final int oy = getWidth() / 2;
 			
-			final double ay = 90.0 * Math.sin(model.getActualAngle());
-			final double ax = 90.0 * Math.cos(model.getActualAngle());
-			final double ey = 90.0 * Math.sin(model.getActualElevation());
-			final double ex = 90.0 * Math.cos(model.getActualElevation());
+			final double ay = 90.0 * Math.sin(model.getAngle());
+			final double ax = 90.0 * Math.cos(model.getAngle());
+			final double ey = 90.0 * Math.sin(model.getElevation());
+			final double ex = 90.0 * Math.cos(model.getElevation());
 			
 			g.setColor(Color.BLUE);
 			g.drawLine((int)ox, (int)oy, (int)(ox+ax), (int)(oy+ay));

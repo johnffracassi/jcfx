@@ -17,13 +17,13 @@ public class ShotRecorder
 
 	private ShotRecorder()
 	{
-		points = Collections.synchronizedList(new ArrayList<Point2D>(100));
+		reset();
 	}
 	
 	public void reset()
 	{
 		log.debug("Reset shot recorder");
-		getShotPoints().clear();
+		points = Collections.synchronizedList(new ArrayList<Point2D>(100));
 	}
 	
 	public void addPoint(Point2D point)

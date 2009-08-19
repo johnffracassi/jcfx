@@ -22,6 +22,9 @@
 				<entry key="Standing">
 					<ref bean="standingAnimation" />
 				</entry>
+				<entry key="Catching">
+					<ref bean="standingAnimation" />
+				</entry>
 				<entry key="Walking">
 					<ref bean="runningAnimation" />
 				</entry>
@@ -39,6 +42,21 @@
 					</bean>
 				</entry>
 				<entry key="PickingUpBallLegside">
+					<bean class="com.siebentag.cj.graphics.animation.OneShotAnimation">
+						<property name="frames">
+							<list>
+								<value>4,9,0.2</value>
+								<value>4,8,0.2</value>
+								<value>4,12,0.1</value>
+								<value>4,11,0.1</value>
+								<value>4,10,0.1</value>
+								<value>4,11,0.1</value>
+								<value>1,0,0.1</value>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="PickingUpBallFast">
 					<bean class="com.siebentag.cj.graphics.animation.OneShotAnimation">
 						<property name="frames">
 							<list>

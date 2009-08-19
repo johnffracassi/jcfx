@@ -28,6 +28,11 @@ public class FielderModel extends PersonModel
 		setLabel(name);
 	}
 	
+	@Override
+	public String toString() {
+		return player.getKey();
+	}
+	
 	public FielderState getFielderState()
 	{
 		return fielderState;

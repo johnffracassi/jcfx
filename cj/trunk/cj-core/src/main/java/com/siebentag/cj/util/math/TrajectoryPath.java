@@ -158,6 +158,18 @@ public class TrajectoryPath
     	return getLocation(getTimeAtY(y));
     }
     
+    public double getVelocityAtTime(double time) 
+    {
+    	int idx = convertTimeToIndex(time);
+    	
+    	if(idx > 0) {
+    		double displacement = Calculator.distance(points.get(idx), points.get(idx-1));
+    		return displacement / RESOLUTION;
+    	}
+    	
+    	return 0.0;
+    }
+    
     /**
      * 
      * @param y
