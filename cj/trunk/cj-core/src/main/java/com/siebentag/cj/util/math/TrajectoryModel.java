@@ -1,50 +1,45 @@
 package com.siebentag.cj.util.math;
 
-import static java.lang.Math.*;
 
 public class TrajectoryModel
 {
 	private Point3D origin;
 	private double initialVelocity;
 	
-	/**
-	 * The angle in radians
-	 */
-	private double angle;
-	
-	private double elevation;
+	private Angle angle;
+	private Angle elevation;
 	
 	private double windSpeed = 0.0;
-	private double windDirection = 0.0;
+	private Angle windDirection = Angle.degrees(0);
 	
 	public TrajectoryModel()
 	{
-		this(0,0,0);
+		this(0, Angle.degrees(0), Angle.degrees(0));
 	}
 	
-	public TrajectoryModel(Point3D origin, double speed, double radians, double elevation)
+	public TrajectoryModel(Point3D origin, double speed, Angle angle, Angle elevation)
 	{
 		this.origin 		 = origin;
 		this.initialVelocity = speed;
-		this.angle 			 = radians;
+		this.angle 			 = angle;
 		this.elevation 		 = elevation;
 	}
 
 	public String toString()
 	{
-		return "(" + origin + ", v=" + initialVelocity + "m/s, a=" + toDegrees(angle) + ", e=" + toDegrees(elevation) + ", wind=" + windSpeed + "m/s@" + windDirection + ")";
+		return "(" + origin + ", v=" + initialVelocity + "m/s, a=" + angle.degrees() + ", e=" + elevation.degrees() + ", wind=" + windSpeed + "m/s@" + windDirection + ")";
 	}
 	
-	public TrajectoryModel(double speed, double radians, double elevation)
+	public TrajectoryModel(double speed, Angle angle, Angle elevation)
 	{
-		this(Point3D.ORIGIN, speed, radians, elevation);
+		this(Point3D.ORIGIN, speed, angle, elevation);
 	}
 
 	/**
 	 * 
 	 * @return the angle (in radians)
 	 */
-	public double getAngle()
+	public Angle getAngle()
 	{
 		return angle;
 	}
@@ -53,17 +48,17 @@ public class TrajectoryModel
 	 * 
 	 * @param radians The angle (in radians)
 	 */
-	public void setAngle(double radians)
+	public void setAngle(Angle radians)
 	{
 		this.angle = radians;
 	}
 
-	public double getElevation()
+	public Angle getElevation()
 	{
 		return elevation;
 	}
 
-	public void setElevation(double elevation)
+	public void setElevation(Angle elevation)
 	{
 		this.elevation = elevation;
 	}
@@ -88,12 +83,12 @@ public class TrajectoryModel
 		this.initialVelocity = velocity;
 	}
 
-	public double getWindDirection()
+	public Angle getWindDirection()
 	{
 		return windDirection;
 	}
 
-	public void setWindDirection(double windDirection)
+	public void setWindDirection(Angle windDirection)
 	{
 		this.windDirection = windDirection;
 	}

@@ -1,9 +1,8 @@
 package com.siebentag.cj.time;
 
-public interface TimeKeeper
-{
-	/**
-	 * Elapsed game time in seconds
-	 */
-	public double getTime();
+import com.siebentag.cj.util.math.Time;
+
+public interface TimeKeeper {
+	public Time getAppTime();
+	public Time getBallTime();
 }

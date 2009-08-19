@@ -46,7 +46,7 @@ public class Manager extends Thread
 		while(true)
 		{
 			// this instant of time should be used by everything 
-			double time = timeKeeper.getTime();
+			Time time = timeKeeper.getTime();
 			
 			log.trace(String.format("polling queue: time=%.1f size=%d", time, managedQueue.size()));
 			

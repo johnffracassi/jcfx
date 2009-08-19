@@ -6,12 +6,12 @@ public class InstantaneousTrajectory
 {
 	protected double vx,vy,vz;
 	
-	public InstantaneousTrajectory(double velocity, double angle, double elevation)
+	public InstantaneousTrajectory(double velocity, Angle angle, Angle elevation)
 	{
-		double vh = velocity * Math.cos(elevation);
-		vz = velocity * Math.sin(elevation);
-		vx = vh * Math.sin(angle);
-		vy = vh * Math.cos(angle);
+		double vh = velocity * Math.cos(elevation.radians());
+		vz = velocity * Math.sin(elevation.radians());
+		vx = vh * Math.sin(angle.radians());
+		vy = vh * Math.cos(angle.radians());
 	}
 	
 	public void accelerate(double acceleration)

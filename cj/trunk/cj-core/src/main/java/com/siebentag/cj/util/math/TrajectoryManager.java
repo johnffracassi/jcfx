@@ -26,8 +26,8 @@ public class TrajectoryManager
 		Point3D loc = model.getOrigin();
 			
 		// initial instantaneous heading and elevation
-		double direction = model.getAngle();
-		double elevation = model.getElevation();
+		Angle direction = model.getAngle();
+		Angle elevation = model.getElevation();
 		
 		// initial instantaneous velocities
 		InstantaneousTrajectory trajectory = new InstantaneousTrajectory(model.getVelocity(), direction, elevation);

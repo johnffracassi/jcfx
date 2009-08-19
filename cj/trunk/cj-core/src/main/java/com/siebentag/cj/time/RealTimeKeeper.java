@@ -2,22 +2,25 @@ package com.siebentag.cj.time;
 
 import org.springframework.stereotype.Component;
 
+import com.siebentag.cj.util.math.Time;
+
 @Component
 public class RealTimeKeeper implements TimeKeeper
 {
-	private long startTime = -1;
+	private Long ballStartTime = null;
+	private Long appStartTime = null;
 	
 	public RealTimeKeeper()
 	{
 	}
 	
-    public double getTime()
+    public Time getAppTime()
     {
-	    if(startTime < 0)
+	    if(appStartTime == null)
 	    {
-			startTime = System.nanoTime();
+			appStartTime = System.nanoTime();
 	    }
 
-	    return (System.nanoTime() - startTime) / 1000000000.0;
+	    return new Time((System.nanoTime() - appStartTime) / 1000000000.0, Time.Scope.Application);
     }
 }

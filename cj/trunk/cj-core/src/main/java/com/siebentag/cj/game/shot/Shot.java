@@ -4,18 +4,20 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.siebentag.cj.util.math.Angle;
+
 public class Shot 
 {
 	private static final Logger log = Logger.getLogger("Shots");
 
-	String name;
-	Zones zones;
-	private double angMax 	= 359.9999;
-	private double angMin 	=   0.0001;
+	private String name;
+	private Zones zones;
+	private Angle angMax 	= Angle.MAX;
+	private Angle angMin 	= Angle.ZERO;
+	private Angle elevMax 	= Angle.degrees(75);
+	private Angle elevMin 	= Angle.degrees(-75);
 	private double powMax 	=   3.0;
 	private double powMin 	=   0.0;
-	private double elevMax 	=  75.0;
-	private double elevMin 	= -75.0;
 
 	public Shot() 
 	{
@@ -49,7 +51,7 @@ public class Shot
 		return zones.getZones(x, y);
 	}
 	
-	public boolean isValid(double x, double y, double angle, double elev, double power)
+	public boolean isValid(double x, double y, Angle angle, Angle elev, double power)
 	{
 		if("no shot".equalsIgnoreCase(name))
 		{
@@ -92,18 +94,18 @@ public class Shot
 		return min < power && power < max;
 	}
 	
-	private boolean isValidAngle(double angleRadians, double minDegrees, double maxDegress)
+	private boolean isValidAngle(Angle angle, Angle min, Angle max)
 	{
-		if(minDegrees < maxDegress)
+		if(min.degrees() < max.degrees())
 		{
-			if(Math.toRadians(minDegrees) < angleRadians && angleRadians < Math.toRadians(maxDegress))
+			if(min.radians() < angle.radians() && angle.radians() < max.radians())
 			{
 				return true;
 			}
 		}
 		else
 		{
-			return isValidAngle(angleRadians, minDegrees, 360.0) || isValidAngle(angleRadians, 0.0, maxDegress);
+			return isValidAngle(angle, min, Angle.MAX) || isValidAngle(angle, Angle.ZERO, max);
 		}
 		
 		return false;
@@ -114,24 +116,23 @@ public class Shot
 		return getName();
 	}
 
-	public double getAngMax()
+	public Angle getAngMax()
 	{
 		return angMax;
 	}
 
-	public void setAngMax(double angMax)
-	{
-		this.angMax = angMax;
+	public void setAngMax(double degrees) {
+		angMax = (Angle.degrees(degrees));
 	}
 
-	public double getAngMin()
+
+	public Angle getAngMin()
 	{
 		return angMin;
 	}
 
-	public void setAngMin(double angMin)
-	{
-		this.angMin = angMin;
+	public void setAngMin(double degrees) {
+		angMin = (Angle.degrees(degrees));
 	}
 
 	public double getPowMax()
@@ -154,23 +155,21 @@ public class Shot
 		this.powMin = powMin;
 	}
 
-	public double getElevMax()
+	public Angle getElevMax()
 	{
 		return elevMax;
 	}
 
-	public void setElevMax(double elevMax)
-	{
-		this.elevMax = elevMax;
+	public void setElevMax(double degrees) {
+		elevMax = (Angle.degrees(degrees));
 	}
 
-	public double getElevMin()
+	public Angle getElevMin()
 	{
 		return elevMin;
 	}
 
-	public void setElevMin(double elevMin)
-	{
-		this.elevMin = elevMin;
+	public void setElevMin(double degrees) {
+		elevMin = (Angle.degrees(degrees));
 	}
 }

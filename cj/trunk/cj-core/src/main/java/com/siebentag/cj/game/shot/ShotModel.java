@@ -3,6 +3,7 @@
  */
 package com.siebentag.cj.game.shot;
 
+import com.siebentag.cj.util.math.Angle;
 import com.siebentag.cj.util.math.TrajectoryModel;
 
 /**
@@ -11,8 +12,8 @@ import com.siebentag.cj.util.math.TrajectoryModel;
  */
 public class ShotModel extends TrajectoryModel
 {
-	private double desiredAngle;
-	private double desiredElevation;
+	private Angle desiredAngle;
+	private Angle desiredElevation;
 	private double desiredPower;
 	
 	private Consequence consequence;
@@ -44,7 +45,7 @@ public class ShotModel extends TrajectoryModel
 	/**
      * @return the desiredAngle
      */
-    public double getDesiredAngle()
+    public Angle getDesiredAngle()
     {
     	return desiredAngle;
     }
@@ -52,7 +53,7 @@ public class ShotModel extends TrajectoryModel
 	/**
      * @param desiredAngle the desiredAngle to set
      */
-    public void setDesiredAngle(double desiredAngle)
+    public void setDesiredAngle(Angle desiredAngle)
     {
     	this.desiredAngle = desiredAngle;
     	setAngle(desiredAngle);
@@ -61,27 +62,29 @@ public class ShotModel extends TrajectoryModel
 	/**
      * @return the desiredElevation
      */
-    public double getDesiredElevation()
+    public Angle getDesiredElevation()
     {
     	return desiredElevation;
     }
 
-    private double fixElev(double elev)
+    private Angle fixElev(Angle elevation)
     {
-    	if(elev > 180.0)
+    	double elevDegrees = elevation.degrees();
+    	
+    	if(elevDegrees > 180.0)
     	{
-    		return -(360.0 - elev);
+    		return Angle.degrees(-(360.0 - elevDegrees));
     	}
     	else
     	{
-    		return elev;
+    		return Angle.degrees(elevDegrees);
     	}
     }
     
 	/**
      * @param ang the desiredElevation to set
      */
-    public void setDesiredElevation(double ang)
+    public void setDesiredElevation(Angle ang)
     {
     	this.desiredElevation = fixElev(ang);
     	setElevation(fixElev(ang));

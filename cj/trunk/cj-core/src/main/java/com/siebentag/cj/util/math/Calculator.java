@@ -42,23 +42,23 @@ public class Calculator
 		return new Point3D(start.x + dx * percentage, start.y + dy * percentage, start.z + dz * percentage);
 	}
 	
-	public static final double angle(double dx, double dy)
+	public static final Angle angle(double dx, double dy)
 	{
 		if(dx >= 0.0 && dy < 0.0) // quadrant 1
 		{
-			return atan(dx / -dy);
+			return Angle.radians(atan(dx / -dy));
 		}
 		else if(dx >= 0.0 && dy >= 0.0) // quadrant 2
 		{
-			return atan(dy / dx) + (PI / 2);
+			return Angle.radians(atan(dy / dx) + (PI / 2));
 		}
 		else if(dx < 0.0 && dy >= 0.0) // quadrant 3
 		{
-			return atan(-dx / dy) + PI;
+			return Angle.radians(atan(-dx / dy) + PI);
 		}
 		else // quadrant 4
 		{
-			return atan(-dy / -dx) + 3*PI / 2;
+			return Angle.radians(atan(-dy / -dx) + 3*PI / 2);
 		}
 	}
 
@@ -72,7 +72,7 @@ public class Calculator
 		return ((int)(number / divisor)) * divisor;
 	}
 	
-	public static final double getComponentValue(double speed, double direction, double elevation, VectorComponent component)
+	public static final double getComponentValue(double speed, Angle direction, Angle elevation, VectorComponent component)
 	{
 		if(component == VectorComponent.Resultant)
 		{
@@ -82,22 +82,22 @@ public class Calculator
 		{
 			if(component == VectorComponent.X)
 			{
-				return speed * Math.sin(direction);
+				return speed * Math.sin(direction.radians());
 			}
 			else if(component == VectorComponent.Y)
 			{
-				return speed * Math.cos(direction);
+				return speed * Math.cos(direction.radians());
 			}
 			else if(component == VectorComponent.Z)
 			{
-				return speed * Math.sin(elevation);
+				return speed * Math.sin(elevation.radians());
 			}
 		}
 		
 		throw new IllegalArgumentException("Unknown vector component (" + VectorComponent.class.getSimpleName() + "." + component + ")");
 	}
 	
-	public static final double getComponentValue(double speed, double direction, VectorComponent component)
+	public static final double getComponentValue(double speed, Angle direction, VectorComponent component)
 	{
 		if(component == VectorComponent.Z)
 		{
@@ -105,7 +105,7 @@ public class Calculator
 		}
 		else
 		{
-			return getComponentValue(speed, direction, 0.0, component);
+			return getComponentValue(speed, direction, Angle.ZERO, component);
 		}
 	}
 }

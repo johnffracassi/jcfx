@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import com.siebentag.cj.graphics.World;
 import com.siebentag.cj.model.Player;
 import com.siebentag.cj.util.format.Formatter;
+import com.siebentag.cj.util.math.Angle;
 import com.siebentag.cj.util.math.Calculator;
 import com.siebentag.cj.util.math.Point3D;
 
@@ -55,9 +56,9 @@ public class ShotAnalyser
 		
 		if(desiredModel != null)
 		{
-			double ang = desiredModel.getDesiredAngle();
+			Angle  ang = desiredModel.getDesiredAngle();
 			double pow = desiredModel.getDesiredPower();
-			double elv = desiredModel.getDesiredElevation();
+			Angle  elv = desiredModel.getDesiredElevation();
 			
 			// find any shot that has a matching zone (not including the default zone)
 			List<Shot> candidates = getCandidateShots(ballLoc, ang, elv, pow);
@@ -129,7 +130,7 @@ public class ShotAnalyser
 			{
 				Hit hit = (Hit)con;
 				
-				double newAng = applyAccuracyMod(desiredShotModel.getDesiredAngle(), hit.getAccuracy());
+				Angle newAng = applyAccuracyMod(desiredShotModel.getDesiredAngle(), hit.getAccuracy());
 				actualShotModel.setAngle(newAng);
 				log.debug("=> angle - desired=" + desiredShotModel.getDesiredAngle() + " shot=" + newAng);
 
@@ -152,12 +153,12 @@ public class ShotAnalyser
 		return actualShotModel;
 	}
 	
-	private double applyAccuracyMod(double angleDegrees, double acc)
+	private Angle applyAccuracyMod(Angle angle, double accuracy)
 	{
-		double err = (1.0 - acc);
+		double err = (1.0 - accuracy);
 		double diff = err * 360.0;
 		double change = Math.random() * diff;
-		return Math.toRadians(Math.random() < 0.5 ? angleDegrees + change : angleDegrees - change); 
+		return Angle.degrees(Math.random() < 0.5 ? angle.degrees() + change :  angle.degrees() - change); 
 	}
 	
 	/**
@@ -208,7 +209,7 @@ public class ShotAnalyser
 	 * @param pow
 	 * @return
 	 */
-	private List<Shot> getCandidateShots(Point3D pt, double ang, double elv, double pow)
+	private List<Shot> getCandidateShots(Point3D pt, Angle ang, Angle elv, double pow)
 	{
 		List<Shot> candidates = new ArrayList<Shot>();
 		
@@ -260,9 +261,9 @@ public class ShotAnalyser
 		Point2D p2 = points[points.length / 2];
 		Point2D p3 = points[points.length - 1];
 
-		double angle 	 = Calculator.angle(p2.getX() - p1.getX(), p2.getY() - p1.getY());
-		double elevation = Calculator.angle(p3.getX() - p2.getX(), p3.getY() - p2.getY());
-		double diff 	 = Math.abs(angle - elevation);
+		Angle angle 	 = Calculator.angle(p2.getX() - p1.getX(), p2.getY() - p1.getY());
+		Angle elevation  = Calculator.angle(p3.getX() - p2.getX(), p3.getY() - p2.getY());
+		double diff 	 = Math.abs(angle.degrees() - elevation.degrees());
 
 		double dx = p3.getX() - p1.getX();
 		double dy = p3.getY() - p1.getY();
@@ -270,10 +271,10 @@ public class ShotAnalyser
 		double diagonal = sqrt(w*w + h*h);
 		
 		model.setDesiredAngle(angle);
-		model.setDesiredElevation(diff);
+		model.setDesiredElevation(Angle.degrees(diff));
 		model.setDesiredPower(distance * 2 / diagonal);
 		
-		log.debug(String.format("Shot analysis: angle=%.1f elev=%.1f power=%.1f", model.getDesiredAngle(), model.getDesiredElevation(), model.getDesiredPower()));
+		log.debug(String.format("Shot analysis: angle=%.1f elev=%.1f power=%.1f", model.getDesiredAngle().degrees(), model.getDesiredElevation().degrees(), model.getDesiredPower()));
 		
 		return model;
 	}

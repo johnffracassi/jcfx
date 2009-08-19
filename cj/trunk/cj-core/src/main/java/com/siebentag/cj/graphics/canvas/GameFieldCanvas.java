@@ -26,6 +26,7 @@ import com.siebentag.cj.mvc.BatsmanController;
 import com.siebentag.cj.mvc.Controller;
 import com.siebentag.cj.queue.ManagedQueue;
 import com.siebentag.cj.time.TimeKeeper;
+import com.siebentag.cj.util.math.Angle;
 import com.siebentag.cj.util.math.Point3D;
 
 @SuppressWarnings("serial")
@@ -168,7 +169,7 @@ public class GameFieldCanvas extends JComponent implements MouseMotionListener, 
 			ba.setTime(timeKeeper.getTime());
 			
 			// TODO bowl models needs to be generated somewhere meaningful
-			BowlModel model = new BowlModel(new Point3D(1, 10, 2), 22, Math.PI * 1.007, 0.08);
+			BowlModel model = new BowlModel(new Point3D(1, 10, 2), 22, Angle.degrees(181), Angle.ZERO);
 			ba.setBowlModel(model);
 			
 			managedQueue.add(ba);
