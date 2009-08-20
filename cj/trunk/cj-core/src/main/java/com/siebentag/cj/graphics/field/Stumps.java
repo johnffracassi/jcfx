@@ -10,6 +10,7 @@ import com.siebentag.cj.graphics.Polygon3D;
 import com.siebentag.cj.graphics.World;
 import com.siebentag.cj.graphics.canvas.AbstractCanvasEntity;
 import com.siebentag.cj.util.math.Point3D;
+import com.siebentag.cj.util.math.Time;
 
 @Component
 public class Stumps extends AbstractCanvasEntity 
@@ -29,7 +30,7 @@ public class Stumps extends AbstractCanvasEntity
 		return 10;
 	}
 	
-	public void paint(Graphics2D g, double time)
+	public void paint(Graphics2D g, Time time)
 	{
 		g.setColor(colour);
 		g.drawPolygon(world.convert(getStump(-gap, pitch.getLength() / 2)));

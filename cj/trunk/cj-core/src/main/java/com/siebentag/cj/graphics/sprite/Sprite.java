@@ -46,9 +46,9 @@ public class Sprite
 		return animations.get(key);
 	}
 	
-	public AnimationFrame getFrame(String key, double time)
+	public AnimationFrame getFrame(String key, double animationTime)
 	{
-		return getAnimation(key).getFrameByTime(time);
+		return getAnimation(key).getFrameByTime(animationTime);
 	}
 }
 

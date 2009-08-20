@@ -2,10 +2,15 @@ package com.siebentag.cj.util.math;
 
 public class Time implements Comparable<Time> {
 	
-	private double time;
-	private Scope scope;
+	public static final Time ZERO = new Time(0, 0.0, TimeScope.Absolute);
+	public static final double MULTIPLIER = 1000000000.0;
 	
-	public Time(double time, Scope scope) {
+	private TimeScope scope;
+	private double time;
+	private long nanoTime;
+	
+	public Time(long nanos, double time, TimeScope scope) {
+		this.nanoTime = nanos;
 		this.time = time;
 		this.scope = scope;
 	}
@@ -14,21 +19,46 @@ public class Time implements Comparable<Time> {
 		return time;
 	}
 	
-	public Scope getScope() {
+	public boolean isBefore(Time time) {
+		return (nanoTime < time.getAbsoluteTime()); 
+	}
+	
+	public boolean isAfter(Time time) {
+		return (nanoTime > time.getAbsoluteTime());
+	}
+	
+	public long getAbsoluteTime() {
+		return nanoTime;
+	}
+	
+	public Time add(Time time) {
+		return new Time(nanoTime + (long)(time.getTime() * MULTIPLIER), this.time + time.getTime(), scope);
+	}
+	
+	public Time subtract(Time time) {
+		return new Time(nanoTime - (long)(time.getTime() * MULTIPLIER), this.time - time.getTime(), scope);
+	}
+	
+	public Time add(double seconds) {
+		return new Time((long)(nanoTime + seconds * MULTIPLIER), time + seconds, scope);
+	}
+	
+	public Time subtract(double seconds) {
+		return new Time((long)(nanoTime - seconds * MULTIPLIER), time - seconds, scope);
+	}
+	
+	public TimeScope getScope() {
 		return scope;
 	}
 	
-	public enum Scope {
-		Ball, Application
-	}
-
 	public int compareTo(Time obj) {
-		
-		if(scope != obj.scope)
-			throw new IllegalArgumentException("Cannot compare Times with different scopes");
-		
-		if(time > obj.time) return 1;
-		else if(time < obj.time) return -1;
+		if(isAfter(obj)) return 1;
+		else if(isBefore(obj)) return -1;
 		else return 0;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return (obj != null && obj instanceof Time && ((Time)obj).time == time);
 	}
 }

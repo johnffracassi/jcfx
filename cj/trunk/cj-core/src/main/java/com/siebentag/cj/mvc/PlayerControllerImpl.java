@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.siebentag.cj.Manager;
 import com.siebentag.cj.model.Player;
 import com.siebentag.cj.util.math.Point3D;
+import com.siebentag.cj.util.math.Time;
 
 public abstract class PlayerControllerImpl implements PlayerController
 {
@@ -19,21 +20,21 @@ public abstract class PlayerControllerImpl implements PlayerController
 	private Map<Player,Point3D> playerLoc;
 	private Map<Player,PersonMovement> movements;
 	private Map<Player,String> speechMsg;
-	private Map<Player,Double> stateChangeTime;
+	private Map<Player,Time> stateChangeTime;
 
 	@Autowired
 	Manager manager;
 	
 	public PlayerControllerImpl()
 	{
-		stateChangeTime = new HashMap<Player, Double>();
-		playerLoc = new HashMap<Player, Point3D>();
+		stateChangeTime = new HashMap<Player,Time>();
+		playerLoc = new HashMap<Player,Point3D>();
 		movements = new HashMap<Player,PersonMovement>();
 	}
 
-	public abstract void paint(Graphics2D g, double time);
+	public abstract void paint(Graphics2D g, Time time);
 
-	public Point3D getLocation(Player person, double time)
+	public Point3D getLocation(Player person, Time time)
 	{
 		Point3D loc = Point3D.ORIGIN;
 		
@@ -50,28 +51,25 @@ public abstract class PlayerControllerImpl implements PlayerController
 		return loc;
 	}
 	
-	protected void setStateChangeTime(Player player, double time)
+	protected void setStateChangeTime(Player player, Time time)
 	{
 		stateChangeTime.put(player, time);
 	}
 	
-	protected double getTimeSinceStateChange(Player player, double time)
+	protected double getTimeSinceStateChange(Player player, Time time)
 	{
 		double changeTime = getStateChangeTime(player);
-		return time - changeTime;
+		return time.subtract(changeTime).getTime();
 	}
 	
 	public double getStateChangeTime(Player player)
 	{
 		double time = 0.0;
 		
-		if(stateChangeTime.containsKey(player))
-		{
-			time = stateChangeTime.get(player);
-		}
-		else
-		{
-			setStateChangeTime(player, 0.0);
+		if(stateChangeTime.containsKey(player)) {
+			time = stateChangeTime.get(player).getTime();
+		} else {
+			setStateChangeTime(player, Time.ZERO);
 		}
 		
 		return time;

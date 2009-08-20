@@ -33,6 +33,7 @@ import com.siebentag.cj.util.math.BoundaryManager;
 import com.siebentag.cj.util.math.Calculator;
 import com.siebentag.cj.util.math.FielderIntersection;
 import com.siebentag.cj.util.math.Point3D;
+import com.siebentag.cj.util.math.Time;
 import com.siebentag.cj.util.math.TrajectoryManager;
 import com.siebentag.cj.util.math.TrajectoryPath;
 import com.siebentag.cj.util.math.TrajectoryPoint;
@@ -75,14 +76,14 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 		fielders = new HashMap<Player, FielderModel>();
 	}
 
-	public void paint(Graphics2D g, double time)
+	public void paint(Graphics2D g, Time time)
     {
 		for(FielderModel fielder : getFielders())
 		{
 			if(fielder.isFielding())
 			{
 				Point3D sLoc = getLocation(fielder.getPlayer(), time);
-				renderer.render(g, sLoc, getState(fielder), time - fielder.getTimeOfLastStateChange());
+				renderer.render(g, sLoc, getState(fielder), time.getTime() - fielder.getTimeOfLastStateChange().getTime());
 			}
 		}
     }
@@ -91,23 +92,22 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 	 * 
 	 * @param time The absolute time that the ball was hit
 	 */
-	public void fieldBall(ShotResult result, double time)
+	public void fieldBall(ShotResult result, Time time)
 	{
 		log.debug("Field ball (time=" + time + ")");
 		
 		// check for boundary
 		BoundaryIntersection boundaryIntersection = boundaryManager.getBoundaryIntersection(result.getBallPath());
-		double boundaryCrossTime = (boundaryIntersection.getType() == BoundaryType.NONE) ? Double.MAX_VALUE : boundaryIntersection.getLocation().getTime();
+		Time boundaryCrossTime = (boundaryIntersection.getType() == BoundaryType.NONE) ? null : boundaryIntersection.getLocation().getTime();
 		log.debug("  boundary=" + boundaryIntersection.getType() + " @ " + boundaryCrossTime);
 		
 		// find the closest fielder
 		FielderIntersection intersection = getClosestFielder(result.getBallPath());
-		final double fielderPickupTime = intersection.getBallTime(); // TODO should this be fielder time?
+		final Time fielderPickupTime = intersection.getBallTime(); // TODO should this be fielder time?
 		log.debug("  closest fielder=" + intersection.getPlayer() + " @ " + fielderPickupTime);
 
 		// if the ball crosses the boundary before the fielder can reach it
-		if(fielderPickupTime >= boundaryCrossTime)
-		{
+		if(fielderPickupTime.isAfter(boundaryCrossTime)) {
 			intersection = getClosestFielder(boundaryIntersection.getLocation());
 		}		
 		
@@ -142,14 +142,14 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 		{
 			// return ball to keeper
 			final TrajectoryPath returnPath = trajectoryManager.getApproximateSimpleTrajectory(17.5, intersection.getLocation(), FieldPosition.KeeperReturn.getLocation());
-			final double returnThrowTime = time + fielderPickupTime + 0.5;
+			final Time returnThrowTime = time.add(fielderPickupTime.getTime() + 0.5);
 			
 			managedQueue.add(new AbstractAction() {
 				public void run() {
 					ballController.setTrajectoryPath(returnPath, returnThrowTime);
 				}
 				
-				public double getTime() {
+				public Time getTime() {
 					return returnThrowTime;
 				}
 			});
@@ -178,7 +178,7 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 			fielderModel.setLabel(player.getKey());
 			fielderModel.setFieldPosition(fieldSetting[i]);
 			fielderModel.setBaseLocation(fielderModel.getFieldPosition().getLocation());
-			fielderModel.setFielderState(FielderState.Idle, 0.0);
+			fielderModel.setFielderState(FielderState.Idle, Time.ZERO);
 			fielderModel.setFielding(i > 1); // keeper and bowler shouldn't be painted by this controller
 			fielders.put(player, fielderModel);
 			
@@ -290,7 +290,7 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 		}
 	}
 	
-	public void setState(Player player, FielderState fielderState, double time)
+	public void setState(Player player, FielderState fielderState, Time time)
 	{
 		getFielder(player).setFielderState(fielderState, time);
 	}
@@ -391,7 +391,7 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 			if(ballLoc.getZ() < 2.25) // TODO get fielder height/reach from attributes
 			{
 				double timeToRunTo = calculateTimeToRunTo(fielder, ballLoc);
-				double ballTravelTime = ballLoc.getTime();
+				double ballTravelTime = ballLoc.getTime().getTime();
 				
 				// fielder has to be able to get to the point before the ball can
 				if(timeToRunTo < ballTravelTime)

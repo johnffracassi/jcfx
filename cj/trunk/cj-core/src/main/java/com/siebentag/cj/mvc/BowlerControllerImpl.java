@@ -13,6 +13,7 @@ import com.siebentag.cj.graphics.renderer.BowlerRenderer;
 import com.siebentag.cj.model.Player;
 import com.siebentag.cj.model.Team;
 import com.siebentag.cj.util.math.Point3D;
+import com.siebentag.cj.util.math.Time;
 
 @Component
 public class BowlerControllerImpl extends PlayerControllerImpl implements BowlerController
@@ -68,7 +69,7 @@ public class BowlerControllerImpl extends PlayerControllerImpl implements Bowler
 		this.bowlingSide = side;
 	}
 	
-	public void paint(Graphics2D g, double time)
+	public void paint(Graphics2D g, Time time)
     {
 		Player bowler = getBowler(BowlerRole.CurrentBowler);
 		Point3D sLoc = getLocation(bowler, time);
@@ -90,7 +91,7 @@ public class BowlerControllerImpl extends PlayerControllerImpl implements Bowler
 		return stateByPlayer.containsKey(player) ? stateByPlayer.get(player) : BowlerState.Standing; 
 	}
 	
-	public void setState(Player player, BowlerState bowlerState, double time)
+	public void setState(Player player, BowlerState bowlerState, Time time)
     {
 		log.debug("setting state of bowler to " + bowlerState);
 	    stateByPlayer.put(player, bowlerState);

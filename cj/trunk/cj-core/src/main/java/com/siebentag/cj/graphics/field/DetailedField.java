@@ -1,6 +1,8 @@
 package com.siebentag.cj.graphics.field;
 
-import static java.lang.Math.*;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+import static java.lang.Math.toRadians;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -8,7 +10,6 @@ import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
 
 import javax.imageio.ImageIO;
 
@@ -16,12 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
-import com.siebentag.cj.Config;
 import com.siebentag.cj.graphics.Polygon3D;
 import com.siebentag.cj.graphics.World;
 import com.siebentag.cj.graphics.WorldChangeListener;
 import com.siebentag.cj.graphics.canvas.AbstractCanvasEntity;
 import com.siebentag.cj.util.math.Point3D;
+import com.siebentag.cj.util.math.Time;
 
 @Component
 public class DetailedField extends AbstractCanvasEntity implements WorldChangeListener
@@ -105,7 +106,7 @@ public class DetailedField extends AbstractCanvasEntity implements WorldChangeLi
 	}
 	
 	@Override
-    public void paint(Graphics2D g, double time)
+    public void paint(Graphics2D g, Time time)
 	{
 		g.drawImage(scaledImage1, (int)origin.getX(), (int)origin.getY(), null);
 

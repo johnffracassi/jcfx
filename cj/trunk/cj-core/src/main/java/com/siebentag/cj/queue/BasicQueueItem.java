@@ -1,15 +1,17 @@
 package com.siebentag.cj.queue;
 
+import com.siebentag.cj.util.math.Time;
+
 public abstract class BasicQueueItem implements QueueItem
 {
-	private double time = 0.0;
+	private Time time = Time.ZERO;
 	private Priority priority = Priority.Medium;
 	private Scope scope = Scope.Ball;
 	
 	public int compareTo(QueueItem o2) 
 	{
-		if(getTime() > o2.getTime()) return AFTER;
-		if(getTime() < o2.getTime()) return BEFORE;
+		if(getTime().getTime() > o2.getTime().getTime()) return AFTER;
+		if(getTime().getTime() < o2.getTime().getTime()) return BEFORE;
 		
 		if(getClassPriority() > o2.getClassPriority()) return BEFORE;
 		if(getClassPriority() < o2.getClassPriority()) return AFTER;
@@ -17,12 +19,12 @@ public abstract class BasicQueueItem implements QueueItem
 		return getPriority().compareTo(o2.getPriority());
 	}
 	
-	public double getTime() 
+	public Time getTime() 
 	{
 		return time;
 	}
 	
-	public void setTime(double time) 
+	public void setTime(Time time) 
 	{
 		this.time = time;
 	}

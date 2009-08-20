@@ -12,6 +12,7 @@ import com.siebentag.cj.graphics.renderer.UmpireRenderer;
 import com.siebentag.cj.model.Player;
 import com.siebentag.cj.model.Team;
 import com.siebentag.cj.util.math.Point3D;
+import com.siebentag.cj.util.math.Time;
 
 @Component
 public class UmpireControllerImpl extends PlayerControllerImpl implements UmpireController
@@ -28,7 +29,7 @@ public class UmpireControllerImpl extends PlayerControllerImpl implements Umpire
 		stateByUmpire = new HashMap<Player, UmpireState>();
 	}
 	
-	public void paint(Graphics2D g, double time)
+	public void paint(Graphics2D g, Time time)
     {
 		for(UmpireRole role : UmpireRole.values())
 		{

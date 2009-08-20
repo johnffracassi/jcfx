@@ -3,24 +3,40 @@ package com.siebentag.cj.time;
 import org.springframework.stereotype.Component;
 
 import com.siebentag.cj.util.math.Time;
+import com.siebentag.cj.util.math.TimeScope;
 
 @Component
-public class RealTimeKeeper implements TimeKeeper
-{
+public class RealTimeKeeper implements TimeKeeper {
+	
 	private Long ballStartTime = null;
 	private Long appStartTime = null;
-	
-	public RealTimeKeeper()
-	{
-	}
-	
-    public Time getAppTime()
-    {
-	    if(appStartTime == null)
-	    {
-			appStartTime = System.nanoTime();
-	    }
+	private Long pathStartTime = null;
 
-	    return new Time((System.nanoTime() - appStartTime) / 1000000000.0, Time.Scope.Application);
-    }
+	public RealTimeKeeper() {
+	}
+
+	public Time getTime(TimeScope scope) {
+
+		long time = System.nanoTime();
+		
+		switch (scope) {
+		case Application:
+			if (appStartTime == null)
+				appStartTime = System.nanoTime();
+			return new Time(time, (time - appStartTime) / Time.MULTIPLIER, scope);
+			
+		case Ball:
+			if (ballStartTime == null)
+				ballStartTime = System.nanoTime();
+			return new Time(time, (time - ballStartTime) / Time.MULTIPLIER, scope);
+			
+		case Path:
+			if (pathStartTime == null)
+				pathStartTime = System.nanoTime();
+			return new Time(time, (time - pathStartTime) / Time.MULTIPLIER, scope);
+			
+		default:
+			throw new IllegalArgumentException("Unsupported TimeScope: " + scope);
+		}
+	}
 }

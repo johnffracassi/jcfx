@@ -20,6 +20,7 @@ import com.siebentag.cj.queue.Event;
 import com.siebentag.cj.queue.EventListener;
 import com.siebentag.cj.queue.ManagedQueue;
 import com.siebentag.cj.util.math.Point3D;
+import com.siebentag.cj.util.math.Time;
 
 @Component
 public class BatsmanControllerImpl 
@@ -70,8 +71,8 @@ public class BatsmanControllerImpl
 		
 		resetRunCounters();
 
-		setState(striker, BatsmanState.StrikerWaiting, 0.0);
-		setState(nonStriker, BatsmanState.Idle, 0.0);
+		setState(striker, BatsmanState.StrikerWaiting, Time.ZERO);
+		setState(nonStriker, BatsmanState.Idle, Time.ZERO);
 		
 		// set the striker location
 		setLocation(striker, FieldPosition.BatStrikerRight.getLocation());
@@ -99,7 +100,7 @@ public class BatsmanControllerImpl
 		}
 	}
 	
-	public void paint(Graphics2D g, double time)
+	public void paint(Graphics2D g, Time time)
 	{
 		for(BatsmanRole role : BatsmanRole.values())
 		{
@@ -112,7 +113,7 @@ public class BatsmanControllerImpl
 	/**
 	 * Check each batsman, see if they are required to run again
 	 */
-	private void primeRunQueue(double time)
+	private void primeRunQueue(Time time)
 	{
 		for(BatsmanRole role : BatsmanRole.values())
 		{
@@ -124,7 +125,7 @@ public class BatsmanControllerImpl
 	 * If the batsman has more runs queued, then make him run.
 	 * Will only trigger the batsman to run if he is idle.
 	 */
-	private void primeBatsman(BatsmanRole role, double time)
+	private void primeBatsman(BatsmanRole role, Time time)
 	{
 		int numRunsCompleted = runsCompleted.get(role);
 		
@@ -144,7 +145,7 @@ public class BatsmanControllerImpl
 			}
 
 			// perform the run
-			double runStartTime = time + 0.15; // delay the run a little bit
+			Time runStartTime = time.add(0.15); // delay the run a little bit
 			MovementAction action = movementActionFactory.createRunToAction(PersonRole.Batsman, getBatsman(role), getLocation(getBatsman(role), time), destination.getLocation(), runStartTime);
 			managedQueue.add(action);
 		}
@@ -164,7 +165,7 @@ public class BatsmanControllerImpl
 	/**
 	 * Increment the queued run counter for each batsman
 	 */
-	public void queueRun(double time) 
+	public void queueRun(Time time) 
 	{
 		for(BatsmanRole role : BatsmanRole.values())
 		{
@@ -227,7 +228,7 @@ public class BatsmanControllerImpl
 		// if the move style is Run, then set the batsman state to Running
 		Player player = movement.getPerson();
 		BatsmanState state = (movement.getMoveStyle() == MoveStyle.Run ? BatsmanState.Running : getState(player));
-		double time = movement.getStartTime();
+		Time time = movement.getStartTime();
 		
 		// inform the batsman controller of the state change
 	    setState(player, state, time);
@@ -287,7 +288,7 @@ public class BatsmanControllerImpl
 		playerByRole.put(role, player);
 	}
 
-	public void setState(Player player, BatsmanState state, double time) 
+	public void setState(Player player, BatsmanState state, Time time) 
 	{
 		stateByPlayer.put(player, state);
 		setStateChangeTime(player, time);

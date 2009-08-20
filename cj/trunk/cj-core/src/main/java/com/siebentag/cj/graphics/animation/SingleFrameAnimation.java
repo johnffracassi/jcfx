@@ -41,7 +41,7 @@ public class SingleFrameAnimation extends Animation
 		return "";
 	}
 	
-	@Override public AnimationFrame getFrameByTime(double time)
+	@Override public AnimationFrame getFrameByTime(double animationTime)
 	{
 		return frame;
 	}

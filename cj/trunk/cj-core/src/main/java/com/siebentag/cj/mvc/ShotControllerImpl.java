@@ -23,6 +23,7 @@ import com.siebentag.cj.game.shot.ShotRecorder;
 import com.siebentag.cj.model.Player;
 import com.siebentag.cj.queue.ManagedQueue;
 import com.siebentag.cj.util.math.Point3D;
+import com.siebentag.cj.util.math.Time;
 import com.siebentag.cj.util.math.TrajectoryManager;
 import com.siebentag.cj.util.math.TrajectoryModel;
 import com.siebentag.cj.util.math.TrajectoryPath;
@@ -53,7 +54,7 @@ public class ShotControllerImpl implements ShotController
 	@Autowired
 	private TrajectoryManager trajectoryManager;
 	
-	public ShotResult playShot(Player batsman, Point3D initialLoc, double time)
+	public ShotResult playShot(Player batsman, Point3D initialLoc, Time time)
 	{
 		// get recorded shot
 		List<Point2D> shotPoints = shotRecorder.getShotPoints();
@@ -61,7 +62,7 @@ public class ShotControllerImpl implements ShotController
 		
 		// find out some information about where the ball is
 		TrajectoryPath ballPath = ballController.getTrajectoryPath();
-		double ballTimeAtBatsman = ballPath.getTimeAtY(FieldPosition.BatStrikerRight.getLocation().getY());
+		Time ballTimeAtBatsman = ballPath.getTimeAtY(FieldPosition.BatStrikerRight.getLocation().getY());
 		double velocityAtBatsman = ballPath.getVelocityAtTime(ballTimeAtBatsman);
 
 		// analyse shot
@@ -125,7 +126,7 @@ public class ShotControllerImpl implements ShotController
 		return shotResult;
 	}
 	
-	private void ballThroughToKeeper(TrajectoryPath ballPath, double time, boolean isCatch) 
+	private void ballThroughToKeeper(TrajectoryPath ballPath, Time time, boolean isCatch) 
 	{
 		// move the keeper to the path of the ball
 		keeperController.moveToLineOfBall(ballPath, time);
@@ -133,7 +134,7 @@ public class ShotControllerImpl implements ShotController
 		// TODO does the keeper take it cleanly? unclean takes for shit keepers 
 		
 		// TODO terminate the ball path when it reaches the keeper			
-		double timeBallReachesKeeper = ballPath.getTimeAtY(keeperController.getFieldPosition().getLocation().getY());
+		Time timeBallReachesKeeper = ballPath.getTimeAtY(keeperController.getFieldPosition().getLocation().getY());
 		ballPath.setTerminateTime(timeBallReachesKeeper);
 		
 		// notify listeners when the ball is caught
@@ -146,7 +147,7 @@ public class ShotControllerImpl implements ShotController
 		
 		// raise a ball completed event
 		BallCompletedEvent bce = new BallCompletedEvent();
-		bce.setTime(time + timeBallReachesKeeper);
+		bce.setTime(time.add(timeBallReachesKeeper));
 		managedQueue.add(bce);
 	}
 }

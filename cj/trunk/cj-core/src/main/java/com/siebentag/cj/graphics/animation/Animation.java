@@ -1,13 +1,12 @@
 package com.siebentag.cj.graphics.animation;
 
-
 public abstract class Animation
 {
 	private String name;
 	private int width;
 	private int height;
 	
-	public abstract AnimationFrame getFrameByTime(double time);
+	public abstract AnimationFrame getFrameByTime(double animationTime);
 	
 	public void setWidth(int width)
 	{

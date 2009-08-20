@@ -6,15 +6,15 @@ import com.siebentag.cj.model.Player;
 public class FielderIntersection
 {
 	private TrajectoryPoint location;
-	private double ballTime;
 	private Player player;
+	private Time ballTime;
 	private double playerTime;
 
 	public FielderIntersection()
 	{
 		location = null;
 		player = null;
-		ballTime = 0.0;
+		ballTime = null;
 		playerTime = 0.0;
 	}
 	
@@ -38,12 +38,12 @@ public class FielderIntersection
     	this.player = player;
     }
 
-	public double getBallTime()
+	public Time getBallTime()
     {
     	return ballTime;
     }
 
-	public void setBallTime(double ballTime)
+	public void setBallTime(Time ballTime)
     {
     	this.ballTime = ballTime;
     }

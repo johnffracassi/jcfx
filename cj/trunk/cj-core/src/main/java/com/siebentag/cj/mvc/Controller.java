@@ -11,6 +11,7 @@ import com.siebentag.cj.game.event.InningsCompleteEvent;
 import com.siebentag.cj.model.Team;
 import com.siebentag.cj.queue.Event;
 import com.siebentag.cj.queue.EventListener;
+import com.siebentag.cj.util.math.Time;
 
 @Component
 public class Controller implements EventListener
@@ -33,7 +34,7 @@ public class Controller implements EventListener
 	@Autowired
 	BallControllerImpl ballController;
 
-	public void paint(Graphics2D g, double time)
+	public void paint(Graphics2D g, Time time)
 	{
 		umpireController.paint(g, time);
 		ballController.paint(g, time);

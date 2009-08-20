@@ -54,9 +54,9 @@ public class SpriteManager
 		return getSprite(spriteKey).getAnimation(animationKey);
 	}
 	
-	public AnimationFrame getFrame(String spriteKey, String animationKey, double time)
+	public AnimationFrame getFrame(String spriteKey, String animationKey, double animationTime)
 	{
-		return getAnimation(spriteKey, animationKey).getFrameByTime(time);
+		return getAnimation(spriteKey, animationKey).getFrameByTime(animationTime);
 	}
 	
 	public void draw(Graphics2D g, Point3D loc, Image img)

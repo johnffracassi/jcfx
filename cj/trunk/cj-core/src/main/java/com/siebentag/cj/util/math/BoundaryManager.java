@@ -26,7 +26,7 @@ public class BoundaryManager
 			{
 				intersection.setLocation(pt);
 
-				if(pt.getTime() > path.getFirstBounceTime())
+				if(pt.getTime().isAfter(path.getFirstBounceTime())) 
 				{
 					intersection.setType(BoundaryType.SIX);
 				}

@@ -11,6 +11,7 @@ import com.siebentag.cj.graphics.Polygon3D;
 import com.siebentag.cj.graphics.World;
 import com.siebentag.cj.graphics.canvas.AbstractCanvasEntity;
 import com.siebentag.cj.util.math.Point3D;
+import com.siebentag.cj.util.math.Time;
 
 @Component
 public class Pitch extends AbstractCanvasEntity
@@ -62,7 +63,7 @@ public class Pitch extends AbstractCanvasEntity
 		return 7;
 	}
 	
-	public void paint(Graphics2D g, double time)
+	public void paint(Graphics2D g, Time time)
 	{
 		g.setColor(colour);
 		g.drawPolygon(world.convert(getShape()));

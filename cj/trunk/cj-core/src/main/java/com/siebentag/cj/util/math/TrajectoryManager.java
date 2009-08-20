@@ -1,6 +1,6 @@
 package com.siebentag.cj.util.math;
 
-import static com.siebentag.cj.util.math.Constants.*;
+import static com.siebentag.cj.util.math.Constants.BALL_MASS;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,11 +33,11 @@ public class TrajectoryManager
 		InstantaneousTrajectory trajectory = new InstantaneousTrajectory(model.getVelocity(), direction, elevation);
 
 		// time counter
-		double t = 0.0;
+		Time time = new Time(0, 0.0, TimeScope.Path);
 		int bounceCount = 0;
-		while(trajectory.getVelocity() > getBallStopVelocity() && t < 25.0)
+		while(trajectory.getVelocity() > getBallStopVelocity() && time.getTime() < 25.0)
 		{
-			t += getResolution();
+			time = time.add(getResolution());
 			
 			// gravity
 			trajectory.applyGravity();
@@ -50,9 +50,8 @@ public class TrajectoryManager
 			// check for bounce
 			if(requiresBounce(loc))
 			{
-				if(bounceCount == 0)
-				{
-					trajectoryPath.setFirstBounceTime(t);
+				if(bounceCount == 0) {
+					trajectoryPath.setFirstBounceTime(time);
 				}
 				
 				bounceCount ++;
@@ -68,7 +67,7 @@ public class TrajectoryManager
 		
 			// find the new location and add it to the path 
 			loc = loc.offset(dx, dy, dz);
-			TrajectoryPoint pt = new TrajectoryPoint(loc, t);
+			TrajectoryPoint pt = new TrajectoryPoint(loc, time);
 			pt.setHasBounced(bounceCount > 0);
 			trajectoryPath.addPoint(pt);
 

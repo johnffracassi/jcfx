@@ -5,17 +5,17 @@ package com.siebentag.cj.util.math;
 @SuppressWarnings("serial")
 public class TrajectoryPoint extends Point3D
 {
-	private double time;
+	private Time time;
 	private boolean hasBounced;
 
 	/**
      * @param loc
      * @param t
      */
-    public TrajectoryPoint(Point3D loc, double t)
+    public TrajectoryPoint(Point3D loc, Time time)
     {
     	super(loc);
-    	this.time = t;
+    	this.time = time;
     }
 
     @Override
@@ -23,12 +23,12 @@ public class TrajectoryPoint extends Point3D
     	return String.format("%s@%.2f", super.toString(), time);
     }
     
-	public double getTime()
+	public Time getTime()
 	{
 		return time;
 	}
 
-	public void setTime(double time)
+	public void setTime(Time time)
 	{
 		this.time = time;
 	}

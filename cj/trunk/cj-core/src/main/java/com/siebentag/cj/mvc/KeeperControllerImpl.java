@@ -11,6 +11,7 @@ import com.siebentag.cj.graphics.renderer.FielderRenderer;
 import com.siebentag.cj.model.Player;
 import com.siebentag.cj.model.Team;
 import com.siebentag.cj.util.math.Point3D;
+import com.siebentag.cj.util.math.Time;
 import com.siebentag.cj.util.math.TrajectoryPath;
 
 @Component
@@ -23,13 +24,13 @@ public class KeeperControllerImpl extends PlayerControllerImpl implements Keeper
 
 	private Player keeper;
 	private FielderState state;
-	private double timeOfLastStateChange;
+	private Time timeOfLastStateChange;
 	private FieldPosition fieldPosition;
 	
-	public void paint(Graphics2D g, double time)
+	public void paint(Graphics2D g, Time time)
     {
 		Point3D sLoc = getLocation(keeper, time);
-		renderer.render(g, sLoc, getState(), time - timeOfLastStateChange);
+		renderer.render(g, sLoc, getState(), time.subtract(timeOfLastStateChange).getTime());
     }
 
 	public void resetForInnings(Team battingTeam, Team fieldingTeam)
@@ -43,7 +44,7 @@ public class KeeperControllerImpl extends PlayerControllerImpl implements Keeper
 
 	public void resetForBall()
     {
-		timeOfLastStateChange = 0.0;
+		timeOfLastStateChange = null;
 		fieldPosition = FieldPosition.KeeperFast;
 		state = FielderState.Idle;
 		setLocation(keeper, fieldPosition.getLocation());
@@ -64,13 +65,13 @@ public class KeeperControllerImpl extends PlayerControllerImpl implements Keeper
 		return state == null ? FielderState.Idle : state;
 	}
 	
-	public void setState(FielderState state, double time)
+	public void setState(FielderState state, Time time)
 	{
 		this.state = state;
 		this.timeOfLastStateChange = time;
 	}
 	
-	public void moveToStumps(double time)
+	public void moveToStumps(Time time)
 	{
 		PersonMovement movement = new PersonMovement();
 		movement.setSource(getLocation(keeper, time));
@@ -82,17 +83,17 @@ public class KeeperControllerImpl extends PlayerControllerImpl implements Keeper
 		doMove(movement);
 	}
 	
-	public void moveToLineOfBall(TrajectoryPath path, double ballTimeAtBatsman)
+	public void moveToLineOfBall(TrajectoryPath path, Time timeAtBatsman)
 	{
-		log.debug("move keeper to line of ball (start=" + ballTimeAtBatsman + ")");
+		log.debug("move keeper to line of ball (start=" + timeAtBatsman + ")");
 		
 		Point3D target = path.getLocationAtY(fieldPosition.getLocation().getY());
 		
 		PersonMovement movement = new PersonMovement();
-		movement.setSource(getLocation(keeper, ballTimeAtBatsman));
+		movement.setSource(getLocation(keeper, timeAtBatsman));
 		movement.setDestination(target);
 		movement.setMoveStyle(MoveStyle.Run);
-		movement.setStartTime(ballTimeAtBatsman);
+		movement.setStartTime(timeAtBatsman);
 		movement.setPerson(keeper);
 
 		doMove(movement);

@@ -8,6 +8,8 @@ import java.util.Queue;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import com.siebentag.cj.util.math.Time;
+
 @Component
 public class ManagedQueue
 {
@@ -25,13 +27,13 @@ public class ManagedQueue
 	 * @param time
 	 * @return
 	 */
-	public List<QueueItem> poll(double time)
+	public List<QueueItem> poll(Time time)
 	{
 		List<QueueItem> items = new ArrayList<QueueItem>();
 		
 		if(size() > 0)
 		{
-			while(peek() != null && peek().getTime() <= time)
+			while(peek() != null && peek().getTime().getTime() <= time.getTime())
 			{
 				items.add(poll());
 			}

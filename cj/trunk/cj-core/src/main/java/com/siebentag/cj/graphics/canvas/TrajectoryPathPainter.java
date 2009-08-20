@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.siebentag.cj.graphics.World;
 import com.siebentag.cj.mvc.BallController;
+import com.siebentag.cj.util.math.Time;
 import com.siebentag.cj.util.math.TrajectoryPath;
 import com.siebentag.cj.util.math.TrajectoryPoint;
 
@@ -24,7 +25,7 @@ public class TrajectoryPathPainter extends AbstractCanvasEntity
 	private Color pathColour = new Color(1.0f, 0.5f, 0.5f, 0.2f);
 	private Color pointColour = new Color(1.0f, 0.5f, 0.5f, 0.7f);
 	
-	public void paint(Graphics2D g, double time)
+	public void paint(Graphics2D g, Time time)
 	{
 		TrajectoryPath trajectoryPath = ballController.getTrajectoryPath();
 		

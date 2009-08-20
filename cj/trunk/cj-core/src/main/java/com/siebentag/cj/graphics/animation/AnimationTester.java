@@ -16,6 +16,8 @@ import com.siebentag.cj.graphics.renderer.BatsmanRenderer;
 import com.siebentag.cj.graphics.sprite.SpriteManager;
 import com.siebentag.cj.mvc.BatsmanState;
 import com.siebentag.cj.time.TimeKeeper;
+import com.siebentag.cj.util.math.Time;
+import com.siebentag.cj.util.math.TimeScope;
 
 @Component
 public class AnimationTester extends JFrame
@@ -61,14 +63,14 @@ public class AnimationTester extends JFrame
 		g.setColor(Color.WHITE);
 		g.fillRect(0,0,100,100);
 
-		double time = timeKeeper.getTime();
+		Time time = timeKeeper.getTime(TimeScope.Application);
 		String state = BatsmanState.StrikerWaiting.toString();
-		AnimationFrame frame = spriteManager.getFrame("batsman", state, time);
+		AnimationFrame frame = spriteManager.getFrame("batsman", state, time.getTime());
 		Image img = frame.getImage();
 		g.drawImage(img, 10, 50, null);
 		
 		String state2 = BatsmanState.Idle.toString();
-		AnimationFrame frame2 = spriteManager.getFrame("batsman", state2, time);
+		AnimationFrame frame2 = spriteManager.getFrame("batsman", state2, time.getTime());
 		Image img2 = frame2.getImage();
 		g.drawImage(img2, 30, 50, null);
 		

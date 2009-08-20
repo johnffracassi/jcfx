@@ -10,6 +10,7 @@ import com.siebentag.cj.mvc.PersonController;
 import com.siebentag.cj.mvc.PersonMovement;
 import com.siebentag.cj.queue.Priority;
 import com.siebentag.cj.util.math.Point3D;
+import com.siebentag.cj.util.math.Time;
 
 @Component
 public class MovementActionFactory
@@ -17,7 +18,7 @@ public class MovementActionFactory
 	@Autowired
 	Controller controller;
 	
-	private MovementAction createMovementAction(PersonRole personRole, Player player, Point3D source, Point3D destination, double time, MoveStyle style)
+	private MovementAction createMovementAction(PersonRole personRole, Player player, Point3D source, Point3D destination, Time time, MoveStyle style)
 	{
 		MovementAction action = new MovementAction();
 		PersonMovement movement = new PersonMovement();
@@ -39,12 +40,12 @@ public class MovementActionFactory
 		return action;
 	}
 	
-	public MovementAction createRunToAction(PersonRole personRole, Player player, Point3D source, Point3D destination, double time)
+	public MovementAction createRunToAction(PersonRole personRole, Player player, Point3D source, Point3D destination, Time time)
 	{
 		return createMovementAction(personRole, player, source, destination, time, MoveStyle.Run);
 	}
 	
-	public MovementAction createWalkToAction(PersonRole personRole, Player player, Point3D source, Point3D destination, double time)
+	public MovementAction createWalkToAction(PersonRole personRole, Player player, Point3D source, Point3D destination, Time time)
 	{
 		return createMovementAction(personRole, player, source, destination, time, MoveStyle.Walk);
 	}

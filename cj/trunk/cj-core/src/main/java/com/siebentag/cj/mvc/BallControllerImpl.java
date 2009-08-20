@@ -13,6 +13,7 @@ import com.siebentag.cj.graphics.World;
 import com.siebentag.cj.queue.Event;
 import com.siebentag.cj.queue.EventListener;
 import com.siebentag.cj.util.math.Point3D;
+import com.siebentag.cj.util.math.Time;
 import com.siebentag.cj.util.math.TrajectoryPath;
 
 @Component
@@ -24,13 +25,13 @@ public class BallControllerImpl implements BallController, EventListener
 	private World world;
 	
 	private TrajectoryPath trajectoryPath;
-	private double trajectoryStartTime;
+	private Time trajectoryStartTime;
 	private BallState ballState = BallState.None;
 	
 	private Color ballColour = Color.RED;
 	private Color shadowColour = new Color(0.0f, 0.0f, 0.0f, 0.5f);
 	
-	public void paint(Graphics2D g, double time)
+	public void paint(Graphics2D g, Time time)
     {
 		if(getBallState() == BallState.InFlight)
 		{
@@ -54,23 +55,19 @@ public class BallControllerImpl implements BallController, EventListener
     {
 		setBallState(BallState.None);
 		trajectoryPath = null;
-		trajectoryStartTime = 0.0;
+		trajectoryStartTime = null;
     }
 
-	public Point3D getLocation(double time)
-    {
-		if(trajectoryPath != null)
-		{
-			double trajectoryTime = time - trajectoryStartTime;
-			return trajectoryPath.getLocation(trajectoryTime);
-		}
-		else
-		{
+	public Point3D getLocation(Time time) {
+		if(trajectoryPath != null) {
+			double trajectoryTime = time.subtract(trajectoryStartTime).getTime();
+			return trajectoryPath.getLocation(time);
+		} else {
 			return Point3D.ORIGIN;
 		}
     }
 
-	public void setTrajectoryPath(TrajectoryPath trajectoryPath, double time)
+	public void setTrajectoryPath(TrajectoryPath trajectoryPath, Time time)
 	{
 		log.debug("new trajectory set for ball (" + trajectoryPath.getPoints().size() + ")");
 		
@@ -84,7 +81,7 @@ public class BallControllerImpl implements BallController, EventListener
 	    return trajectoryPath;
     }
 
-	public double getTrajectoryStartTime()
+	public Time getTrajectoryStartTime()
     {
     	return trajectoryStartTime;
     }

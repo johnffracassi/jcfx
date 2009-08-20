@@ -13,6 +13,8 @@ import com.siebentag.cj.queue.EventListener;
 import com.siebentag.cj.queue.ManagedQueue;
 import com.siebentag.cj.queue.QueueItem;
 import com.siebentag.cj.time.TimeKeeper;
+import com.siebentag.cj.util.math.Time;
+import com.siebentag.cj.util.math.TimeScope;
 
 @Component
 public class Manager extends Thread
@@ -46,7 +48,7 @@ public class Manager extends Thread
 		while(true)
 		{
 			// this instant of time should be used by everything 
-			Time time = timeKeeper.getTime();
+			Time time = timeKeeper.getTime(TimeScope.Application);
 			
 			log.trace(String.format("polling queue: time=%.1f size=%d", time, managedQueue.size()));
 			

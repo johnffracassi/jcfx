@@ -1,12 +1,14 @@
 package com.siebentag.cj.mvc;
 
 import com.siebentag.cj.model.Player;
+import com.siebentag.cj.util.math.Time;
 
 
 
 public interface BatsmanController extends PlayerController
 {
-	void setState(Player player, BatsmanState state, double time);
+	void setState(Player player, BatsmanState state, Time time);
+	
 	BatsmanState getState(Player player);
 	
 	/**
@@ -22,7 +24,7 @@ public interface BatsmanController extends PlayerController
 	/**
 	 * Add a run to the queue
 	 */
-	void queueRun(double time);
+	void queueRun(Time time);
 	
 	/**
 	 * Dequeue all runs, send batsmen back to nearest crease

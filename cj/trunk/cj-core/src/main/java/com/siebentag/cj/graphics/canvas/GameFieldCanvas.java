@@ -28,6 +28,8 @@ import com.siebentag.cj.queue.ManagedQueue;
 import com.siebentag.cj.time.TimeKeeper;
 import com.siebentag.cj.util.math.Angle;
 import com.siebentag.cj.util.math.Point3D;
+import com.siebentag.cj.util.math.Time;
+import com.siebentag.cj.util.math.TimeScope;
 
 @SuppressWarnings("serial")
 @Component
@@ -108,7 +110,7 @@ public class GameFieldCanvas extends JComponent implements MouseMotionListener, 
      */
     @Override public void paint(Graphics graphics)
     {
-		double gameTime = timeKeeper.getTime();
+		Time gameTime = timeKeeper.getTime(TimeScope.Application);
 
 		// setup the graphics object with anti-aliasing etc...
         Graphics2D g = (Graphics2D)graphics;    	
@@ -148,11 +150,13 @@ public class GameFieldCanvas extends JComponent implements MouseMotionListener, 
 	{
 		log.debug("Mouse click caught on GameFieldCanvas (button=" + ev.getButton() + " / runningAllowed=" + gsm.isRunningAllowed() + " / ballInProgress=" + gsm.isBallInProgress() + ")");
 
+		Time time = timeKeeper.getTime(TimeScope.Application);
+		
 		if(gsm.isRunningAllowed())
 		{
 			if(ev.getButton() == MouseEvent.BUTTON1)
 			{
-				batsmanController.queueRun(timeKeeper.getTime());
+				batsmanController.queueRun(time);
 			}
 			else if(ev.getButton() == MouseEvent.BUTTON3)
 			{
@@ -166,7 +170,7 @@ public class GameFieldCanvas extends JComponent implements MouseMotionListener, 
 			
 	    	// TODO this needs to be executed in another thread
 			BowlAction ba = baf.createEmptyBowlAction();
-			ba.setTime(timeKeeper.getTime());
+			ba.setTime(time);
 			
 			// TODO bowl models needs to be generated somewhere meaningful
 			BowlModel model = new BowlModel(new Point3D(1, 10, 2), 22, Angle.degrees(181), Angle.ZERO);

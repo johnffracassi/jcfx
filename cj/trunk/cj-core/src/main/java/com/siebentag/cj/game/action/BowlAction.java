@@ -15,6 +15,7 @@ import com.siebentag.cj.mvc.BowlerState;
 import com.siebentag.cj.queue.ManagedQueue;
 import com.siebentag.cj.queue.Scope;
 import com.siebentag.cj.util.math.Point3D;
+import com.siebentag.cj.util.math.Time;
 import com.siebentag.cj.util.math.TrajectoryManager;
 import com.siebentag.cj.util.math.TrajectoryPath;
 
@@ -45,7 +46,7 @@ public class BowlAction extends AbstractAction
 	
 	public void run() 
 	{
-		final double currentTime = getTime();
+		final Time currentTime = getTime();
 		final Player bowler = bowlerController.getBowler(BowlerRole.CurrentBowler);
 
 		
@@ -60,20 +61,20 @@ public class BowlAction extends AbstractAction
 			@Override public void run() {
 				bowlerController.setState(bowler, BowlerState.RunUp, currentTime);
             }
-			@Override public double getTime() {
+			@Override public Time getTime() {
 			    return currentTime;
 			}
 		};
 
 
 		// set state to delivery and pause for length of animation
-		final double deliveryStartTime = runupAction.getMovement().getCompletionTime();
-		final double deliveryFinishTime = deliveryStartTime + 0.4; // TODO get timings from the animation
+		final Time deliveryStartTime = runupAction.getMovement().getCompletionTime();
+		final Time deliveryFinishTime = deliveryStartTime.add(0.4); // TODO get timings from the animation
 		AbstractAction bowlerStateChangeDeliveryAction = new AbstractAction() {
 			@Override public void run() {
 				bowlerController.setState(bowler, BowlerState.Delivery, deliveryStartTime);
             }
-			@Override public double getTime() {
+			@Override public Time getTime() {
 			    return deliveryStartTime;
 			}
 		};
@@ -83,21 +84,21 @@ public class BowlAction extends AbstractAction
 		final TrajectoryPath trajectoryPath = trajectoryManager.calculate(bowlModel);
 		AbstractAction releaseBallAction = new AbstractAction() {
 			@Override public void run() {
-				ballController.setTrajectoryPath(trajectoryPath, deliveryFinishTime - 0.1);
+				ballController.setTrajectoryPath(trajectoryPath, deliveryFinishTime.subtract(0.1));
             }
-			@Override public double getTime() {
-			    return deliveryFinishTime - 0.1;
+			@Override public Time getTime() {
+			    return deliveryFinishTime.subtract(0.1);
 			}
 		};
 		
 		
 		// alert listeners that the ball has been released
 		BowlerReleasedBallEvent bowlerReleasedBallEvent = new BowlerReleasedBallEvent();
-		bowlerReleasedBallEvent.setTime(deliveryFinishTime - 0.1);
+		bowlerReleasedBallEvent.setTime(deliveryFinishTime.subtract(0.1));
 		
 		
 		// notify that the ball has reached the batsman
-		final double stopRecordingTime = deliveryFinishTime + trajectoryPath.getTimeAtY(-10); // TODO shot terminate y-loc should come from config
+		final Time stopRecordingTime = deliveryFinishTime.add(trajectoryPath.getTimeAtY(-10)); // TODO shot terminate y-loc should come from config
 		final Point3D ballLocWhenPassingBatsman = trajectoryPath.getLocation(trajectoryPath.getTimeAtY(-10));
 		boolean hasBounced = trajectoryPath.hasBounced(stopRecordingTime);
 		BallReachedBatsmanEvent ballReachedBatsmanEvent = new BallReachedBatsmanEvent(ballLocWhenPassingBatsman, hasBounced);
@@ -116,17 +117,17 @@ public class BowlAction extends AbstractAction
 			@Override public void run() {
 				bowlerController.setState(bowler, BowlerState.RunUp, deliveryFinishTime);
             }
-			@Override public double getTime() {
+			@Override public Time getTime() {
 			    return deliveryFinishTime;
 			}
 		};
 
-		final double followThroughFinishTime = followThroughAction.getMovement().getCompletionTime();
+		final Time followThroughFinishTime = followThroughAction.getMovement().getCompletionTime();
 		AbstractAction bowlerStateChangeFollowThroughFinishedAction = new AbstractAction() {
 			@Override public void run() {
 				bowlerController.setState(bowler, BowlerState.Waiting, followThroughFinishTime);
             }
-			@Override public double getTime() {
+			@Override public Time getTime() {
 			    return followThroughFinishTime;
 			}
 		};

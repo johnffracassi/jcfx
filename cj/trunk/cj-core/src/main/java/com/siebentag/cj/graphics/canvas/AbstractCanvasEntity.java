@@ -2,11 +2,13 @@ package com.siebentag.cj.graphics.canvas;
 
 import java.awt.Graphics2D;
 
+import com.siebentag.cj.util.math.Time;
+
 public abstract class AbstractCanvasEntity implements CanvasElement
 {
 	boolean enabled = true;
 	
-	public abstract void paint(Graphics2D g, double time);
+	public abstract void paint(Graphics2D g, Time time);
 
 	public void setEnabled(boolean enabled)
     {

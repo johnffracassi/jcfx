@@ -2,12 +2,13 @@ package com.siebentag.cj.mvc;
 
 import com.siebentag.cj.game.field.FieldPosition;
 import com.siebentag.cj.model.Player;
+import com.siebentag.cj.util.math.Time;
 
 public class FielderModel extends PersonModel
 {
 	private FielderState fielderState;
 	private FieldPosition fieldPosition;
-	private double timeOfLastStateChange;
+	private Time timeOfLastStateChange;
 	private boolean isFielding;
 
 	public FielderModel() 
@@ -38,7 +39,7 @@ public class FielderModel extends PersonModel
 		return fielderState;
 	}
 
-	public void setFielderState(FielderState fielderState, double time)
+	public void setFielderState(FielderState fielderState, Time time)
 	{
 		this.fielderState = fielderState;
 		this.timeOfLastStateChange = time;
@@ -54,7 +55,7 @@ public class FielderModel extends PersonModel
 		this.fieldPosition = fieldPosition;
 	}
 
-	public double getTimeOfLastStateChange()
+	public Time getTimeOfLastStateChange()
     {
     	return timeOfLastStateChange;
     }

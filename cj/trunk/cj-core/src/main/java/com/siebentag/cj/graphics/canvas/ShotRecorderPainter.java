@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.siebentag.cj.game.shot.ShotRecorder;
+import com.siebentag.cj.util.math.Time;
 
 @Component
 public class ShotRecorderPainter extends AbstractCanvasEntity
@@ -20,7 +21,7 @@ public class ShotRecorderPainter extends AbstractCanvasEntity
     private Color pointColour = new Color(0.5f, 0.5f, 1.0f, 0.8f);
     private Color joinLineColour = new Color(0.3f, 0.6f, 1.0f, 0.8f);
     
-    public void paint(Graphics2D g, double time)
+    public void paint(Graphics2D g, Time time)
     {
     	if(shotRecorder.getShotPoints() != null && shotRecorder.getShotPoints().size() > 5)
     	{
