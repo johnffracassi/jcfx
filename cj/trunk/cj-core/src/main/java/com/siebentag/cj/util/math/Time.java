@@ -32,10 +32,18 @@ public class Time implements Comparable<Time> {
 	}
 	
 	public Time add(Time time) {
+		
+		if(time == null) 
+			return this;
+		
 		return new Time(nanoTime + (long)(time.getTime() * MULTIPLIER), this.time + time.getTime(), scope);
 	}
 	
 	public Time subtract(Time time) {
+		
+		if(time == null)
+			return this;
+		
 		return new Time(nanoTime - (long)(time.getTime() * MULTIPLIER), this.time - time.getTime(), scope);
 	}
 	
@@ -60,5 +68,10 @@ public class Time implements Comparable<Time> {
 	@Override
 	public boolean equals(Object obj) {
 		return (obj != null && obj instanceof Time && ((Time)obj).time == time);
+	}
+	
+	@Override
+	public int hashCode() {
+		return new Long(nanoTime).hashCode();
 	}
 }

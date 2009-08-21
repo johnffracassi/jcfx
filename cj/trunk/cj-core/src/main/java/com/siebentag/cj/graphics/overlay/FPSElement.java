@@ -30,7 +30,7 @@ public class FPSElement extends AbstractCanvasEntity
 		g.setColor(Color.BLACK);
 		g.drawRect(10, 10, 150, 20);
 		
-		String msg = String.format("%d / %.2fs / %.1ffps", frameCount, time, (frameCount / time.getTime()));
+		String msg = String.format("%d / %.2fs / %.1ffps", frameCount, time.getTime(), (frameCount / time.getTime()));
 		g.drawString(msg, 20, 25);
 	}
 

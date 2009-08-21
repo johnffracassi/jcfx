@@ -50,7 +50,7 @@ public class Manager extends Thread
 			// this instant of time should be used by everything 
 			Time time = timeKeeper.getTime(TimeScope.Application);
 			
-			log.trace(String.format("polling queue: time=%.1f size=%d", time, managedQueue.size()));
+			log.trace(String.format("polling queue: time=%.1f size=%d", time.getTime(), managedQueue.size()));
 			
 			try
 			{
