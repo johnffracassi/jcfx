@@ -99,12 +99,12 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 		// check for boundary
 		BoundaryIntersection boundaryIntersection = boundaryManager.getBoundaryIntersection(result.getBallPath());
 		Time boundaryCrossTime = (boundaryIntersection.getType() == BoundaryType.NONE) ? null : boundaryIntersection.getLocation().getTime();
-		log.debug("  boundary=" + boundaryIntersection.getType() + " @ " + boundaryCrossTime);
+		log.debug("boundary=" + boundaryIntersection.getType() + " @ " + boundaryCrossTime);
 		
 		// find the closest fielder
 		FielderIntersection intersection = getClosestFielder(result.getBallPath());
 		final Time fielderPickupTime = intersection.getBallTime(); // TODO should this be fielder time?
-		log.debug("  closest fielder=" + intersection.getPlayer() + " @ " + fielderPickupTime);
+		log.debug("closest fielder=" + intersection.getPlayer() + " @ " + fielderPickupTime);
 
 		// if the ball crosses the boundary before the fielder can reach it
 		if(fielderPickupTime.isAfter(boundaryCrossTime)) {

@@ -58,6 +58,7 @@ public class ShotControllerImpl implements ShotController
 	{
 		// get recorded shot
 		List<Point2D> shotPoints = shotRecorder.getShotPoints();
+		log.debug("getting recorded shot points (" + shotPoints.size() + ")");
 		shotRecorder.reset();
 		
 		// find out some information about where the ball is
