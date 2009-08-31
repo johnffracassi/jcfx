@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.siebentag.cj.game.BowlModel;
+import com.siebentag.cj.game.action.MovementActionFactory.MovementAction;
 import com.siebentag.cj.game.event.BallReachedBatsmanEvent;
 import com.siebentag.cj.game.event.BowlerReleasedBallEvent;
 import com.siebentag.cj.game.field.FieldPosition;
