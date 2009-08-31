@@ -36,6 +36,7 @@ public class TrajectoryPathPainter extends AbstractCanvasEntity
 			for(TrajectoryPoint pt : trajectoryPath.getPoints())
 			{
 				Point2D nextPt = world.convert(pt);
+				Point2D shadowPt = world.convert(pt.floored());
 				
 				if(prevPt == null)
 				{
@@ -43,8 +44,12 @@ public class TrajectoryPathPainter extends AbstractCanvasEntity
 				}
 				else
 				{
+					g.setColor(Color.BLACK);
+					g.drawRect((int)shadowPt.getX(), (int)shadowPt.getY(), 1, 1);
+
 					g.setColor(pathColour);
 					g.drawLine((int)prevPt.getX(), (int)prevPt.getY(), (int)nextPt.getX(), (int)nextPt.getY());
+					
 					g.setColor(pointColour);
 					g.drawRect((int)prevPt.getX(), (int)prevPt.getY(), 1, 1);
 				}

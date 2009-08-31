@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.siebentag.cj.game.action.AbstractAction;
+import com.siebentag.cj.game.action.Action;
 import com.siebentag.cj.game.action.FielderStateChangeAction;
-import com.siebentag.cj.game.action.MovementAction;
 import com.siebentag.cj.game.action.MovementActionFactory;
 import com.siebentag.cj.game.action.PersonRole;
 import com.siebentag.cj.game.event.BallPickedUpEvent;
@@ -113,7 +113,7 @@ public class FielderControllerImpl extends PlayerControllerImpl implements Field
 		
 		// send a fielder to run to the point of intersection
 		Player fielder = intersection.getPlayer();
-		MovementAction fielderMovement = movementActionFactory.createRunToAction(PersonRole.Fielder, fielder, getLocation(fielder, time), intersection.getLocation(), time);
+		Action fielderMovement = movementActionFactory.createRunToAction(PersonRole.Fielder, fielder, getLocation(fielder, time), intersection.getLocation(), time);
 		managedQueue.add(fielderMovement);
 		
 		// is it a catch or a pick-up?

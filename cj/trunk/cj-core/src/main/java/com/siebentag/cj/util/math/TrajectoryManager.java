@@ -123,7 +123,9 @@ public class TrajectoryManager
 
 		// TODO use a variable speed for the return throw
 		double flightTime = d / maxInitialVelocity;
-		double uz = -9.8 * flightTime / 2;
+		
+		// solve for vz=0 halfway through the trajectory
+		double uz = -gravity * (flightTime / 2);
 		
 		int pointCount = (int)(flightTime / getResolution()) + 1;
 		
@@ -132,7 +134,7 @@ public class TrajectoryManager
 		for(int i=0; i<pointCount; i++)
 		{
 			double time = i * getResolution();
-			points[i] = new Point3D(origin.getX() + time / flightTime * dx, origin.getY() + time / flightTime * dy, keeperTakeHeight + uz * time + 0.5 * -gravity * time*time);
+			points[i] = new Point3D(origin.getX() + time / flightTime * dx, origin.getY() + time / flightTime * dy, keeperTakeHeight + uz * time + 0.5 * gravity * time*time);
 		}
 		
 		TrajectoryPath path = new TrajectoryPath(getResolution(), points);

@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.siebentag.cj.game.action.MovementAction;
+import com.siebentag.cj.game.action.Action;
 import com.siebentag.cj.game.action.MovementActionFactory;
 import com.siebentag.cj.game.action.PersonRole;
 import com.siebentag.cj.game.event.BallCompletedEvent;
@@ -146,7 +146,7 @@ public class BatsmanControllerImpl
 
 			// perform the run
 			Time runStartTime = time.add(0.15); // delay the run a little bit
-			MovementAction action = movementActionFactory.createRunToAction(PersonRole.Batsman, getBatsman(role), getLocation(getBatsman(role), time), destination.getLocation(), runStartTime);
+			Action action = movementActionFactory.createRunToAction(PersonRole.Batsman, getBatsman(role), getLocation(getBatsman(role), time), destination.getLocation(), runStartTime);
 			managedQueue.add(action);
 		}
 	}
