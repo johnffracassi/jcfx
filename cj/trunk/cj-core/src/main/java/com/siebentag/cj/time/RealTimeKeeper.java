@@ -1,5 +1,7 @@
 package com.siebentag.cj.time;
 
+import java.util.EnumMap;
+
 import org.springframework.stereotype.Component;
 
 import com.siebentag.cj.util.math.Time;
@@ -8,35 +10,27 @@ import com.siebentag.cj.util.math.TimeScope;
 @Component
 public class RealTimeKeeper implements TimeKeeper {
 	
-	private Long ballStartTime = null;
-	private Long appStartTime = null;
-	private Long pathStartTime = null;
-
+	private EnumMap<TimeScope, Long> scopeTime;
+	public static final double MULTIPLIER = 1000000000.0;
+	
 	public RealTimeKeeper() {
+		
+		long time = System.nanoTime();
+		
+		scopeTime = new EnumMap<TimeScope, Long>(TimeScope.class);
+		
+		for(TimeScope scope : TimeScope.values()) {
+			scopeTime.put(scope, time);
+		}
 	}
 
 	public Time getTime(TimeScope scope) {
 
 		long time = System.nanoTime();
+		long scopeStartTime = scopeTime.get(scope);
 		
-		switch (scope) {
-		case Application:
-			if (appStartTime == null)
-				appStartTime = System.nanoTime();
-			return new Time(time, (time - appStartTime) / Time.MULTIPLIER, scope);
-			
-		case Ball:
-			if (ballStartTime == null)
-				ballStartTime = System.nanoTime();
-			return new Time(time, (time - ballStartTime) / Time.MULTIPLIER, scope);
-			
-		case Path:
-			if (pathStartTime == null)
-				pathStartTime = System.nanoTime();
-			return new Time(time, (time - pathStartTime) / Time.MULTIPLIER, scope);
-			
-		default:
-			throw new IllegalArgumentException("Unsupported TimeScope: " + scope);
-		}
+		double seconds = (time - scopeStartTime) / MULTIPLIER;
+		
+		return new Time(time, seconds, scope);		
 	}
 }

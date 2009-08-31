@@ -139,6 +139,6 @@ public class PersonMovement
 
 	public String toString()
 	{
-		return String.format("%s - %s from %s => %s (time=%.1f)", person, moveStyle, source, destination, startTime);
+		return String.format("%s - %s from %s => %s (time=%.1f)", person, moveStyle, source, destination, startTime.getTime());
 	}	
 }
