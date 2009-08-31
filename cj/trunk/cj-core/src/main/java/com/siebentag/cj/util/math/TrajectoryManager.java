@@ -122,8 +122,8 @@ public class TrajectoryManager
 		double d = Math.sqrt(dx*dx + dy*dy);
 
 		// TODO use a variable speed for the return throw
-		double flightTime = d / 17.5;
-		double uz = 9.8 * flightTime / 2;
+		double flightTime = d / maxInitialVelocity;
+		double uz = -9.8 * flightTime / 2;
 		
 		int pointCount = (int)(flightTime / getResolution()) + 1;
 		

@@ -35,7 +35,7 @@ public class BoundaryManager
 					intersection.setType(BoundaryType.FOUR);
 				}
 
-				log.debug(String.format("boundary intersection found at %s (%s). bounceTime=%.1f / pointTime=%.1f", pt, intersection.getType(), path.getFirstBounceTime(), pt.getTime()));
+				log.debug(String.format("boundary intersection found at %s (%s). bounceTime=%.1f / pointTime=%.1f", pt, intersection.getType(), path.getFirstBounceTime().getTime(), pt.getTime().getTime()));
 				
 				return intersection;
 			}

@@ -66,6 +66,11 @@ public class Time implements Comparable<Time> {
 	}
 	
 	@Override
+	public String toString() {
+		return String.format("[%.1fs/%s]", time, scope);
+	}
+	
+	@Override
 	public boolean equals(Object obj) {
 		return (obj != null && obj instanceof Time && ((Time)obj).time == time);
 	}

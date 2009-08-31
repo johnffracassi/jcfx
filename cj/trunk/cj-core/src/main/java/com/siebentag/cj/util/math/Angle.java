@@ -34,4 +34,9 @@ public class Angle {
 	public double radians() {
 		return radians;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("%.1f", degrees());
+	}
 }

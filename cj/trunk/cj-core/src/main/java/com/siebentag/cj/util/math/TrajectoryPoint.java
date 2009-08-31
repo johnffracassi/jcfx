@@ -20,7 +20,7 @@ public class TrajectoryPoint extends Point3D
 
     @Override
     public String toString() {
-    	return String.format("%s@%.2f", super.toString(), time);
+    	return String.format("%s@%.2f", super.toString(), time.getTime());
     }
     
 	public Time getTime()
