@@ -5,10 +5,11 @@ import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
+import com.jeff.fx.datasource.Locator;
 import com.jeff.fx.util.DateUtil;
 
 @Component
-public class GAINLocator
+public class GAINLocator implements Locator
 {
 	private String domain = "ratedata.gaincapital.com";
 	private String pattern = "http://%s/%4d/%02d %s/%s_%s_Week%d.zip";
