@@ -30,8 +30,7 @@ public class AbstractDataSource<T extends FXDataPoint> implements DataSource<T> 
 	public FXDataResponse<T> load(FXDataRequest request) throws Exception {
 		List<T> dataPoints = new ArrayList<T>();
 
-		String url = locate(request.getInstrument(), request.getDate(), request
-				.getPeriod());
+		String url = locate(request.getInstrument(), request.getDate(), request.getPeriod());
 		byte[] compressed = download(url);
 		byte[] uncompressed = process(compressed);
 		List<T> newPoints = parse(uncompressed);
