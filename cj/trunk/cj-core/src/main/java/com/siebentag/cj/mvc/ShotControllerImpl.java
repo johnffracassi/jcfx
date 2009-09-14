@@ -94,7 +94,8 @@ public class ShotControllerImpl implements ShotController
 		else if(consequence instanceof Hit)
 		{
 			// create a trajectory based on the shot
-			TrajectoryModel trajectory = actualShotModel.getTrajectory();			
+			TrajectoryModel trajectory = actualShotModel.getTrajectory();
+			trajectory.setOrigin(initialLoc);
 			newBallPath = trajectoryManager.calculate(trajectory);
 			shotResult.setOffBat(true);
 			shotResult.setOffBody(false);
