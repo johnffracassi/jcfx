@@ -13,7 +13,7 @@ import com.siebentag.cj.util.math.Time;
 import com.siebentag.cj.util.math.TrajectoryPath;
 import com.siebentag.cj.util.math.TrajectoryPoint;
 
-@Component
+//@Component
 public class TrajectoryPathPainter extends AbstractCanvasEntity
 {
 	@Autowired

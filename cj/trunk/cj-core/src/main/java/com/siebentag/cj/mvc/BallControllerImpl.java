@@ -60,8 +60,8 @@ public class BallControllerImpl implements BallController, EventListener
 
 	public Point3D getLocation(Time time) {
 		if(trajectoryPath != null) {
-			double trajectoryTime = time.subtract(trajectoryStartTime).getTime();
-			return trajectoryPath.getLocation(time);
+			Time trajectoryTime = time.subtract(trajectoryStartTime);
+			return trajectoryPath.getLocation(trajectoryTime);
 		} else {
 			return Point3D.ORIGIN;
 		}
