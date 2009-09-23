@@ -198,4 +198,20 @@ public class CandleDataPoint extends AbstractFXDataPoint implements
 	public void setTickCount(int tickCount) {
 		this.tickCount = tickCount;
 	}
+
+	public double getHigh() {
+		return getBuyHigh() + getSellHigh() / 2.0;
+	}
+
+	public double getLow() {
+		return getBuyLow() + getSellLow() / 2.0;
+	}
+
+	public double getOpen() {
+		return getBuyOpen() + getSellOpen() / 2.0;
+	}
+
+	public double getClose() {
+		return getBuyClose() + getSellClose() / 2.0;
+	}
 }
