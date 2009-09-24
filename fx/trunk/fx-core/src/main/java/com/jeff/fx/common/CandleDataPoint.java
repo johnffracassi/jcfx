@@ -38,6 +38,17 @@ public class CandleDataPoint extends AbstractFXDataPoint implements
 		this.tickCount = candle.tickCount;
 	}
 
+	public CandleDataPoint(double value) {
+		this.buyClose = value;
+		this.buyHigh = value;
+		this.buyLow = value;
+		this.buyOpen = value;
+		this.sellClose = value;
+		this.sellHigh = value;
+		this.sellLow = value;
+		this.sellOpen = value;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("[%s/%s/%s] %s / %.4f %.4f %.4f %.4f (%d ticks)",
