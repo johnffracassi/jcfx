@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.joda.time.LocalDate;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.FXDataPoint;
@@ -56,7 +56,7 @@ public class SerialiserDataStore<T extends FXDataPoint> extends AbstractDataStor
 			T sample = data.get(0);
 			FXDataSource dataSource = sample.getDataSource();
 			Instrument instrument = sample.getInstrument();
-			LocalDate date = sample.getDate().toLocalDate();
+			DateTime date = sample.getDate().toDateTime();
 			
 			// locate the data file
 			File file = getLocator().locate(dataSource, instrument, date, sample.getPeriod());

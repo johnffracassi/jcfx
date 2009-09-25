@@ -13,8 +13,14 @@
 	<version>${jcfx.version}</version>
 	<description>FX Advisor - Data Sources</description>
 	
+	<scm>
+		<connection>${svn.connection.browse}/${project.artifactId}</connection>
+		<developerConnection>${svn.connection.dev}/${project.artifactId}</developerConnection>
+		<url>${svn.url}/${project.artifactId}</url>
+	</scm>
+
 	<dependencies>
-			<dependency>
+		<dependency>
 			<groupId>com.jeff.fx</groupId>
 			<artifactId>fx-core</artifactId>
 		</dependency> 
