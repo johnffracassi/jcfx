@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,17 +30,33 @@ public class AbstractDataSource<T extends FXDataPoint> implements DataSource<T> 
 	private Downloader downloader;
 
 	public FXDataResponse<T> load(FXDataRequest request) throws Exception {
+		
 		List<T> dataPoints = new ArrayList<T>();
 
-		String url = locate(request.getInstrument(), request.getDate(), request.getPeriod());
-		byte[] compressed = download(url);
-		byte[] uncompressed = process(compressed);
-		List<T> newPoints = parse(uncompressed);
-		dataPoints.addAll(newPoints);
+		for(LocalDate date : splitInterval(request.getInterval())) {		
+			String url = locate(request.getInstrument(), date, request.getPeriod());
+			byte[] compressed = download(url);
+			byte[] uncompressed = process(compressed);
+			List<T> newPoints = parse(uncompressed);
+			dataPoints.addAll(newPoints);
+		}
 
-		return new FXDataResponse<T>(request, newPoints);
+		return new FXDataResponse<T>(request, dataPoints);
 	}
 
+	private List<LocalDate> splitInterval(Interval interval) {
+		
+		List<LocalDate> dates = new ArrayList<LocalDate>();
+		
+		DateTime date = interval.getStart();
+		while(!date.isAfter(interval.getEnd())) {
+			dates.add(date.toLocalDate());
+			date = date.plusDays(1);
+		}
+		
+		return dates;
+	}
+	
 	public String locate(Instrument instrument, LocalDate date, Period period) {
 		return locator.generateUrl(instrument, date, period);
 	}
