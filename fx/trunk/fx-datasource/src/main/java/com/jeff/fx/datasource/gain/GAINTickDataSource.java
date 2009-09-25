@@ -8,8 +8,8 @@ import com.jeff.fx.common.TickDataPoint;
 import com.jeff.fx.datasource.AbstractDataSource;
 import com.jeff.fx.util.ZipUtil;
 
-@Component("gain")
-public class GAINDataSource extends AbstractDataSource<TickDataPoint> {
+@Component
+public class GAINTickDataSource extends AbstractDataSource<TickDataPoint> {
 
 	public byte[] process(byte[] data) throws IOException {
 		return ZipUtil.unzipBytes(data);

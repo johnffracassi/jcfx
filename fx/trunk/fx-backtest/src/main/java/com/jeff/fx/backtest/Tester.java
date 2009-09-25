@@ -15,8 +15,8 @@ import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.common.TickDataPoint;
+import com.jeff.fx.datasource.converter.TickToCandleConverter;
 import com.jeff.fx.datastore.DataManager;
-import com.jeff.fx.datastore.converter.TickToCandleConverter;
 
 public class Tester {
 

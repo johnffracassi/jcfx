@@ -1,4 +1,4 @@
-package com.jeff.fx.datastore.converter;
+package com.jeff.fx.datasource.converter;
 
 import java.util.ArrayList;
 import java.util.Collections;

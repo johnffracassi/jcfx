@@ -18,7 +18,7 @@ import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.common.TickDataPoint;
 import com.jeff.fx.datasource.DataSource;
-import com.jeff.fx.datastore.converter.TickToCandleConverter;
+import com.jeff.fx.datasource.converter.TickToCandleConverter;
 
 @Component("dataManager")
 public class DataManager {
@@ -38,10 +38,8 @@ public class DataManager {
 
 		TickToCandleConverter t2c = new TickToCandleConverter();
 
-		for (Period period : new Period[] { Period.OneMin, Period.FiveMin,
-				Period.FifteenMin, Period.ThirtyMin, Period.OneHour }) {
-			List<CandleDataPoint> candles = t2c.convert(response.getData(),
-					period);
+		for (Period period : new Period[] { Period.OneMin, Period.FiveMin, Period.FifteenMin, Period.ThirtyMin, Period.OneHour }) {
+			List<CandleDataPoint> candles = t2c.convert(response.getData(),period);
 			dm.getCandleDataStore().store(candles);
 		}
 	}
@@ -56,12 +54,19 @@ public class DataManager {
 		}
 	}
 
-	public FXDataResponse<CandleDataPoint> loadCandles(FXDataRequest request)
-			throws Exception {
+	public FXDataResponse<CandleDataPoint> loadCandles(FXDataRequest request) throws Exception {
 		log.debug("Load candles for " + request);
-		DataSource<CandleDataPoint> ds = candleDataSources.get(request
-				.getDataSource());
-		return ds.load(request);
+		
+		if (exists(request)) {
+			log.debug("returning candles from data store");
+			return candleDataStore.load(request);
+		} else {
+			log.debug("fetching candles from data source");
+			DataSource<CandleDataPoint> ds = candleDataSources.get(request.getDataSource());
+			FXDataResponse<CandleDataPoint> response = ds.load(request);
+			storeCandles(response.getData());
+			return response;
+		}
 	}
 
 	public FXDataResponse<TickDataPoint> loadTicks(FXDataRequest request)
@@ -73,8 +78,7 @@ public class DataManager {
 			return tickDataStore.load(request);
 		} else {
 			log.debug("fetching ticks from data source");
-			DataSource<TickDataPoint> ds = tickDataSources.get(request
-					.getDataSource());
+			DataSource<TickDataPoint> ds = tickDataSources.get(request.getDataSource());
 			FXDataResponse<TickDataPoint> response = ds.load(request);
 			storeTicks(response.getData());
 			return response;
