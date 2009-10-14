@@ -15,8 +15,14 @@
 	<property name="xml.file" value="data.xml" />			<!-- Output location for data model 			-->
 	<property name="out.file" value="steamboat.html" />	<!-- Output HTML file, pre-split 				-->
 	
-	
-	
+    <property name="sdk.dir" location="F:/dev/lib/appengine-java-sdk-1.2.5" />
+    <import file="${sdk.dir}/config/user/ant-macros.xml" />
+
+	  <target name="update" description="Uploads the application to App Engine.">
+	    <appcfg action="update" war="C:/Program Files (x86)/Apache Software Foundation/Tomcat 6.0/webapps/steamboat" />
+	  </target>
+
+
 	<target name="init">
 		<available property="linux" file="/usr" />
 		
@@ -31,7 +37,7 @@
 	<!-- ========================================================================== -->
 	<!-- Generate and deploy														-->
 	<!-- ========================================================================== -->
-	<target name="all" depends="init, clean, compile, generate, chart, deploy" />
+	<target name="all" depends="init, clean, compile, data-model, generate, chart, deploy" />
 
 	<!-- ========================================================================== -->
 	<!-- Deploy to SteamboatWillies.com												-->
@@ -58,7 +64,7 @@
 	<!-- ========================================================================== -->
 	<!-- Generate the static content												-->
 	<!-- ========================================================================== -->
-	<target name="generate" depends="init, data-model">
+	<target name="generate">
 		<mkdir dir="${tmp.dir}" />
 		<mkdir dir="${tmp.dir}/split" />
 		<mkdir dir="${tmp.dir}/${app.dir}" />
@@ -74,7 +80,7 @@
 	<!-- ========================================================================== -->
 	<!-- Build the XML data model													-->
 	<!-- ========================================================================== -->
-	<target name="data-model" depends="init, compile">
+	<target name="data-model">
 		<taskdef name="convert" classname="com.jeff.sw.DataConverter" classpath="${tmp.dir}/${classes}" />
 		<convert gameDir="${game.dir}" profileDir="${profile.dir}" outputFile="${tmp.dir}/${xml.file}" />
 	</target>
@@ -83,7 +89,7 @@
 	<!-- ========================================================================== -->
 	<!-- Generate and resterise the charts											-->
 	<!-- ========================================================================== -->
-	<target name="chart" depends="init, data-model">
+	<target name="chart">
 		<xslt style="${xsl.dir}/bat-charts.xsl" in="${tmp.dir}/${xml.file}" out="${tmp.dir}/tmp.svg" force="true" />
 
 		<taskdef name="rasterise" classname="org.apache.tools.ant.taskdefs.optional.RasterizerTask" />
@@ -96,7 +102,7 @@
 	<!-- ========================================================================== -->
 	<!-- Clean out temp and build directories										-->
 	<!-- ========================================================================== -->
-	<target name="clean" depends="init">
+	<target name="clean">
 		<delete dir="${tmp.dir}" />
 		<mkdir dir="${tmp.dir}/${app.dir}" />
 		<mkdir dir="${tmp.dir}/${classes}" />
