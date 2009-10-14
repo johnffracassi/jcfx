@@ -42,9 +42,6 @@
 	<classpathentry kind="lib" path="lib/batik-1.6/lib/xerces_2_5_0.jar"/>
 	<classpathentry kind="lib" path="lib/batik-1.6/lib/xml-apis.jar"/>
 	<classpathentry kind="lib" path="lib/commons-net-1.4.1.jar"/>
-	<classpathentry kind="lib" path="/home/jeff/.m2/repository/org/hibernate/hibernate/3.2.4.ga/hibernate-3.2.4.ga.jar"/>
-	<classpathentry kind="lib" path="/home/jeff/.m2/repository/org/hibernate/hibernate-annotations/3.3.0.ga/hibernate-annotations-3.3.0.ga.jar"/>
-	<classpathentry kind="lib" path="/home/jeff/.m2/repository/org/hibernate/hibernate-commons-annotations/3.0.0.ga/hibernate-commons-annotations-3.0.0.ga.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/cj-core"/>
 	<classpathentry kind="var" path="M2_REPO"/>
 	<classpathentry kind="output" path="bin"/>

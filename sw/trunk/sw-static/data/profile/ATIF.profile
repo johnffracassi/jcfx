@@ -1,0 +1,16 @@
+fullName 		= Atif
+dob 			= 
+currentAge		= 
+flag 			= pk.gif
+origin 			= Unknown
+teams	 		= Steamboat Willies ICC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 26/9/2009
+lastGame		= 26/9/2009
+nicknames		= Atif
+profile			= 
+specialMove		= 
+registered		= 0
