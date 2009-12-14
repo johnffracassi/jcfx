@@ -1,0 +1,16 @@
+fullName 		= Rob
+dob 			= 
+currentAge		= 
+flag 			= eng.gif
+origin 			= 
+teams	 		= Steamboat Willies
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 22/10/2009
+lastGame		= 22/10/2009
+nicknames		= Rob
+profile			= 
+specialMove		= 
+registered		= 0
