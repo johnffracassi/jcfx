@@ -17,6 +17,7 @@
 	<xsl:include href="player-profile.xsl" />
 	<xsl:include href="team-bowling.xsl" />
 	<xsl:include href="weighted-pts.xsl" />
+	<xsl:include href="menus.xsl" />
 
 	
 	<xsl:template match="/">
@@ -33,5 +34,6 @@
 		<xsl:call-template name="ps-all" />
 		<xsl:call-template name="bowl-all" />
 		<xsl:call-template name="team-bowl-all" />
+		<xsl:call-template name="menu-pages" />
 	</xsl:template>
 </xsl:stylesheet>

@@ -1,8 +1,8 @@
 fullName 		= Nick Walker
-dob 			= 
-currentAge		= 35ish
+dob 			= early 70's
+currentAge		= 37ish?
 picture			= nick.jpg
-flag 			= england.gif
+flag 			= de.gif
 origin 			= Whiney Pom
 teams	 		= Steamboat Willies CC
 role 			= Team Physician
