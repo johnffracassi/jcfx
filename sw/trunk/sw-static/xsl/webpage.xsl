@@ -112,7 +112,7 @@
 						<tr>
 							<td class="header">
 								<a href="index.html">
-									<img src="images/sw-small.jpg" style="border: 0px;" />
+									<img src="images/sw-small.png" style="border: 0px;" />
 								</a>
 							</td>
 							<td class="header">
@@ -126,15 +126,6 @@
 							</td>
 							
 							<td class="content">
-								<!-- Corporate sponsorship logo 
-								<br/>
-									<center>
-										<img align="center" valign="top" src="{$sponsor}" />
-									</center>
-								<br/>
-								<hr/>
-								-->
-								
 								<xsl:copy-of select="$doc" />
 							</td>
 						</tr>

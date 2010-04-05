@@ -25,7 +25,7 @@
 	</xsl:template>
 	
 	<xsl:template name="items-profiles">
-		<li>Profiles (Current)
+		<li><a href="menu-profiles.html">Profiles (Current)</a>
 			<ul>
 				<xsl:for-each select="//player[@current = 'Y']">
 					<xsl:sort select="sw:realname(@id)" />
@@ -34,7 +34,7 @@
 			</ul>
 		</li>
 		
-		<li>Profiles (RIP)
+		<li><a href="menu-profiles.html">Profiles (RIP)</a>
 			<ul>
 				<xsl:for-each select="//player[@current = 'N']">
 					<xsl:sort select="sw:realname(@id)" />
@@ -55,7 +55,7 @@
 	</xsl:template>
 
 	<xsl:template name="items-batting">
-		<li>Batting Records
+		<li><a href="menu-batting.html">Batting Records</a>
 		<ul>
 			<li><a href="bat-summary-career.html">Career</a></li>
 			<li><a href="bat-summary-season.html">Season</a></li>
@@ -90,7 +90,7 @@
 	</xsl:template>
 
 	<xsl:template name="items-bowling">
-		<li>Bowling Records
+		<li><a href="menu-bowling.html">Bowling Records</a>
 			<ul>
 				<li><a href="bowl-summary-career.html">Career</a></li>
 				<li><a href="bowl-summary-season.html">Season</a></li>
@@ -121,7 +121,7 @@
 	</xsl:template>
 	
 	<xsl:template name="items-general">
-		<li>General Records
+		<li><a href="menu-general.html">General Records</a>
 			<ul>
 				<li><a href="net-career.html">Net Runs (Career)</a></li>
 				<li><a href="net-season.html">Net Runs (Season)</a></li>
