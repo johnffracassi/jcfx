@@ -117,7 +117,7 @@
 				<th class="season" rowspan="2">Season</th>
 				<th class="lb num2"   rowspan="2">Inns</th>
 				<th class="lb centre" colspan="8">Player</th>
-				<th class="lb centre" colspan="5">Partnership</th>
+				<th class="lb centre" colspan="6">Partnership</th>
 				<th class="lb centre" colspan="5">Out</th>
 
 				<th class="lb num2" rowspan="2">Dot</th>
@@ -140,7 +140,8 @@
 				<th class="num3">Avg</th>
 				<th class="num2">HS</th>
 				<th class="num2">LS</th>
-				<th class="num2">&gt;30</th>
+				<th class="num2">&gt;25</th>
+				<th class="num2">&gt;50</th>
 				
 				<th class="lb num2">Total</th>
 				<th class="num2">B</th>
@@ -199,7 +200,8 @@
 		<td class="num3"><xsl:value-of select="sw:divide($psRuns, $inns)" /></td>
 		<td class="num2"><xsl:value-of select="max($psSet/@score)" /></td>
 		<td class="num2"><xsl:value-of select="min($psSet/@score)" /></td>
-		<td class="num2"><xsl:value-of select="count($psSet[number(@score) &gt;= 30])" /></td>
+		<td class="num2"><xsl:value-of select="count($psSet[number(@score) &gt;= 25 and number(@score) &lt; 50])" /></td>
+		<td class="num2"><xsl:value-of select="count($psSet[number(@score) &gt;= 50])" /></td>
 		
 		<td class="lb num2"><xsl:value-of select="count($balls[@runs = '-5'])" /></td>
 		<td class="num2"><xsl:value-of select="count($balls[@score = 'B'])" /></td>
