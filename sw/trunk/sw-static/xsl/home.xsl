@@ -9,18 +9,14 @@
    
 	<xsl:template name="home">
 
-		<h2>Steamboat Willies News</h2>
+		<h1>Steamboat Willies News</h1>
+		
+		<h3>7th Apr 2010</h3>
 		Following on from the reasonably successful World Ice Cricket Club Championships, we are taking on the mighty ICC affiliated 
-		<a href="http://icc-cricket.yahoo.net/the-icc/icc_members/profile.php?countryCode=ICC_AFFILIATE_MEMBERS_EST"><img src="images/ee.gif" style="border: 0px;" />Estonian</a>
-		national team. Email if you would like to be considered for selection.<br/>
+		<a href="http://icc-cricket.yahoo.net/the-icc/icc_members/profile.php?countryCode=ICC_AFFILIATE_MEMBERS_EST">Estonian national team</a>. 
+		<br/>Email if you would like to be considered for selection.<br/>
 
-		<h2>Contact</h2>
-		Email: <a href="mailto:steamboatwilliesicc@gmail.com">steamboatwilliesicc@gmail.com</a><br/>
-		Franchising opportunities: <a href="mailto:steamboatwilliesicc@gmail.com">steamboatwilliesicc@gmail.com</a><br/>
-		
-		
 		
 		<h2>Current Player Rankings</h2>
-		
 	</xsl:template>
 </xsl:stylesheet>
