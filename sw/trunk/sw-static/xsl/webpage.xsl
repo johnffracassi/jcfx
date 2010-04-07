@@ -132,8 +132,13 @@
 						
 						<tr>
 							<td class="footer" colspan="2">
-								&#169; 2005-2010 <xsl:value-of select="$team-name" /> (Toot toot!)<br/>
-								<small>Generated: <xsl:value-of select="Date:new()" /></small>
+								&#169; 2005-2010 <xsl:value-of select="$team-name" /> (Toot toot!) | 
+								Contact: <a href="mailto:steamboatwilliesicc@gmail.com">steamboatwilliesicc@gmail.com</a> | 
+								Wikipedia: <a href="http://en.wikipedia.org/wiki/Steamboat_Willies_ICC">Steamboat Willies ICC</a>
+								<br/>
+								<small>
+									Generated: <xsl:value-of select="Date:new()" /><br/>
+								</small>
 							</td>
 						</tr>
 					</table>
