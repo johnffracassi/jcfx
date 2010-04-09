@@ -19,9 +19,11 @@
 					<tr>
 						<td valign="top">
 							<table class="stats2" style="border: 1px solid black;" border="0" cellspacing="1" cellpadding="3">
-								<caption><xsl:value-of select="sw:season-title($current-season)" /> - Player Rankings</caption>
+								<caption>Player Rankings - <xsl:value-of select="sw:season-title($current-season)" />
+								| <a href="net-history-all.html">All Time</a></caption>
 								<xsl:call-template name="net-history">
 									<xsl:with-param name="match-set" select="//match[@seasonId = $current-season]" />
+									<xsl:with-param name="min-games" select="3" />
 								</xsl:call-template>
 							</table>
 						</td>
@@ -132,11 +134,11 @@
 						
 						<tr>
 							<td class="footer" colspan="2">
-								&#169; 2005-2010 <xsl:value-of select="$team-name" /> (Toot toot!) | 
 								Contact: <a href="mailto:steamboatwilliesicc@gmail.com">steamboatwilliesicc@gmail.com</a> | 
 								Wikipedia: <a href="http://en.wikipedia.org/wiki/Steamboat_Willies_ICC">Steamboat Willies ICC</a>
 								<br/>
 								<small>
+									&#169; 2005-2010 <xsl:value-of select="$team-name" /> (Toot toot!) |
 									Generated: <xsl:value-of select="Date:new()" /><br/>
 								</small>
 							</td>

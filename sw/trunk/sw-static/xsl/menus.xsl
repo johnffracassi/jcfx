@@ -131,6 +131,7 @@
 				<li><a href="most-beers-won.html">Most Beers Won</a></li>
 				<li><a href="ps-skin-win.html">Best Skins</a></li>
 				<li><a href="ps-skin-loss.html">Worst Skins</a></li>
+				<li><A href="bat-histogram.html">Ball Histogram</A></li>
 			</ul>
 		</li>
 	</xsl:template>
