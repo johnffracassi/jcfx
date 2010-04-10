@@ -7,9 +7,9 @@
 				extension-element-prefixes="exsl" >
    
 	<xsl:variable name="doc" 			select="/" />
-	<xsl:variable name="ind-row-count" 	select="40" />
+	<xsl:variable name="ind-row-count" 	select="50" />
 	<xsl:variable name="ps-row-count"  	select="$ind-row-count" />
-	<xsl:variable name="current-season" select="11" />
+	<xsl:variable name="current-season" select="12" />
 	<xsl:variable name="sponsor" 		select="'http://www.usairways.com/awa/resources/_images/homepage_logo.gif'" />
 	<xsl:variable name="team-name" 		select="'Steamboat Willies ICC'" />
 
