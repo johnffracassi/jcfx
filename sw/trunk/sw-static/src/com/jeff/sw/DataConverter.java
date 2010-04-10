@@ -20,7 +20,7 @@ import com.sun.org.apache.xerces.internal.dom.DocumentImpl;
 
 public class DataConverter extends Task
 {
-	static String dataRoot 		= "/var/local/dev/proj/steamboat/steamboat/data";
+	static String dataRoot 		= "C:/Users/Sally/workspace/sw-static/data";
 	static String gameDir 		= dataRoot + "/game";
 	static String profileDir 	= dataRoot + "/profile";
 	static String outputFile 	= dataRoot + "/xml/data.xml";

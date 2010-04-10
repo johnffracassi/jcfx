@@ -132,6 +132,8 @@
 				<li><a href="ps-skin-win.html">Best Skins</a></li>
 				<li><a href="ps-skin-loss.html">Worst Skins</a></li>
 				<li><A href="bat-histogram.html">Ball Histogram</A></li>
+				<li><a href="weighted-season.html">Weighted Points (Season)</a></li>
+				<li><a href="weighted-career.html">Weighted Points (Career)</a></li>
 			</ul>
 		</li>
 	</xsl:template>

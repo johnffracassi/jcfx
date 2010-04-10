@@ -1,6 +1,6 @@
 fullName 		= Max Murray
 dob 			= 1973
-currentAge		= 35
+currentAge		= 37
 picture			= max.jpg
 flag 			= scotland.gif
 origin 			= Loch Ness, Scotland.

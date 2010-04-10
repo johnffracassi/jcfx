@@ -20,7 +20,8 @@
 						<td valign="top">
 							<table class="stats2" style="border: 1px solid black;" border="0" cellspacing="1" cellpadding="3">
 								<caption>Player Rankings - <xsl:value-of select="sw:season-title($current-season)" />
-								| <a href="net-history-all.html">All Time</a></caption>
+								| <a href="net-history-all.html">All Time</a>
+								| <a href="net-history-12.html">Historical</a></caption>
 								<xsl:call-template name="net-history">
 									<xsl:with-param name="match-set" select="//match[@seasonId = $current-season]" />
 									<xsl:with-param name="min-games" select="3" />
@@ -155,8 +156,8 @@
 			<li><a href="index.html">Home</a></li>
 			<li><a href="results.html">Results</a></li>
 			
-			<li><a href="http://playonsports.spawtz.com/SpawtzSkin/Fixtures/Fixtures.aspx?LeagueId=58&amp;SeasonId=25">Fixtures »</a></li>
-			<li><a href="http://playonsports.spawtz.com/SpawtzSkin/Fixtures/Standings.aspx?LeagueId=58&amp;SeasonId=25">Table »</a></li>
+			<li><a href="http://playonsports.spawtz.com/SpawtzSkin/Fixtures/Fixtures.aspx?LeagueId=58&amp;SeasonId=38">Fixtures »</a></li>
+			<li><a href="http://playonsports.spawtz.com/SpawtzSkin/Fixtures/Standings.aspx?LeagueId=58&amp;SeasonId=38">Table »</a></li>
 
 			<!-- menu items are now defined in 'menus.xsl' -->
 			<xsl:call-template name="items-profiles" />
