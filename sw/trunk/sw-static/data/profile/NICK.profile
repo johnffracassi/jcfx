@@ -2,13 +2,8 @@ fullName 		= Nick Walker
 dob 			= early 70's
 currentAge		= 37ish?
 picture			= nick.jpg
-<<<<<<< .mine
 flag 			= de.gif
 origin 			= Socks and sandal wearing German
-=======
-flag 			= de.gif
-origin 			= Whiney Pom
->>>>>>> .r152
 teams	 		= Steamboat Willies CC
 role 			= Team Coach (Gynaecology skills not required in all male cricket club).
 battingStyle 	= OK
