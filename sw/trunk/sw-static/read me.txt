@@ -27,6 +27,7 @@ C:\dev\proj\sw\sw-static\xsl
 C:\dev\proj\sw\sw-static\web
 right click and select SVN Commit
 
+when adding stuff use Tortoise SVN... then remember to commit the new file
 IF DEPLOY CRASHES - USE FOLLOWING COMMAND TO RESET
 =====================================================
 appcfg.cmd rollback C:\dev\temp\steamboat\bin\app
