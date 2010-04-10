@@ -26,12 +26,10 @@
 	<!-- ============================================================================================== -->
 	<xsl:function name="sw:weighting-by-match">
 		<xsl:param name="matches" />
+		<xsl:param name="fully-qualified-matches"/>
 		
 		<xsl:choose>
-			<xsl:when test="$matches &lt; 2">0.2</xsl:when>
-			<xsl:when test="$matches &lt; 3">0.4</xsl:when>
-			<xsl:when test="$matches &lt; 4">0.6</xsl:when>
-			<xsl:when test="$matches &lt; 5">0.8</xsl:when>
+			<xsl:when test="$matches &lt; $fully-qualified-matches"><xsl:value-of select="$matches div $fully-qualified-matches" /></xsl:when>
 			<xsl:otherwise>1.0</xsl:otherwise>
 		</xsl:choose>
 	</xsl:function>   

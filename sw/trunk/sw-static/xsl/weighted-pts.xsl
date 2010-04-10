@@ -12,11 +12,13 @@
 			<xsl:with-param name="doc">
 				<xsl:call-template name="highlight" />
 				<table id="sortTable" class="stats2" border="0" cellspacing="1" cellpadding="3">
-					<caption>Weighted Player Rankings - Career</caption>
+					<caption>Weighted Player Rankings - Career (10 matches for full ranking)</caption>
 					<xsl:call-template name="weighted">
 						<xsl:with-param name="match-set" select="//match" />
+						<xsl:with-param name="fully-qualified-matches" select="10" />
 					</xsl:call-template>
 				</table>
+				<xsl:call-template name="weighted-exp" />
 			</xsl:with-param>
 		</xsl:call-template>
 
@@ -25,18 +27,32 @@
 			<xsl:with-param name="doc">
 				<xsl:call-template name="highlight" />
 				<table id="sortTable" class="stats2" border="0" cellspacing="1" cellpadding="3">
-					<caption>Weighted Player Rankings - Season</caption>
+					<caption>Weighted Player Rankings - Season (3 matches for full ranking)</caption>
 					<xsl:call-template name="weighted">
 						<xsl:with-param name="match-set" select="//match[@seasonId &gt;= $current-season]" />
+						<xsl:with-param name="fully-qualified-matches" select="3" />
 					</xsl:call-template>
 				</table>
+				<xsl:call-template name="weighted-exp" />
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
 
+	<xsl:template name="weighted-exp">
+		<p>		
+		Weighted Average is calculated by ranking players against their teammates in each individual game.<br/>
+		The best player for a single match will always receive 10pts. The worst player (aka Armadillo) is always given 0pts. The remainder
+		of players are allocated points based on how close to the best/worst players.<br/>
+		For example, say P1 scores +25, P2 scores -10, P3 scores +20 and P4 scores +1. Firstly, all scores are normalised to start from 0, 
+		in this case +10 is added to all the scores (P1=35,P2=0,P3=30,P4=11). The scores are then scaled by the same amount so that
+		the highest score is exactly 10 (in this case the scale is 10/35=0.286). Then we end up with P1=10,P2=0,P3=5.72,P4=3.15<br/>
+		</p>
+		
+	</xsl:template>
 
 	<xsl:template name="weighted">
 		<xsl:param name="match-set" />
+		<xsl:param name="fully-qualified-matches" />
 
 		<xsl:variable name="net">
 			<xsl:call-template name="get-net">
@@ -98,17 +114,17 @@
 		
 		<tbody>
 			<xsl:for-each-group select="$results/results/result" group-by="@player">
-				<xsl:sort select="sw:weighting-by-match(count(current-group())) * sum(current-group()/@weighted) div count(current-group())" order="descending" data-type="number" />
+				<xsl:sort select="sw:weighting-by-match(count(current-group()), $fully-qualified-matches) * sum(current-group()/@weighted) div count(current-group())" order="descending" data-type="number" />
 				
 				<xsl:variable name="matches" select="count(current-group())" />
-				<xsl:variable name="weighting" select="sw:weighting-by-match($matches)" />
+				<xsl:variable name="weighting" select="sw:weighting-by-match($matches, $fully-qualified-matches)" />
 				<xsl:variable name="weighted-pts" select="sum(current-group()/@weighted)" />
 				
 				<tr id="[{@player}]">
 					<td class="text"><xsl:copy-of select="sw:fullname(current-group()[1]/@player)" /></td>
 					<td class="number"><xsl:value-of select="$matches" /></td>
 					<td class="number"><xsl:value-of select="sum(current-group()/@net)" /></td>
-					<td class="number"><xsl:value-of select="$weighting * 100" />%</td>
+					<td class="number"><xsl:value-of select="format-number($weighting * 100, '0')" />%</td>
 					<td class="number"><xsl:value-of select="format-number($weighted-pts, '0.000')" /></td>
 					<td class="number"><xsl:value-of select="format-number($weighted-pts div $matches, '0.000')" /></td>
 					<td class="number"><b><xsl:value-of select="format-number($weighting * $weighted-pts div $matches, '0.000')" /></b></td>
@@ -121,5 +137,6 @@
 				</tr>
 			</xsl:for-each-group>
 		</tbody>
+		
 	</xsl:template>
 </xsl:stylesheet>

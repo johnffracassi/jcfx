@@ -20,6 +20,27 @@
 				</table>
 			</xsl:with-param>
 		</xsl:call-template>
+
+		<xsl:for-each select="//season">
+			<xsl:variable name="seasonId" select="@id" />
+			<xsl:call-template name="output">
+				<xsl:with-param name="file">net-history-<xsl:value-of select="$seasonId" /></xsl:with-param>
+				<xsl:with-param name="doc">
+					<xsl:call-template name="highlight" />
+					<table class="stats2" border="0" cellspacing="1" cellpadding="3">
+						<caption>
+							<a href="net-history-{@id - 1}.html">&lt;</a>
+							Final Player Rankings (min 3 games) - <xsl:value-of select="@name" /><xsl:value-of select="' '" /><xsl:value-of select="@year" /> (<xsl:value-of select="@grade" />) 
+							<a href="net-history-{@id + 1}.html">&gt;</a>
+						</caption>
+						<xsl:call-template name="net-history">
+							<xsl:with-param name="match-set" select="//match[@seasonId = $seasonId]" />
+							<xsl:with-param name="min-games" select="3" />
+						</xsl:call-template>
+					</table>
+				</xsl:with-param>
+			</xsl:call-template>
+		</xsl:for-each>
 	</xsl:template>
 
 	<xsl:template name="net-history">

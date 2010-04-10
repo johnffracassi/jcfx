@@ -1,4 +1,4 @@
-fullName 		= Rory Robertson
+fullName 		= Tom
 dob 			= 
 currentAge		= 
 flag 			= za.gif

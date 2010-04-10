@@ -1,6 +1,6 @@
 fullName 		= Trent Malcolm
 dob 			= Sept 1976
-currentAge		= 32
+currentAge		= 34
 picture			= trent.jpg
 flag 			= au.gif
 origin 			= Canberra (Yawn)

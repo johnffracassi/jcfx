@@ -1,6 +1,6 @@
 fullName 		= Kumaran Sivapathasuntharam
 dob 			= 1981
-currentAge		= 27
+currentAge		= 29
 picture			= kumaran.jpg
 flag 			= nz.gif
 origin 			= 
