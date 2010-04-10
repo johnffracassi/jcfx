@@ -411,20 +411,21 @@ public class DataConverter extends Task
 		container.setAttribute("balls", String.valueOf(count));
 	}
 	
-	private Element convertBall(Document doc, int ordinal, String ball)
+	private Element convertBall(Document doc, int ordinal, String oldBall)
 	{
-		if(ball == null || ball.trim().equals(""))
+		if(oldBall == null || oldBall.trim().equals(""))
 		{
 			return null;
 		}
 
-		ball = ball.replace("ls", "w");		
+		String newBall = oldBall.replace("ls", "W");		
+		newBall = oldBall.replace("LS", "W");		
 		
 		Element elem = doc.createElement("ball");
 		
 		elem.setAttribute("ordinal", String.valueOf(ordinal));
-		elem.setAttribute("score", ball);
-		elem.setAttribute("runs", String.valueOf(runsOffBall(ball)));
+		elem.setAttribute("score", newBall);
+		elem.setAttribute("runs", String.valueOf(runsOffBall(newBall)));
 //		elem.setAttribute("absOrdinal", String.valueOf(++batAbsOrd));
 //		batCum += runsOffBall(ball);
 //		elem.setAttribute("cumScore", String.valueOf(batCum));
