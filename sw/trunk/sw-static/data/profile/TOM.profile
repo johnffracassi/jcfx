@@ -1,4 +1,4 @@
-fullName 		= Tom Weasel's Mate
+fullName 		= Rory Robertson
 dob 			= 
 currentAge		= 
 flag 			= za.gif
