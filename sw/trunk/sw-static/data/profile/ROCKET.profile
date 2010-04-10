@@ -1,6 +1,6 @@
 fullName 		= Rod "Rocket" Scotton
-dob 			= long ago
-currentAge		= oldish
+dob 			= Long ago
+currentAge		= Oldish
 flag 			= au.gif
 origin 			= Tassie
 teams	 		= Steamboat Willies, Antelopes
@@ -12,5 +12,5 @@ debut			= 6/3/2009
 lastGame		= Current
 nicknames		= Red Rocket, Rocket, Rocket Salad, Rod
 profile			= Nuggety recent joiner who proved his worth picking up Player of the Season on his debut.  Has quickly stepped up to the mark and organises the Steamboat Willia fund.
-specialMove		= Cleaning Vomit of his mo
+specialMove		= Cleaning Vomit off his mo
 registered		= 1
