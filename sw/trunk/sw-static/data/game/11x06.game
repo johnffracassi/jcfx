@@ -14,7 +14,7 @@ max		4	NB1		1			1		W	1		1		1			NB			1		2
 rob	1		S	1		4	W	0	0	C		2				0	C			1			5		R		
 owen		2			1						C		R	0	1			2	1		B	W1		W		2	
 nick	1	W	1	2	W	5																					
-natham	2	C	1	2	2	7																					
+nathan	2	C	1	2	2	7																					
 kumaran	7	0	3	1	5	0																					
 neil	R	1	0	3	2	2																					
 rob	W	3	0	1	2	W																					
@@ -29,3 +29,4 @@ nathan	2	NB	1	2	3	1
 kumaran	0	2	2	3	2	1																					
 neil	1	2	1	1	NB	1																					
 nick	1	W	2	0	2	0	R																				
+																											
