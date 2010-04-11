@@ -35,7 +35,7 @@
 		<a href="http://icc-cricket.yahoo.net/the-icc/icc_members/profile.php?countryCode=ICC_AFFILIATE_MEMBERS_EST">Estonian national team</a>. 
 		<br/>Email if you would like to be considered for selection.<br/>
 
-		
-		<h2>Current Player Rankings</h2>
+		<br/>
+
 	</xsl:template>
 </xsl:stylesheet>

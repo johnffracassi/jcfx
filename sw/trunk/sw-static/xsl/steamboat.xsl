@@ -18,10 +18,12 @@
 	<xsl:include href="team-bowling.xsl" />
 	<xsl:include href="weighted-pts.xsl" />
 	<xsl:include href="menus.xsl" />
+	<xsl:include href="rnrr.xsl" />
 
 	
 	<xsl:template match="/">
 		<xsl:comment><xsl:value-of select="count($doc)" /></xsl:comment>
+		<xsl:call-template name="rnrr" />
 		<xsl:apply-templates select="//matches" mode="results" />
 		<xsl:apply-templates select="//match" mode="match-result" />
 		<xsl:apply-templates select="//players" />
