@@ -72,8 +72,8 @@
 						<th>Balls</th>
 						<th>Bowl RR</th>
 					</tr>
-					
-					<xsl:apply-templates select="$rnrr//player[@inns gt 7 and @player ne 'f1']" mode="rnrr">
+				
+					<xsl:apply-templates select="$rnrr/rnrr/player[@inns &gt; 6 and @player ne 'f1']" mode="rnrr">
 						<xsl:sort select="@holy-grail" data-type="number" order="descending" />
 					</xsl:apply-templates>
 				</table>
