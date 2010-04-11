@@ -12,35 +12,70 @@
 	<!-- ================================================================================================= -->
 	<xsl:template name="rnrr">
 	
+		<xsl:variable name="rnrr-matches">
+			<results>
+				<xsl:apply-templates select="//match" mode="rnrr" />
+			</results>
+		</xsl:variable>
+		
+		<xsl:variable name="data">
+			<innings>
+				<xsl:apply-templates select="//innings" mode="rnrr">
+					<xsl:with-param name="rnrr" select="$rnrr-matches" />
+				</xsl:apply-templates>
+			</innings>
+			<overs>
+				<xsl:apply-templates select="//over" mode="rnrr">
+					<xsl:with-param name="rnrr" select="$rnrr-matches" />
+				</xsl:apply-templates>
+			</overs>
+		</xsl:variable>
+
+		<xsl:variable name="rnrr">
+			<xsl:call-template name="merge">
+				<xsl:with-param name="data" select="$data" />
+			</xsl:call-template>
+		</xsl:variable>
+
+		<xsl:call-template name="output">
+			<xsl:with-param name="file">rnrr-pussies</xsl:with-param>
+			<xsl:with-param name="doc">	
+				<xsl:call-template name="highlight" />
+
+				The simple explanation of this table is, <i>The higher your score here, the bigger pussy you are.</i><br/>
+				It means that you've only ever played against easy teams in shit comps.<br/> 
+				Players with low scores tend to play the harder games, where we normally get smashed (eg/ A grade).<br/>
+				The Fulham Gay-boys will soon find out what this is all about once Super-League starts.<br/>
+				<i>But how can it accurately determine that I'm a total softcock?</i> Well Rocket, without the technology <br/>
+				of a terahertz wavelength scanner borrowed from an airport, the only information we have to go on is statistical.<br/>
+				The <b>Bat RRR</b> column is the Batting Relative Run Rate, or the Run Rate of the whole team in<br/>
+				matches that you have participated in. ie/ if the run rate is high, chances are it was an easy match.<br/>
+				The <b>Bowl RRR</b> column is the Bowling Relative Run Rate, or the run rate conceeded whilst you<br/>
+				have been playing. ie/ if this is low, then you've been bowling too much against blind pygmy lepers.<br/>
+				The <b>Net RRR</b> column is simply the <b>Bat RRR - Bowl RRR</b>.<br/>
+				If you don't appear on this table, then you're a pussy anyway, because you haven't played enough games.<br/>
+				 
+				<br/>
+			
+				<table class="stats2" border="0" cellspacing="1" cellpadding="3">
+					<caption>Steamboat Willies Softness Table (Minimum 10 matches)</caption>
+					<tr>
+						<th>Player</th>
+						<th>Batting RRR</th>
+						<th>Bowling RRR</th>
+						<th>Net RRR</th>
+					</tr>
+					<xsl:apply-templates select="$rnrr/rnrr/player[@inns &gt; 9 and @player ne 'f1']" mode="rnrr-pussy">
+						<xsl:sort select="@team-bat-rr - @team-bowl-rr" data-type="number" order="descending" />
+					</xsl:apply-templates>
+				</table>
+			</xsl:with-param>
+		</xsl:call-template>
+
 		<xsl:call-template name="output">
 			<xsl:with-param name="file">rnrr</xsl:with-param>
 			<xsl:with-param name="doc">
 				<xsl:call-template name="highlight" />
-			
-				<xsl:variable name="rnrr-matches">
-					<results>
-						<xsl:apply-templates select="//match" mode="rnrr" />
-					</results>
-				</xsl:variable>
-				
-				<xsl:variable name="data">
-					<innings>
-						<xsl:apply-templates select="//innings" mode="rnrr">
-							<xsl:with-param name="rnrr" select="$rnrr-matches" />
-						</xsl:apply-templates>
-					</innings>
-					<overs>
-						<xsl:apply-templates select="//over" mode="rnrr">
-							<xsl:with-param name="rnrr" select="$rnrr-matches" />
-						</xsl:apply-templates>
-					</overs>
-				</xsl:variable>
-
-				<xsl:variable name="rnrr">
-					<xsl:call-template name="merge">
-						<xsl:with-param name="data" select="$data" />
-					</xsl:call-template>
-				</xsl:variable>
 
 				<table class="stats2" border="0" cellspacing="1" cellpadding="3">
 					<caption>Relative Net Run Rate - All Time (Minimum 7 inns)</caption>
@@ -54,7 +89,7 @@
 						<th rowspan="2">Overs</th>
 						<th colspan="3">Player</th>
 						<th colspan="3">Team</th>
-						<th rowspan="2">Bowl RNRR</th>
+					<th rowspan="2">Bowl RNRR</th>
 						<th rowspan="2">RNRR</th>
 					</tr>
 					
@@ -81,7 +116,18 @@
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
-
+	
+	
+	<xsl:template match="player" mode="rnrr-pussy">
+		<tr>
+			<td class="text"><xsl:copy-of select="sw:fullname(@player)" /></td>
+			<td class="number"><xsl:value-of select="format-number(@team-bat-rr, '0.00')" /></td>
+			<td class="number"><xsl:value-of select="format-number(@team-bowl-rr, '0.00')" /></td>
+			<td class="number"><b><xsl:value-of select="format-number(@team-bat-rr - @team-bowl-rr, '0.00')" /></b></td>
+		</tr>
+	</xsl:template>
+		
+		
 	<xsl:template match="player" mode="rnrr">
 		<tr>
 			<td class="text"><xsl:copy-of select="sw:fullname(@player)" /></td>
