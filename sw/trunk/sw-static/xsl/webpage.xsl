@@ -170,6 +170,7 @@ pageTracker._trackPageview();
 			<li><a href="http://playonsports.spawtz.com/SpawtzSkin/Fixtures/Fixtures.aspx?LeagueId=58&amp;SeasonId=38">Fixtures »</a></li>
 			<li><a href="http://playonsports.spawtz.com/SpawtzSkin/Fixtures/Standings.aspx?LeagueId=58&amp;SeasonId=38">Table »</a></li>
 			<li><a href="rnrr.html">RNRR</a></li>
+			<li><a href="rnrr-pussies.html">Softness Factor</a></li>
 
 			<!-- menu items are now defined in 'menus.xsl' -->
 			<xsl:call-template name="items-profiles" />

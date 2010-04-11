@@ -230,7 +230,14 @@
 			<xsl:if test="position() mod 2 != 0">
 				<xsl:copy-of select="sw:ball-summary(ball, 19, 27)" />
 			</xsl:if>
-			<td class="right over-break" style="width: 50px;"><xsl:value-of select="sum(ball/@runs)" /> (<xsl:value-of select="count(ball/@runs)" />)</td>
+			<td class="right over-break" style="width: 50px;">
+				<xsl:value-of select="sum(ball/@runs)" /> (<xsl:value-of select="count(ball/@runs)" />)
+			</td>
+			<xsl:if test="position() mod 2 != 0">
+				<td class="ball-summary" style="width: 50px;" rowspan="2">
+					<xsl:value-of select="../@score" /> (<xsl:value-of select="sum(../innings/@balls)" />)
+				</td>
+			</xsl:if>
 		</tr>
 	</xsl:template>
 
