@@ -11,21 +11,51 @@
 	<!-- Matches -->
 	<!-- ================================================================================================= -->
 	<xsl:template name="rnrr">
+		<xsl:call-template name="rnrr-set">
+			<xsl:with-param name="matches" select="//match" />
+			<xsl:with-param name="caption" select="'All Time'" />
+			<xsl:with-param name="suffix" select="'all'" />
+			<xsl:with-param name="minInns" select="10" />
+		</xsl:call-template>	
+		
+		<xsl:call-template name="rnrr-set">
+			<xsl:with-param name="matches" select="//match[@seasonId = 12]" />
+			<xsl:with-param name="caption" select="'This Season'" />
+			<xsl:with-param name="suffix" select="'now'" />
+			<xsl:with-param name="minInns" select="3" />
+		</xsl:call-template>
+		
+		<xsl:for-each select="//season">
+			<xsl:variable name="seasonId" select="@id" />
+			<xsl:call-template name="rnrr-set">
+				<xsl:with-param name="matches" select="//match[@seasonId = $seasonId]" />
+				<xsl:with-param name="caption" select="concat(@name, ' ', @year, ' (', @grade, ' grade)')" />
+				<xsl:with-param name="suffix" select="$seasonId" />
+				<xsl:with-param name="minInns" select="3" />
+			</xsl:call-template>
+		</xsl:for-each>	
+	</xsl:template>
+	
+	<xsl:template name="rnrr-set">
+		<xsl:param name="matches" />
+		<xsl:param name="caption" />
+		<xsl:param name="suffix" />
+		<xsl:param name="minInns" />
 	
 		<xsl:variable name="rnrr-matches">
 			<results>
-				<xsl:apply-templates select="//match" mode="rnrr" />
+				<xsl:apply-templates select="$matches" mode="rnrr" />
 			</results>
 		</xsl:variable>
 		
 		<xsl:variable name="data">
 			<innings>
-				<xsl:apply-templates select="//innings" mode="rnrr">
+				<xsl:apply-templates select="$matches//innings" mode="rnrr">
 					<xsl:with-param name="rnrr" select="$rnrr-matches" />
 				</xsl:apply-templates>
 			</innings>
 			<overs>
-				<xsl:apply-templates select="//over" mode="rnrr">
+				<xsl:apply-templates select="$matches//over" mode="rnrr">
 					<xsl:with-param name="rnrr" select="$rnrr-matches" />
 				</xsl:apply-templates>
 			</overs>
@@ -38,7 +68,7 @@
 		</xsl:variable>
 
 		<xsl:call-template name="output">
-			<xsl:with-param name="file">rnrr-pussies</xsl:with-param>
+			<xsl:with-param name="file">rnrr-pussies-<xsl:value-of select="$suffix" /></xsl:with-param>
 			<xsl:with-param name="doc">	
 				<xsl:call-template name="highlight" />
 
@@ -58,14 +88,14 @@
 				<br/>
 			
 				<table class="stats2" border="0" cellspacing="1" cellpadding="3">
-					<caption>Steamboat Willies Softness Table (Minimum 10 matches)</caption>
+					<caption>Steamboat Willies Softness Table - <xsl:value-of select="$caption" /> (Minimum <xsl:value-of select="$minInns" /> matches)</caption>
 					<tr>
 						<th>Player</th>
 						<th>Batting RRR</th>
 						<th>Bowling RRR</th>
 						<th>Net RRR</th>
 					</tr>
-					<xsl:apply-templates select="$rnrr/rnrr/player[@inns &gt; 9 and @player ne 'f1']" mode="rnrr-pussy">
+					<xsl:apply-templates select="$rnrr/rnrr/player[@inns &gt; ($minInns - 1) and @player ne 'f1']" mode="rnrr-pussy">
 						<xsl:sort select="@team-bat-rr - @team-bowl-rr" data-type="number" order="descending" />
 					</xsl:apply-templates>
 				</table>
@@ -73,12 +103,12 @@
 		</xsl:call-template>
 
 		<xsl:call-template name="output">
-			<xsl:with-param name="file">rnrr</xsl:with-param>
+			<xsl:with-param name="file">rnrr-<xsl:value-of select="$suffix" /></xsl:with-param>
 			<xsl:with-param name="doc">
 				<xsl:call-template name="highlight" />
 
 				<table class="stats2" border="0" cellspacing="1" cellpadding="3">
-					<caption>Relative Net Run Rate - All Time (Minimum 7 inns)</caption>
+					<caption>Relative Net Run Rate - <xsl:value-of select="$caption" /> (Minimum <xsl:value-of select="$minInns" /> inns)</caption>
 					
 					<tr>
 						<th rowspan="2">Player</th>
@@ -108,7 +138,7 @@
 						<th>Bowl RR</th>
 					</tr>
 				
-					<xsl:apply-templates select="$rnrr/rnrr/player[@inns &gt; 6 and @player ne 'f1']" mode="rnrr">
+					<xsl:apply-templates select="$rnrr/rnrr/player[@inns &gt; ($minInns - 1) and @player ne 'f1']" mode="rnrr">
 						<xsl:sort select="@holy-grail" data-type="number" order="descending" />
 					</xsl:apply-templates>
 				</table>
@@ -116,7 +146,6 @@
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
-	
 	
 	<xsl:template match="player" mode="rnrr-pussy">
 		<tr>
