@@ -3,7 +3,7 @@ package com.jeff.fx.common;
 import static com.jeff.fx.common.Instrument.AUDUSD;
 
 public enum FXDataSource {
-	Dukascopy(AUDUSD), GAIN(AUDUSD), FXCM(AUDUSD), Forexite(AUDUSD);
+	GAIN(AUDUSD), Dukascopy(AUDUSD), FXCM(AUDUSD), Forexite(AUDUSD);
 
 	Instrument[] instruments;
 
