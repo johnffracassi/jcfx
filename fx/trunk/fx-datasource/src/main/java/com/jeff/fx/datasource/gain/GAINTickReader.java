@@ -14,10 +14,8 @@ import com.jeff.fx.datasource.Parser;
 public class GAINTickReader extends GenericLineReader<TickDataPoint> implements
 		Parser<TickDataPoint> {
 
-	private static DateTimeFormatter df1 = DateTimeFormat
-			.forPattern("yyyy-MM-dd HH:mm:ss.SSS");
-	private static DateTimeFormatter df2 = DateTimeFormat
-			.forPattern("yyyy-MM-dd HH:mm:ss");
+	private static DateTimeFormatter df1 = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS");
+	private static DateTimeFormatter df2 = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
 	private static String encoding = "UTF8";
 	private static FXDataSource dataSource = FXDataSource.GAIN;
@@ -31,23 +29,33 @@ public class GAINTickReader extends GenericLineReader<TickDataPoint> implements
 		String[] fields = str.split(",");
 
 		if (fields.length != 6) {
-			System.out.println("Bad data line " + count + ": "
-					+ str.substring(0, 200));
+			System.out.println("Bad data line " + count + ": " + str.substring(0, 200));
 			return null;
 		} else {
 			TickDataPoint dp = new TickDataPoint();
 
-			dp.setDataSource(getDataSource());
-			dp.setInstrument(toInstrument(fields[1]));
-
-			if (fields[2].length() == 19) {
-				dp.setDate(df2.parseDateTime(fields[2]).toLocalDateTime());
+			// determine which format is being used
+			int[] ordering;
+			if(fields[2].length() == 1) {
+				ordering = new int[] {1, 2, 3, 4};
+			} else if(fields[1].length() == 1) {
+				ordering = new int[] {2, 3, 4, 5};
 			} else {
-				dp.setDate(df1.parseDateTime(fields[2]).toLocalDateTime());
+				System.out.println("Bad data line " + count + ": " + str.substring(0, 200));
+				return null;
+			}
+			
+			dp.setDataSource(getDataSource());
+			dp.setInstrument(toInstrument(fields[ordering[0]]));
+
+			if (fields[ordering[1]].length() == 19) {
+				dp.setDate(df2.parseDateTime(fields[ordering[1]]).toLocalDateTime());
+			} else {
+				dp.setDate(df1.parseDateTime(fields[ordering[1]]).toLocalDateTime());
 			}
 
-			dp.setSell(Double.parseDouble(fields[3]));
-			dp.setBuy(Double.parseDouble(fields[4]));
+			dp.setSell(Double.parseDouble(fields[ordering[2]]));
+			dp.setBuy(Double.parseDouble(fields[ordering[3]]));
 
 			return dp;
 		}

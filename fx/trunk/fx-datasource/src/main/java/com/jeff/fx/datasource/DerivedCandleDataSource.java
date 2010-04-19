@@ -9,6 +9,11 @@ import com.jeff.fx.common.Period;
 import com.jeff.fx.common.TickDataPoint;
 import com.jeff.fx.datasource.converter.TickToCandleConverter;
 
+/**
+ * Derive candles from a collection of ticks
+ * 
+ * @author Jeff
+ */
 public class DerivedCandleDataSource implements DataSource<CandleDataPoint> {
 
 	private DataSource<TickDataPoint> dataSource;
