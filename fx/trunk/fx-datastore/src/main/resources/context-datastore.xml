@@ -16,7 +16,7 @@
 		<property name="candleDataStore" ref="candleDataStore" />
 		<property name="tickDataSources">
 			<map>
-				<entry key="GAIN" value-ref="gain" />
+				<entry key="GAIN" value-ref="GAINTickDataSource" />
 			</map>
 		</property>
 		<property name="candleDataSources">

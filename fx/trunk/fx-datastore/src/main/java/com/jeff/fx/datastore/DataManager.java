@@ -33,7 +33,7 @@ public class DataManager {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-datastore.xml");
 		DataManager dm = (DataManager) ctx.getBean("dataManager");
 
-		FXDataResponse<TickDataPoint> response = dm.loadTicks(new FXDataRequest(FXDataSource.GAIN, Instrument.AUDUSD, new Interval(new DateTime(2009, 6, 8, 0, 0, 0, 0), new DateTime(2009, 6, 8, 0, 0, 0, 0)), Period.Tick));
+		FXDataResponse<TickDataPoint> response = dm.loadTicks(new FXDataRequest(FXDataSource.GAIN, Instrument.AUDUSD, new Interval(new DateTime(2010, 2, 1, 0, 0, 0, 0), new DateTime(2010, 2, 14, 0, 0, 0, 0)), Period.Tick));
 		log.debug("Loaded " + response.getData().size() + " ticks");
 
 		TickToCandleConverter t2c = new TickToCandleConverter();
