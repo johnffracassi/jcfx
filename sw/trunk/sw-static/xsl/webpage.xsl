@@ -169,15 +169,29 @@ pageTracker._trackPageview();
 			
 			<li><a href="http://playonsports.spawtz.com/SpawtzSkin/Fixtures/Fixtures.aspx?LeagueId=58&amp;SeasonId=38">Fixtures »</a></li>
 			<li><a href="http://playonsports.spawtz.com/SpawtzSkin/Fixtures/Standings.aspx?LeagueId=58&amp;SeasonId=38">Table »</a></li>
-			<li><a href="rnrr.html">RNRR</a></li>
-			<li><a href="rnrr-pussies.html">Softness Factor</a></li>
+			<li><a href="rnrr-all.html">RNRR</a></li>
+			<li><a href="rnrr-pussies-all.html">Softness Factor</a></li>
 
 			<!-- menu items are now defined in 'menus.xsl' -->
 			<xsl:call-template name="items-profiles" />
 			<xsl:call-template name="items-batting" />
 			<xsl:call-template name="items-bowling" />
 			<xsl:call-template name="items-general" />
-			
+		
+
+<script type="text/javascript">
+<xsl:comment>
+google_ad_client = "pub-3374690750459288";
+/* Main Menu banner */
+google_ad_slot = "2903369873";
+google_ad_width = 120;
+google_ad_height = 240;
+</xsl:comment>
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
 		</ul>
 	</xsl:template>
 </xsl:stylesheet>

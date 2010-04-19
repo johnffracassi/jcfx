@@ -15,8 +15,8 @@
 	<property name="xml.file" value="data.xml" />			<!-- Output location for data model 			-->
 	<property name="out.file" value="steamboat.html" />	<!-- Output HTML file, pre-split 				-->
 	
-<!--    <property name="sdk.dir" location="F:/dev/lib/appengine-java-sdk-1.2.5" /> -->
-<!--    <import file="${sdk.dir}/config/user/ant-macros.xml" /> -->
+    <property name="sdk.dir" location="c:/dev/lib/appengine" />
+    <import file="${sdk.dir}/config/user/ant-macros.xml" />
 
 	  <target name="update" description="Uploads the application to App Engine.">
 	    <appcfg action="update" war="C:/dev/temp/steamboat/bin/app" />
