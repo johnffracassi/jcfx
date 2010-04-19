@@ -17,17 +17,16 @@ public class GAINLocator implements Locator
 	public String generateUrl(Instrument instrument, LocalDate date, Period period)
 	{
 		int year = date.getYear();
-		int month = date.getMonthOfYear();
+		int month = calculateMonth(date);
 		String cur1 = instrument.toString().substring(0, 3);
 		String cur2 = instrument.toString().substring(3);
 		
-		String url = String.format(pattern, domain, year, month, calculateMonth(date), cur1, cur2, calculateWeek(date));
+		String url = String.format(pattern, domain, year, month+1, DateUtil.MONTHS[month], cur1, cur2, calculateWeek(date));
 		return url;
 	}
 	
-	private String calculateMonth(LocalDate date)
-	{
-		return DateUtil.MONTHS[roundDate(date).getMonthOfYear()-1];
+	private int calculateMonth(LocalDate date) {
+		return roundDate(date).getMonthOfYear() - 1;
 	}
 	
 	private int calculateWeek(LocalDate date)
