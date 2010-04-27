@@ -21,6 +21,19 @@
 	</scm>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.jeff.fx</groupId>
+			<artifactId>fx-core</artifactId>
+		</dependency> 
+		<dependency>
+			<groupId>com.jeff.fx</groupId>
+			<artifactId>fx-datastore</artifactId>
+			<scope>runtime</scope>
+		</dependency> 
+		<dependency>
+			<groupId>com.jeff.fx</groupId>
+			<artifactId>fx-datasource</artifactId>
+		</dependency> 
 	</dependencies>
 
 </project>
