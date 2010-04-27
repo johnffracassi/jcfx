@@ -33,6 +33,11 @@ public class Locator
 		return store;
 	}
 	
+	public File locate(FXDataRequest request, int day)
+	{
+		return locate(request.getDataSource(), request.getInstrument(), request.getInterval().getStart().plusDays(day), request.getPeriod());
+	}
+	
 	public File locate(FXDataRequest request)
 	{
 		return locate(request.getDataSource(), request.getInstrument(), request.getInterval().getStart(), request.getPeriod());

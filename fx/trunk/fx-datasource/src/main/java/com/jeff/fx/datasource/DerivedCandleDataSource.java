@@ -33,8 +33,7 @@ public class DerivedCandleDataSource implements DataSource<CandleDataPoint> {
 
 		// convert the ticks to the requested period
 		TickToCandleConverter t2c = new TickToCandleConverter();
-		List<CandleDataPoint> candles = t2c.convert(response.getData(), request
-				.getPeriod());
+		List<CandleDataPoint> candles = t2c.convert(response.getData(), request.getPeriod());
 
 		return new FXDataResponse<CandleDataPoint>(request, candles);
 	}
