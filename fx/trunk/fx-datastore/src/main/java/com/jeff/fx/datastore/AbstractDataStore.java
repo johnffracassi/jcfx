@@ -29,6 +29,17 @@ public abstract class AbstractDataStore<T extends FXDataPoint> implements DataSt
 		
 		return exists;
 	}
+	
+	public boolean exists(FXDataRequest request, int day)
+	{
+		File file = locator.locate(request, day);
+		
+		boolean exists = file.exists();
+
+		log.debug("file does " + (exists?"":"not") + " exist in data store");
+		
+		return exists;
+	}
 
 	public Locator getLocator() 
 	{

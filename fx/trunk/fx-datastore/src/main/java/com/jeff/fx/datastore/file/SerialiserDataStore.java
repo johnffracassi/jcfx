@@ -5,11 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.FXDataPoint;
@@ -24,13 +26,31 @@ public class SerialiserDataStore<T extends FXDataPoint> extends AbstractDataStor
 {
 	private static Logger log = Logger.getLogger(SerialiserDataStore.class);
 
-	@SuppressWarnings("unchecked")
 	public FXDataResponse<T> load(FXDataRequest request) throws Exception
 	{
-		if(exists(request))
+		List<T> all = new ArrayList<T>();
+		
+		int dayCount = Days.daysBetween(request.getInterval().getStart(), request.getInterval().getEnd()).getDays() + 1;
+
+		log.debug(dayCount + " days in the interval (" + request.getInterval() + ")");
+		
+		for(int i=0; i<dayCount; i++) {
+			List<T> list = loadForDay(request, i).getData();
+			log.debug("found " + list.size() + " candles for " + request.getInterval().getStart().plusDays(i));
+			all.addAll(list);
+		}
+		
+		FXDataResponse<T> response = new FXDataResponse<T>(request, all);
+		return response;
+	}
+
+	@SuppressWarnings("unchecked")
+	private FXDataResponse<T> loadForDay(FXDataRequest request, int day) throws Exception
+	{
+		if(exists(request, day))
 		{
 			// locate the data file
-			File file = getLocator().locate(request);
+			File file = getLocator().locate(request, day);
 
 			// deserialise the list of data points
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
@@ -45,7 +65,7 @@ public class SerialiserDataStore<T extends FXDataPoint> extends AbstractDataStor
 			return new FXDataResponse<T>(request, Collections.<T>emptyList());
 		}
 	}
-
+	
 	/**
 	 * 
 	 */

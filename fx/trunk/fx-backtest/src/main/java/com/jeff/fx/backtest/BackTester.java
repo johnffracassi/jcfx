@@ -24,20 +24,19 @@ public class BackTester {
 	private DataManager dataManager;
 
 	public static void main(String[] args) {
-		ApplicationContext ctx = new ClassPathXmlApplicationContext(
-				"context-*.xml");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-*.xml");
 		BackTester backTester = (BackTester) ctx.getBean("backTester");
 		backTester.run();
 	}
 
 	public void run() {
 		try {
-			FXDataResponse<CandleDataPoint> candles = dataManager
-					.loadCandles(new FXDataRequest(FXDataSource.GAIN,
-							Instrument.AUDUSD, new Interval(new DateTime(2009,
-									6, 8, 0, 0, 0, 0), new DateTime(2009, 6, 8,
-									0, 0, 0, 0)), Period.FifteenMin));
+			FXDataResponse<CandleDataPoint> candles = dataManager.loadCandles(
+					new FXDataRequest(FXDataSource.GAIN,Instrument.AUDUSD, 
+							new Interval(new DateTime(2010, 4, 1, 0, 0, 0, 0), new DateTime(2010, 4, 17, 0, 0, 0, 0)), Period.FifteenMin));
+			
 			log.info("Found " + candles.getData().size() + " candles");
+			
 		} catch (Exception ex) {
 			log.error("Error loading candles", ex);
 		}

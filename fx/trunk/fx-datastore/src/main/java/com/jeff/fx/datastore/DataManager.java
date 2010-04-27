@@ -33,7 +33,7 @@ public class DataManager {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-datastore.xml");
 		DataManager dm = (DataManager) ctx.getBean("dataManager");
 
-		DateTime date = new DateTime(2010, 4, 1, 0, 0, 0, 0);
+		DateTime date = new DateTime(2010, 3, 25, 0, 0, 0, 0);
 		FXDataResponse<TickDataPoint> response = dm.loadTicks(new FXDataRequest(FXDataSource.GAIN, Instrument.AUDUSD, new Interval(date, date), Period.Tick));
 		log.debug("Loaded " + response.getData().size() + " ticks");
 
