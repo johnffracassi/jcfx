@@ -1,0 +1,4 @@
+import projects from google code (in Eclipse)
+run "hardlinks-windows.bat" to create linked resources
+run "mvn eclipse:eclipse" from fx-pom directory
+refresh Eclipse projects
