@@ -12,9 +12,9 @@ public enum Period
     ThirtyMin(TimeUnit.Minute, 30, "m30"),
     OneHour(TimeUnit.Hour, 1, "h1"),
     FourHour(TimeUnit.Hour, 4, "h4"),
-    Day(TimeUnit.Day, 1, "d1"),
-    Week(TimeUnit.Week, 1, "w1"),
-    Month(TimeUnit.Month, 1, "m1");
+    Day(TimeUnit.Day, 1, "day"),
+    Week(TimeUnit.Week, 1, "week"),
+    Month(TimeUnit.Month, 1, "month");
 
     public final TimeUnit unit;
     public final int numOfUnits;

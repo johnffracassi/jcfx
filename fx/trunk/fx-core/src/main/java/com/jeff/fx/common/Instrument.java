@@ -1,6 +1,5 @@
 package com.jeff.fx.common;
 
-
 public enum Instrument 
 {
     AUDJPY, AUDNZD, AUDUSD, EURAUD, EURCHF, 
