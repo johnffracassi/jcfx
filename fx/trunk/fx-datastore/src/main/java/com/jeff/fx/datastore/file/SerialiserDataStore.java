@@ -31,31 +31,13 @@ public class SerialiserDataStore<T extends FXDataPoint> extends AbstractDataStor
 {
 	private static Logger log = Logger.getLogger(SerialiserDataStore.class);
 
+	@SuppressWarnings("unchecked")
 	public FXDataResponse<T> load(FXDataRequest request) throws Exception
 	{
-		List<T> all = new ArrayList<T>();
-		
-		int dayCount = Days.daysBetween(request.getInterval().getStart(), request.getInterval().getEnd()).getDays() + 1;
-
-		log.debug(dayCount + " days in the interval (" + request.getInterval() + ")");
-		
-		for(int i=0; i<dayCount; i++) {
-			List<T> list = loadForDay(request, i).getData();
-			log.debug("found " + list.size() + " candles for " + request.getInterval().getStart().plusDays(i));
-			all.addAll(list);
-		}
-		
-		FXDataResponse<T> response = new FXDataResponse<T>(request, all);
-		return response;
-	}
-
-	@SuppressWarnings("unchecked")
-	private FXDataResponse<T> loadForDay(FXDataRequest request, int day) throws Exception
-	{
-		if(exists(request, day))
-		{
+		if(exists(request)) {
+			
 			// locate the data file
-			File file = getLocator().locate(request, day);
+			File file = getLocator().locate(request);
 
 			// deserialise the list of data points
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
@@ -63,14 +45,12 @@ public class SerialiserDataStore<T extends FXDataPoint> extends AbstractDataStor
 			ois.close();
 				
 			return new FXDataResponse<T>(request, list);
-		}
-		else
-		{
+		} else {
 			log.warn("file does not exist in store, returning empty list of data points");
 			return new FXDataResponse<T>(request, Collections.<T>emptyList());
 		}
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -85,7 +65,7 @@ public class SerialiserDataStore<T extends FXDataPoint> extends AbstractDataStor
 			for(DPKey key : map.keySet()) {
 				
 				// locate the data file
-				File file = getLocator().locate(key.dataSource, key.instrument, key.date.toDateTime(LocalTime.MIDNIGHT), key.period);
+				File file = getLocator().locate(key.dataSource, key.instrument, key.date, key.period);
 				log.debug("locating data store at " + file);
 				
 				// if the file exists, delete and replace (check for existence should be performed beforehand)

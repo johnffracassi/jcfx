@@ -22,13 +22,10 @@ public class DerivedCandleDataSource implements DataSource<CandleDataPoint> {
 		this.dataSource = dataSource;
 	}
 
-	public FXDataResponse<CandleDataPoint> load(FXDataRequest request)
-			throws Exception {
+	public FXDataResponse<CandleDataPoint> load(FXDataRequest request) throws Exception {
 
 		// get the ticks matching the requested period
-		FXDataRequest tickRequest = new FXDataRequest(request.getDataSource(),
-				request.getInstrument(), request.getInterval(), Period.Tick);
-
+		FXDataRequest tickRequest = new FXDataRequest(request.getDataSource(), request.getInstrument(), request.getDate(), Period.Tick);
 		FXDataResponse<TickDataPoint> response = dataSource.load(tickRequest);
 
 		// convert the ticks to the requested period

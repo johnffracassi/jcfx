@@ -2,9 +2,7 @@ package com.jeff.fx.datamanager;
 
 import javax.swing.table.DefaultTableModel;
 
-import org.joda.time.DateTime;
 import org.joda.time.Days;
-import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
 import com.jeff.fx.common.FXDataRequest;
@@ -45,15 +43,14 @@ public class DataTableModel extends DefaultTableModel  {
 		return dayCount;
 	}
 
-	public DateTime getDateForRow(int row) {
-		DateTime now = new DateTime();
-		now = now.minusDays(row);
-		return new DateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 0, 0, 0, 0);
+	public LocalDate getDateForRow(int row) {
+		LocalDate now = new LocalDate();
+		return now.minusDays(row);
 	}
 	
 	public Object getValueAt(int row, int col) {
 		
-		DateTime now = getDateForRow(row);
+		LocalDate now = getDateForRow(row);
 		
 		if(col == 0) {
 			return now.toString("yyyy-MM-dd");
@@ -63,7 +60,7 @@ public class DataTableModel extends DefaultTableModel  {
 			FXDataRequest req = new FXDataRequest();
 			req.setDataSource(FXDataSource.Forexite);
 			req.setInstrument(Instrument.AUDUSD);
-			req.setInterval(new Interval(now, now.plusDays(1)));
+			req.setDate(now);
 			req.setPeriod(Period.values()[col-1]);
 			
 			return (dataManager.exists(req) ? "Y":"N");

@@ -26,30 +26,16 @@ public class AbstractDataSource<T extends FXDataPoint> implements DataSource<T> 
 		
 		List<T> dataPoints = new ArrayList<T>();
 
-		for(LocalDate date : splitInterval(request.getInterval())) {		
-			if(date.getDayOfWeek() != DateTimeConstants.SATURDAY) {
-				String url = locate(request.getInstrument(), date, request.getPeriod());
-				byte[] compressed = download(url);
-				byte[] uncompressed = process(compressed);
-				List<T> newPoints = parse(uncompressed);
-				dataPoints.addAll(newPoints);
-			}
+		LocalDate date = request.getDate();
+		if(date.getDayOfWeek() != DateTimeConstants.SATURDAY) {
+			String url = locate(request.getInstrument(), date, request.getPeriod());
+			byte[] compressed = download(url);
+			byte[] uncompressed = process(compressed);
+			List<T> newPoints = parse(uncompressed);
+			dataPoints.addAll(newPoints);
 		}
 
 		return new FXDataResponse<T>(request, dataPoints);
-	}
-
-	private List<LocalDate> splitInterval(Interval interval) {
-		
-		List<LocalDate> dates = new ArrayList<LocalDate>();
-		
-		DateTime date = interval.getStart();
-		while(!date.isAfter(interval.getEnd())) {
-			dates.add(date.toLocalDate());
-			date = date.plusDays(1);
-		}
-		
-		return dates;
 	}
 	
 	public String locate(Instrument instrument, LocalDate date, Period period) {

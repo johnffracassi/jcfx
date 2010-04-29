@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
@@ -34,8 +34,8 @@ public class DataManager {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-datastore.xml");
 		DataManager dm = (DataManager) ctx.getBean("dataManager");
 
-		DateTime date = new DateTime(2010, 3, 25, 0, 0, 0, 0);
-		FXDataResponse<TickDataPoint> response = dm.loadTicks(new FXDataRequest(FXDataSource.GAIN, Instrument.AUDUSD, new Interval(date, date), Period.Tick));
+		LocalDate date = new LocalDate(2010, 3, 25);
+		FXDataResponse<TickDataPoint> response = dm.loadTicks(new FXDataRequest(FXDataSource.GAIN, Instrument.AUDUSD, date, Period.Tick));
 		log.debug("Loaded " + response.getData().size() + " ticks");
 
 		TickToCandleConverter t2c = new TickToCandleConverter();
@@ -58,7 +58,7 @@ public class DataManager {
 
 	public FXDataResponse<CandleDataPoint> loadCandles(FXDataRequest request) throws Exception {
 		log.debug("Load candles for " + request);
-		
+
 		if (exists(request)) {
 			log.debug("returning candles from data store");
 			return candleDataStore.load(request);

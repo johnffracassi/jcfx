@@ -22,7 +22,7 @@ public class ForexiteCandleDataSource extends ZippedAbstractDataSource<CandleDat
 		log.debug(request);
 		
 		// return an empty list for a Saturday
-		if(request.getInterval().getStart().getDayOfWeek() == DateTimeConstants.SATURDAY) {
+		if(request.getDate().getDayOfWeek() == DateTimeConstants.SATURDAY) {
 			return new FXDataResponse<CandleDataPoint>(request, Collections.<CandleDataPoint>emptyList());
 		} else {		
 			return super.load(request);

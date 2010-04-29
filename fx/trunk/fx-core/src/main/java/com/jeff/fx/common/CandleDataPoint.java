@@ -1,6 +1,7 @@
 package com.jeff.fx.common;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class CandleDataPoint extends AbstractFXDataPoint implements
 		Serializable {
@@ -23,6 +24,23 @@ public class CandleDataPoint extends AbstractFXDataPoint implements
 	public CandleDataPoint() {
 	}
 
+	public CandleDataPoint(List<CandleDataPoint> candles) {
+		this(candles.get(0));
+		
+		for(CandleDataPoint candle : candles) {
+			if(candle.buyLow < buyLow) buyLow = candle.buyLow;
+			if(candle.sellLow < sellLow) sellLow = candle.sellLow;
+			
+			if(candle.buyHigh > buyHigh) buyHigh = candle.buyHigh;
+			if(candle.sellHigh > sellHigh) sellHigh = candle.sellHigh;
+			
+			buyClose = candle.buyClose;
+			sellClose = candle.sellClose;
+			
+			tickCount ++;
+		}
+	}
+	
 	public CandleDataPoint(CandleDataPoint candle) {
 		super(candle);
 

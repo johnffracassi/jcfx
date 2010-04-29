@@ -3,7 +3,7 @@ package com.jeff.fx.datastore.file;
 import java.io.File;
 
 import org.apache.log4j.Logger;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import com.jeff.fx.common.FXDataRequest;
 import com.jeff.fx.common.FXDataSource;
@@ -20,7 +20,7 @@ public class Locator {
 	public Locator() {
 	}
 
-	public File locate(FXDataSource dataSource, Instrument instrument, DateTime date, Period period) {
+	public File locate(FXDataSource dataSource, Instrument instrument, LocalDate date, Period period) {
 		
 		String pathStr = String.format(filenamePattern, dataSource, instrument, date.getYear(), date.getMonthOfYear(), date.getDayOfMonth());
 		String filename = String.format("%s.%s", period.key, getExtension());
@@ -31,12 +31,8 @@ public class Locator {
 		return store;
 	}
 
-	public File locate(FXDataRequest request, int day) {
-		return locate(request.getDataSource(), request.getInstrument(), request.getInterval().getStart().plusDays(day), request.getPeriod());
-	}
-
 	public File locate(FXDataRequest request) {
-		return locate(request.getDataSource(), request.getInstrument(), request.getInterval().getStart(), request.getPeriod());
+		return locate(request.getDataSource(), request.getInstrument(), request.getDate(), request.getPeriod());
 	}
 
 	public String getDataRoot() {
