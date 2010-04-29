@@ -1,24 +1,25 @@
 package com.jeff.fx.common;
 
-import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 
 public class FXDataRequest {
+	
 	private FXDataSource dataSource;
 	private Instrument instrument;
-	private Interval interval;
+	private LocalDate date;
 	private Period period;
 
 	public FXDataRequest() {
 	}
 
-	public FXDataRequest(FXDataSource dataSource, Instrument instrument, Interval interval, Period period) {
+	public FXDataRequest(FXDataSource dataSource, Instrument instrument, LocalDate date, Period period) {
 		
 		super();
 
 		this.dataSource = dataSource;
 		this.instrument = instrument;
 		this.period = period;
-		this.interval = interval;
+		this.date = date;
 	}
 
 	public FXDataSource getDataSource() {
@@ -44,19 +45,19 @@ public class FXDataRequest {
 	public void setPeriod(Period period) {
 		this.period = period;
 	}
+	
+	public LocalDate getDate() {
+		return date;
+	}
 
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format(
-				"[dataSource=%s, instrument=%s, period=%s, interval=%s]",
-				dataSource, instrument, period, interval);
-	}
-
-	public Interval getInterval() {
-		return interval;
-	}
-
-	public void setInterval(Interval interval) {
-		this.interval = interval;
+				"[dataSource=%s, instrument=%s, period=%s, date=%s]",
+				dataSource, instrument, period, date);
 	}
 }

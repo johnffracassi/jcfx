@@ -17,6 +17,12 @@ public enum CandleValueModel {
 		};
 	}),
 	
+	Typical(new Evaluator() {
+		public double evaluate(CandleDataPoint dp) {
+			return (dp.getSellHigh() + dp.getSellClose() + dp.getSellClose()) / 3.0;
+		};
+	}),
+	
 	OpenSell(new Evaluator() {
 		public double evaluate(CandleDataPoint dp) {
 			return (dp.getSellOpen());

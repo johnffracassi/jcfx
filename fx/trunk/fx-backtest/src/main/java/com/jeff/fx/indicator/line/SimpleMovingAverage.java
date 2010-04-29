@@ -4,8 +4,7 @@ import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.CandleValueModel;
 import com.jeff.fx.indicator.FixedSizeNumberQueue;
 
-public class SimpleMovingAverage extends FixedSizeNumberQueue implements
-		Indicator {
+public class SimpleMovingAverage extends FixedSizeNumberQueue implements Indicator {
 
 	private static final long serialVersionUID = -3438030867529382721L;
 

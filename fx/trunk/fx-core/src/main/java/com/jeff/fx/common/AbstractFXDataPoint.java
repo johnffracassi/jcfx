@@ -22,7 +22,7 @@ public abstract class AbstractFXDataPoint implements FXDataPoint, Comparable<Abs
 	{
 		this.instrument = dataPoint.instrument;
 		this.dataSource = dataPoint.dataSource;
-		this.date = new LocalDateTime(date);
+		this.date = new LocalDateTime(dataPoint.date);
 		this.buyVolume = dataPoint.buyVolume;
 		this.sellVolume = dataPoint.sellVolume;
 	}

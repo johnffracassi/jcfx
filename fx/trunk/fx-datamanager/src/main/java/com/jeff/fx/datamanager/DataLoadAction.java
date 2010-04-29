@@ -3,8 +3,7 @@ package com.jeff.fx.datamanager;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.joda.time.DateTime;
-import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.FXDataRequest;
@@ -21,10 +20,10 @@ public class DataLoadAction {
 	
 	private static Logger log = Logger.getLogger(DataLoadAction.class);
 
-	public void perform(FXDataSource dataSource, Instrument instrument, DateTime date) {
+	public void perform(FXDataSource dataSource, Instrument instrument, LocalDate date) {
 		try {
 			DataManager dm = (DataManager) DataManagerApp.ctx.getBean("dataManager");
-			FXDataResponse<TickDataPoint> response = dm.loadTicks(new FXDataRequest(dataSource, instrument, new Interval(date, date), Period.Tick));
+			FXDataResponse<TickDataPoint> response = dm.loadTicks(new FXDataRequest(dataSource, instrument, date, Period.Tick));
 			
 			log.debug("Loaded " + response.getData().size() + " ticks");
 			
