@@ -48,8 +48,7 @@ public class NaturalOrder {
 		StringBuffer sb = new StringBuffer();
 
 		for (FixedSizeNumberQueue sma : indicators) {
-			sb.append(String.format("%s(%d)=%.3f ", sma.getClass()
-					.getSimpleName(), sma.capacity(), sma.value()));
+			sb.append(String.format("%s(%d)=%.4f ", sma.getClass().getSimpleName(), sma.capacity(), sma.value()));
 		}
 
 		return sb.toString();
@@ -57,16 +56,9 @@ public class NaturalOrder {
 
 	public static void main(String[] args) {
 
-		NaturalOrder nos = new NaturalOrder(new SimpleMovingAverage[] {
-				new SimpleMovingAverage(10), new SimpleMovingAverage(20),
-				new SimpleMovingAverage(50) });
-		NaturalOrder now = new NaturalOrder(new SimpleMovingAverage[] {
-				new WeightedMovingAverage(10), new WeightedMovingAverage(20),
-				new WeightedMovingAverage(50) });
-		NaturalOrder noe = new NaturalOrder(new SimpleMovingAverage[] {
-				new ExponentialMovingAverage(10),
-				new ExponentialMovingAverage(20),
-				new ExponentialMovingAverage(50) });
+		NaturalOrder nos = new NaturalOrder(new SimpleMovingAverage[] { new SimpleMovingAverage(10), new SimpleMovingAverage(20), new SimpleMovingAverage(50) });
+		NaturalOrder now = new NaturalOrder(new SimpleMovingAverage[] { new WeightedMovingAverage(10), new WeightedMovingAverage(20), new WeightedMovingAverage(50) });
+		NaturalOrder noe = new NaturalOrder(new SimpleMovingAverage[] { new ExponentialMovingAverage(10), new ExponentialMovingAverage(20), new ExponentialMovingAverage(50) });
 
 		for (int i = 0; i < 200; i++) {
 
@@ -75,15 +67,11 @@ public class NaturalOrder {
 			now.add(cdp);
 			noe.add(cdp);
 
-			String smaOrder = nos.isNaturalOrderRising() ? "up" : nos
-					.isNaturalOrderFalling() ? "down" : "none";
-			String wmaOrder = now.isNaturalOrderRising() ? "up" : now
-					.isNaturalOrderFalling() ? "down" : "none";
-			String emaOrder = noe.isNaturalOrderRising() ? "up" : now
-					.isNaturalOrderFalling() ? "down" : "none";
+			String smaOrder = nos.isNaturalOrderRising() ? "up" : nos.isNaturalOrderFalling() ? "down" : "none";
+			String wmaOrder = now.isNaturalOrderRising() ? "up" : now.isNaturalOrderFalling() ? "down" : "none";
+			String emaOrder = noe.isNaturalOrderRising() ? "up" : now.isNaturalOrderFalling() ? "down" : "none";
 
-			System.out.printf("===| %.4f %s/%s/%s %n", cdp.getBuyOpen(),
-					smaOrder, wmaOrder, emaOrder);
+			System.out.printf("===| %.4f %s/%s/%s %n", cdp.getBuyOpen(), smaOrder, wmaOrder, emaOrder);
 			System.out.println(" " + nos);
 			System.out.println(" " + now);
 			System.out.println(" " + noe);
