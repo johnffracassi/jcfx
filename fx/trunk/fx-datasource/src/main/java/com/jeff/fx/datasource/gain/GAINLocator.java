@@ -9,10 +9,10 @@ import com.jeff.fx.common.Period;
 import com.jeff.fx.datasource.Locator;
 import com.jeff.fx.util.DateUtil;
 
-@Component
+@Component("GAINLocator")
 public class GAINLocator implements Locator {
-	private static Logger log = Logger.getLogger(GAINLocator.class);
 
+	private static Logger log = Logger.getLogger(GAINLocator.class);
 	private String domain = "ratedata.gaincapital.com";
 	private String pattern = "http://%s/%4d/%02d %s/%s_%s_Week%d.zip";
 	private static final int MID_WEEK_DOW = 3;

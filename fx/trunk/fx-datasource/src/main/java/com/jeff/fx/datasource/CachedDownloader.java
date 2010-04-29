@@ -16,8 +16,7 @@ public class CachedDownloader implements Downloader, Cache<byte[]>
 
 	private File cacheRoot;
 
-	public byte[] download(String url) throws IOException 
-	{
+	public byte[] download(String url) throws IOException {
 		return retrieve(url);
 	}
 

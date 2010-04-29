@@ -7,7 +7,7 @@ import com.jeff.fx.common.TickDataPoint;
 import com.jeff.fx.datasource.DataSource;
 import com.jeff.fx.datasource.DerivedCandleDataSource;
 
-@Component
+@Component("GAINCandleDataSource")
 public class GAINCandleDataSource extends DerivedCandleDataSource {
 
 	@Autowired
