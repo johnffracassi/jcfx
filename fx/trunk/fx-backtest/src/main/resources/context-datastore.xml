@@ -1,4 +1,3 @@
-<<<<<<< .mine
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -90,64 +89,4 @@
 		<constructor-arg ref="cacheDownloader" />
 	</bean>
 	
-</beans>=======
-<?xml version="1.0" encoding="UTF-8"?>
-
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="
-       		http://www.springframework.org/schema/beans 
-       		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-       		http://www.springframework.org/schema/context
-       		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
-
-	<context:component-scan base-package="com.jeff.fx" />
-	
-	<bean id="dataManager" class="com.jeff.fx.datastore.DataManager">
-		<property name="tickDataStore" ref="tickDataStore" />
-		<property name="candleDataStore" ref="candleDataStore" />
-		<property name="tickDataSources">
-			<map>
-				<entry key="GAIN" value-ref="GAINTickDataSource" />
-			</map>
-		</property>
-		<property name="candleDataSources">
-			<map>
-				<entry key="GAIN" value-ref="GAINCandleDataSource" />
-			</map>
-		</property>
-	</bean>
-	
-	<bean id="tickDataStore" class="com.jeff.fx.datastore.file.TickSerialiserDataStore">
-		<property name="locator" ref="serialiserStoreLocator" />
-	</bean>
-	
-	<bean id="candleDataStore" class="com.jeff.fx.datastore.file.CandleSerialiserDataStore">
-		<property name="locator" ref="serialiserStoreLocator" />
-	</bean>
-	
-	<bean id="serialiserStoreLocator" class="com.jeff.fx.datastore.file.Locator">
-		<property name="dataRoot" value="c:/dev/jeff/cache/store" />
-		<property name="filenamePattern" value="/ser/%s/%s/y%04d/m%02d/d%02d" />
-		<property name="extension" value="ser" />
-	</bean>	
-
-	<bean id="downloader" class="com.jeff.fx.datasource.DownloadManager">
-		<property name="sources">
-			<list>
-				<ref bean="cacheDownloader"/>
-				<ref bean="internetDownloader" />
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="cacheDownloader" class="com.jeff.fx.datasource.CachedDownloader">
-		<property name="cacheRoot" value="c:/dev/jeff/cache/download" />
-	</bean>
-	
-	<bean id="internetDownloader" class="com.jeff.fx.datasource.DownloaderImpl">
-		<constructor-arg ref="cacheDownloader" />
-	</bean>
-
-</beans>>>>>>>> .r195
+</beans>
