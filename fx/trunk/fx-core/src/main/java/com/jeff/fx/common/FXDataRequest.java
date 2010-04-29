@@ -11,8 +11,8 @@ public class FXDataRequest {
 	public FXDataRequest() {
 	}
 
-	public FXDataRequest(FXDataSource dataSource, Instrument instrument,
-			Interval interval, Period period) {
+	public FXDataRequest(FXDataSource dataSource, Instrument instrument, Interval interval, Period period) {
+		
 		super();
 
 		this.dataSource = dataSource;
