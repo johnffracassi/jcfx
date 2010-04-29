@@ -26,14 +26,11 @@ public class CachedDownloader implements Downloader, Cache<byte[]>
 		FileUtil.saveFile(bytes, file);
 	}
 
-	public byte[] retrieve(String key) throws IOException 
-	{
-		if(exists(key))
-		{
+	public byte[] retrieve(String key) throws IOException {
+		
+		if(exists(key)) {
 			return FileUtil.readBinaryFile(transformUrlToFile(key));
-		}
-		else
-		{
+		} else {
 			byte[] data = DownloadUtil.download(key);
 			store(key, data);
 			return data;
@@ -44,7 +41,7 @@ public class CachedDownloader implements Downloader, Cache<byte[]>
 	{
 		String fileStr = transformUrlToPath(url);
 		File file = new File(cacheRoot, fileStr);
-		boolean exists = file.exists();
+		boolean exists = file.exists() && file.length() > 0;
 		
 		log.debug("checking cache for existence of " + file + " = " + exists);
 		

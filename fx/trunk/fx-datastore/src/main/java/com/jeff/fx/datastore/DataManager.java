@@ -1,10 +1,11 @@
 package com.jeff.fx.datastore;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.joda.time.Interval;
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -18,7 +19,7 @@ import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.common.TickDataPoint;
 import com.jeff.fx.datasource.DataSource;
-import com.jeff.fx.datasource.converter.TickToCandleConverter;
+import com.jeff.fx.datasource.converter.CandleToCandleConverter;
 
 @Component("dataManager")
 public class DataManager {
@@ -33,16 +34,19 @@ public class DataManager {
 	public static void main(String[] args) throws Exception {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-datastore.xml");
 		DataManager dm = (DataManager) ctx.getBean("dataManager");
+		CandleToCandleConverter c2c = new CandleToCandleConverter();
 
-		LocalDate date = new LocalDate(2010, 3, 25);
-		FXDataResponse<TickDataPoint> response = dm.loadTicks(new FXDataRequest(FXDataSource.GAIN, Instrument.AUDUSD, date, Period.Tick));
-		log.debug("Loaded " + response.getData().size() + " ticks");
+		for(int i=1; i<30; i++) {
+			LocalDate date = new LocalDate();
+			date = date.minusDays(i);
 
-		TickToCandleConverter t2c = new TickToCandleConverter();
+			FXDataResponse<CandleDataPoint> response = dm.loadCandles(new FXDataRequest(FXDataSource.Forexite, Instrument.AUDUSD, date, Period.OneMin));
+			
+			log.debug("Loaded " + response.getData().size() + " ticks");
 
-		for (Period period : new Period[] { Period.OneMin, Period.FiveMin, Period.FifteenMin, Period.ThirtyMin, Period.OneHour }) {
-			List<CandleDataPoint> candles = t2c.convert(response.getData(),period);
-			dm.getCandleDataStore().store(candles);
+//			for (Period period : new Period[] { Period.FiveMin, Period.TenMin, Period.FifteenMin, Period.ThirtyMin, Period.OneHour, Period.FourHour }) {
+//				dm.storeCandles(c2c.convert(response.getData(), period));
+//			}
 		}
 	}
 
@@ -57,18 +61,53 @@ public class DataManager {
 	}
 
 	public FXDataResponse<CandleDataPoint> loadCandles(FXDataRequest request) throws Exception {
+		
+		if(request.isRangeOfDates()) {
+			
+			int dayCount = Days.daysBetween(request.getDate(), request.getEndDate()).getDays();
+			
+			List<CandleDataPoint> all = new LinkedList<CandleDataPoint>();
+			for(int day = 0; day<dayCount; day++) {
+				FXDataRequest newReq = new FXDataRequest(request);
+				newReq.setDate(request.getDate().plusDays(day));
+				newReq.setEndDate(null);
+				all.addAll(loadCandlesForDay(newReq).getData());
+			}
+			return new FXDataResponse<CandleDataPoint>(request, all);
+		} else {
+			return loadCandlesForDay(request);
+		}
+	}
+	
+	private FXDataResponse<CandleDataPoint> loadCandlesForDay(FXDataRequest request) throws Exception {
+		
 		log.debug("Load candles for " + request);
 
+		// does the requested data already exist in the store?
 		if (exists(request)) {
 			log.debug("returning candles from data store");
 			return candleDataStore.load(request);
-		} else {
-			log.debug("fetching candles from data source");
-			DataSource<CandleDataPoint> ds = candleDataSources.get(request.getDataSource());
-			FXDataResponse<CandleDataPoint> response = ds.load(request);
-			storeCandles(response.getData());
-			return response;
+		} 
+
+		// check if the M1 candles exists, if so then make the requested candles
+		FXDataRequest newRequest = new FXDataRequest(request.getDataSource(), request.getInstrument(), request.getDate(), Period.OneMin);
+		if(exists(newRequest)) {
+			log.debug("requested period (" + request.getPeriod() + ") doesn't exist in store, converting from " + Period.OneMin + " candles");
+			List<CandleDataPoint> m1candles = candleDataStore.load(newRequest).getData();
+			CandleToCandleConverter c2c = new CandleToCandleConverter();
+			List<CandleDataPoint> convertedCandles = c2c.convert(m1candles, request.getPeriod());
+			candleDataStore.store(convertedCandles);
+			return new FXDataResponse<CandleDataPoint>(request, convertedCandles);
 		}
+		
+		// TODO build candles from ticks if they exist
+		
+		// can't find/convert data from store, go fetch from the source
+		log.debug("fetching candles from data source");
+		DataSource<CandleDataPoint> ds = candleDataSources.get(request.getDataSource());
+		FXDataResponse<CandleDataPoint> response = ds.load(request);
+		storeCandles(response.getData());
+		return response;
 	}
 
 	public FXDataResponse<TickDataPoint> loadTicks(FXDataRequest request)
