@@ -32,8 +32,8 @@ public class BackTester {
 
 	public void run() {
 		try {
-			FXDataResponse<CandleDataPoint> candles = dataManager.loadCandles(
-					new FXDataRequest(FXDataSource.Forexite,Instrument.AUDUSD, new LocalDate(2010, 4, 1), Period.FifteenMin));
+			FXDataRequest request = new FXDataRequest(FXDataSource.Forexite, Instrument.AUDUSD, new LocalDate(2010, 4, 1), new LocalDate(2010, 4, 28), Period.FourHour);
+			FXDataResponse<CandleDataPoint> candles = dataManager.loadCandles(request);
 			
 			CommodityChannelIndex cci = new CommodityChannelIndex(14);
 			
