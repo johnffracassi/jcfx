@@ -61,7 +61,7 @@ public class DataTableModel extends DefaultTableModel  {
 			return "Load";
 		} else {
 			FXDataRequest req = new FXDataRequest();
-			req.setDataSource(FXDataSource.GAIN);
+			req.setDataSource(FXDataSource.Forexite);
 			req.setInstrument(Instrument.AUDUSD);
 			req.setInterval(new Interval(now, now.plusDays(1)));
 			req.setPeriod(Period.values()[col-1]);

@@ -9,7 +9,8 @@
        		http://www.springframework.org/schema/context
        		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
-	<context:component-scan base-package="com.jeff.fx" />
+	<context:component-scan base-package="com.jeff.fx.datastore" />
+	<context:component-scan base-package="com.jeff.fx.datasource" />
 	
 	<bean id="dataManager" class="com.jeff.fx.datastore.DataManager">
 		<property name="tickDataStore" ref="tickDataStore" />
@@ -22,10 +23,39 @@
 		<property name="candleDataSources">
 			<map>
 				<entry key="GAIN" value-ref="GAINCandleDataSource" />
+				<entry key="Forexite" value-ref="forexiteCandleDataSource" />
 			</map>
 		</property>
 	</bean>
 	
+
+	<!-- ====== Data sources ==================================================================================== -->
+	<bean name="forexiteCandleDataSource" class="com.jeff.fx.datasource.forexite.ForexiteCandleDataSource">
+		<property name="parser">
+			<bean class="com.jeff.fx.datasource.forexite.ForexiteCandleReader" />
+		</property>
+		<property name="locator">
+			<bean class="com.jeff.fx.datasource.forexite.ForexiteLocator" />
+		</property>
+		<property name="downloader" ref="downloader" />
+	</bean>
+	
+	<bean name="GAINTickDataSource" class="com.jeff.fx.datasource.gain.GAINTickDataSource">
+		<property name="parser">
+			<bean class="com.jeff.fx.datasource.gain.GAINTickReader" />
+		</property>
+		<property name="locator">
+			<bean class="com.jeff.fx.datasource.gain.GAINLocator" />
+		</property>
+		<property name="downloader" ref="downloader" />
+	</bean>
+
+	<bean name="GAINCandleDataSource" class="com.jeff.fx.datasource.gain.GAINCandleDataSource">
+		<constructor-arg ref="GAINTickDataSource" />
+	</bean>	
+	
+
+	<!-- ====== Data Store ====================================================================================== -->
 	<bean id="tickDataStore" class="com.jeff.fx.datastore.file.TickSerialiserDataStore">
 		<property name="locator" ref="serialiserStoreLocator" />
 	</bean>
@@ -40,6 +70,8 @@
 		<property name="extension" value="ser" />
 	</bean>	
 
+
+	<!-- ====== Downloaders ===================================================================================== -->
 	<bean id="downloader" class="com.jeff.fx.datasource.DownloadManager">
 		<property name="sources">
 			<list>
@@ -56,5 +88,5 @@
 	<bean id="internetDownloader" class="com.jeff.fx.datasource.DownloaderImpl">
 		<constructor-arg ref="cacheDownloader" />
 	</bean>
-
+	
 </beans>
