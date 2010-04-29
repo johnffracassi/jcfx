@@ -22,6 +22,7 @@ import com.jeff.fx.datasource.converter.TickToCandleConverter;
 
 @Component("dataManager")
 public class DataManager {
+
 	private static Logger log = Logger.getLogger(DataManager.class);
 
 	private DataStore<TickDataPoint> tickDataStore;
