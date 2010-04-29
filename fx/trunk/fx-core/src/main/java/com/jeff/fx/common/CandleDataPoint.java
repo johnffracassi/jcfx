@@ -51,9 +51,11 @@ public class CandleDataPoint extends AbstractFXDataPoint implements
 
 	@Override
 	public String toString() {
-		return String.format("[%s/%s/%s] %s / %.4f %.4f %.4f %.4f (%d ticks)",
-				getInstrument(), getDataSource(), period.key, getDate(),
-				buyOpen, buyHigh, buyLow, buyClose, tickCount);
+		if(tickCount > 0) {
+			return String.format("[%s/%s/%s] %s / %.4f %.4f %.4f %.4f (%d ticks)", getInstrument(), getDataSource(), period.key, getDate(), sellOpen, sellHigh, sellLow, sellClose, tickCount);
+		} else {
+			return String.format("[%s/%s/%s] %s / %.4f %.4f %.4f %.4f", getInstrument(), getDataSource(), period.key, getDate(), sellOpen, sellHigh, sellLow, sellClose);
+		}
 	}
 
 	public double evaluate(CandleValueModel model) {
