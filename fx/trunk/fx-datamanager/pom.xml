@@ -1,18 +1,19 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<artifactId>fx-pom</artifactId>
 		<groupId>com.jeff.fx</groupId>
 		<version>1.0</version>
 	</parent>
 
-	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jeff.fx</groupId>
-	<artifactId>fx-datasource</artifactId>
-	<name>FX Advisor - Data Sources</name>
+	<artifactId>fx-datamanager</artifactId>
 	<version>${jcfx.version}</version>
-	<description>FX Advisor - Data Sources</description>
-	
+	<packaging>jar</packaging>
+	<name>FX Advisor - Data Manager</name>
+	<url>http://www.siebentag.com/maven/site/fx/fx-datamanager</url>
+
 	<scm>
 		<connection>${svn.connection.browse}/${project.artifactId}</connection>
 		<developerConnection>${svn.connection.dev}/${project.artifactId}</developerConnection>
@@ -24,6 +25,27 @@
 			<groupId>com.jeff.fx</groupId>
 			<artifactId>fx-core</artifactId>
 		</dependency> 
+		<dependency>
+			<groupId>com.jeff.fx</groupId>
+			<artifactId>fx-datastore</artifactId>
+			<scope>runtime</scope>
+		</dependency> 
+		<dependency>
+			<groupId>com.jeff.fx</groupId>
+			<artifactId>fx-datasource</artifactId>
+		</dependency> 
+
+		<dependency>
+		    <groupId>org.swinglabs</groupId>
+		    <artifactId>swingx</artifactId>
+		    <version>1.6</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>jfree</groupId>
+		    <artifactId>jfreechart</artifactId>
+		    <version>1.0.12</version>
+		</dependency>
 	</dependencies>
-	
+
 </project>
