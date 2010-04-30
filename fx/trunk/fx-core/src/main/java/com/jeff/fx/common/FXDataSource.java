@@ -6,7 +6,8 @@ import java.util.TimeZone;
 public enum FXDataSource {
 	
 	GAIN(TimeZone.getTimeZone("GMT")), 
-	Forexite(TimeZone.getTimeZone("GMT"));
+	Forexite(TimeZone.getTimeZone("GMT")), 
+	Dukascopy(TimeZone.getTimeZone("GMT"));
 	
 	public TimeZone timeZone;
 	
