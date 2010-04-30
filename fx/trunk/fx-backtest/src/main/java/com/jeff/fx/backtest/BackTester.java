@@ -14,6 +14,7 @@ import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.datastore.DataManager;
+import com.jeff.fx.indicator.advice.HighLowFinder;
 import com.jeff.fx.indicator.line.CommodityChannelIndex;
 
 @Component
@@ -36,10 +37,12 @@ public class BackTester {
 			FXDataResponse<CandleDataPoint> candles = dataManager.loadCandles(request);
 			
 			CommodityChannelIndex cci = new CommodityChannelIndex(14);
+			HighLowFinder hlf = new HighLowFinder();
 			
 			for(CandleDataPoint candle : candles.getData()) {
 				cci.add(candle);
 				System.out.println(" " + candle + " / " + cci);
+				hlf.add(candle);
 			}
 			
 		} catch (Exception ex) {
