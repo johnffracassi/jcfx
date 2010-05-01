@@ -10,7 +10,7 @@
 	<groupId>com.jeff.fx</groupId>
 	<artifactId>fx-backtest</artifactId>
 	<name>FX Advisor - Back Tester</name>
-	<version>${jcfx.version}</version>
+	<version>${currentVersion}</version>
 	<description>FX Advisor - Back Tester</description>
 
 	<scm>
