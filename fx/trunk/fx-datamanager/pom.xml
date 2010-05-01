@@ -9,7 +9,7 @@
 
 	<groupId>com.jeff.fx</groupId>
 	<artifactId>fx-datamanager</artifactId>
-	<version>${jcfx.version}</version>
+	<version>${currentVersion}</version>
 	<packaging>jar</packaging>
 	<name>FX Advisor - Data Manager</name>
 	<url>http://www.siebentag.com/maven/site/fx/fx-datamanager</url>
