@@ -14,8 +14,6 @@ import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.datastore.DataManager;
-import com.jeff.fx.indicator.advice.HighLowFinder;
-import com.jeff.fx.indicator.line.CommodityChannelIndex;
 
 @Component
 public class BackTester {
@@ -33,17 +31,14 @@ public class BackTester {
 
 	public void run() {
 		try {
-			FXDataRequest request = new FXDataRequest(FXDataSource.Forexite, Instrument.AUDUSD, new LocalDate(2010, 4, 1), new LocalDate(2010, 4, 28), Period.FourHour);
+			FXDataRequest request = new FXDataRequest(FXDataSource.Forexite, Instrument.AUDUSD, new LocalDate(2010, 4, 1), new LocalDate(2010, 4, 30), Period.FifteenMin);
 			FXDataResponse<CandleDataPoint> candles = dataManager.loadCandles(request);
 			
-			CommodityChannelIndex cci = new CommodityChannelIndex(14);
-			HighLowFinder hlf = new HighLowFinder();
+//			HighLowFinder hlf = new HighLowFinder();
+//			for(CandleDataPoint candle : candles.getData()) {
+//				hlf.add(candle);
+//			}
 			
-			for(CandleDataPoint candle : candles.getData()) {
-				cci.add(candle);
-				System.out.println(" " + candle + " / " + cci);
-				hlf.add(candle);
-			}
 			
 		} catch (Exception ex) {
 			log.error("Error loading candles", ex);
