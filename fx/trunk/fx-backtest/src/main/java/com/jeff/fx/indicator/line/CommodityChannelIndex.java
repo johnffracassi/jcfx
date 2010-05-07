@@ -9,26 +9,30 @@ public class CommodityChannelIndex extends FixedSizeNumberQueue implements Indic
 	private static final long serialVersionUID = -3438030867529382721L;
 
 	private CandleValueModel valueModel = CandleValueModel.Typical;
-	private MeanAbsoluteDeviation mad;
-	private SimpleMovingAverage sma;
 
 	public CommodityChannelIndex(int capacity) {
 		super(capacity);
-		mad = new MeanAbsoluteDeviation(capacity);
-		sma = new SimpleMovingAverage(capacity);
 	}
 
 	public void add(CandleDataPoint data) {
 		double value = data.evaluate(valueModel);
 		add(value);
-		mad.add(value);
-		sma.add(value);
 	}
 
 	@Override
 	public double value() {
-		double k = (1.0 / 0.015);
-		double val = k * ((peek() - sma.value()) / mad.value());
+		
+		double avg = average();
+		
+		Double[] values = toArray(new Double[size()]);
+		
+		double md = 0.0;
+		for(int i=0; i<values.length; i++) {
+			md += Math.abs(avg - values[i]);
+		}
+		md /= size();
+		
+		double val = (values[values.length-1] - avg) / (0.015 * md);
 		return val;
 	}
 
@@ -42,6 +46,6 @@ public class CommodityChannelIndex extends FixedSizeNumberQueue implements Indic
 
 	@Override
 	public String toString() {
-		return String.format("CCI(%d) = %.6f (%.6f / %.6f)", capacity(), value(), mad.value(), sma.value());
+		return String.format("CCI(%d) = %.6f", capacity(), value());
 	}
 }
