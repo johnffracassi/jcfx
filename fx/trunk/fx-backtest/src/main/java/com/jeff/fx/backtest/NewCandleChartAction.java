@@ -10,9 +10,15 @@ import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 
-class NewChartAction extends AbstractAction {
+class NewCandleChartAction extends AbstractAction {
 	
 	private static final long serialVersionUID = 7750607693375928071L;
+
+	public NewCandleChartAction() {
+		putValue(SHORT_DESCRIPTION, "Create chart");
+		putValue(LONG_DESCRIPTION, "Create a new candle chart from the selected dataset");
+		putValue(NAME, "Create Chart");
+	}
 
 	public void actionPerformed(ActionEvent ev) {
 		Instrument instrument = Instrument.valueOf(AppCtx.getString("newChart.instrument"));
@@ -21,7 +27,7 @@ class NewChartAction extends AbstractAction {
 		LocalDate startDate = AppCtx.getDate("newChart.startDate");
 		LocalDate endDate = AppCtx.getDate("newChart.endDate");
 		
-		NewChartEvent nce = new NewChartEvent(instrument, dataSource, period, startDate, endDate);
+		NewCandleChartEvent nce = new NewCandleChartEvent(instrument, dataSource, period, startDate, endDate);
 		AppCtx.fireEvent(nce);
 	}
 }

@@ -1,4 +1,4 @@
 package com.jeff.fx.backtest;
 
-public interface ActionEvent {
+public interface FXActionEvent {
 }

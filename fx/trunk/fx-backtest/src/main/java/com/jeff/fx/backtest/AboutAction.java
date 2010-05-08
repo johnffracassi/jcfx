@@ -6,17 +6,15 @@ import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
-public class AboutAction extends AbstractAction 
-{
-	public AboutAction()
-	{
-		putValue(SHORT_DESCRIPTION, "About the game");
-		putValue(LONG_DESCRIPTION, "About the game");
+public class AboutAction extends AbstractAction {
+	
+	public AboutAction() {
+		putValue(SHORT_DESCRIPTION, "About the application");
+		putValue(LONG_DESCRIPTION, "About the application");
 		putValue(NAME, "About...");
 	}
-	
-	public void actionPerformed(ActionEvent ev) 
-	{
-		JOptionPane.showMessageDialog(null, "World Greatest Cricket Game v0.01\n(c)2008 Jeffrey Cann");
+
+	public void actionPerformed(ActionEvent ev) {
+		JOptionPane.showMessageDialog(null, "FX Backtesting Applicaion v0.01\n(c)2010 Jeffrey Cann");
 	}
 }
