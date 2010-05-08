@@ -49,30 +49,23 @@ public class TestEngine {
 			
 			FXDataRequest request = new FXDataRequest(FXDataSource.Forexite, Instrument.AUDUSD, new LocalDate(2010, 4, 1), new LocalDate(2010, 4, 30), Period.OneMin);
 			FXDataResponse<CandleDataPoint> candles = dataManager.loadCandles(request);
-	
-			SimpleStrategy ss = new SimpleStrategy(new double[] { 5.0, 5.0 });
-			TestEngine te = new TestEngine();
-			te.test(ss, candles.getData(), pbs);
-			
-			System.out.println(pbs);
+			execute(candles.getData(), SimpleStrategy.createTestSet(pbs));
 			
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 	
-	public BTResult test(SimpleStrategy strategy, List<CandleDataPoint> candles, BTParameterSet paramSet) {
+	public BTResult execute(List<CandleDataPoint> candles, List<SimpleStrategy> tests) {
 		
-		double[][] parameters = BTParameterTable.getParameterValueTable(paramSet);
-		int perms = parameters[0].length;
+		System.out.println("running " + tests.size() + " iterations with " + candles.size() + " candles");
 		
-		System.out.println("running " + perms + " iterations with " + candles.size() + " candles");
-		
-		for(int i=0; i<perms; i++) {
-			strategy = new SimpleStrategy(new double[] { parameters[0][i], parameters[1][i] });
+		for(SimpleStrategy strategy : tests) {
 			for(CandleDataPoint candle : candles) {
 				strategy.candle(candle);
 			}
+			
+			System.out.println(strategy);
 		}
 		
 		return new BTResult();
