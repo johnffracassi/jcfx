@@ -6,7 +6,7 @@ import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 
-public class NewChartEvent implements ActionEvent {
+public class NewCandleChartEvent implements FXActionEvent {
 	
 	private Instrument instrument;
 	private FXDataSource dataSource;
@@ -14,7 +14,7 @@ public class NewChartEvent implements ActionEvent {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	
-	public NewChartEvent(Instrument instrument, FXDataSource dataSource, Period period, LocalDate startDate, LocalDate endDate) {
+	public NewCandleChartEvent(Instrument instrument, FXDataSource dataSource, Period period, LocalDate startDate, LocalDate endDate) {
 		
 		super();
 		

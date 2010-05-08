@@ -16,11 +16,11 @@ import org.joda.time.format.ISODateTimeFormat;
 public class AppCtx {
 	
 	private static Preferences prefs;
-	private static Map<Class<? extends ActionEvent>,List<ActionEventListener>> listeners;
+	private static Map<Class<? extends FXActionEvent>,List<FXActionEventListener>> listeners;
 	
 	static {
 		prefs = Preferences.userRoot();
-		listeners = new HashMap<Class<? extends ActionEvent>, List<ActionEventListener>>();
+		listeners = new HashMap<Class<? extends FXActionEvent>, List<FXActionEventListener>>();
 	}
 	
 	public static void set(String key, String value) {
@@ -44,21 +44,21 @@ public class AppCtx {
 		}
 	}
 	
-	public static void register(Class<? extends ActionEvent> c, ActionEventListener listener) {
+	public static void register(Class<? extends FXActionEvent> c, FXActionEventListener listener) {
 		if(listeners.containsKey(c)) {
 			listeners.get(c).add(listener);
 		} else {
-			List<ActionEventListener> newListeners = new ArrayList<ActionEventListener>();
+			List<FXActionEventListener> newListeners = new ArrayList<FXActionEventListener>();
 			newListeners.add(listener);
 			listeners.put(c, newListeners);
 		}
 	}
 	
-	public static void fireEvent(ActionEvent ev) {
+	public static void fireEvent(FXActionEvent ev) {
 		
-		List<? extends ActionEventListener> listeners = AppCtx.listeners.get(ev.getClass());
+		List<? extends FXActionEventListener> listeners = AppCtx.listeners.get(ev.getClass());
 		
-		for(ActionEventListener listener : listeners) {
+		for(FXActionEventListener listener : listeners) {
 			listener.event(ev);
 		}
 	}
