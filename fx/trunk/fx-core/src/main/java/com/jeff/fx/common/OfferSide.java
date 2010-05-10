@@ -2,5 +2,9 @@ package com.jeff.fx.common;
 
 public enum OfferSide 
 {
-    Bid, Ask;
+	/** Bid = sell */
+    Bid, 
+    
+    /** Ask = buy */
+    Ask;  
 }
