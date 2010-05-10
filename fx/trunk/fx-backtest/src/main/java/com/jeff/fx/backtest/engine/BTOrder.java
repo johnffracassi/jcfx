@@ -14,6 +14,14 @@ public class BTOrder {
 	private LocalDateTime openTime;
 	private LocalDateTime closeTime;
 
+	public double getProfit() {
+		if(offerSide == OfferSide.Ask) {
+			return 10000.0 * (getClosePrice() - getOpenPrice());
+		} else {
+			return 10000.0 * (getOpenPrice() - getClosePrice());
+		}
+	}
+	
 	public OfferSide getOfferSide() {
 		return offerSide;
 	}

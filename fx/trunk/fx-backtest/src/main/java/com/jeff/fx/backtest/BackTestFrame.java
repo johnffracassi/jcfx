@@ -31,10 +31,14 @@ public class BackTestFrame extends JXFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JXPanel pnlWest = new JXPanel(new VerticalFlowLayout(3));
+		pnlWest.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		
 		DatasetDefinitionPanel ddp = new DatasetDefinitionPanel("newChart");
 		pnlWest.add(frame("Dataset", ddp));
 
+		SimpleStrategyPanel ssp = new SimpleStrategyPanel();
+		pnlWest.add(frame("Strategy", ssp));
+		
         add(tabs, BorderLayout.CENTER);
         add(pnlWest, BorderLayout.WEST);
         

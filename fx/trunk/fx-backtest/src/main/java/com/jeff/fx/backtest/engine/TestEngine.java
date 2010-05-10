@@ -34,7 +34,7 @@ public class TestEngine {
 		
 		BTParameterValueSet pvs1 = new BTParameterValueSet();
 		pvs1.setStartValue(10);
-		pvs1.setEndValue(100);
+		pvs1.setEndValue(50);
 		pvs1.setStep(5);
 		
 		BTParameterValueSet pvs2 = new BTParameterValueSet();
