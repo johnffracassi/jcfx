@@ -2,9 +2,6 @@ package com.jeff.fx.backtest.engine;
 
 public class BTParameterTable {
 	
-	public BTParameterTable(BTParameterSet ps) {
-	}
-	
 	public static double[][] getParameterValueTable(BTParameterSet ps) {
 		
 		// work out the number of values for each parameter
