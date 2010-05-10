@@ -18,9 +18,10 @@ import org.w3c.dom.Node;
 
 import com.sun.org.apache.xerces.internal.dom.DocumentImpl;
 
+
 public class DataConverter extends Task
 {
-	static String dataRoot 		= "C:/Users/Sally/workspace/sw-static/data";
+	static String dataRoot 		= "C:/temp/steamboat/data";
 	static String gameDir 		= dataRoot + "/game";
 	static String profileDir 	= dataRoot + "/profile";
 	static String outputFile 	= dataRoot + "/xml/data.xml";
@@ -85,6 +86,7 @@ public class DataConverter extends Task
     	nodeSeasons.appendChild(createSeason(doc, "10", "Q2", "2009", "Th", "Steamboat Willies"));
     	nodeSeasons.appendChild(createSeason(doc, "11", "Q4", "2009", "Th", "Steamboat Willies")); 
     	nodeSeasons.appendChild(createSeason(doc, "12", "Q1", "2010", "A", "Steamboat Willies")); 
+    	nodeSeasons.appendChild(createSeason(doc, "13", "Q2", "2010", "Superleague", "Steamboat Willies")); 
     	
     	Node nodeMatches = convertMatches(doc);
     	Node nodePlayers = convertProfiles(doc);
