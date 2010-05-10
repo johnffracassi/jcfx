@@ -48,6 +48,10 @@ public class AbstractStrategy {
 		}
 	}
 	
+	public OrderBook getOrderBook() {
+		return orderBook;
+	}
+	
 	public boolean hasOpenOrder() {
 		return orderBook.hasOpenOrders();
 	}

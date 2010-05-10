@@ -23,6 +23,10 @@ public class OrderBook {
 		return openOrders;
 	}
 	
+	public List<BTOrder> getClosedOrders() {
+		return closedOrders;
+	}
+	
 	public BTOrder find(int id) {
 		return lookup.get(id);
 	}

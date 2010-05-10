@@ -56,18 +56,11 @@ public class TestEngine {
 		}
 	}
 	
-	public BTResult execute(List<CandleDataPoint> candles, List<SimpleStrategy> tests) {
-		
-		System.out.println("running " + tests.size() + " iterations with " + candles.size() + " candles");
-		
+	public void execute(List<CandleDataPoint> candles, List<SimpleStrategy> tests) {
 		for(SimpleStrategy strategy : tests) {
 			for(CandleDataPoint candle : candles) {
 				strategy.candle(candle);
 			}
-			
-			System.out.println(strategy);
 		}
-		
-		return new BTResult();
 	}
 }

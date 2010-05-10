@@ -16,10 +16,8 @@ import org.jdesktop.swingx.JXFrame;
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTitledPanel;
 import org.jdesktop.swingx.border.DropShadowBorder;
-import org.jfree.chart.ChartPanel;
 
 import com.siebentag.gui.VerticalFlowLayout;
-
 
 @SuppressWarnings("serial")
 public class BackTestFrame extends JXFrame {
@@ -36,22 +34,19 @@ public class BackTestFrame extends JXFrame {
 		DatasetDefinitionPanel ddp = new DatasetDefinitionPanel("newChart");
 		pnlWest.add(frame("Dataset", ddp));
 
-		SimpleStrategyPanel ssp = new SimpleStrategyPanel();
-		pnlWest.add(frame("Strategy", ssp));
-		
         add(tabs, BorderLayout.CENTER);
         add(pnlWest, BorderLayout.WEST);
         
         JToolBar toolBar = new JToolBar("Main");
         toolBar.add(new AboutAction());
         toolBar.add(new NewCandleChartAction());
+        toolBar.add(new NewSimpleStrategyChartAction());
         setToolBar(toolBar);
         
         setJMenuBar(buildMenu());
     }
 	
-	public void addMainPanel(ChartPanel panel, String title) {
-		
+	public void addMainPanel(JPanel panel, String title) {
 		tabs.add(panel, title);
 		tabs.setTabComponentAt(tabs.getTabCount()-1, new ButtonTabComponent(tabs));
 		invalidate();

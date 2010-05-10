@@ -1,5 +1,7 @@
 package com.jeff.fx.backtest;
 
+import java.util.List;
+
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
@@ -10,12 +12,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.CandleDataPoint;
-import com.jeff.fx.common.FXDataRequest;
-import com.jeff.fx.common.FXDataResponse;
-import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.datastore.DataManager;
 
 @Component("backTestApp")
 public class BackTestApp {
@@ -25,11 +23,12 @@ public class BackTestApp {
 	private BackTestFrame frame;
 	
 	@Autowired
-	private DataManager dataManager;
+	private BackTestDataManager dataManager;
 	
 	public static void main(String[] args) {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-*.xml");
 		BackTestApp app = (BackTestApp)ctx.getBean("backTestApp");
+		AppCtx.init(ctx);
 		app.run();
 	}
 
@@ -49,16 +48,20 @@ public class BackTestApp {
 		AppCtx.register(NewCandleChartEvent.class, new FXActionEventListener() {
 			public void event(com.jeff.fx.backtest.FXActionEvent ev) {
 				try {
-					FXDataSource dataSource = FXDataSource.valueOf(AppCtx.getString("newChart.dataSource"));
-					Instrument instrument = Instrument.valueOf(AppCtx.getString("newChart.instrument"));
-					Period period = Period.valueOf(AppCtx.getString("newChart.period"));
-					FXDataRequest request = new FXDataRequest(dataSource, instrument, AppCtx.getDate("newChart.startDate"), AppCtx.getDate("newChart.endDate"), period);
-					FXDataResponse<CandleDataPoint> candles = dataManager.loadCandles(request);
-					ChartPanel chart = CandleChart.createChart(instrument + " (" + period.key + ")", candles.getData());
+					Instrument instrument = Instrument.valueOf(AppCtx.retrieve("newChart.instrument"));
+					Period period = Period.valueOf(AppCtx.retrieve("newChart.period"));
+					List<CandleDataPoint> candles = dataManager.getCandles();
+					ChartPanel chart = CandleChart.createChart(instrument + " (" + period.key + ")", candles);
 					frame.addMainPanel(chart, instrument + " (" + period.key + ")");
 				} catch(Exception ex) {
 					ex.printStackTrace();
 				}
+			}
+		});
+		
+		AppCtx.register(NewSimpleStrategyChartEvent.class, new FXActionEventListener() {
+			public void event(FXActionEvent ev) {
+				frame.addMainPanel(new SimpleStrategyChartPanel(), "Simple Strategy");
 			}
 		});
 	}

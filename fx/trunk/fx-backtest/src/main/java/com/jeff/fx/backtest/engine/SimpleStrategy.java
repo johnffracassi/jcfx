@@ -13,7 +13,7 @@ public class SimpleStrategy extends AbstractStrategy {
 	private int totalCandleCount = 0;
 
 	
-	private SimpleStrategy(int id, double[] params) {
+	public SimpleStrategy(int id, double[] params) {
 		super(id);
 		stayClosedFor = (int)params[0];
 		stayOpenFor = (int)params[1];
