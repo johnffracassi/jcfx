@@ -17,9 +17,13 @@ import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.data.general.DatasetChangeEvent;
+import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.xy.AbstractXYDataset;
+import org.jfree.data.xy.XYDataset;
 
 import com.jeff.fx.backtest.engine.BTOrder;
 import com.jeff.fx.backtest.engine.OrderBook;
@@ -31,7 +35,9 @@ public class SimpleStrategyChartPanel extends JXPanel {
 
 	private JXLabel lbl = new JXLabel("chart panel");
 	private List<CandleDataPoint> candles = null;
+	private TimeSeries timeSeries = null;
 	private ChartPanel chartPanel = null;
+	private JFreeChart chart = null;
 
 	public SimpleStrategyChartPanel() {
 
@@ -56,7 +62,6 @@ public class SimpleStrategyChartPanel extends JXPanel {
 		add(pnlConfig, BorderLayout.SOUTH);
 	}
 
-	
 	protected void update() throws Exception {
 		chartPanel.setChart(createChart());
 	}
@@ -73,9 +78,12 @@ public class SimpleStrategyChartPanel extends JXPanel {
 	 */
 	private JFreeChart createChart() throws Exception {
 		
+		timeSeries = updateChartDataset();
+		TimeSeriesCollection tsc = new TimeSeriesCollection(timeSeries);
+		
 		// build the new chart
-        JFreeChart chart = ChartFactory.createTimeSeriesChart(
-            "Sample Chart", "Date", "Value", updateChartDataset(), true, true, false
+        chart = ChartFactory.createTimeSeriesChart(
+            "Balance Chart", "Date", "Value", tsc, true, true, false
         );
         
 		chart.setBackgroundPaint(Color.white);
@@ -100,7 +108,7 @@ public class SimpleStrategyChartPanel extends JXPanel {
 	/**
 	 * 
 	 */
-	private TimeSeriesCollection updateChartDataset() {
+	private TimeSeries updateChartDataset() {
 		
 		// get the parameters for the test run
 		double openFor = AppCtx.get("simpleStrategy.openFor");
@@ -114,15 +122,14 @@ public class SimpleStrategyChartPanel extends JXPanel {
 		OrderBook orderBook = tests.get(0).getOrderBook();
 		
 		// build the series
-		TimeSeriesCollection dataset = createTimeSeriesDataset(orderBook);
-		
+		TimeSeries dataset = createTimeSeriesDataset(orderBook);
 		return dataset;
 	}
 	
 	/**
 	 * Create the data for the chart
 	 */
-	private TimeSeriesCollection createTimeSeriesDataset(OrderBook orderBook) {
+	private TimeSeries createTimeSeriesDataset(OrderBook orderBook) {
 
 		TimeSeries ts = new TimeSeries("Balance", Minute.class);
 
@@ -134,9 +141,59 @@ public class SimpleStrategyChartPanel extends JXPanel {
 			ts.addOrUpdate(new Minute(order.getCloseTime().toDateTime().toDate()), balance);
 		}
 
-		TimeSeriesCollection tsc = new TimeSeriesCollection();
-		tsc.addSeries(ts);
+		return ts;
+	}
+}
 
-		return tsc;
+class TranslatingXYDataset extends AbstractXYDataset implements XYDataset, DatasetChangeListener {
+
+	private XYDataset underlying;
+	private double translate;
+
+	public TranslatingXYDataset(XYDataset underlying) {
+		this.underlying = underlying;
+		this.underlying.addChangeListener(this);
+		this.translate = 0.0;
+	}
+
+	public double getTranslate() {
+		return this.translate;
+	}
+
+	public void setTranslate(double t) {
+		this.translate = t;
+		fireDatasetChanged();
+	}
+
+	public int getItemCount(int series) {
+		return this.underlying.getItemCount(series);
+	}
+
+	public double getXValue(int series, int item) {
+		return this.underlying.getXValue(series, item) + translate;
+	}
+
+	public Number getX(int series, int item) {
+		return new Double(getXValue(series, item));
+	}
+
+	public Number getY(int series, int item) {
+		return new Double(getYValue(series, item));
+	}
+
+	public double getYValue(int series, int item) {
+		return this.underlying.getYValue(series, item);
+	}
+
+	public int getSeriesCount() {
+		return this.underlying.getSeriesCount();
+	}
+
+	public Comparable getSeriesKey(int series) {
+		return underlying.getSeriesKey(series);
+	}
+
+	public void datasetChanged(DatasetChangeEvent event) {
+		this.fireDatasetChanged();
 	}
 }

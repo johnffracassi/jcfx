@@ -1,6 +1,5 @@
 package com.jeff.fx.backtest;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 
@@ -18,8 +17,7 @@ public class SimpleStrategyConfigPanel extends JXPanel {
 	
 	public SimpleStrategyConfigPanel(final SimpleStrategyChartPanel chartPanel) {
 		
-		setLayout(new VerticalFlowLayout(1));
-		setBackground(Color.CYAN);
+		setLayout(new VerticalFlowLayout(0));
 		
 		final JSlider sldOpenFor = new JSlider(5, 200);
 		sldOpenFor.addChangeListener(new ChangeListener() {
