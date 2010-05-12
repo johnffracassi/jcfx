@@ -1,7 +1,8 @@
-package com.jeff.fx.backtest;
+package com.jeff.fx.backtest.chart;
 
 import org.joda.time.LocalDate;
 
+import com.jeff.fx.backtest.FXActionEvent;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;

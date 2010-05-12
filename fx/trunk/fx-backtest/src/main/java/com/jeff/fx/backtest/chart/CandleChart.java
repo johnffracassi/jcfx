@@ -1,4 +1,4 @@
-package com.jeff.fx.backtest;
+package com.jeff.fx.backtest.chart;
 
 import java.util.Date;
 import java.util.List;
