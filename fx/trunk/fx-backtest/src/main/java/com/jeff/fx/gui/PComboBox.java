@@ -1,9 +1,11 @@
-package com.jeff.fx.backtest;
+package com.jeff.fx.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
+
+import com.jeff.fx.backtest.AppCtx;
 
 @SuppressWarnings("serial")
 public abstract class PComboBox extends JComboBox {

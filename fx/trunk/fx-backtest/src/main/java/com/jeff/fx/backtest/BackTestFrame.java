@@ -17,6 +17,10 @@ import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTitledPanel;
 import org.jdesktop.swingx.border.DropShadowBorder;
 
+import com.jeff.fx.action.AboutAction;
+import com.jeff.fx.action.ExitAction;
+import com.jeff.fx.backtest.chart.NewCandleChartAction;
+import com.jeff.fx.backtest.strategy.simple.NewSimpleStrategyChartAction;
 import com.siebentag.gui.VerticalFlowLayout;
 
 @SuppressWarnings("serial")

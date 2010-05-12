@@ -11,6 +11,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
+import com.jeff.fx.backtest.chart.CandleChart;
+import com.jeff.fx.backtest.chart.NewCandleChartEvent;
+import com.jeff.fx.backtest.strategy.simple.NewSimpleStrategyChartEvent;
+import com.jeff.fx.backtest.strategy.simple.SimpleStrategyChartPanel;
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;

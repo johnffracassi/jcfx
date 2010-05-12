@@ -11,9 +11,11 @@ import org.jdesktop.swingx.JXLabel;
 import org.jdesktop.swingx.JXPanel;
 import org.joda.time.LocalDate;
 
+import com.jeff.fx.backtest.chart.NewCandleChartAction;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
+import com.jeff.fx.gui.PComboBox;
 import com.siebentag.gui.VerticalFlowLayout;
 
 @SuppressWarnings("serial")
