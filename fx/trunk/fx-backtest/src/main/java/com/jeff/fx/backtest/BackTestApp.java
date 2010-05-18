@@ -15,6 +15,8 @@ import com.jeff.fx.backtest.chart.CandleChart;
 import com.jeff.fx.backtest.chart.NewCandleChartEvent;
 import com.jeff.fx.backtest.strategy.simple.NewSimpleStrategyChartEvent;
 import com.jeff.fx.backtest.strategy.simple.SimpleStrategyChartPanel;
+import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartEvent;
+import com.jeff.fx.backtest.strategy.time.TimeStrategyChartPanel;
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
@@ -66,6 +68,12 @@ public class BackTestApp {
 		AppCtx.register(NewSimpleStrategyChartEvent.class, new FXActionEventListener() {
 			public void event(FXActionEvent ev) {
 				frame.addMainPanel(new SimpleStrategyChartPanel(), "Simple Strategy");
+			}
+		});
+
+		AppCtx.register(NewTimeStrategyChartEvent.class, new FXActionEventListener() {
+			public void event(FXActionEvent ev) {
+				frame.addMainPanel(new TimeStrategyChartPanel(), "Time Strategy");
 			}
 		});
 	}

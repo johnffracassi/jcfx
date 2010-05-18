@@ -8,6 +8,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
+import com.jeff.fx.backtest.strategy.simple.SimpleStrategy;
+import com.jeff.fx.backtest.strategy.time.TimeStrategy;
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.FXDataRequest;
 import com.jeff.fx.common.FXDataResponse;
@@ -49,15 +51,23 @@ public class TestEngine {
 			
 			FXDataRequest request = new FXDataRequest(FXDataSource.Forexite, Instrument.AUDUSD, new LocalDate(2010, 4, 1), new LocalDate(2010, 4, 30), Period.OneMin);
 			FXDataResponse<CandleDataPoint> candles = dataManager.loadCandles(request);
-			execute(candles.getData(), SimpleStrategy.createTestSet(pbs));
+			executeSimple(candles.getData(), SimpleStrategy.createTestSet(pbs));
 			
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 	
-	public void execute(List<CandleDataPoint> candles, List<SimpleStrategy> tests) {
+	public void executeSimple(List<CandleDataPoint> candles, List<SimpleStrategy> tests) {
 		for(SimpleStrategy strategy : tests) {
+			for(CandleDataPoint candle : candles) {
+				strategy.candle(candle);
+			}
+		}
+	}
+
+	public void executeTime(List<CandleDataPoint> candles, List<TimeStrategy> tests) {
+		for(TimeStrategy strategy : tests) {
 			for(CandleDataPoint candle : candles) {
 				strategy.candle(candle);
 			}

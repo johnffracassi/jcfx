@@ -1,8 +1,12 @@
-package com.jeff.fx.backtest.engine;
+package com.jeff.fx.backtest.strategy.simple;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jeff.fx.backtest.engine.AbstractStrategy;
+import com.jeff.fx.backtest.engine.BTOrder;
+import com.jeff.fx.backtest.engine.BTParameterSet;
+import com.jeff.fx.backtest.engine.BTParameterTable;
 import com.jeff.fx.common.CandleDataPoint;
 
 public class SimpleStrategy extends AbstractStrategy {

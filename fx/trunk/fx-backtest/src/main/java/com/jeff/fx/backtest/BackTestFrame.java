@@ -21,6 +21,7 @@ import com.jeff.fx.action.AboutAction;
 import com.jeff.fx.action.ExitAction;
 import com.jeff.fx.backtest.chart.NewCandleChartAction;
 import com.jeff.fx.backtest.strategy.simple.NewSimpleStrategyChartAction;
+import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartAction;
 import com.siebentag.gui.VerticalFlowLayout;
 
 @SuppressWarnings("serial")
@@ -45,6 +46,7 @@ public class BackTestFrame extends JXFrame {
         toolBar.add(new AboutAction());
         toolBar.add(new NewCandleChartAction());
         toolBar.add(new NewSimpleStrategyChartAction());
+        toolBar.add(new NewTimeStrategyChartAction());
         setToolBar(toolBar);
         
         setJMenuBar(buildMenu());

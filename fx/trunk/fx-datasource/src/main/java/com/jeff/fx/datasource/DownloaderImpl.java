@@ -19,8 +19,11 @@ public class DownloaderImpl implements Downloader
 	}
 	
 	public byte[] download(String urlStr) throws IOException {
+		
 		byte[] data = DownloadUtil.download(urlStr);
+		
 		cache.store(urlStr, data);
+		
 		return data;
 	}
 }
