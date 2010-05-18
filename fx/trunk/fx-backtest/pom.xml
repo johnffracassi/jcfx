@@ -46,7 +46,19 @@
 		    <groupId>jfree</groupId>
 		    <artifactId>jfreechart</artifactId>
 		    <version>1.0.12</version>
-		</dependency>		
+		</dependency>	
+		 
+		<dependency>
+			<groupId>commons-el</groupId>
+			<artifactId>commons-el</artifactId>
+			<version>1.0</version>
+		</dependency>	
+		
+		<dependency>
+		    <groupId>javax.servlet.jsp</groupId>
+		    <artifactId>jsp-api</artifactId>
+		    <version>2.1</version>
+		</dependency> 
 	</dependencies>
 
 </project>

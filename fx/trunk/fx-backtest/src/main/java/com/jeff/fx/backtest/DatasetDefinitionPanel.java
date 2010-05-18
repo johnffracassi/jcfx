@@ -10,6 +10,7 @@ import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.JXLabel;
 import org.jdesktop.swingx.JXPanel;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 import com.jeff.fx.backtest.chart.NewCandleChartAction;
 import com.jeff.fx.common.FXDataSource;
@@ -58,7 +59,7 @@ public class DatasetDefinitionPanel extends JXPanel {
 		
 		date.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				AppCtx.update(name, new LocalDate(date.getDate()));
+				AppCtx.save(name, new LocalDate(date.getDate()));
 			}
 		});
 		

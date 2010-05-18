@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
-import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
 import com.jeff.fx.common.FXDataPoint;

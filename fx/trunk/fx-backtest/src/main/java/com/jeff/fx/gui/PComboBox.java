@@ -21,7 +21,7 @@ public abstract class PComboBox extends JComboBox {
 		
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				AppCtx.update(key, String.valueOf(getSelectedItem()));
+				AppCtx.save(key, String.valueOf(getSelectedItem()));
 			}
 		});
 	}
