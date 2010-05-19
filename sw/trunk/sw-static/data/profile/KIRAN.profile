@@ -1,0 +1,16 @@
+fullName 		= Kiran
+dob 			= 
+currentAge		= 
+flag 			= nz.gif
+origin 			= New Zealand
+teams	 		= Steamboat Willies
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 13/5/2010
+lastGame		= Current
+nicknames		= Shakiran, Kiran Icihban, Kiran
+profile			= 
+specialMove		= 
+registered		= 0
