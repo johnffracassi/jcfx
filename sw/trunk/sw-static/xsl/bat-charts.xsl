@@ -22,8 +22,9 @@
 	<xsl:include href="ps-records.xsl" />
 	<xsl:include href="player-profile.xsl" />
 	<xsl:include href="team-bowling.xsl" />
+	<xsl:include href="menus.xsl" />
 
-	<xsl:variable name="w" select="850" />
+	<xsl:variable name="w" select="1000" />
 	<xsl:variable name="h" select="350" />
 
 
