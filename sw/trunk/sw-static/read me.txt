@@ -2,7 +2,7 @@ From command prompt:
 
 Command to deploy app
 =====================
-cd \dev\appengine-java-sdk-1.3.0\bin (or c:\dev\lib\appengine\bin)
+cd \dev\lib\appengine\bin)
 appcfg.cmd update C:\dev\temp\steamboat\bin\app
 
 
