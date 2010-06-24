@@ -15,14 +15,12 @@
 	<property name="xml.file" value="data.xml" />			<!-- Output location for data model 			-->
 	<property name="out.file" value="steamboat.html" />	<!-- Output HTML file, pre-split 				-->
 	
-	<!--
     <property name="sdk.dir" location="c:/dev/lib/appengine" />
     <import file="${sdk.dir}/config/user/ant-macros.xml" />
 
 	  <target name="update" description="Uploads the application to App Engine.">
 	    <appcfg action="update" war="C:/dev/temp/steamboat/bin/app" />
 	  </target>
-	-->
 
 	<target name="init">
 		<available property="linux" file="/usr" />
