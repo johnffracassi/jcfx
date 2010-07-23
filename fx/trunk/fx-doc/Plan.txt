@@ -9,7 +9,7 @@ Strategy Miner
 
 Data Store Manager
 ====================
-Utility to manage the Data Store
+GUI Application to manage the Data Store
 - Download new data
 - Show which date ranges, datasources, currency pair are populated
 - Validate data
