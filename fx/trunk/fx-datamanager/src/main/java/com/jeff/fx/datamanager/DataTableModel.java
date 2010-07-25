@@ -9,14 +9,14 @@ import com.jeff.fx.common.FXDataRequest;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.datastore.DataManager;
+import com.jeff.fx.datastore.DataStoreImpl;
 
 public class DataTableModel extends DefaultTableModel  {
 	
-	private DataManager dataManager;
+	private DataStoreImpl dataManager;
 	
 	public DataTableModel() {
-		dataManager = (DataManager)DataManagerApp.ctx.getBean("dataManager");
+		dataManager = (DataStoreImpl)DataManagerApp.ctx.getBean("dataManager");
 	}
 	
 	public int getColumnCount() {

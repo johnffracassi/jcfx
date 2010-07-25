@@ -13,7 +13,7 @@ import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.common.TickDataPoint;
 import com.jeff.fx.datasource.converter.TickToCandleConverter;
-import com.jeff.fx.datastore.DataManager;
+import com.jeff.fx.datastore.DataStoreImpl;
 
 
 public class DataLoadAction {
@@ -22,7 +22,7 @@ public class DataLoadAction {
 
 	public void perform(FXDataSource dataSource, Instrument instrument, LocalDate date) {
 		try {
-			DataManager dm = (DataManager) DataManagerApp.ctx.getBean("dataManager");
+			DataStoreImpl dm = (DataStoreImpl) DataManagerApp.ctx.getBean("dataManager");
 			FXDataResponse<TickDataPoint> response = dm.loadTicks(new FXDataRequest(dataSource, instrument, date, Period.Tick));
 			
 			log.debug("Loaded " + response.getData().size() + " ticks");

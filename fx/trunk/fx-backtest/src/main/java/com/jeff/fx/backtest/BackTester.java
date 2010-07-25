@@ -13,7 +13,7 @@ import com.jeff.fx.common.FXDataResponse;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.datastore.DataManager;
+import com.jeff.fx.datastore.DataStoreImpl;
 
 @Component
 public class BackTester {
@@ -21,7 +21,7 @@ public class BackTester {
 	private static Logger log = Logger.getLogger(BackTester.class);
 
 	@Autowired
-	private DataManager dataManager;
+	private DataStoreImpl dataManager;
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-*.xml");

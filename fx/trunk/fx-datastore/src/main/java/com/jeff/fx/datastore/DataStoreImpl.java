@@ -22,9 +22,9 @@ import com.jeff.fx.datasource.DataSource;
 import com.jeff.fx.datasource.converter.CandleToCandleConverter;
 
 @Component("dataManager")
-public class DataManager {
+public class DataStoreImpl {
 
-	private static Logger log = Logger.getLogger(DataManager.class);
+	private static Logger log = Logger.getLogger(DataStoreImpl.class);
 
 	private DataStore<TickDataPoint> tickDataStore;
 	private DataStore<CandleDataPoint> candleDataStore;
@@ -33,7 +33,7 @@ public class DataManager {
 
 	public static void main(String[] args) throws Exception {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-datastore.xml");
-		DataManager dm = (DataManager) ctx.getBean("dataManager");
+		DataStoreImpl dm = (DataStoreImpl) ctx.getBean("dataManager");
 		CandleToCandleConverter c2c = new CandleToCandleConverter();
 
 		for(int i=1; i<30; i++) {
@@ -44,9 +44,9 @@ public class DataManager {
 			
 			log.debug("Loaded " + response.getData().size() + " ticks");
 
-//			for (Period period : new Period[] { Period.FiveMin, Period.TenMin, Period.FifteenMin, Period.ThirtyMin, Period.OneHour, Period.FourHour }) {
-//				dm.storeCandles(c2c.convert(response.getData(), period));
-//			}
+			for (Period period : new Period[] { Period.FiveMin, Period.TenMin, Period.FifteenMin, Period.ThirtyMin, Period.OneHour, Period.FourHour }) {
+				dm.storeCandles(c2c.convert(response.getData(), period));
+			}
 		}
 	}
 

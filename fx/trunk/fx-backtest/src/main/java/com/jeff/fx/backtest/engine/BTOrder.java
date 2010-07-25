@@ -2,11 +2,13 @@ package com.jeff.fx.backtest.engine;
 
 import org.joda.time.LocalDateTime;
 
+import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.OfferSide;
 
 public class BTOrder {
 	
 	private int id;
+	private Instrument instrument;
 	private OfferSide offerSide;
 	private double units;
 	private double openPrice;
@@ -76,5 +78,13 @@ public class BTOrder {
 
 	public void setClosePrice(double closePrice) {
 		this.closePrice = closePrice;
+	}
+
+	public Instrument getInstrument() {
+		return instrument;
+	}
+
+	public void setInstrument(Instrument instrument) {
+		this.instrument = instrument;
 	}
 }

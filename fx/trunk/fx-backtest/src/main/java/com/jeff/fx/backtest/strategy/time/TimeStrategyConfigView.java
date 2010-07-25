@@ -10,11 +10,11 @@ import com.jeff.fx.backtest.strategy.StrategyPropertyChangeListener;
 import com.jeff.fx.gui.TimeOfWeekSliderLine;
 import com.siebentag.gui.VerticalFlowLayout;
 
-public class TimeStrategyConfigPanel extends JXPanel {
+public class TimeStrategyConfigView extends JXPanel {
 	
 	private static final long serialVersionUID = 7675491170754141950L;
 
-	public TimeStrategyConfigPanel(final StrategyPropertyChangeListener spcl) {
+	public TimeStrategyConfigView(final StrategyPropertyChangeListener spcl) {
 		
 		JXPanel pnlConfig = new JXPanel();
 		pnlConfig.setLayout(new VerticalFlowLayout(0));

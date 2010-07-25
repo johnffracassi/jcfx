@@ -21,13 +21,13 @@ import com.jeff.fx.common.FXDataRequest;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.datastore.DataManager;
+import com.jeff.fx.datastore.DataStoreImpl;
 
 @Component
 public class CandleAnalyser 
 {
 	@Autowired
-	private DataManager dm;
+	private DataStoreImpl dm;
 	
 	public static void main(String[] args) {
 		try {

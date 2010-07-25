@@ -16,13 +16,13 @@ import com.jeff.fx.common.FXDataResponse;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.datastore.DataManager;
+import com.jeff.fx.datastore.DataStoreImpl;
 
 @Component
 public class TestEngine {
 
 	@Autowired
-	private DataManager dataManager;
+	private DataStoreImpl dataManager;
 	
 	public static void main(String[] args) {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-*.xml");

@@ -8,14 +8,12 @@ import java.util.Map;
 public class OrderBook {
 	
 	private Map<Integer,BTOrder> lookup;
-	private List<BTOrder> openOrders;
-	private List<BTOrder> closedOrders;
+	private List<BTOrder> openOrders = new ArrayList<BTOrder>();
+	private List<BTOrder> closedOrders = new ArrayList<BTOrder>();
 	
 	private int nextId = 1;
 	
 	public OrderBook() {
-		openOrders = new ArrayList<BTOrder>();
-		closedOrders = new ArrayList<BTOrder>();
 		lookup = new HashMap<Integer, BTOrder>();
 	}
 	
