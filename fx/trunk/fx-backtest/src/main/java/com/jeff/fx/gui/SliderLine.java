@@ -23,8 +23,9 @@ public class SliderLine extends JXPanel {
 	public SliderLine(final String key, final String label, final int startValue, final int endValue) {
 		
 		lblLabel = new JXLabel(label);
-		lblValue = new JXLabel("0");
+		lblValue = new JXLabel("N/A");
 		slider = new JSlider(startValue, endValue);
+		slider.setValue(startValue);
 
 		lblLabel.setPreferredSize(new Dimension(100, 20));
 		lblValue.setPreferredSize(new Dimension(50, 20));

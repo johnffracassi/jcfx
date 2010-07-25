@@ -11,13 +11,13 @@ import com.jeff.fx.common.FXDataResponse;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.datastore.DataManager;
+import com.jeff.fx.datastore.DataStoreImpl;
 
 @Component
 public class BackTestDataManager {
 	
 	@Autowired
-	private DataManager dataManager;
+	private DataStoreImpl dataManager;
 	
 	public List<CandleDataPoint> getCandles() throws Exception {
 		

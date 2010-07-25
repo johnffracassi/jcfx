@@ -1,9 +1,11 @@
 package com.jeff.fx.datasource;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
 
@@ -16,6 +18,8 @@ import com.jeff.fx.util.Downloader;
 
 public class AbstractDataSource<T extends FXDataPoint> implements DataSource<T> {
 
+	private static Logger log = Logger.getLogger(AbstractDataSource.class);
+
 	private Downloader downloader;
 	private Locator locator;
 	private Parser<T> parser;
@@ -27,10 +31,18 @@ public class AbstractDataSource<T extends FXDataPoint> implements DataSource<T> 
 		LocalDate date = request.getDate();
 		if(date.getDayOfWeek() != DateTimeConstants.SATURDAY) {
 			String url = locate(request.getInstrument(), date, request.getPeriod());
-			byte[] compressed = download(url);
-			byte[] uncompressed = process(compressed);
-			List<T> newPoints = parse(uncompressed);
-			dataPoints.addAll(newPoints);
+			
+			try {
+				byte[] compressed = download(url);
+				
+				if(compressed.length > 0) {
+					byte[] uncompressed = process(compressed);
+					List<T> newPoints = parse(uncompressed);
+					dataPoints.addAll(newPoints);
+				}
+			} catch(FileNotFoundException fnfex) {
+				log.warn("File not found", fnfex);
+			}
 		}
 
 		return new FXDataResponse<T>(request, dataPoints);

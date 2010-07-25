@@ -12,7 +12,7 @@
 	<context:component-scan base-package="com.jeff.fx.datastore" />
 	<context:component-scan base-package="com.jeff.fx.datasource" />
 	
-	<bean id="dataManager" class="com.jeff.fx.datastore.DataManager">
+	<bean id="dataManager" class="com.jeff.fx.datastore.DataStoreImpl">
 		<property name="tickDataStore" ref="tickDataStore" />
 		<property name="candleDataStore" ref="candleDataStore" />
 		<property name="tickDataSources">

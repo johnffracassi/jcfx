@@ -39,7 +39,16 @@ public class AppCtx {
 	}
 	
 	public static double getDouble(String key) {
-		return (Double)tempRegister.get(key);
+		
+		Object result = tempRegister.get(key);
+		
+		if(result == null) {
+			return 0.0;
+		} else if(result instanceof Integer) {
+			return ((Integer)tempRegister.get(key)).doubleValue();
+		} else {
+			return (Double)tempRegister.get(key);
+		}
 	}
 	
 	public static int getInt(String key) {

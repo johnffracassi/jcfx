@@ -26,7 +26,7 @@ public class DownloadUtil {
 			urlStr = urlStr.replace(" ", "%20");
 			URL url = new URL(urlStr);
 			URLConnection urlc = url.openConnection();
-			urlc.setConnectTimeout(5);
+			urlc.setConnectTimeout(5000);
 
 			// open the input stream
 			bis = new BufferedInputStream(urlc.getInputStream());
