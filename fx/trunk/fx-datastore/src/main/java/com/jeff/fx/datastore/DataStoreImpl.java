@@ -1,5 +1,6 @@
 package com.jeff.fx.datastore;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ public class DataStoreImpl {
 	private DataStore<CandleDataPoint> candleDataStore;
 	private Map<FXDataSource, DataSource<TickDataPoint>> tickDataSources;
 	private Map<FXDataSource, DataSource<CandleDataPoint>> candleDataSources;
+	private List<DataStoreProgressListener> listeners = new ArrayList<DataStoreProgressListener>();
 
 	public static void main(String[] args) throws Exception {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-datastore.xml");
@@ -50,6 +52,18 @@ public class DataStoreImpl {
 		}
 	}
 
+	public void addProgressListener(DataStoreProgressListener listener) {
+		listeners.add(listener);
+	}
+	
+	private void updateProgress(int progress, int steps) {
+		if(listeners != null && listeners.size() > 0) {
+			for(DataStoreProgressListener listener : listeners) {
+				listener.dataStoreProgressUpdate(new DataStoreProgress(progress, steps));
+			}
+		}
+	}
+	
 	public boolean exists(FXDataRequest request) {
 		log.debug("check existance of " + request);
 
@@ -72,6 +86,7 @@ public class DataStoreImpl {
 				newReq.setDate(request.getDate().plusDays(day));
 				newReq.setEndDate(null);
 				all.addAll(loadCandlesForDay(newReq).getData());
+				updateProgress(day, dayCount);
 			}
 			return new FXDataResponse<CandleDataPoint>(request, all);
 		} else {
@@ -79,7 +94,7 @@ public class DataStoreImpl {
 		}
 	}
 	
-	private FXDataResponse<CandleDataPoint> loadCandlesForDay(FXDataRequest request) throws Exception {
+	public FXDataResponse<CandleDataPoint> loadCandlesForDay(FXDataRequest request) throws Exception {
 		
 		log.debug("Load candles for " + request);
 
