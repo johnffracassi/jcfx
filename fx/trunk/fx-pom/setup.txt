@@ -1,7 +1,11 @@
 * import projects from google code (in Eclipse)
 
+* install jgraphx into maven repo
+mvn install:install-file -DgroupId=jgraphx -DartifactId=jgraphx -Dversion=1.4.0.9 -Dfile=jgraphx.jar -Dpackaging=jar -DgeneratePom=true
+
 * run "setup-<env>.bat" 
   - creates linked resources
   - creates eclipse projects (via maven)
 
 * refresh Eclipse projects
+
