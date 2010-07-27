@@ -43,9 +43,9 @@
 		</dependency>
 		
 		<dependency>
-		    <groupId>jgraph</groupId>
-		    <artifactId>jgraph</artifactId>
-		    <version>5.5.1</version>
+		    <groupId>jgraphx</groupId>
+		    <artifactId>jgraphx</artifactId>
+		    <version>1.4.0.9</version>
 		</dependency>
 		
 		
