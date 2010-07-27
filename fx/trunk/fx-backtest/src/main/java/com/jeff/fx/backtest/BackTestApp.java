@@ -73,7 +73,9 @@ public class BackTestApp {
 
 		AppCtx.register(NewTimeStrategyChartEvent.class, new FXActionEventListener() {
 			public void event(FXActionEvent ev) {
-				frame.addMainPanel(new TimeStrategyView(), "Time Strategy");
+				TimeStrategyView tsv = new TimeStrategyView();
+				frame.addMainPanel(tsv, "Time Strategy");
+				tsv.initialise();
 			}
 		});
 	}

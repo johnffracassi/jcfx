@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JTabbedPane;
+import javax.swing.SwingWorker;
 
 import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXPanel;
@@ -48,17 +49,23 @@ public class TimeStrategyView extends JXPanel implements StrategyPropertyChangeL
 		TimeStrategyConfigView pnlConfig = new TimeStrategyConfigView(this);
 		pnlConfig.setPreferredSize(new Dimension(150, 150));
 		add(pnlConfig, BorderLayout.SOUTH);
-		
-		loadCandles();
 	}
 
-	public void loadCandles() {
-
-		try {
-			candles = AppCtx.getDataManager().getCandles();
-		} catch(Exception ex) {
-			log.error("Error getting candles", ex);
-		}
+	public void initialise() {
+		loadCandles();
+	}
+	
+	private void loadCandles() {
+		new SwingWorker<Object,Object>() {
+			protected Object doInBackground() throws Exception {
+				try {
+					candles = AppCtx.getDataManager().getCandles();
+				} catch(Exception ex) {
+					log.error("Error getting candles", ex);
+				}
+				return null;
+			}
+		}.execute();
 	}
 	
 	public void update() throws Exception {

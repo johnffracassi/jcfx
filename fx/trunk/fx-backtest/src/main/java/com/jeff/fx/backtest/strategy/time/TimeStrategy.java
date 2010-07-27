@@ -3,7 +3,6 @@ package com.jeff.fx.backtest.strategy.time;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalTime;
 
 import com.jeff.fx.backtest.engine.AbstractStrategy;
@@ -11,6 +10,7 @@ import com.jeff.fx.backtest.engine.BTOrder;
 import com.jeff.fx.backtest.engine.BTParameterSet;
 import com.jeff.fx.backtest.engine.BTParameterTable;
 import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.OfferSide;
 
 public class TimeStrategy extends AbstractStrategy {
 	
@@ -50,12 +50,14 @@ public class TimeStrategy extends AbstractStrategy {
 		
 		// is it open/close time?
 		if(openAtDay == dayOfWeek && time.getHourOfDay() == openAtTime.getHourOfDay() && time.getMinuteOfHour() == openAtTime.getMinuteOfHour() && !hasOpenOrder()) {
-			open(new BTOrder(), candle);
+			BTOrder order = new BTOrder();
+			order.setOfferSide(OfferSide.Ask);
+			order.setUnits(1.0);
+			open(order, candle);
 		} else if(closeAtDay == dayOfWeek && time.getHourOfDay() == closeAtTime.getHourOfDay() && time.getMinuteOfHour() == closeAtTime.getMinuteOfHour() && hasOpenOrder()) {
 			close(candle);
 		} 
 	}
-
 
 	@Override
 	public String toString() {
