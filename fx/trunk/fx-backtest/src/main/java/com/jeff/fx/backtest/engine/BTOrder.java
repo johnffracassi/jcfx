@@ -13,6 +13,8 @@ public class BTOrder {
 	private double units;
 	private double openPrice;
 	private double closePrice;
+	private double stopLoss;
+	private double takeProfit;
 	private LocalDateTime openTime;
 	private LocalDateTime closeTime;
 
@@ -86,5 +88,21 @@ public class BTOrder {
 
 	public void setInstrument(Instrument instrument) {
 		this.instrument = instrument;
+	}
+
+	public double getStopLoss() {
+		return stopLoss;
+	}
+
+	public void setStopLoss(double stopLoss) {
+		this.stopLoss = stopLoss;
+	}
+
+	public double getTakeProfit() {
+		return takeProfit;
+	}
+
+	public void setTakeProfit(double takeProfit) {
+		this.takeProfit = takeProfit;
 	}
 }

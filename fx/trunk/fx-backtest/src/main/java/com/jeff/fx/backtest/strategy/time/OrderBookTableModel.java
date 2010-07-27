@@ -2,6 +2,8 @@ package com.jeff.fx.backtest.strategy.time;
 
 import javax.swing.table.DefaultTableModel;
 
+import org.joda.time.LocalDateTime;
+
 import com.jeff.fx.backtest.engine.BTOrder;
 import com.jeff.fx.backtest.engine.OrderBook;
 
@@ -28,15 +30,34 @@ public class OrderBookTableModel extends DefaultTableModel {
 			case 3: return order.getUnits();
 			case 4: return order.getInstrument();
 			case 5: return order.getOpenPrice();
-			case 6: return "";
-			case 7: return "";
+			case 6: return order.getStopLoss();
+			case 7: return order.getTakeProfit();
 			case 8: return order.getCloseTime();
 			case 9: return order.getClosePrice();
-			case 10: return "0.00";
+			case 10: return 0.0;
 			case 11: return order.getProfit();
 			default: return "XXX";
 		}
 	}
+
+	public Class<?> getColumnClass(int column) {
+		switch (column) {
+			case 0: return Integer.class;
+			case 1: return LocalDateTime.class;
+			case 2: return String.class;
+			case 3: return Double.class;
+			case 4: return String.class;
+			case 5: return Double.class;
+			case 6: return Double.class;
+			case 7: return Double.class;
+			case 8: return LocalDateTime.class;
+			case 9: return Double.class;
+			case 10: return Double.class;
+			case 11: return Double.class;
+			default: return String.class;
+		}
+	}
+	
 	
 	public int getColumnCount() {
 		return 12;
@@ -68,3 +89,5 @@ public class OrderBookTableModel extends DefaultTableModel {
 		}
 	}
 }
+
+
