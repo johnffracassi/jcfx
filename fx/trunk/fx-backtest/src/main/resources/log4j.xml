@@ -24,8 +24,13 @@
 		<appender-ref ref="Console" />
     </logger>
     
+    <logger name="com.jeff.fx.backtest.strategy" additivity="false">
+        <level value="debug"/> 
+		<appender-ref ref="Console" />
+    </logger>
+
     <logger name="com.jeff.fx.datastore" additivity="false">
-        <level value="info"/> 
+        <level value="error"/> 
 		<appender-ref ref="Console" />
     </logger>
 
@@ -35,7 +40,7 @@
 	</logger>
 
     <logger name="com.jeff.fx.datasource" additivity="false">
-        <level value="info"/> 
+        <level value="error"/> 
 		<appender-ref ref="Console" />
     </logger>
 

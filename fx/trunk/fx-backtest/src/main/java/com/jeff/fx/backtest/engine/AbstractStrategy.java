@@ -29,7 +29,8 @@ public class AbstractStrategy {
 	 * @return
 	 */
 	protected boolean isOrderStopped(BTOrder order, CandleDataPoint candle) {
-		return getCloseType(order, candle) != OrderCloseType.Open;
+		
+		return getCloseType(order, candle) != OrderCloseType.Close;
 	}
 	
 	/**
@@ -39,7 +40,7 @@ public class AbstractStrategy {
 	 * @param candle
 	 * @return
 	 */
-	private OrderCloseType getCloseType(BTOrder order, CandleDataPoint candle) {
+	protected OrderCloseType getCloseType(BTOrder order, CandleDataPoint candle) {
 
 		OrderCloseType type = OrderCloseType.Close;
 		
@@ -61,7 +62,7 @@ public class AbstractStrategy {
 		return type;
 	}
 
-	private double getClosePrice(BTOrder order, CandleDataPoint candle) {
+	protected double getClosePrice(BTOrder order, CandleDataPoint candle) {
 
 		double closePrice = order.getOfferSide() == OfferSide.Ask ? candle.getSellOpen() : candle.getBuyOpen();
 		

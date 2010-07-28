@@ -92,6 +92,10 @@ public class BTOrder {
 	}
 
 	public double getStopLossPrice() {
+		if(stopLoss == 0.0) {
+			return 0.0;
+		}
+		
 		if(offerSide == OfferSide.Ask) {
 			return getOpenPrice() - (stopLoss * instrument.getPipValue());
 		} else {
@@ -100,6 +104,10 @@ public class BTOrder {
 	}
 
 	public double getTakeProfitPrice() {
+		if(takeProfit == 0.0) {
+			return 0.0;
+		}
+		
 		if(offerSide == OfferSide.Ask) {
 			return getOpenPrice() + (takeProfit * instrument.getPipValue());
 		} else {

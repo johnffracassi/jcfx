@@ -37,7 +37,7 @@ public class BackTestFrame extends JXFrame {
 		pnlWest.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		
 		DatasetDefinitionPanel ddp = new DatasetDefinitionPanel("newChart");
-		pnlWest.add(frame("Dataset", ddp));
+		pnlWest.add(GUIUtil.frame("Dataset", ddp));
 
         add(tabs, BorderLayout.CENTER);
         add(pnlWest, BorderLayout.WEST);
@@ -68,14 +68,5 @@ public class BackTestFrame extends JXFrame {
 		menuBar.add(fileMenu);
 		menuBar.add(helpMenu);
 		return menuBar;
-	}
-	
-	private JXPanel frame(String title, JPanel pnl) {
-        JXTitledPanel titled = new JXTitledPanel(title, pnl);
-        Border shadow = new DropShadowBorder(Color.BLACK, 3, 0.66f, 3, false, false, true, true);
-        Border line = BorderFactory.createLineBorder(Color.GRAY);
-        Border border = BorderFactory.createCompoundBorder(shadow, line);
-        titled.setBorder(border);
-        return titled;
 	}
 }
