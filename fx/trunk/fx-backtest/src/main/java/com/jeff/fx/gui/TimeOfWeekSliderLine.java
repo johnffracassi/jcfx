@@ -1,6 +1,8 @@
 package com.jeff.fx.gui;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JSlider;
@@ -24,6 +26,8 @@ public class TimeOfWeekSliderLine extends JXPanel {
 	private int dayOfWeek = 0;
 	private LocalTime time;
 	private final JSlider slider;
+	private List<ChangeListener> listeners = new ArrayList<ChangeListener>();
+	
 	
 	public TimeOfWeekSliderLine(final String key, final String label, final int startValue, final int endValue) {
 		
@@ -50,6 +54,10 @@ public class TimeOfWeekSliderLine extends JXPanel {
 				time = dt.toLocalTime();
 				AppCtx.set(key + ".dayOfWeek", dayOfWeek);
 				AppCtx.set(key + ".time", time);
+				
+				for(ChangeListener listener : listeners) {
+					listener.stateChanged(ev);
+				}
 			}
 		});
 		
@@ -67,7 +75,7 @@ public class TimeOfWeekSliderLine extends JXPanel {
 	}
 	
 	public void addChangeListener(ChangeListener listener) {
-		slider.addChangeListener(listener);
+		listeners.add(listener);
 	}
 	
 	public static void main(String[] args) {

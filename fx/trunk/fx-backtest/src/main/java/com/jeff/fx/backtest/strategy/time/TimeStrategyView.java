@@ -26,8 +26,8 @@ public class TimeStrategyView extends JXPanel implements StrategyPropertyChangeL
 
 	private OrderBookController orderBook = new OrderBookController();
 	private TimeStrategyChartController chart = new TimeStrategyChartController();
-	private TimeStrategyOptimiserView optimiser = null;
-	TimeStrategyConfigView pnlConfig = null;
+	private OptimiserView optimiser = null;
+	private TimeStrategyConfigView pnlConfig = null;
 	private List<CandleDataPoint> candles = Collections.<CandleDataPoint>emptyList();
 	
 	public TimeStrategyView() {
@@ -39,7 +39,7 @@ public class TimeStrategyView extends JXPanel implements StrategyPropertyChangeL
 		add(tabbedPane, BorderLayout.CENTER);
 
 		// create views
-		optimiser = new TimeStrategyOptimiserView();
+		optimiser = new OptimiserView();
 
 		// add the tabs
 		tabbedPane.add(chart.getView(), "Chart View");

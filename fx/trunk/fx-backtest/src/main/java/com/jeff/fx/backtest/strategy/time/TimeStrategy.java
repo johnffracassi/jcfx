@@ -3,6 +3,7 @@ package com.jeff.fx.backtest.strategy.time;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.joda.time.LocalTime;
 
 import com.jeff.fx.backtest.engine.AbstractStrategy;
@@ -14,6 +15,8 @@ import com.jeff.fx.common.OfferSide;
 
 public class TimeStrategy extends AbstractStrategy {
 	
+	private static Logger log = Logger.getLogger(TimeStrategy.class);
+
 	private int openAtDay = 0;
 	private LocalTime openAtTime = null;
 	private int closeAtDay = 0;
@@ -51,12 +54,15 @@ public class TimeStrategy extends AbstractStrategy {
 		List<BTOrder> ordersToClose = new ArrayList<BTOrder>();
 		for(BTOrder order : getOrderBook().getOpenOrders()) {
 			if(isOrderStopped(order, candle)) {
+				log.warn("Order #" + order.getId() + " has breached " + getCloseType(order, candle) + " (" + getClosePrice(order, candle) + ")");
+				log.debug(candle);
 				ordersToClose.add(order);
 			}
 		}
 		
 		// close the orders (do it outside the loop to avoid concurrent modification)
 		for(BTOrder order : ordersToClose) {
+			log.warn("Closing order #" + order.getId());
 			close(order, candle);
 		}
 		
@@ -76,8 +82,12 @@ public class TimeStrategy extends AbstractStrategy {
 				order.setStopLoss(stopLoss);
 			}
 			
+			log.warn("Opened new order");
+			log.debug(candle);
 			open(order, candle);
 		} else if(closeAtDay == dayOfWeek && time.getHourOfDay() == closeAtTime.getHourOfDay() && time.getMinuteOfHour() == closeAtTime.getMinuteOfHour() && hasOpenOrder()) {
+			log.warn("Manually closing order");
+			log.debug(candle);
 			close(getOrderBook().getOpenOrders().get(0), candle);
 		} 
 	}
