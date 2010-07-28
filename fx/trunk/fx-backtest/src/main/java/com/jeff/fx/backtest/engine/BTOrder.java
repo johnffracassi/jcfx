@@ -17,6 +17,7 @@ public class BTOrder {
 	private double takeProfit;
 	private LocalDateTime openTime;
 	private LocalDateTime closeTime;
+	private OrderCloseType closeType = OrderCloseType.Open;
 
 	public double getProfit() {
 		if(offerSide == OfferSide.Ask) {
@@ -88,6 +89,38 @@ public class BTOrder {
 
 	public void setInstrument(Instrument instrument) {
 		this.instrument = instrument;
+	}
+
+	public double getStopLossPrice() {
+		if(offerSide == OfferSide.Ask) {
+			return getOpenPrice() - (stopLoss * instrument.getPipValue());
+		} else {
+			return getOpenPrice() + (stopLoss * instrument.getPipValue());
+		}
+	}
+
+	public double getTakeProfitPrice() {
+		if(offerSide == OfferSide.Ask) {
+			return getOpenPrice() + (takeProfit * instrument.getPipValue());
+		} else {
+			return getOpenPrice() - (takeProfit * instrument.getPipValue());
+		}
+	}
+
+	public boolean hasTakeProfit() {
+		return takeProfit > 0.0;
+	}
+	
+	public boolean hasStopLoss() {
+		return stopLoss > 0.0;
+	}
+
+	public OrderCloseType getCloseType() {
+		return closeType;
+	}
+
+	public void setCloseType(OrderCloseType closeType) {
+		this.closeType = closeType;
 	}
 
 	public double getStopLoss() {

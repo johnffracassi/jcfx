@@ -30,8 +30,8 @@ public class OrderBookTableModel extends DefaultTableModel {
 			case 3: return order.getUnits();
 			case 4: return order.getInstrument();
 			case 5: return order.getOpenPrice();
-			case 6: return order.getStopLoss();
-			case 7: return order.getTakeProfit();
+			case 6: return order.getStopLossPrice();
+			case 7: return order.getTakeProfitPrice();
 			case 8: return order.getCloseTime();
 			case 9: return order.getClosePrice();
 			case 10: return 0.0;

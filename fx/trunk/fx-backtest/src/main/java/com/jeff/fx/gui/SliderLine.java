@@ -43,6 +43,10 @@ public class SliderLine extends JXPanel {
 		add(lblValue);
 	}
 	
+	public int getValue() {
+		return slider.getValue();
+	}
+	
 	public void addChangeListener(ChangeListener listener) {
 		slider.addChangeListener(listener);
 	}
