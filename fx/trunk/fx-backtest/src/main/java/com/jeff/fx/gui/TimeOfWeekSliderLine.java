@@ -17,14 +17,13 @@ import org.joda.time.format.DateTimeFormat;
 import com.jeff.fx.backtest.AppCtx;
 import com.siebentag.gui.VerticalFlowLayout;
 
+@SuppressWarnings("serial")
 public class TimeOfWeekSliderLine extends JXPanel {
 	
-	private static final long serialVersionUID = 1561678788540967715L;
-
 	private int multiplier = 15;
-	private JXLabel lblLabel;
-	private JXLabel lblValue;
-	private JSlider slider;
+	private int dayOfWeek = 0;
+	private LocalTime time;
+	private final JSlider slider;
 	
 	public TimeOfWeekSliderLine(final String key, final String label, final int startValue, final int endValue) {
 		
@@ -33,13 +32,13 @@ public class TimeOfWeekSliderLine extends JXPanel {
 		int minutes = Minutes.minutesBetween(firstTime, lastTime).getMinutes();
 		int ticks = minutes / multiplier;
 		
-		lblLabel = new JXLabel(label);
+		final JXLabel lblLabel = new JXLabel(label);
+		final JXLabel lblValue = new JXLabel("0");
 		slider = new JSlider(0, ticks);
-		lblValue = new JXLabel("0");
 
 		lblLabel.setPreferredSize(new Dimension(100, 20));
-		slider.setPreferredSize(new Dimension(200, 25));
 		lblValue.setPreferredSize(new Dimension(100, 20));
+		slider.setPreferredSize(new Dimension(200, 25));
 		
 		slider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent ev) {
@@ -47,8 +46,8 @@ public class TimeOfWeekSliderLine extends JXPanel {
 				lblValue.setText(DateTimeFormat.forPattern("EE HH:mm").print(dt));
 
 				// set the value in the registry
-				int dayOfWeek = dt.getDayOfWeek();
-				LocalTime time = dt.toLocalTime();
+				dayOfWeek = dt.getDayOfWeek();
+				time = dt.toLocalTime();
 				AppCtx.set(key + ".dayOfWeek", dayOfWeek);
 				AppCtx.set(key + ".time", time);
 			}
@@ -57,6 +56,14 @@ public class TimeOfWeekSliderLine extends JXPanel {
 		add(lblLabel);
 		add(slider);
 		add(lblValue);
+	}
+	
+	public int getDayOfWeek() {
+		return dayOfWeek;
+	}
+	
+	public LocalTime getTime() {
+		return time;
 	}
 	
 	public void addChangeListener(ChangeListener listener) {

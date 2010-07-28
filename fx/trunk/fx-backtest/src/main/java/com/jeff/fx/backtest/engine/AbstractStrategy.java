@@ -6,10 +6,6 @@ import com.jeff.fx.common.OfferSide;
 public class AbstractStrategy {
 	
 	private int id = -1;
-	
-	private double balance = 0.0;
-	private int wins = 0;
-	private int losses = 0;
 
 	private OrderBook orderBook;
 
@@ -25,28 +21,81 @@ public class AbstractStrategy {
 		orderBook.post(order);
 	}
 
-	protected void close(CandleDataPoint candle) {
+	/**
+	 * Check if the order has hit a stop loss or take profit
+	 * 
+	 * @param order
+	 * @param candle
+	 * @return
+	 */
+	protected boolean isOrderStopped(BTOrder order, CandleDataPoint candle) {
+		return getCloseType(order, candle) != OrderCloseType.Open;
+	}
+	
+	/**
+	 * Check the type of close method (normal, take profit or stop loss)
+	 * 
+	 * @param order
+	 * @param candle
+	 * @return
+	 */
+	private OrderCloseType getCloseType(BTOrder order, CandleDataPoint candle) {
+
+		OrderCloseType type = OrderCloseType.Close;
 		
-		if(orderBook.hasOpenOrders()) {
-			
-			BTOrder currentOrder = orderBook.getOpenOrders().get(0);
-			currentOrder.setCloseTime(candle.getDate());
-			currentOrder.setClosePrice(currentOrder.getOfferSide() == OfferSide.Ask ? candle.getSellOpen() : candle.getBuyOpen());
-
-			double profit = 10000.0 * (currentOrder.getOpenPrice() - currentOrder.getClosePrice());
-			
-			if(profit > 0.0) {
-				wins ++;
-			} else { 
-				losses ++;
+		// check for a stop loss or take profit
+		if(order.getOfferSide() == OfferSide.Ask) {
+			if(order.hasStopLoss() && candle.getSellLow() < order.getStopLossPrice()) {
+				type = (OrderCloseType.StopLoss);
+			} else if(order.hasTakeProfit() && candle.getBuyHigh() > order.getTakeProfitPrice()) {
+				type = (OrderCloseType.TakeProfit);
 			}
-
-			balance += profit;
-			
-			orderBook.close(currentOrder);
-			
-			currentOrder = null;
+		} else if(order.getOfferSide() == OfferSide.Bid) {
+			if(order.hasTakeProfit() && candle.getBuyHigh() > order.getTakeProfitPrice()) {
+				type = (OrderCloseType.TakeProfit);
+			} else if(order.hasStopLoss() && candle.getSellLow() < order.getStopLossPrice()) {
+				type = (OrderCloseType.StopLoss);
+			}
 		}
+		
+		return type;
+	}
+
+	private double getClosePrice(BTOrder order, CandleDataPoint candle) {
+
+		double closePrice = order.getOfferSide() == OfferSide.Ask ? candle.getSellOpen() : candle.getBuyOpen();
+		
+		// check for a stop loss or take profit
+		if(order.getOfferSide() == OfferSide.Ask) {
+			if(order.hasStopLoss() && candle.getSellLow() < order.getStopLossPrice()) {
+				closePrice = order.getStopLossPrice();
+			} else if(order.hasTakeProfit() && candle.getBuyHigh() > order.getTakeProfitPrice()) {
+				closePrice = order.getTakeProfitPrice();
+			}
+		} else if(order.getOfferSide() == OfferSide.Bid) {
+			if(order.hasTakeProfit() && candle.getBuyHigh() > order.getTakeProfitPrice()) {
+				closePrice = order.getTakeProfitPrice();
+			} else if(order.hasStopLoss() && candle.getSellLow() < order.getStopLossPrice()) {
+				closePrice = order.getStopLossPrice();
+			}
+		}
+		
+		return closePrice;
+	}
+
+	/**
+	 * Close an order. Sets prices taking stops/takes into consideration
+	 * 
+	 * @param order
+	 * @param candle
+	 */
+	protected void close(BTOrder order, CandleDataPoint candle) {
+
+		order.setClosePrice(getClosePrice(order, candle));
+		order.setCloseType(getCloseType(order, candle));
+		order.setCloseTime(candle.getDate());
+
+		orderBook.close(order);
 	}
 	
 	public OrderBook getOrderBook() {
@@ -55,18 +104,6 @@ public class AbstractStrategy {
 	
 	public boolean hasOpenOrder() {
 		return orderBook.hasOpenOrders();
-	}
-	
-	public double getBalance() {
-		return balance;
-	}
-
-	public int getWins() {
-		return wins;
-	}
-
-	public int getLosses() {
-		return losses;
 	}
 
 	public int getId() {

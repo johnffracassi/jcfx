@@ -27,6 +27,7 @@ public class TimeStrategyView extends JXPanel implements StrategyPropertyChangeL
 	private OrderBookController orderBook = new OrderBookController();
 	private TimeStrategyChartController chart = new TimeStrategyChartController();
 	private TimeStrategyOptimiserView optimiser = null;
+	TimeStrategyConfigView pnlConfig = null;
 	private List<CandleDataPoint> candles = Collections.<CandleDataPoint>emptyList();
 	
 	public TimeStrategyView() {
@@ -46,7 +47,7 @@ public class TimeStrategyView extends JXPanel implements StrategyPropertyChangeL
 		tabbedPane.add(optimiser, "Optimiser");
 
 		// add the config panel at the bottom of the screen
-		TimeStrategyConfigView pnlConfig = new TimeStrategyConfigView(this);
+		pnlConfig = new TimeStrategyConfigView(this);
 		pnlConfig.setPreferredSize(new Dimension(150, 150));
 		add(pnlConfig, BorderLayout.SOUTH);
 	}
@@ -74,12 +75,17 @@ public class TimeStrategyView extends JXPanel implements StrategyPropertyChangeL
 		int openDayOfWeek = AppCtx.getInt("timeStrategy.openAt.dayOfWeek");
 		LocalTime openTime = AppCtx.getTime("timeStrategy.openAt.time");
 		int closeDayOfWeek = AppCtx.getInt("timeStrategy.closeAt.dayOfWeek");
-		LocalTime closeTime = AppCtx.getTime("timeStrategy.closeAt.time");
-
+		LocalTime closeTime = pnlConfig.getCloseTime();
+		double takeProfit = pnlConfig.getTakeProfit();
+		double stopLoss = pnlConfig.getStopLoss();
+		
 		// perform the test, get the order book
 		TestEngine te = new TestEngine();
 		List<TimeStrategy> tests = new ArrayList<TimeStrategy>();
-		tests.add(new TimeStrategy(1, openDayOfWeek, openTime, closeDayOfWeek, closeTime));
+		TimeStrategy strat = new TimeStrategy(1, openDayOfWeek, openTime, closeDayOfWeek, closeTime);
+		strat.setStopLoss((int)stopLoss);
+		strat.setTakeProfit((int)takeProfit);
+		tests.add(strat);
 		te.executeTime(candles, tests);
 
 		// update the controllers

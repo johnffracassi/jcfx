@@ -18,6 +18,8 @@ public class TimeStrategy extends AbstractStrategy {
 	private LocalTime openAtTime = null;
 	private int closeAtDay = 0;
 	private LocalTime closeAtTime = null;
+	private int stopLoss = 0;
+	private int takeProfit = 0;
 	
 	public TimeStrategy(int id, int openAtDay, LocalTime openAtTime, int closeAtDay, LocalTime closeAtTime) {
 		
@@ -45,22 +47,54 @@ public class TimeStrategy extends AbstractStrategy {
 	
 	public void candle(CandleDataPoint candle) {
 		
-		int dayOfWeek = candle.getDate().getDayOfWeek();
-		LocalTime time = candle.getDate().toLocalTime();
+		// check all orders for a stop loss or take profit
+		List<BTOrder> ordersToClose = new ArrayList<BTOrder>();
+		for(BTOrder order : getOrderBook().getOpenOrders()) {
+			if(isOrderStopped(order, candle)) {
+				ordersToClose.add(order);
+			}
+		}
+		
+		// close the orders (do it outside the loop to avoid concurrent modification)
+		for(BTOrder order : ordersToClose) {
+			close(order, candle);
+		}
 		
 		// is it open/close time?
+		int dayOfWeek = candle.getDate().getDayOfWeek();
+		LocalTime time = candle.getDate().toLocalTime();
 		if(openAtDay == dayOfWeek && time.getHourOfDay() == openAtTime.getHourOfDay() && time.getMinuteOfHour() == openAtTime.getMinuteOfHour() && !hasOpenOrder()) {
 			BTOrder order = new BTOrder();
 			order.setOfferSide(OfferSide.Ask);
 			order.setUnits(1.0);
+			
+			if(takeProfit > 0) {
+				order.setTakeProfit(takeProfit);
+			}
+			
+			if(stopLoss > 0) {
+				order.setStopLoss(stopLoss);
+			}
+			
 			open(order, candle);
 		} else if(closeAtDay == dayOfWeek && time.getHourOfDay() == closeAtTime.getHourOfDay() && time.getMinuteOfHour() == closeAtTime.getMinuteOfHour() && hasOpenOrder()) {
-			close(candle);
+			close(getOrderBook().getOpenOrders().get(0), candle);
 		} 
 	}
 
-	@Override
-	public String toString() {
-		return getId() + ". " + openAtDay + " to " + closeAtDay + " = " + getBalance() + " (" + getWins() + "/" + getLosses() + ")";
+	public int getStopLoss() {
+		return stopLoss;
+	}
+
+	public void setStopLoss(int stopLoss) {
+		this.stopLoss = stopLoss;
+	}
+
+	public int getTakeProfit() {
+		return takeProfit;
+	}
+
+	public void setTakeProfit(int takeProfit) {
+		this.takeProfit = takeProfit;
 	}
 }
