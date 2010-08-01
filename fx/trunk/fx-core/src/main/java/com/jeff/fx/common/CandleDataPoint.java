@@ -42,6 +42,7 @@ public class CandleDataPoint extends AbstractFXDataPoint implements
 	}
 	
 	public CandleDataPoint(CandleDataPoint candle) {
+		
 		super(candle);
 
 		this.period = candle.period;
@@ -116,8 +117,8 @@ public class CandleDataPoint extends AbstractFXDataPoint implements
 		return tick;
 	}
 
-	public void setApproximatedValues(CandleDataPoint candle,
-			boolean useCloseTime) {
+	public void setApproximatedValues(CandleDataPoint candle, boolean useCloseTime) {
+		
 		setPeriod(candle.getPeriod());
 		setInstrument(candle.getInstrument());
 		setDataSource(candle.getDataSource());

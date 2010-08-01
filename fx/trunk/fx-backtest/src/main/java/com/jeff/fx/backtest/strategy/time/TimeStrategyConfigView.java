@@ -1,13 +1,17 @@
 package com.jeff.fx.backtest.strategy.time;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.jdesktop.swingx.JXPanel;
-import org.joda.time.LocalTime;
 
+import com.jeff.fx.backtest.AppCtx;
 import com.jeff.fx.backtest.strategy.CommonStrategyPanel;
 import com.jeff.fx.backtest.strategy.StrategyPropertyChangeListener;
+import com.jeff.fx.common.TimeOfWeek;
 import com.jeff.fx.gui.TimeOfWeekSliderLine;
 import com.siebentag.gui.VerticalFlowLayout;
 
@@ -47,27 +51,35 @@ public class TimeStrategyConfigView extends JXPanel {
 		add(pnlConfig);
 	}
 
-	public LocalTime getOpenTime() {
-		return sldOpen.getTime();
+	public Map<String,Object> getParams() {
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("stopLoss", getStopLoss());
+		params.put("takeProfit", getTakeProfit());
+		params.put("open", getOpen());
+		params.put("close", getClose());
+		return params;
 	}
 	
-	public int getOpenDay() {
-		return sldOpen.getDayOfWeek();
+	public void setParams(Map<String,Object> params) {
+		sldOpen.setTimeOfWeek((TimeOfWeek)params.get("open"));
+		sldClose.setTimeOfWeek((TimeOfWeek)params.get("close"));
+		pnlCommon.setStopLoss((Integer)params.get("stopLoss"));
+		pnlCommon.setTakeProfit((Integer)params.get("takeProfit"));
 	}
 	
-	public LocalTime getCloseTime() {
-		return sldClose.getTime();
+	public TimeOfWeek getOpen() {
+		return sldOpen.getTimeOfWeek();
 	}
 	
-	public int getCloseDay() {
-		return sldClose.getDayOfWeek();
+	public TimeOfWeek getClose() {
+		return sldClose.getTimeOfWeek();
 	}
 	
-	public double getStopLoss() {
+	public int getStopLoss() {
 		return pnlCommon.getStopLoss();
 	}
 	
-	public double getTakeProfit() {
+	public int getTakeProfit() {
 		return pnlCommon.getTakeProfit();
 	}
 }

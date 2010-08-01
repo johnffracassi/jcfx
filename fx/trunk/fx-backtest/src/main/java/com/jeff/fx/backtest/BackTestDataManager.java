@@ -2,7 +2,7 @@ package com.jeff.fx.backtest;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.SwingWorker;
@@ -70,7 +70,7 @@ public class BackTestDataManager {
 		 * load the data day by day
 		 */
 		protected FXDataResponse<CandleDataPoint> doInBackground() throws Exception {
-			List<CandleDataPoint> all = new LinkedList<CandleDataPoint>();
+			List<CandleDataPoint> all = new ArrayList<CandleDataPoint>();
 			for(int day = 0; day<dayCount; day++) {
 				FXDataRequest newReq = new FXDataRequest(request);
 				newReq.setDate(request.getDate().plusDays(day));

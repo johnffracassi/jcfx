@@ -43,17 +43,17 @@ public class SimpleStrategy extends AbstractStrategy {
 		candleCount ++;
 		
 		if(!hasOpenOrder() && candleCount == stayClosedFor) {
-			open(new BTOrder(), candle);
+			openOrder(new BTOrder(), candle);
 			candleCount = 0;
 		} else if(hasOpenOrder() && candleCount == stayOpenFor) {
-			close(candle);
+//			close(candle);
 			candleCount = 0;
 		}
 	}
 
 
-	@Override
-	public String toString() {
-		return getId() + ". " + stayOpenFor + "/" + stayClosedFor + " = " + getBalance() + " (" + getWins() + "/" + getLosses() + ")";
-	}
+//	@Override
+//	public String toString() {
+//		return getId() + ". " + stayOpenFor + "/" + stayClosedFor + " = " + getBalance() + " (" + getWins() + "/" + getLosses() + ")";
+//	}
 }

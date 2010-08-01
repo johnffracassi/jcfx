@@ -1,6 +1,8 @@
 package com.jeff.fx.datastore;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -121,12 +123,13 @@ public class DataStoreImpl {
 		log.debug("fetching candles from data source");
 		DataSource<CandleDataPoint> ds = candleDataSources.get(request.getDataSource());
 		FXDataResponse<CandleDataPoint> response = ds.load(request);
-		storeCandles(response.getData());
+		List<CandleDataPoint> candles = response.getData();
+		candles = filterAndFill(candles, request);
+		storeCandles(candles);
 		return response;
 	}
 
-	public FXDataResponse<TickDataPoint> loadTicks(FXDataRequest request)
-			throws Exception {
+	public FXDataResponse<TickDataPoint> loadTicks(FXDataRequest request) throws Exception {
 		log.debug("Load ticks for " + request);
 
 		if (exists(request)) {
@@ -141,6 +144,67 @@ public class DataStoreImpl {
 		}
 	}
 
+	private List<CandleDataPoint> filterAndFill(List<CandleDataPoint> candleList, FXDataRequest request) {
+		
+		int minutesInPeriod = (int)(request.getPeriod().getInterval() / 1000 / 60);
+		int periodsInDay = 1440 / minutesInPeriod;
+		
+		// check off candles
+		CandleDataPoint[] candles = new CandleDataPoint[periodsInDay];
+		for(int c=0; c<candleList.size(); c++) {
+			CandleDataPoint candle = candleList.get(c);
+			
+			if(candle.getInstrument() == request.getInstrument()) {
+				int minuteOfDay = (candle.getDate().getMillisOfDay() / 1000 / 60);
+				int periodOfDay = minuteOfDay / minutesInPeriod;
+				candles[periodOfDay] = candle;
+			}
+		}
+		
+		// find and fill any missing candles
+		for(int c=0; c<periodsInDay; c++) {
+			if(candles[c] == null) {
+				if(c>0 && c<periodsInDay-1 && candles[c-1] != null && candles[c+1] != null) {
+					CandleDataPoint newCandle = new CandleDataPoint(candles[c-1]);
+					newCandle.setDate(newCandle.getDate().plusMinutes(minutesInPeriod));
+					newCandle.setBuyOpen(candles[c-1].getBuyClose());
+					newCandle.setSellOpen(candles[c-1].getSellClose());
+					newCandle.setBuyClose(candles[c+1].getBuyOpen());
+					newCandle.setSellClose(candles[c+1].getSellOpen());
+					newCandle.setBuyHigh(Math.max(newCandle.getBuyOpen(), newCandle.getBuyClose()));
+					newCandle.setSellHigh(Math.max(newCandle.getSellOpen(), newCandle.getSellClose()));
+					newCandle.setBuyLow(Math.min(newCandle.getBuyClose(), newCandle.getBuyClose()));
+					newCandle.setSellLow(Math.min(newCandle.getSellClose(), newCandle.getSellClose()));
+					newCandle.setTickCount(0);
+					newCandle.setBuyVolume(0);
+					newCandle.setSellVolume(0);
+					candles[c] = newCandle;
+					System.out.println("*** filled in candle " + newCandle + " ***");
+				} else if(c>0 && candles[c-1] != null) {
+					CandleDataPoint newCandle = new CandleDataPoint(candles[c-1]);
+					newCandle.setDate(newCandle.getDate().plusMinutes(minutesInPeriod));
+					newCandle.setBuyOpen(candles[c-1].getBuyClose());
+					newCandle.setSellOpen(candles[c-1].getSellClose());
+					newCandle.setBuyClose(candles[c-1].getBuyClose());
+					newCandle.setSellClose(candles[c-1].getSellClose());
+					newCandle.setBuyHigh(candles[c-1].getBuyClose());
+					newCandle.setSellHigh(candles[c-1].getSellClose());
+					newCandle.setBuyLow(candles[c-1].getBuyClose());
+					newCandle.setSellLow(candles[c-1].getSellClose());
+					newCandle.setTickCount(0);
+					newCandle.setBuyVolume(0);
+					newCandle.setSellVolume(0);
+					candles[c] = newCandle;
+					System.out.println("*** copied candle " + newCandle + " ***");
+				} else {
+					System.out.println("*** missing candle at " + c + " ***");
+				}
+			}
+		}
+		
+		return Arrays.asList(candles);
+	}
+	
 	public void storeTicks(List<TickDataPoint> data) throws Exception {
 		log.info("storing " + data.size() + " ticks in data store");
 		tickDataStore.store(data);

@@ -11,13 +11,13 @@ import com.siebentag.gui.VerticalFlowLayout;
 @SuppressWarnings("serial")
 public class CommonStrategyPanel extends JXPanel {
 	
-	private int stopLoss = 0;
-	private int takeProfit = 0;
+	final SliderLine pnlTakeProfit;
+	final SliderLine pnlStopLoss;
 	
 	public CommonStrategyPanel(final StrategyPropertyChangeListener spcl) {
 		
-		final SliderLine pnlTakeProfit = new SliderLine("common.takeProfit", "Take Profit", 0, 100);
-		final SliderLine pnlStopLoss = new SliderLine("common.stopLoss", "Stop Loss", 0, 100);
+		pnlTakeProfit = new SliderLine("common.takeProfit", "Take Profit", 0, 250, 5);
+		pnlStopLoss = new SliderLine("common.stopLoss", "Stop Loss", 0, 250, 5);
 		setLayout(new VerticalFlowLayout(0));
 		add(pnlStopLoss);
 		add(pnlTakeProfit);
@@ -25,8 +25,6 @@ public class CommonStrategyPanel extends JXPanel {
 		ChangeListener listener = new ChangeListener() {
 			public void stateChanged(ChangeEvent ev) {
 				try {
-					stopLoss = pnlStopLoss.getValue();
-					takeProfit = pnlTakeProfit.getValue();
 					spcl.update();
 				} catch(Exception ex) {
 					ex.printStackTrace();
@@ -38,12 +36,20 @@ public class CommonStrategyPanel extends JXPanel {
 		pnlStopLoss.addChangeListener(listener);
 	}
 	
+	public void setStopLoss(int sl) {
+		pnlStopLoss.setValue(sl);
+	}
+	
+	public void setTakeProfit(int tp) {
+		pnlTakeProfit.setValue(tp);
+	}
+	
 	public int getStopLoss() {
-		return stopLoss;
+		return pnlStopLoss.getValue();
 	}
 	
 	public int getTakeProfit() {
-		return takeProfit;
+		return pnlTakeProfit.getValue();
 	}
 }
 

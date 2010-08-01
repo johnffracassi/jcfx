@@ -11,10 +11,10 @@ public class OptimiserParameterTableModel extends DefaultTableModel {
 	private List<OptimiserParameter> params = new ArrayList<OptimiserParameter>();
 	
 	public OptimiserParameterTableModel() {
-		addParameter(new OPInteger("stopLoss", 0, 200, 10));
-		addParameter(new OPInteger("takeProfit", 0, 200, 10));
-		addParameter(new OPInteger("open", 0, 10000, 15));
-		addParameter(new OPInteger("close", 0, 10000, 15));
+		addParameter(new OPInteger("stopLoss", 0, 100, 20));
+		addParameter(new OPInteger("takeProfit", 0, 100, 20));
+		addParameter(new OPInteger("open", 1380, 1560, 15));
+		addParameter(new OPInteger("close", 1620, 1860, 15));
 	}
 	
 	public void addParameter(OptimiserParameter param) {
@@ -53,6 +53,8 @@ public class OptimiserParameterTableModel extends DefaultTableModel {
 					perms *= param.getStepCount();
 				}
 				return perms;
+			} else if(col == 0) {
+				return "  Permutations";
 			} else {
 				return "";
 			}
@@ -90,86 +92,12 @@ public class OptimiserParameterTableModel extends DefaultTableModel {
 		fireTableCellUpdated(row, 4);
 		fireTableCellUpdated(params.size(), 4);
 	}
-}
 
-class OPInteger extends OptimiserParameter<Integer,Integer> {
-
-	public OPInteger(String arg0, int arg1, int arg2, int arg3) {
-		super(arg0, arg1, arg2, arg3);
+	public List<OptimiserParameter> getParameters() {
+		return params;
 	}
 
-	public Integer fromString(String val) {
-		return new Integer(val);
-	}
-
-	public int getStepCount() {
-		return (getEnd() - getStart()) / getStep();
+	public void setParams(List<OptimiserParameter> params) {
+		this.params = params;
 	}
 }
-
-class OPDouble extends OptimiserParameter<Double,Double> {
-
-	public OPDouble(String arg0, double arg1, double arg2, double arg3) {
-		super(arg0, arg1, arg2, arg3);
-	}
-
-	public Double fromString(String val) {
-		return new Double(val);
-	}
-
-	public int getStepCount() {
-		return (int)((getEnd() - getStart()) / getStep());
-	}
-}
-
-abstract class OptimiserParameter<T,S> {
-	
-	private String key;
-	private T start;
-	private T end;
-	private S step;
-	
-	public OptimiserParameter(String key, T start, T end, S step) {
-		super();
-		this.key = key;
-		this.start = start;
-		this.end = end;
-		this.step = step;
-	}
-
-	public abstract T fromString(String val);
-	public abstract int getStepCount();
-	
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
-
-	public T getStart() {
-		return start;
-	}
-
-	public void setStart(T start) {
-		this.start = start;
-	}
-
-	public T getEnd() {
-		return end;
-	}
-
-	public void setEnd(T end) {
-		this.end = end;
-	}
-
-	public S getStep() {
-		return step;
-	}
-
-	public void setStep(S step) {
-		this.step = step;
-	}
-}
-

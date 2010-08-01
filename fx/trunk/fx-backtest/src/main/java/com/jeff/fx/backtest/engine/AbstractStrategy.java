@@ -1,9 +1,11 @@
 package com.jeff.fx.backtest.engine;
 
+import java.util.List;
+
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.OfferSide;
 
-public class AbstractStrategy {
+public abstract class AbstractStrategy {
 	
 	private int id = -1;
 
@@ -14,7 +16,29 @@ public class AbstractStrategy {
 		orderBook = new OrderBook();
 	}
 	
-	protected void open(BTOrder order, CandleDataPoint candle) {
+	/**
+	 * Process the next candle
+	 */
+	public abstract void candle(CandleDataPoint candle);
+	
+	/**
+	 * Should the test be run?
+	 * @return
+	 */
+	public abstract boolean validate();
+	
+	/**
+	 * Execute the test with all strategies
+	 * 
+	 * @param candles
+	 */
+	public void execute(List<CandleDataPoint> candles) {
+		for(CandleDataPoint candle : candles) {
+			candle(candle);
+		}
+	}
+	
+	protected void openOrder(BTOrder order, CandleDataPoint candle) {
 		order.setInstrument(candle.getInstrument());
 		order.setOpenTime(candle.getDate());
 		order.setOpenPrice(order.getOfferSide() == OfferSide.Ask ? candle.getBuyOpen() : candle.getSellOpen());
