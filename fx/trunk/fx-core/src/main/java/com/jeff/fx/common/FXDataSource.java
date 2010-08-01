@@ -1,17 +1,18 @@
 package com.jeff.fx.common;
 
-import java.util.TimeZone;
-
-
 public enum FXDataSource {
 	
-	GAIN(TimeZone.getTimeZone("America/New_York")), 
-	Forexite(TimeZone.getTimeZone("Europe/Zurich")), 
-	Dukascopy(TimeZone.getTimeZone("Europe/Zurich"));
+	GAIN(new ForexiteCalendar()), 
+	Forexite(new ForexiteCalendar()), 
+	Dukascopy(new ForexiteCalendar());
 	
-	public TimeZone timeZone;
+	public ForexCalendar cal;
 	
-	private FXDataSource(TimeZone tz) {
-		timeZone = tz;
+	private FXDataSource(ForexiteCalendar cal) {
+		this.cal = cal;
+	}
+	
+	public ForexCalendar getCalendar() {
+		return cal;
 	}
 }

@@ -2,50 +2,37 @@ package com.jeff.fx.backtest.strategy.time;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.joda.time.LocalTime;
 
 import com.jeff.fx.backtest.engine.AbstractStrategy;
 import com.jeff.fx.backtest.engine.BTOrder;
-import com.jeff.fx.backtest.engine.BTParameterSet;
-import com.jeff.fx.backtest.engine.BTParameterTable;
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.OfferSide;
+import com.jeff.fx.common.TimeOfWeek;
 
 public class TimeStrategy extends AbstractStrategy {
 	
 	private static Logger log = Logger.getLogger(TimeStrategy.class);
 
-	private int openAtDay = 0;
-	private LocalTime openAtTime = null;
-	private int closeAtDay = 0;
-	private LocalTime closeAtTime = null;
+	private TimeOfWeek open = null;
+	private TimeOfWeek close = null;
 	private int stopLoss = 0;
 	private int takeProfit = 0;
 	
-	public TimeStrategy(int id, int openAtDay, LocalTime openAtTime, int closeAtDay, LocalTime closeAtTime) {
+	public TimeStrategy(int id, Map<String,Object> parameters) {
 		
 		super(id);
 		
-		this.openAtDay = openAtDay;
-		this.openAtTime = openAtTime;
-		this.closeAtDay = closeAtDay;
-		this.closeAtTime = closeAtTime;
+		stopLoss = (Integer)parameters.get("stopLoss");
+		takeProfit = (Integer)parameters.get("takeProfit");
+		open = (TimeOfWeek)parameters.get("open");
+		close = (TimeOfWeek)parameters.get("close");
 	}
 	
-	public static List<TimeStrategy> createTestSet(BTParameterSet ps) {
-		
-		double[][] parameters = BTParameterTable.getParameterValueTable(ps);
-		int permutations = parameters[0].length;
-		
-		List<TimeStrategy> list = new ArrayList<TimeStrategy>(permutations);
-		for(int i=0; i<permutations; i++) {
-//			TimeStrategy strategy = new TimeStrategy(i+1, new double[] { parameters[0][i], parameters[1][i] });
-//			list.add(strategy);
-		}
-		
-		return list;
+	public boolean validate() {
+		return (!open.equals(close));
 	}
 	
 	public void candle(CandleDataPoint candle) {
@@ -54,22 +41,18 @@ public class TimeStrategy extends AbstractStrategy {
 		List<BTOrder> ordersToClose = new ArrayList<BTOrder>();
 		for(BTOrder order : getOrderBook().getOpenOrders()) {
 			if(isOrderStopped(order, candle)) {
-				log.warn("Order #" + order.getId() + " has breached " + getCloseType(order, candle) + " (" + getClosePrice(order, candle) + ")");
-				log.debug(candle);
 				ordersToClose.add(order);
 			}
 		}
 		
 		// close the orders (do it outside the loop to avoid concurrent modification)
 		for(BTOrder order : ordersToClose) {
-			log.warn("Closing order #" + order.getId());
 			close(order, candle);
 		}
 		
 		// is it open/close time?
-		int dayOfWeek = candle.getDate().getDayOfWeek();
-		LocalTime time = candle.getDate().toLocalTime();
-		if(openAtDay == dayOfWeek && time.getHourOfDay() == openAtTime.getHourOfDay() && time.getMinuteOfHour() == openAtTime.getMinuteOfHour() && !hasOpenOrder()) {
+		TimeOfWeek tow = new TimeOfWeek(candle.getDate().getDayOfWeek(), candle.getDate().toLocalTime());
+		if(tow.equals(open) && !hasOpenOrder()) {
 			BTOrder order = new BTOrder();
 			order.setOfferSide(OfferSide.Ask);
 			order.setUnits(1.0);
@@ -82,12 +65,9 @@ public class TimeStrategy extends AbstractStrategy {
 				order.setStopLoss(stopLoss);
 			}
 			
-			log.warn("Opened new order");
-			log.debug(candle);
-			open(order, candle);
-		} else if(closeAtDay == dayOfWeek && time.getHourOfDay() == closeAtTime.getHourOfDay() && time.getMinuteOfHour() == closeAtTime.getMinuteOfHour() && hasOpenOrder()) {
-			log.warn("Manually closing order");
-			log.debug(candle);
+			openOrder(order, candle);
+			
+		} else if(tow.equals(close) && hasOpenOrder()) {
 			close(getOrderBook().getOpenOrders().get(0), candle);
 		} 
 	}
@@ -106,5 +86,21 @@ public class TimeStrategy extends AbstractStrategy {
 
 	public void setTakeProfit(int takeProfit) {
 		this.takeProfit = takeProfit;
+	}
+
+	public TimeOfWeek getOpen() {
+		return open;
+	}
+
+	public void setOpen(TimeOfWeek open) {
+		this.open = open;
+	}
+
+	public TimeOfWeek getClose() {
+		return close;
+	}
+
+	public void setClose(TimeOfWeek close) {
+		this.close = close;
 	}
 }

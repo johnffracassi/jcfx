@@ -20,7 +20,7 @@
     </appender>
     
     <logger name="com.jeff" additivity="false">
-        <level value="warn"/> 
+        <level value="debug"/> 
 		<appender-ref ref="Console" />
     </logger>
     

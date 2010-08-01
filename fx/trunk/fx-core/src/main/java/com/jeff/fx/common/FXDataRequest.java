@@ -80,6 +80,6 @@ public class FXDataRequest {
 	}
 	
 	public boolean isRangeOfDates() {
-		return endDate != null;
+		return endDate != null && !endDate.equals(date);
 	}
 }

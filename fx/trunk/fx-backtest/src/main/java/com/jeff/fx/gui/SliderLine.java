@@ -19,14 +19,17 @@ public class SliderLine extends JXPanel {
 	private JXLabel lblLabel;
 	private JXLabel lblValue;
 	private JSlider slider;
+	private int step;
 	
-	public SliderLine(final String key, final String label, final int startValue, final int endValue) {
+	public SliderLine(final String key, final String label, final int startValue, final int endValue, final int step) {
 		
 		lblLabel = new JXLabel(label);
 		lblValue = new JXLabel("N/A");
-		slider = new JSlider(startValue, endValue);
+		slider = new JSlider(startValue / step, endValue / step);
 		slider.setValue(startValue);
 
+		this.step = step;
+		
 		lblLabel.setPreferredSize(new Dimension(100, 20));
 		lblValue.setPreferredSize(new Dimension(50, 20));
 		slider.setPreferredSize(new Dimension(250, 25));
@@ -34,7 +37,7 @@ public class SliderLine extends JXPanel {
 		slider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent ev) {
 				AppCtx.set(key, slider.getValue());
-				lblValue.setText(String.format("%d", slider.getValue()));
+				lblValue.setText(String.format("%d", slider.getValue() * step));
 			}
 		});
 		
@@ -43,8 +46,12 @@ public class SliderLine extends JXPanel {
 		add(lblValue);
 	}
 	
+	public void setValue(int val) {
+		slider.setValue(val / step);
+	}
+
 	public int getValue() {
-		return slider.getValue();
+		return slider.getValue() * step;
 	}
 	
 	public void addChangeListener(ChangeListener listener) {
@@ -55,7 +62,7 @@ public class SliderLine extends JXPanel {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(new Dimension(450, 200));
-		frame.add(new SliderLine("test.slider", "Slider", 0, 200));
+		frame.add(new SliderLine("test.slider", "Slider", 0, 250, 5));
 		frame.setVisible(true);
 	}
 }
