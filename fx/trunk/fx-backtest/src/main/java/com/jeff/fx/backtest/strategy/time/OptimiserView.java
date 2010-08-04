@@ -36,8 +36,7 @@ public class OptimiserView extends JPanel {
 
 	public OptimiserView() {
 
-		setLayout(new MigLayout("", "[250:400][250:400,grow]",
-				"[200:200:300,top][200:n,grow,top]"));
+		setLayout(new MigLayout("", "[250:400][250:400,grow]", "[200:200:300,top][200:n,grow,top]"));
 
 		JPanel pnlParameters = new JPanel();
 		add(GUIUtil.frame("Parameters", pnlParameters), "cell 0 0,grow");

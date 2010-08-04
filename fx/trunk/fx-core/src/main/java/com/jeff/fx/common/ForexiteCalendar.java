@@ -26,6 +26,14 @@ public class ForexiteCalendar implements ForexCalendar {
 		return (time.isAfter(open) && time.isBefore(close));
 	}
 	
+	public TimeOfWeek getOpenTime() {
+		return open;
+	}
+	
+	public TimeOfWeek getCloseTime() {
+		return close;
+	}
+	
 	public boolean isHoliday(LocalDate date) {
 		
 		// Christmas

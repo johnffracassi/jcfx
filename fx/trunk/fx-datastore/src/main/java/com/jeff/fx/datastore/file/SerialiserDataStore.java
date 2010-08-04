@@ -56,10 +56,10 @@ public class SerialiserDataStore<T extends FXDataPoint> extends AbstractDataStor
 		if(data != null && data.size() > 0) {
 			
 			DataPointOrganiser organiser = new DataPointOrganiser();
-			Map<DPKey, List<T>> map = organiser.organise(data);
+			Map<DataPointKey, List<T>> map = organiser.organise(data);
 			
 			// break into separate files
-			for(DPKey key : map.keySet()) {
+			for(DataPointKey key : map.keySet()) {
 				
 				// locate the data file
 				File file = getLocator().locate(key.dataSource, key.instrument, key.date, key.period);
@@ -95,13 +95,13 @@ public class SerialiserDataStore<T extends FXDataPoint> extends AbstractDataStor
 	// organise data points into separate stores. Should be keyed by datasource/instrument/date
 	private class DataPointOrganiser {
 		
-		public Map<DPKey, List<T>> map;
+		public Map<DataPointKey, List<T>> map;
 	
 		public DataPointOrganiser() {
-			map = new HashMap<DPKey, List<T>>();
+			map = new HashMap<DataPointKey, List<T>>();
 		}
 		
-		public Map<DPKey, List<T>> organise(List<T> data) {
+		public Map<DataPointKey, List<T>> organise(List<T> data) {
 			for(T dp : data) {
 				addDataPoint(dp);
 			}
@@ -110,7 +110,7 @@ public class SerialiserDataStore<T extends FXDataPoint> extends AbstractDataStor
 		}
 		
 		private void addDataPoint(T dataPoint) {
-			DPKey key = new DPKey(dataPoint);
+			DataPointKey key = new DataPointKey(dataPoint);
 			
 			if(map.containsKey(key)) {
 				map.get(key).add(dataPoint);
@@ -122,14 +122,14 @@ public class SerialiserDataStore<T extends FXDataPoint> extends AbstractDataStor
 		}
 	}
 
-	private class DPKey {
+	private class DataPointKey {
 		
 		public FXDataSource dataSource;
 		public LocalDate date;
 		public Instrument instrument;
 		public Period period;
 		
-		public DPKey(T dp) {
+		public DataPointKey(T dp) {
 			dataSource = dp.getDataSource();
 			date = dp.getDate().toLocalDate();
 			instrument = dp.getInstrument();
@@ -143,7 +143,7 @@ public class SerialiserDataStore<T extends FXDataPoint> extends AbstractDataStor
 		
 		@Override
 		public boolean equals(Object otherObj) {
-			DPKey key = (DPKey)otherObj;
+			DataPointKey key = (DataPointKey)otherObj;
 			return dataSource.equals(key.dataSource) && date.equals(key.date) && instrument.equals(key.instrument) && period.equals(key.period);
 		}
 	}

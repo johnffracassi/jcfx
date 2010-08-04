@@ -2,9 +2,7 @@ package com.jeff.fx.backtest.strategy.time;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,11 +11,9 @@ import javax.swing.SwingWorker;
 
 import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXPanel;
-import org.joda.time.LocalTime;
 
 import com.jeff.fx.backtest.AppCtx;
 import com.jeff.fx.backtest.engine.OrderBook;
-import com.jeff.fx.backtest.engine.TestEngine;
 import com.jeff.fx.backtest.strategy.StrategyPropertyChangeListener;
 import com.jeff.fx.common.CandleDataPoint;
 

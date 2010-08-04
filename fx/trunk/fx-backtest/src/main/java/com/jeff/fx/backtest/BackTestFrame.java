@@ -1,7 +1,6 @@
 package com.jeff.fx.backtest;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -10,17 +9,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
-import javax.swing.border.Border;
 
 import org.jdesktop.swingx.JXFrame;
 import org.jdesktop.swingx.JXPanel;
-import org.jdesktop.swingx.JXTitledPanel;
-import org.jdesktop.swingx.border.DropShadowBorder;
 
 import com.jeff.fx.action.AboutAction;
 import com.jeff.fx.action.ExitAction;
 import com.jeff.fx.backtest.chart.NewCandleChartAction;
-import com.jeff.fx.backtest.strategy.simple.NewSimpleStrategyChartAction;
 import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartAction;
 import com.siebentag.gui.VerticalFlowLayout;
 
@@ -45,7 +40,6 @@ public class BackTestFrame extends JXFrame {
         JToolBar toolBar = new JToolBar("Main");
         toolBar.add(new AboutAction());
         toolBar.add(new NewCandleChartAction());
-        toolBar.add(new NewSimpleStrategyChartAction());
         toolBar.add(new NewTimeStrategyChartAction());
         setToolBar(toolBar);
         
