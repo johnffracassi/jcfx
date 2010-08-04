@@ -165,6 +165,8 @@ public class DataStoreImpl {
 		for(int c=0; c<periodsInDay; c++) {
 			if(candles[c] == null) {
 				if(c>0 && c<periodsInDay-1 && candles[c-1] != null && candles[c+1] != null) {
+					
+					// interpolate from surrounding candles
 					CandleDataPoint newCandle = new CandleDataPoint(candles[c-1]);
 					newCandle.setDate(newCandle.getDate().plusMinutes(minutesInPeriod));
 					newCandle.setBuyOpen(candles[c-1].getBuyClose());
@@ -179,8 +181,10 @@ public class DataStoreImpl {
 					newCandle.setBuyVolume(0);
 					newCandle.setSellVolume(0);
 					candles[c] = newCandle;
-					System.out.println("*** filled in candle " + newCandle + " ***");
+					
 				} else if(c>0 && candles[c-1] != null) {
+					
+					// copy forward (values from previous candle)
 					CandleDataPoint newCandle = new CandleDataPoint(candles[c-1]);
 					newCandle.setDate(newCandle.getDate().plusMinutes(minutesInPeriod));
 					newCandle.setBuyOpen(candles[c-1].getBuyClose());
@@ -195,7 +199,7 @@ public class DataStoreImpl {
 					newCandle.setBuyVolume(0);
 					newCandle.setSellVolume(0);
 					candles[c] = newCandle;
-					System.out.println("*** copied candle " + newCandle + " ***");
+
 				} else {
 					System.out.println("*** missing candle at " + c + " ***");
 				}

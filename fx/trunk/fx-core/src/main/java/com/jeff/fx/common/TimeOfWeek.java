@@ -18,6 +18,7 @@ public class TimeOfWeek {
 	}
 	
 	public TimeOfWeek(int minuteOfWeek) {
+		minuteOfWeek %= 10080; 
 		dayOfWeek = minuteOfWeek / 1440;
 		int minOfDay = minuteOfWeek % 1440;
 		time = LocalTime.MIDNIGHT.plusMinutes(minOfDay);
@@ -31,6 +32,10 @@ public class TimeOfWeek {
 	public TimeOfWeek(int dayOfWeek, int hour, int minute) {
 		this.dayOfWeek = dayOfWeek % 7;
 		this.time = new LocalTime(hour, minute);
+	}
+	
+	public int periodOfWeek(Period period) {
+		return (int)(getMinuteOfWeek() * 60000 / period.getInterval());
 	}
 	
 	public boolean isAfter(TimeOfWeek other) {

@@ -8,4 +8,7 @@ public interface ForexCalendar {
 	public boolean isHoliday(LocalDate date);
 	public boolean isOpen(TimeOfWeek time);
 	
+	public TimeOfWeek getOpenTime();
+	public TimeOfWeek getCloseTime();
+	
 }

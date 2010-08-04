@@ -3,7 +3,7 @@ package com.jeff.fx.common;
 
 public enum Period 
 {
-    Tick(null, -1, "t"),
+    Tick(TimeUnit.Second, 1, "t"),
     TenSecond(TimeUnit.Second, 10, "s10"),
     OneMin(TimeUnit.Minute, 1, "m1"),
     FiveMin(TimeUnit.Minute, 5, "m5"),
@@ -20,15 +20,13 @@ public enum Period
     public final int numOfUnits;
     public final String key;
 
-    private Period(TimeUnit unit, int nUnits, String display) 
-    {
+    private Period(TimeUnit unit, int nUnits, String display) {
         this.unit = unit;
         this.numOfUnits = nUnits;
         this.key = display;
     }
 
-    public final long getInterval() 
-    {
+    public final long getInterval()     {
         return this == Tick ? -1 : unit.getInterval() * numOfUnits;
     }
 }

@@ -2,22 +2,21 @@ package com.jeff.fx.common;
 
 public enum TimeUnit 
 {
-    Second(1000L, "s", "Sec", "Second"),
-    Minute(60 * 1000L, "m", "Min", "Minute"),
-    Hour(60 * 60 * 1000L, "h", "Hour", "Hourly"),
-    Day(24 * 60 * 60 * 1000L, "D", "Day", "Daily"),
-    Week(7 * 24 * 60 * 60 * 1000L, "W", "Week", "Weekly"),
-    Month(30 * 24 * 60 * 60 * 1000L, "M", "Month", "Monthly");
+    Second(1000l, "s", "Sec", "Second"),
+    Minute(Second.interval * 60, "m", "Min", "Minute"),
+    Hour(Minute.interval * 60, "h", "Hour", "Hourly"),
+    Day(Hour.interval * 24, "D", "Day", "Daily"),
+    Week(Day.interval * 7, "W", "Week", "Weekly"),
+    Month(Day.interval * 30, "M", "Month", "Monthly");
 
+    // interval is in milliseconds
     private long interval;
 
-    private TimeUnit(long interval, String shortDescription, String compactDescription, String longDescription) 
-    {
+    private TimeUnit(long interval, String shortDescription, String compactDescription, String longDescription) {
         this.interval = interval;
     }
     
-    public final long getInterval() 
-    {
+    public final long getInterval() {
         return interval;
     }
 }
