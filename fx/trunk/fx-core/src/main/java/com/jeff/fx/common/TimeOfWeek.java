@@ -1,5 +1,6 @@
 package com.jeff.fx.common;
 
+import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.joda.time.Minutes;
 import org.joda.time.format.DateTimeFormat;
@@ -30,8 +31,12 @@ public class TimeOfWeek {
 	}
 
 	public TimeOfWeek(int dayOfWeek, int hour, int minute) {
-		this.dayOfWeek = dayOfWeek % 7;
-		this.time = new LocalTime(hour, minute);
+		this(dayOfWeek, new LocalTime(hour, minute));
+	}
+	
+	public TimeOfWeek(LocalDateTime dateTime) {
+		this.dayOfWeek = dateTime.getDayOfWeek() % 7;
+		this.time = dateTime.toLocalTime();
 	}
 	
 	public int periodOfWeek(Period period) {

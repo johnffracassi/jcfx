@@ -9,8 +9,8 @@ import org.joda.time.LocalDate;
 public class ForexiteCalendar implements ForexCalendar {
 
 	private TimeZone zone = TimeZone.getTimeZone("Europe/Zurich");
-	private TimeOfWeek open = new TimeOfWeek(DateTimeConstants.SUNDAY, 23, 00);
-	private TimeOfWeek close = new TimeOfWeek(DateTimeConstants.FRIDAY, 22, 00);
+	private TimeOfWeek open = new TimeOfWeek(DateTimeConstants.SUNDAY, 22, 00);
+	private TimeOfWeek close = new TimeOfWeek(DateTimeConstants.FRIDAY, 21, 00);
 	
 	public ForexiteCalendar(TimeZone zone, TimeOfWeek open, TimeOfWeek close) {
 		super();
@@ -75,5 +75,9 @@ public class ForexiteCalendar implements ForexCalendar {
 
 	public void setClose(TimeOfWeek close) {
 		this.close = close;
+	}
+	
+	public TimeZone getTimeZone() {
+		return zone;
 	}
 }

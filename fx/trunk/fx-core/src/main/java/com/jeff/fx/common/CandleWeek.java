@@ -7,6 +7,8 @@ import org.joda.time.LocalDateTime;
 
 public class CandleWeek implements Serializable {
 	
+	private static final long serialVersionUID = 100000001l;
+
 	private LocalDate date;
 	private FXDataSource dataSource;
 	private Instrument instrument;
@@ -36,6 +38,14 @@ public class CandleWeek implements Serializable {
 		volumes = new int[2][periodsInWeek];
 	}
 	
+	public int getCandleCount() {
+		return buy[0].length;
+	}
+	
+	public boolean isComplete() {
+		return complete;
+	}
+	
 	/**
 	 * Get the candle opening at, or containing, the specified time
 	 * @param time
@@ -47,6 +57,27 @@ public class CandleWeek implements Serializable {
 		return getCandle(idx);
 	}
 	
+	public void setCandle(CandleDataPoint candle) {
+		
+		TimeOfWeek time = new TimeOfWeek(candle.getDate());
+		int idx = time.periodOfWeek(candle.getPeriod()) - startIdx;
+
+		if(idx < 0 || idx > endIdx - startIdx || idx >= buy[0].length) {
+			System.out.println("INVALID: #" + idx + "/" + buy[0].length + " = " + candle);
+		}
+		
+		buy[0][idx] = (float)candle.getBuyOpen();
+		buy[1][idx] = (float)candle.getBuyHigh();
+		buy[2][idx] = (float)candle.getBuyLow();
+		buy[3][idx] = (float)candle.getBuyClose();
+		sell[0][idx] = (float)candle.getSellOpen();
+		sell[1][idx] = (float)candle.getSellHigh();
+		sell[2][idx] = (float)candle.getSellLow();
+		sell[3][idx] = (float)candle.getSellClose();
+		volumes[0][idx] = (int)candle.getBuyVolume();
+		volumes[1][idx] = (int)candle.getSellVolume();
+	}
+	
 	/**
 	 * 
 	 * @param idx zero index is the first candle in the collection (not candle at sunday midnight)
@@ -55,6 +86,7 @@ public class CandleWeek implements Serializable {
 	public CandleDataPoint getCandle(int idx) {
 		
 		CandleDataPoint candle = new CandleDataPoint();
+		
 		candle.setDataSource(dataSource);
 		candle.setInstrument(instrument);
 		candle.setPeriod(period);
@@ -71,7 +103,7 @@ public class CandleWeek implements Serializable {
 		candle.setTickCount(0);
 		
 		LocalDateTime dateTime = new LocalDateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(), 0, 0, 0);
-		candle.setDate(dateTime.plusMillis((int)(idx * period.getInterval())));
+		candle.setDateTime(dateTime.plusMillis((int)((startIdx + idx) * period.getInterval())));
 		
 		return candle;
 	}

@@ -168,7 +168,7 @@ public class DataStoreImpl {
 					
 					// interpolate from surrounding candles
 					CandleDataPoint newCandle = new CandleDataPoint(candles[c-1]);
-					newCandle.setDate(newCandle.getDate().plusMinutes(minutesInPeriod));
+					newCandle.setDateTime(newCandle.getDate().plusMinutes(minutesInPeriod));
 					newCandle.setBuyOpen(candles[c-1].getBuyClose());
 					newCandle.setSellOpen(candles[c-1].getSellClose());
 					newCandle.setBuyClose(candles[c+1].getBuyOpen());
@@ -186,7 +186,7 @@ public class DataStoreImpl {
 					
 					// copy forward (values from previous candle)
 					CandleDataPoint newCandle = new CandleDataPoint(candles[c-1]);
-					newCandle.setDate(newCandle.getDate().plusMinutes(minutesInPeriod));
+					newCandle.setDateTime(newCandle.getDate().plusMinutes(minutesInPeriod));
 					newCandle.setBuyOpen(candles[c-1].getBuyClose());
 					newCandle.setSellOpen(candles[c-1].getSellClose());
 					newCandle.setBuyClose(candles[c-1].getBuyClose());

@@ -55,7 +55,7 @@ public class TickCollection extends ArrayList<TickDataPoint>
 	{
 		CandleDataPoint cs = new CandleDataPoint();
 		
-		cs.setDate(openDateTime);
+		cs.setDateTime(openDateTime);
 		cs.setDataSource(dataSource);
 		cs.setPeriod(period);
 		cs.setInstrument(instrument);
