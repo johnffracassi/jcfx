@@ -25,7 +25,7 @@ public class StoreValidator {
 	private FXDataSource dataSource = FXDataSource.Forexite;
 	private Instrument instrument = Instrument.AUDUSD;
 	private Period period = Period.OneMin;
-	private LocalDate startDate = new LocalDate(2010, 7, 19);
+	private LocalDate startDate = new LocalDate(2010, 7, 25);
 	private LocalDate endDate = new LocalDate();
 
 	public static void main(String[] args) throws Exception {
@@ -36,7 +36,9 @@ public class StoreValidator {
 	}
 	
 	public void run() {
-		validateDay(startDate);
+		for(int i=0; i<6; i++) {
+			validateDay(startDate.plusDays(i));
+		}
 	}
 	
 	public void validateDay(LocalDate date) {

@@ -49,9 +49,9 @@ public class GAINTickReader extends GenericLineReader<TickDataPoint> implements
 			dp.setInstrument(toInstrument(fields[ordering[0]]));
 
 			if (fields[ordering[1]].length() == 19) {
-				dp.setDate(df2.parseDateTime(fields[ordering[1]]).toLocalDateTime());
+				dp.setDateTime(df2.parseDateTime(fields[ordering[1]]).toLocalDateTime());
 			} else {
-				dp.setDate(df1.parseDateTime(fields[ordering[1]]).toLocalDateTime());
+				dp.setDateTime(df1.parseDateTime(fields[ordering[1]]).toLocalDateTime());
 			}
 
 			dp.setSell(Double.parseDouble(fields[ordering[2]]));

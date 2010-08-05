@@ -1,5 +1,8 @@
 package com.jeff.fx.datasource.forexite;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Component;
@@ -21,11 +24,14 @@ public class ForexiteCandleReader extends GenericLineReader<CandleDataPoint> imp
 	EURUSD,20100426,000100,1.3345,1.3345,1.3343,1.3344
 	EURUSD,20100426,000200,1.3345,1.3345,1.3345,1.3345
 	
+	
+	if DST = True, then NY Price [t] = Forexite Price [t - 5 hours];
+	if DST = False, then NY Price [t] = Forexite Price [t - 6 hours].
+	
 	*/
 	
-	private static DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("yyyyMMddHHmmss");
-
 	private static FXDataSource dataSource = FXDataSource.Forexite;
+	private static DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("yyyyMMddHHmmss").withZone(DateTimeZone.forTimeZone(dataSource.getCalendar().getTimeZone()));
 	private static double SPREAD = 4;
 	
 	public CandleDataPoint line(String str, int count) throws Exception {
@@ -48,7 +54,9 @@ public class ForexiteCandleReader extends GenericLineReader<CandleDataPoint> imp
 			dp.setDataSource(getDataSource());
 			dp.setInstrument(ins);
 			dp.setPeriod(Period.OneMin);
-			dp.setDate(dateTimeFormat.parseDateTime(fields[1] + fields[2]).toLocalDateTime());
+			
+			DateTime dateTime = dateTimeFormat.parseDateTime(fields[1] + fields[2]);
+			dp.setDateTime(new LocalDateTime(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(), dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()).minusMinutes(61));
 
 			dp.setSellOpen(Double.parseDouble(fields[3]));
 			dp.setSellHigh(Double.parseDouble(fields[4]));

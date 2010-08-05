@@ -108,7 +108,7 @@ public class CandleDataPoint extends AbstractFXDataPoint implements
 
 		tick.setBuy(getBuyOpen());
 		tick.setDataSource(getDataSource());
-		tick.setDate(getDate());
+		tick.setDateTime(getDate());
 		tick.setInstrument(getInstrument());
 		tick.setSell(getSellOpen());
 		tick.setBuyVolume(getBuyVolume());
