@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       		http://www.springframework.org/schema/beans 
+       		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       		http://www.springframework.org/schema/context
+       		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:component-scan base-package="com.jeff.fx.datastore" />
+	<context:component-scan base-package="com.jeff.fx.datasource" />
+
+
+	<!-- ====== Downloaders ===================================================================================== -->
+	<bean id="downloader" class="com.jeff.fx.datasource.DownloadManager">
+		<property name="sources">
+			<list>
+				<ref bean="cacheDownloader"/>
+				<ref bean="internetDownloader" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="cacheDownloader" class="com.jeff.fx.datasource.CachedDownloader">
+		<property name="cacheRoot" value="cache/download" />
+	</bean>
+	
+	<bean id="internetDownloader" class="com.jeff.fx.datasource.DownloaderImpl">
+		<constructor-arg ref="cacheDownloader" />
+	</bean>
+	
+</beans>

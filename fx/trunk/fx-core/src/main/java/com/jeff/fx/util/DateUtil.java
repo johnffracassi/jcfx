@@ -2,6 +2,8 @@ package com.jeff.fx.util;
 
 import java.text.SimpleDateFormat;
 
+import org.joda.time.DateTimeConstants;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 import com.jeff.fx.common.Period;
@@ -21,6 +23,14 @@ public class DateUtil
 	public static String formatHour(LocalDateTime date)
 	{
 		return hourDf.format(date) + "h";
+	}
+	
+	public static LocalDate getStartOfWeek(LocalDate date) {
+		if(date.getDayOfWeek() == DateTimeConstants.SUNDAY) {
+			return date;
+		} else {
+			return date.minusDays(date.getDayOfWeek());
+		}
 	}
 	
 	public static LocalDateTime roundDown(LocalDateTime date, Period period)

@@ -34,7 +34,7 @@ public class ForexiteCandleReader extends GenericLineReader<CandleDataPoint> imp
 	private static DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("yyyyMMddHHmmss").withZone(DateTimeZone.forTimeZone(dataSource.getCalendar().getTimeZone()));
 	private static double SPREAD = 4;
 	
-	public CandleDataPoint line(String str, int count) throws Exception {
+	public CandleDataPoint line(String str, int count) {
 
 		// first line of the file is a header
 		if (count == 1) {

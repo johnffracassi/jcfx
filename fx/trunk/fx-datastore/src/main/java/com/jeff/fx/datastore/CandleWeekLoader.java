@@ -1,6 +1,7 @@
 package com.jeff.fx.datastore;
 
-import org.joda.time.DateTimeConstants;
+import java.io.IOException;
+
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -15,22 +16,22 @@ import com.jeff.fx.common.Period;
 import com.jeff.fx.datasource.CachedDownloader;
 import com.jeff.fx.datasource.forexite.ForexiteCandleReader;
 import com.jeff.fx.datasource.forexite.ForexiteLocator;
+import com.jeff.fx.util.DateUtil;
 import com.jeff.fx.util.ZipUtil;
 
 @Component("candleWeekLoader")
 public class CandleWeekLoader {
 
-	@Autowired
 	private CachedDownloader downloader;
 	
-	@Autowired
 	private ForexiteLocator locator;
 	
 	@Autowired
 	private ForexiteCandleReader reader;
 	
 	public static void main(String[] args) throws Exception {
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-datastore.xml");
+		
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-cwl.xml");
 		CandleWeekLoader cwl = (CandleWeekLoader)ctx.getBean("candleWeekLoader");
 		CandleWeek cw = cwl.load(Instrument.AUDUSD, new LocalDate(2010, 7, 30), Period.OneMin);
 		
@@ -41,9 +42,9 @@ public class CandleWeekLoader {
 		System.out.println(cw.getCandle(cw.getCandleCount()-1));
 	}
 	
-	public CandleWeek load(Instrument instrument, LocalDate date, Period period) throws Exception {
+	public CandleWeek load(Instrument instrument, LocalDate date, Period period) throws IOException {
 		
-		LocalDate startDate = getStartOfWeek(date);
+		LocalDate startDate = DateUtil.getStartOfWeek(date);
 		CandleWeek cw = new CandleWeek(startDate, FXDataSource.Forexite, instrument, period);
 		
 		for(int i=0; i<6; i++) {
@@ -58,13 +59,5 @@ public class CandleWeekLoader {
 		}
 		
 		return cw;
-	}
-	
-	public static LocalDate getStartOfWeek(LocalDate date) {
-		if(date.getDayOfWeek() == DateTimeConstants.SUNDAY) {
-			return date;
-		} else {
-			return date.minusDays(date.getDayOfWeek());
-		}
 	}
 }

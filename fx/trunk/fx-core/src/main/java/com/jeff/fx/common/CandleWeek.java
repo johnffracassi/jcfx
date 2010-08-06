@@ -38,14 +38,6 @@ public class CandleWeek implements Serializable {
 		volumes = new int[2][periodsInWeek];
 	}
 	
-	public int getCandleCount() {
-		return buy[0].length;
-	}
-	
-	public boolean isComplete() {
-		return complete;
-	}
-	
 	/**
 	 * Get the candle opening at, or containing, the specified time
 	 * @param time
@@ -106,5 +98,33 @@ public class CandleWeek implements Serializable {
 		candle.setDateTime(dateTime.plusMillis((int)((startIdx + idx) * period.getInterval())));
 		
 		return candle;
+	}
+	
+	public int getCandleCount() {
+		return buy[0].length;
+	}
+	
+	public boolean isComplete() {
+		return complete;
+	}
+	
+	public LocalDate getStartDate() {
+		return date;
+	}
+	
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public FXDataSource getDataSource() {
+		return dataSource;
+	}
+
+	public Instrument getInstrument() {
+		return instrument;
+	}
+	
+	public Period getPeriod() {
+		return period;
 	}
 }
