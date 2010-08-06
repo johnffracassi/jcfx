@@ -41,4 +41,12 @@ public class CandleCollection {
 			end = weekStart.plusDays(7);
 		}
 	}
+
+	public LocalDate getStart() {
+		return start;
+	}
+
+	public LocalDate getEnd() {
+		return end;
+	}
 }

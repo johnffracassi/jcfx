@@ -1,8 +1,10 @@
 package com.jeff.fx.datastore;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +13,10 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.joda.time.Days;
+import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.CandleCollection;
@@ -19,8 +25,10 @@ import com.jeff.fx.common.CandleDataResponse;
 import com.jeff.fx.common.CandleWeek;
 import com.jeff.fx.common.FXDataRequest;
 import com.jeff.fx.common.FXDataSource;
+import com.jeff.fx.common.Instrument;
+import com.jeff.fx.common.Period;
 import com.jeff.fx.datasource.DataSource;
-import com.jeff.fx.datasource.forexite.ForexiteLocator;
+import com.jeff.fx.datastore.file.FileLocator;
 import com.jeff.fx.util.DateUtil;
 
 @Component("candleDataStore")
@@ -28,11 +36,27 @@ public class CandleDataStore {
 
 	private static Logger log = Logger.getLogger(CandleDataStore.class);
 
-	private ForexiteLocator locator;
+	@Autowired
 	private CandleWeekLoader loader;
+
+	@Autowired
+	private FileLocator fileLocator;
+	
 	private Map<FXDataSource, DataSource<CandleDataPoint>> candleDataSources;
 	private List<DataStoreProgressListener> listeners = new ArrayList<DataStoreProgressListener>();
 
+	public static void main(String[] args) throws IOException {
+		
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-cwl.xml");
+		CandleDataStore cds = (CandleDataStore)ctx.getBean("candleDataStore");
+		CandleDataResponse response = cds.loadCandles(new FXDataRequest(FXDataSource.Forexite, Instrument.AUDUSD, new LocalDate(2010, 7, 20), Period.OneMin));
+		CandleCollection cc = response.getCandles();
+		
+		CandleWeek cw = cc.getCandleWeek(new LocalDate(2010, 7, 20));
+		System.out.println(cw.getCandle(0));
+		System.out.println(cw.getCandle(cw.getCandleCount() - 1));
+	}
+	
 	public void addProgressListener(DataStoreProgressListener listener) {
 		listeners.add(listener);
 	}
@@ -46,7 +70,8 @@ public class CandleDataStore {
 	}
 	
 	public boolean exists(FXDataRequest request) {
-		return false;
+		File file = fileLocator.locate(request.getDataSource(), request.getInstrument(), request.getDate(), request.getPeriod());
+		return file.exists();
 	}
 
 	public CandleDataResponse loadCandles(FXDataRequest request) throws IOException {
@@ -63,8 +88,8 @@ public class CandleDataStore {
 				cc.putCandleWeek(loadCandlesForWeek(newReq));
 				updateProgress(week, weeks);
 			}
-			return new CandleDataResponse(request, cc);
-		} else {
+			return new CandleDataResponse(request, cc);			
+		} else {			
 			return new CandleDataResponse(request, new CandleCollection(loadCandlesForWeek(request)));
 		}
 	}
@@ -74,10 +99,10 @@ public class CandleDataStore {
 		log.debug("Load candles for " + request);
 
 		// does the requested data already exist in the store?
-//		if (exists(request)) {
-//			log.debug("returning candles from data store");
-//			return candleDataStore.load(request);
-//		} 
+		if (exists(request)) {
+			log.debug("returning candles from data store");
+			return retrieve(request.getDataSource(), request.getInstrument(), request.getDate(), request.getPeriod());
+		} 
 
 		// check if the M1 candles exists, if so then make the requested candles
 //		FXDataRequest newRequest = new FXDataRequest(request.getDataSource(), request.getInstrument(), request.getDate(), Period.OneMin);
@@ -162,15 +187,40 @@ public class CandleDataStore {
 		return Arrays.asList(candles);
 	}
 	
-	/**
-	 * 
-	 */
-	public void store(CandleWeek data) throws IOException
-	{
+	private CandleWeek retrieve(FXDataSource dataSource, Instrument instrument, LocalDate date, Period period) throws IOException {
+		
+		CandleWeek cw = null;
+
+		if(date != null) {
+			
+			// locate the data file
+			File file = fileLocator.locate(dataSource, instrument, date, period);
+			log.debug("locating data store at " + file);
+			
+			if(file.exists()) {
+				
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+
+				try {
+					cw = (CandleWeek)ois.readObject();
+					ois.close();
+				} catch(ClassNotFoundException ex) {
+					log.error("Error attempting to load from datastore", ex);
+				} finally {
+					ois.close();
+				}
+			}
+		}
+		
+		return cw;
+	}
+	
+	private void store(CandleWeek data) throws IOException {
+		
 		if(data != null) {
 			
 			// locate the data file
-			File file = locator.locate(data.getDataSource(), data.getInstrument(), data.getStartDate(), data.getPeriod());
+			File file = fileLocator.locate(data.getDataSource(), data.getInstrument(), data.getStartDate(), data.getPeriod());
 			log.debug("locating data store at " + file);
 			
 			// if the file exists, delete and replace (check for existence should be performed beforehand)
@@ -191,9 +241,9 @@ public class CandleDataStore {
 			oos.close();
 			
 			log.info("successfully wrote candle week to store");
-		}
-		else
-		{
+			
+		} else {
+			
 			log.warn("null or empty list of data points supplied, not creating store");
 		}
 	}

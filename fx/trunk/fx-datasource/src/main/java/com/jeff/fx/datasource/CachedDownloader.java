@@ -14,7 +14,7 @@ public class CachedDownloader implements Downloader, Cache<byte[]>
 {
 	private static Logger log = Logger.getLogger(CachedDownloader.class);
 
-	private File cacheRoot;
+	private File cacheRoot = new File("/temp/fx");
 
 	public byte[] download(String url) throws IOException {
 		return retrieve(url);

@@ -3,7 +3,6 @@ package com.jeff.fx.datastore;
 import java.io.IOException;
 
 import org.joda.time.LocalDate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
@@ -22,12 +21,9 @@ import com.jeff.fx.util.ZipUtil;
 @Component("candleWeekLoader")
 public class CandleWeekLoader {
 
-	private CachedDownloader downloader;
-	
-	private ForexiteLocator locator;
-	
-	@Autowired
-	private ForexiteCandleReader reader;
+	private CachedDownloader downloader = new CachedDownloader();
+	private ForexiteLocator locator = new ForexiteLocator();
+	private ForexiteCandleReader reader = new ForexiteCandleReader();
 	
 	public static void main(String[] args) throws Exception {
 		
@@ -48,7 +44,9 @@ public class CandleWeekLoader {
 		CandleWeek cw = new CandleWeek(startDate, FXDataSource.Forexite, instrument, period);
 		
 		for(int i=0; i<6; i++) {
-			String data = new String(ZipUtil.unzipBytes(downloader.download(locator.generateUrl(instrument, startDate.plusDays(i), period))));
+			String url = locator.generateUrl(instrument, startDate.plusDays(i), period);
+			byte[] zippedFile = downloader.download(url);
+			String data = new String(ZipUtil.unzipBytes(zippedFile));
 			String[] lines = data.split("\n");
 			for(String line : lines) {
 				if(line.startsWith(instrument.toString())) {

@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.datasource.Locator;
+import com.jeff.fx.datasource.DownloadLocator;
 
 @Component("forexiteLocator")
-public class ForexiteLocator implements Locator {
+public class ForexiteLocator implements DownloadLocator {
 	
 	private static Logger log = Logger.getLogger(ForexiteLocator.class);
 
