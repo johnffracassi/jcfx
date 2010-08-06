@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.datasource.Locator;
+import com.jeff.fx.datasource.DownloadLocator;
 import com.jeff.fx.util.DateUtil;
 
 @Component("GAINLocator")
-public class GAINLocator implements Locator {
+public class GAINLocator implements DownloadLocator {
 
 	private static Logger log = Logger.getLogger(GAINLocator.class);
 	private String domain = "ratedata.gaincapital.com";

@@ -12,6 +12,11 @@
 	<context:component-scan base-package="com.jeff.fx.datastore" />
 	<context:component-scan base-package="com.jeff.fx.datasource" />
 
+	<bean id="candleWeekFileLocator" class="com.jeff.fx.datastore.file.CandleWeekFileLocator">
+		<property name="dataRoot" value="/temp/fx/cache/store" />
+		<property name="filenamePattern" value="/ser/%s/%s/y%04d/m%02d/d%02d" />
+		<property name="extension" value="ser" />
+	</bean>
 
 	<!-- ====== Downloaders ===================================================================================== -->
 	<bean id="downloader" class="com.jeff.fx.datasource.DownloadManager">

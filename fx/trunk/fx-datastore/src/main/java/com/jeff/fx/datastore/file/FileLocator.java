@@ -10,14 +10,15 @@ import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 
-public class Locator {
-	private static Logger log = Logger.getLogger(Locator.class);
+public class FileLocator {
+	
+	private static Logger log = Logger.getLogger(FileLocator.class);
 
 	private String dataRoot;
 	private String filenamePattern;
 	private String extension;
 
-	public Locator() {
+	public FileLocator() {
 	}
 
 	public File locate(FXDataSource dataSource, Instrument instrument, LocalDate date, Period period) {
