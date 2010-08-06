@@ -1,7 +1,5 @@
 package com.jeff.fx.datastore;
 
-import java.util.List;
-
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +8,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.CandleWeek;
 import com.jeff.fx.common.FXDataRequest;
-import com.jeff.fx.common.FXDataResponse;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
@@ -20,7 +18,7 @@ import com.jeff.fx.common.Period;
 public class StoreValidator {
 
 	@Autowired
-	private DataStoreImpl dataStore;
+	private CandleWeekLoader loader;
 
 	private FXDataSource dataSource = FXDataSource.Forexite;
 	private Instrument instrument = Instrument.AUDUSD;
@@ -30,7 +28,7 @@ public class StoreValidator {
 
 	public static void main(String[] args) throws Exception {
 		
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-datastore.xml");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-cwl.xml");
 		StoreValidator sv = (StoreValidator) ctx.getBean("storeValidator");
 		sv.run();
 	}
@@ -52,18 +50,17 @@ public class StoreValidator {
 		
 		try {
 			
-			FXDataResponse<CandleDataPoint> response = dataStore.loadCandles(request);
-			List<CandleDataPoint> candles = response.getData();
+			CandleWeek cw = loader.load(request.getInstrument(), request.getDate(), request.getPeriod());
 			
 			// create a lookup table
 			int candleSize = (int)(period.getInterval() / 1000 / 60);
 			int candlesInDay = (int)(1440 / candleSize);
 			boolean[] markers = new boolean[candlesInDay];
 			
-			System.out.println("Loaded " + candles.size() + " " + period);
-			
 			// mark each valid candle
-			for(CandleDataPoint candle : candles) {
+			for(int i=0; i<cw.getCandleCount(); i++) {
+				
+				CandleDataPoint candle = cw.getCandle(i);
 				
 				if(candle.getPeriod() != period) {
 					System.out.println("invalid period: " + candle);

@@ -7,7 +7,6 @@ import com.jeff.fx.common.Period;
 
 public interface Locator {
 
-	public abstract String generateUrl(Instrument instrument, LocalDate date,
-			Period period);
+	public String generateUrl(Instrument instrument, LocalDate date, Period period);
 
 }

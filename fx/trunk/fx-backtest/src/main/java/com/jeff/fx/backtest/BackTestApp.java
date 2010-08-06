@@ -1,7 +1,5 @@
 package com.jeff.fx.backtest;
 
-import java.util.List;
-
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
@@ -15,7 +13,7 @@ import com.jeff.fx.backtest.chart.CandleChart;
 import com.jeff.fx.backtest.chart.NewCandleChartEvent;
 import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartEvent;
 import com.jeff.fx.backtest.strategy.time.StrategyView;
-import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 
@@ -54,9 +52,9 @@ public class BackTestApp {
 				try {
 					Instrument instrument = Instrument.valueOf(AppCtx.retrieve("newChart.instrument"));
 					Period period = Period.valueOf(AppCtx.retrieve("newChart.period"));
-					List<CandleDataPoint> candles = dataManager.getCandles();
-					ChartPanel chart = CandleChart.createChart(instrument + " (" + period.key + ")", candles);
-					frame.addMainPanel(chart, instrument + " (" + period.key + ")");
+					CandleCollection candles = dataManager.getCandles();
+//					ChartPanel chart = CandleChart.createChart(instrument + " (" + period.key + ")", candles);
+//					frame.addMainPanel(chart, instrument + " (" + period.key + ")");
 				} catch(Exception ex) {
 					ex.printStackTrace();
 				}

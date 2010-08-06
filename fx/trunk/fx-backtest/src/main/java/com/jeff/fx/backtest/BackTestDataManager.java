@@ -11,9 +11,10 @@ import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.CandleDataResponse;
 import com.jeff.fx.common.FXDataRequest;
-import com.jeff.fx.common.FXDataResponse;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
@@ -26,7 +27,7 @@ public class BackTestDataManager {
 	@Autowired
 	private DataStoreImpl dataManager;
 	
-	public List<CandleDataPoint> getCandles() throws Exception {
+	public CandleCollection getCandles() throws Exception {
 		
 		// build the data request from the user parameters
 		FXDataSource dataSource = FXDataSource.valueOf(AppCtx.retrieve("newChart.dataSource"));
@@ -37,15 +38,15 @@ public class BackTestDataManager {
 		// run the data load in a new thread
 		DataLoaderWorker dlw = new DataLoaderWorker(request);
 		dlw.execute();
-		FXDataResponse<CandleDataPoint> response = dlw.get();
+		CandleDataResponse response = dlw.get();
 		
-		return response.getData();
+		return response.getCandles();
 	}
 
 	/**
 	 * Load dataset and monitor progress
 	 */
-	class DataLoaderWorker extends SwingWorker<FXDataResponse<CandleDataPoint>, Integer> {
+	class DataLoaderWorker extends SwingWorker<CandleDataResponse, Integer> {
 		
 		private FXDataRequest request;
 		private int dayCount; 
@@ -69,17 +70,19 @@ public class BackTestDataManager {
 		/**
 		 * load the data day by day
 		 */
-		protected FXDataResponse<CandleDataPoint> doInBackground() throws Exception {
-			List<CandleDataPoint> all = new ArrayList<CandleDataPoint>();
-			for(int day = 0; day<dayCount; day++) {
+		protected CandleDataResponse doInBackground() throws Exception {
+			
+			CandleCollection data = new CandleCollection();
+			
+			for(int day = 0; day<dayCount; day+=7) {
 				FXDataRequest newReq = new FXDataRequest(request);
 				newReq.setDate(request.getDate().plusDays(day));
 				newReq.setEndDate(null);
-				all.addAll(dataManager.loadCandlesForDay(newReq).getData());
+				data.putCandleWeek()
 				firePropertyChange("day", day, day+1);
 			}
 	
-			return new FXDataResponse<CandleDataPoint>(request, all);
+			return new CandleDataResponse(request, all);
 		}
 	}
 }

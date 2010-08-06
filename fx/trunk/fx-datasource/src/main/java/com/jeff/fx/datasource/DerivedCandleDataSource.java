@@ -3,6 +3,7 @@ package com.jeff.fx.datasource;
 import java.util.List;
 
 import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.CandleDataResponse;
 import com.jeff.fx.common.FXDataRequest;
 import com.jeff.fx.common.FXDataResponse;
 import com.jeff.fx.common.Period;
@@ -30,8 +31,10 @@ public class DerivedCandleDataSource implements DataSource<CandleDataPoint> {
 
 		// convert the ticks to the requested period
 		TickToCandleConverter t2c = new TickToCandleConverter();
-		List<CandleDataPoint> candles = t2c.convert(response.getData(), request.getPeriod());
+//		List<CandleDataPoint> candles = t2c.convert(response.getData(), request.getPeriod());
 
-		return new FXDataResponse<CandleDataPoint>(request, candles);
+		// TODO this is all fucked up at the moment, fix later...
+		
+		return new CandleDataResponse(request, null);
 	}
 }
