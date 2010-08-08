@@ -11,64 +11,14 @@
 
 	<context:component-scan base-package="com.jeff.fx.datastore" />
 	<context:component-scan base-package="com.jeff.fx.datasource" />
-	
-	<bean id="dataManager" class="com.jeff.fx.datastore.DataStoreImpl">
-		<property name="tickDataStore" ref="tickDataStore" />
-		<property name="candleDataStore" ref="candleDataStore" />
-		<property name="tickDataSources">
-			<map>
-				<entry key="GAIN" value-ref="GAINTickDataSource" />
-			</map>
-		</property>
-		<property name="candleDataSources">
-			<map>
-				<entry key="GAIN" value-ref="GAINCandleDataSource" />
-				<entry key="Forexite" value-ref="forexiteCandleDataSource" />
-			</map>
-		</property>
-	</bean>
-	
 
-	<!-- ====== Data sources ==================================================================================== -->
-	<bean name="forexiteCandleDataSource" class="com.jeff.fx.datasource.forexite.ForexiteCandleDataSource">
-		<property name="parser">
-			<bean class="com.jeff.fx.datasource.forexite.ForexiteCandleReader" />
-		</property>
-		<property name="locator">
-			<bean class="com.jeff.fx.datasource.forexite.ForexiteLocator" />
-		</property>
-		<property name="downloader" ref="downloader" />
-	</bean>
-	
-	<bean name="GAINTickDataSource" class="com.jeff.fx.datasource.gain.GAINTickDataSource">
-		<property name="parser">
-			<bean class="com.jeff.fx.datasource.gain.GAINTickReader" />
-		</property>
-		<property name="locator">
-			<bean class="com.jeff.fx.datasource.gain.GAINLocator" />
-		</property>
-		<property name="downloader" ref="downloader" />
-	</bean>
 
-	<bean name="GAINCandleDataSource" class="com.jeff.fx.datasource.gain.GAINCandleDataSource">
-		<constructor-arg ref="GAINTickDataSource" />
-	</bean>	
-	
-
-	<!-- ====== Data Store ====================================================================================== -->
-	<bean id="tickDataStore" class="com.jeff.fx.datastore.file.TickSerialiserDataStore">
-		<property name="locator" ref="serialiserStoreLocator" />
-	</bean>
-	
-	<bean id="candleDataStore" class="com.jeff.fx.datastore.file.CandleSerialiserDataStore">
-		<property name="locator" ref="serialiserStoreLocator" />
-	</bean>
-	
-	<bean id="serialiserStoreLocator" class="com.jeff.fx.datastore.file.Locator">
-		<property name="dataRoot" value="~/cache/store" />
+	<!-- ====== Data store setup ================================================================================ -->
+	<bean id="candleWeekFileLocator" class="com.jeff.fx.datastore.file.CandleWeekFileLocator">
+		<property name="dataRoot" value="/temp/fx/cache/store" />
 		<property name="filenamePattern" value="/ser/%s/%s/y%04d/m%02d/d%02d" />
 		<property name="extension" value="ser" />
-	</bean>	
+	</bean>
 
 
 	<!-- ====== Downloaders ===================================================================================== -->
@@ -82,7 +32,7 @@
 	</bean>
 	
 	<bean id="cacheDownloader" class="com.jeff.fx.datasource.CachedDownloader">
-		<property name="cacheRoot" value="~/cache/download" />
+		<property name="cacheRoot" value="cache/download" />
 	</bean>
 	
 	<bean id="internetDownloader" class="com.jeff.fx.datasource.DownloaderImpl">

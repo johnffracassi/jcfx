@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.swing.SwingUtilities;
 
 import com.jeff.fx.backtest.engine.OrderBookReport;
-import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.TimeOfWeek;
 
 public class MultiThreadedExecutor implements OptimiserExecutor {
@@ -17,7 +17,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 	private List<OptimiserParameter> params;
 	private OptimiserView view;
 	
-	public void run(List<CandleDataPoint> candles, OptimiserView view) {
+	public void run(CandleCollection candles, OptimiserView view) {
 		
 		this.view = view;
 		
@@ -50,15 +50,18 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		private Object jobAllocationSemaphore = new Object();
 		private Object counterSemaphore = new Object();
 		private List<Job> jobs;
-		
-		public Manager(int threads, List<CandleDataPoint> candles, int permutations) {
+
+		private CandleCollection candles;
+
+		public Manager(int threads, CandleCollection candles, int permutations) {
 			
+			this.candles = candles;
 			this.permutations = permutations;
 			jobs = new ArrayList<Job>(permutations);
 			
 			this.workers = new Worker[threads];
 			for(int w=0; w<workers.length; w++) {
-				workers[w] = new Worker(candles);
+				workers[w] = new Worker();
 			}
 		}
 		
@@ -131,16 +134,6 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		
 		class Worker extends Thread {
 			
-			private List<CandleDataPoint> localCandles;
-
-			public Worker(List<CandleDataPoint> candles) {
-				try {
-					localCandles = new ArrayList<CandleDataPoint>(candles);
-				} catch(Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-			
 			public void run() {
 				
 				while(hasNextBlock()) {
@@ -176,7 +169,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 				// build the test
 				final TimeStrategy test = new TimeStrategy(idx, map);
 				if(test.validate()) {
-					test.execute(localCandles);
+					test.execute(candles);
 				}
 				
 				// check the report and add if interesting

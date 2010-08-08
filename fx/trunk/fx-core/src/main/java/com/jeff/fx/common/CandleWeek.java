@@ -21,6 +21,11 @@ public class CandleWeek implements Serializable {
 	private int startIdx;
 	private int endIdx;
 	
+	private static final int OPEN = 0;
+	private static final int HIGH = 1;
+	private static final int LOW = 2;
+	private static final int CLOSE = 3;
+	
 	public CandleWeek(LocalDate date, FXDataSource dataSource, Instrument instrument, Period period) {
 		
 		this.date = date;
@@ -36,6 +41,80 @@ public class CandleWeek implements Serializable {
 		buy = new float[4][periodsInWeek];
 		sell = new float[4][periodsInWeek];
 		volumes = new int[2][periodsInWeek];
+	}
+	
+	public CandleDataPoint findNextLowBelowPrice(TimeOfWeek from, TimeOfWeek to, float targetPrice, boolean useBuyPrice) {
+		
+		int startIdx = from.periodOfWeek(this.period) - this.startIdx;
+		int endIdx = (to == null ? buy[LOW].length : (to.periodOfWeek(this.period) - this.startIdx));
+		
+		for(int idx=startIdx; idx<endIdx; idx++) {
+			float price = useBuyPrice ? buy[LOW][idx] : sell[LOW][idx];
+			if(price <= targetPrice) {
+				return getCandle(idx);
+			}
+		}
+		
+		return null;
+	}
+	
+	public CandleDataPoint findNextHighAbovePrice(TimeOfWeek from, TimeOfWeek to, float targetPrice, boolean useBuyPrice) {
+		
+		int startIdx = from.periodOfWeek(this.period) - this.startIdx;
+		int endIdx = (to == null ? buy[LOW].length : (to.periodOfWeek(this.period) - this.startIdx));
+		
+		for(int idx=startIdx; idx<endIdx; idx++) {
+			float price = useBuyPrice ? buy[HIGH][idx] : sell[HIGH][idx];
+			if(price >= targetPrice) {
+				return getCandle(idx);
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Merge candles down a period (eg/ merge m1 candles to m15 candles)
+	 * @param source
+	 * @param target
+	 */
+	public CandleWeek(CandleWeek source, Period target) {
+		
+		// copy details from source candle week, but with targeted period
+		this(source.getDate(), source.getDataSource(), source.getInstrument(), target);
+		
+		// how many source periods in 1 of the target periods
+		int ratio = (int)(target.getInterval() / source.getPeriod().getInterval());
+		
+		// perform the candle merging
+		for(int destIdx=0; destIdx<getCandleCount(); destIdx++) {
+			
+			// map the destination index to the source index
+			int srcIdx = destIdx * ratio;
+			int srcEndIdx = Math.min(srcIdx + ratio - 1, buy[OPEN].length - 1);
+			
+			// get the new open and close values
+			buy[OPEN][destIdx] = source.buy[OPEN][srcIdx];
+			sell[OPEN][destIdx] = source.sell[OPEN][srcIdx];
+			buy[CLOSE][destIdx] = source.buy[CLOSE][srcEndIdx];
+			sell[CLOSE][destIdx] = source.sell[CLOSE][srcEndIdx];
+			
+			// find the high and lows
+			for(int idx=srcIdx; idx<srcEndIdx; idx++) {
+
+				if(source.buy[HIGH][idx] > buy[HIGH][destIdx])
+					buy[HIGH][destIdx] = source.buy[HIGH][idx];
+				if(source.sell[HIGH][idx] > sell[HIGH][destIdx])
+					sell[HIGH][destIdx] = source.sell[HIGH][idx];
+				
+				if(source.buy[LOW][idx] < buy[LOW][destIdx] || buy[LOW][destIdx] == 0.0)
+					buy[LOW][destIdx] = source.buy[LOW][idx];
+				if(source.sell[LOW][idx] < sell[LOW][destIdx] || sell[LOW][destIdx] == 0.0)
+					sell[LOW][destIdx] = source.sell[LOW][idx];
+				
+				// TODO add candle volumes
+			}
+		}
 	}
 	
 	/**

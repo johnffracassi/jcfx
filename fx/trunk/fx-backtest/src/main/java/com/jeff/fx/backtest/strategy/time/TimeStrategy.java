@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.joda.time.LocalDate;
 
 import com.jeff.fx.backtest.engine.AbstractStrategy;
 import com.jeff.fx.backtest.engine.BTOrder;
+import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.CandleWeek;
 import com.jeff.fx.common.OfferSide;
 import com.jeff.fx.common.TimeOfWeek;
 
@@ -35,6 +38,53 @@ public class TimeStrategy extends AbstractStrategy {
 		return (!open.equals(close));
 	}
 	
+	public void execute(CandleCollection cc) {
+
+		LocalDate date = cc.getStart();
+		while(date.isBefore(cc.getEnd())) {
+			executeWeek(cc.getCandleWeek(date));
+			date = date.plusDays(7);
+		}
+	}
+
+	private void executeWeek(CandleWeek cw) {
+		
+		CandleDataPoint openCandle = cw.getCandle(open);
+		CandleDataPoint closeCandle = cw.getCandle(close);
+		
+		// create and lodge the order
+		BTOrder order = new BTOrder();
+		order.setOfferSide(OfferSide.Ask);
+		order.setUnits(1.0);
+		if(takeProfit > 0) order.setTakeProfit(takeProfit);
+		if(stopLoss > 0) order.setStopLoss(stopLoss);
+		openOrder(order, openCandle);
+		
+		// search for a SL/TP
+		CandleDataPoint sl = null;
+		CandleDataPoint tp = null;
+
+		if(stopLoss > 0) 
+			sl = cw.findNextLowBelowPrice(open, close, (float)order.getStopLossPrice(), false);
+		
+		if(takeProfit > 0)
+			tp = cw.findNextHighAbovePrice(open, close, (float)order.getTakeProfitPrice(), false);
+
+		if(sl != null && tp != null) {
+			if(sl.getDate().isBefore(tp.getDate())) {
+				closeCandle = sl;
+			} else {
+				closeCandle = tp;
+			}
+		} else if(sl != null) {
+			closeCandle = sl;
+		} else if(tp != null) {
+			closeCandle = tp;
+		}
+		
+		closeOrder(order, closeCandle);
+	}
+	
 	public void candle(CandleDataPoint candle) {
 		
 		// check all orders for a stop loss or take profit
@@ -47,7 +97,7 @@ public class TimeStrategy extends AbstractStrategy {
 		
 		// close the orders (do it outside the loop to avoid concurrent modification)
 		for(BTOrder order : ordersToClose) {
-			close(order, candle);
+			closeOrder(order, candle);
 		}
 		
 		// is it open/close time?
@@ -68,7 +118,7 @@ public class TimeStrategy extends AbstractStrategy {
 			openOrder(order, candle);
 			
 		} else if(tow.equals(close) && hasOpenOrder()) {
-			close(getOrderBook().getOpenOrders().get(0), candle);
+			closeOrder(getOrderBook().getOpenOrders().get(0), candle);
 		} 
 	}
 

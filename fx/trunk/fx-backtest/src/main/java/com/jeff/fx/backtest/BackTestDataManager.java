@@ -2,8 +2,6 @@ package com.jeff.fx.backtest;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.SwingWorker;
 
@@ -12,20 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.CandleCollection;
-import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.CandleDataResponse;
+import com.jeff.fx.common.CandleWeek;
 import com.jeff.fx.common.FXDataRequest;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.datastore.DataStoreImpl;
+import com.jeff.fx.datastore.CandleDataStore;
 import com.jeff.fx.datastore.DataStoreProgress;
 
 @Component
 public class BackTestDataManager {
 	
 	@Autowired
-	private DataStoreImpl dataManager;
+	private CandleDataStore dataManager;
 	
 	public CandleCollection getCandles() throws Exception {
 		
@@ -78,11 +76,12 @@ public class BackTestDataManager {
 				FXDataRequest newReq = new FXDataRequest(request);
 				newReq.setDate(request.getDate().plusDays(day));
 				newReq.setEndDate(null);
-				data.putCandleWeek()
+				CandleWeek cw = dataManager.loadCandlesForWeek(newReq);
+				data.putCandleWeek(cw);
 				firePropertyChange("day", day, day+1);
 			}
 	
-			return new CandleDataResponse(request, all);
+			return new CandleDataResponse(request, data);
 		}
 	}
 }

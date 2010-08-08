@@ -1,9 +1,7 @@
 package com.jeff.fx.backtest.strategy.time;
 
-import java.util.List;
-
-import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.CandleCollection;
 
 public interface OptimiserExecutor {
-	public void run(List<CandleDataPoint> candles, OptimiserView view);
+	public void run(CandleCollection candles, OptimiserView view);
 }
