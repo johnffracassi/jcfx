@@ -18,7 +18,7 @@ import com.jeff.fx.common.Period;
 public class StoreValidator {
 
 	@Autowired
-	private CandleWeekLoader loader;
+	private ForexiteCandleWeekLoader loader;
 
 	private FXDataSource dataSource = FXDataSource.Forexite;
 	private Instrument instrument = Instrument.AUDUSD;

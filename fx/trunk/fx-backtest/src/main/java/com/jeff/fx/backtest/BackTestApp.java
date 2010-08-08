@@ -20,7 +20,7 @@ import com.jeff.fx.common.Period;
 @Component("backTestApp")
 public class BackTestApp {
 	
-	private static Logger log = Logger.getLogger(BackTester.class);
+	private static Logger log = Logger.getLogger(BackTestApp.class);
 
 	private BackTestFrame frame;
 	

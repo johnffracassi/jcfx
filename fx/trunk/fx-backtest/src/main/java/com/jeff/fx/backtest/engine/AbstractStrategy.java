@@ -1,8 +1,10 @@
 package com.jeff.fx.backtest.engine;
 
-import java.util.List;
+import org.joda.time.LocalDate;
 
+import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.CandleWeek;
 import com.jeff.fx.common.OfferSide;
 
 public abstract class AbstractStrategy {
@@ -30,11 +32,18 @@ public abstract class AbstractStrategy {
 	/**
 	 * Execute the test with all strategies
 	 * 
-	 * @param candles
+	 * @param cc
 	 */
-	public void execute(List<CandleDataPoint> candles) {
-		for(CandleDataPoint candle : candles) {
-			candle(candle);
+	public void execute(CandleCollection cc) {
+		
+		LocalDate date = cc.getStart();
+		
+		while(date.isBefore(cc.getEnd())) {
+			CandleWeek cw = cc.getCandleWeek(date);
+			for(int i=0; i<cw.getCandleCount(); i++) {
+				candle(cw.getCandle(i));
+			}
+			date = date.plusDays(7);
 		}
 	}
 	
@@ -114,7 +123,7 @@ public abstract class AbstractStrategy {
 	 * @param order
 	 * @param candle
 	 */
-	protected void close(BTOrder order, CandleDataPoint candle) {
+	protected void closeOrder(BTOrder order, CandleDataPoint candle) {
 
 		order.setClosePrice(getClosePrice(order, candle));
 		order.setCloseType(getCloseType(order, candle));

@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -37,22 +36,29 @@ public class CandleDataStore {
 	private static Logger log = Logger.getLogger(CandleDataStore.class);
 
 	@Autowired
-	private CandleWeekLoader loader;
+	private ForexiteCandleWeekLoader loader;
 
 	@Autowired
 	private FileLocator fileLocator;
 	
 	private Map<FXDataSource, DataSource<CandleDataPoint>> candleDataSources;
+	
 	private List<DataStoreProgressListener> listeners = new ArrayList<DataStoreProgressListener>();
 
 	public static void main(String[] args) throws IOException {
 		
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-cwl.xml");
 		CandleDataStore cds = (CandleDataStore)ctx.getBean("candleDataStore");
+
 		CandleDataResponse response = cds.loadCandles(new FXDataRequest(FXDataSource.Forexite, Instrument.AUDUSD, new LocalDate(2010, 7, 20), Period.OneMin));
 		CandleCollection cc = response.getCandles();
-		
 		CandleWeek cw = cc.getCandleWeek(new LocalDate(2010, 7, 20));
+		System.out.println(cw.getCandle(0));
+		System.out.println(cw.getCandle(cw.getCandleCount() - 1));
+		
+		response = cds.loadCandles(new FXDataRequest(FXDataSource.Forexite, Instrument.AUDUSD, new LocalDate(2010, 7, 20), Period.OneHour));
+		cc = response.getCandles();
+		cw = cc.getCandleWeek(new LocalDate(2010, 7, 20));
 		System.out.println(cw.getCandle(0));
 		System.out.println(cw.getCandle(cw.getCandleCount() - 1));
 	}
@@ -105,15 +111,14 @@ public class CandleDataStore {
 		} 
 
 		// check if the M1 candles exists, if so then make the requested candles
-//		FXDataRequest newRequest = new FXDataRequest(request.getDataSource(), request.getInstrument(), request.getDate(), Period.OneMin);
-//		if(exists(newRequest)) {
-//			log.debug("requested period (" + request.getPeriod() + ") doesn't exist in store, converting from " + Period.OneMin + " candles");
-//			List<CandleDataPoint> m1candles = candleDataStore.load(newRequest).getData();
-//			CandleToCandleConverter c2c = new CandleToCandleConverter();
-//			List<CandleDataPoint> convertedCandles = c2c.convert(m1candles, request.getPeriod());
-//			candleDataStore.store(convertedCandles);
-//			return new CandleDataResponse(request, convertedCandles);
-//		}
+		FXDataRequest newRequest = new FXDataRequest(request.getDataSource(), request.getInstrument(), request.getDate(), Period.OneMin);
+		if(exists(newRequest)) {
+			log.debug("requested period (" + request.getPeriod() + ") doesn't exist in store, converting from " + Period.OneMin + " candles");
+			CandleWeek sourceCandles = retrieve(newRequest);
+			CandleWeek targetCandles = new CandleWeek(sourceCandles, request.getPeriod());
+			store(targetCandles);
+			return targetCandles;
+		}
 		
 		// can't find/convert data from store, go fetch from the source
 		log.debug("fetching candles from data source");
@@ -122,73 +127,75 @@ public class CandleDataStore {
 		return candleWeek;
 	}
 
-	private List<CandleDataPoint> filterAndFill(List<CandleDataPoint> candleList, FXDataRequest request) {
+	private void fillGaps(CandleWeek cw) {
 		
-		int minutesInPeriod = (int)(request.getPeriod().getInterval() / 1000 / 60);
-		int periodsInDay = 1440 / minutesInPeriod;
-		
-		// check off candles
-		CandleDataPoint[] candles = new CandleDataPoint[periodsInDay];
-		for(int c=0; c<candleList.size(); c++) {
-			CandleDataPoint candle = candleList.get(c);
-			
-			if(candle.getInstrument() == request.getInstrument()) {
-				int minuteOfDay = (candle.getDate().getMillisOfDay() / 1000 / 60);
-				int periodOfDay = minuteOfDay / minutesInPeriod;
-				candles[periodOfDay] = candle;
-			}
-		}
-		
-		// find and fill any missing candles
-		for(int c=0; c<periodsInDay; c++) {
-			if(candles[c] == null) {
-				if(c>0 && c<periodsInDay-1 && candles[c-1] != null && candles[c+1] != null) {
-					
-					// interpolate from surrounding candles
-					CandleDataPoint newCandle = new CandleDataPoint(candles[c-1]);
-					newCandle.setDateTime(newCandle.getDate().plusMinutes(minutesInPeriod));
-					newCandle.setBuyOpen(candles[c-1].getBuyClose());
-					newCandle.setSellOpen(candles[c-1].getSellClose());
-					newCandle.setBuyClose(candles[c+1].getBuyOpen());
-					newCandle.setSellClose(candles[c+1].getSellOpen());
-					newCandle.setBuyHigh(Math.max(newCandle.getBuyOpen(), newCandle.getBuyClose()));
-					newCandle.setSellHigh(Math.max(newCandle.getSellOpen(), newCandle.getSellClose()));
-					newCandle.setBuyLow(Math.min(newCandle.getBuyClose(), newCandle.getBuyClose()));
-					newCandle.setSellLow(Math.min(newCandle.getSellClose(), newCandle.getSellClose()));
-					newCandle.setTickCount(0);
-					newCandle.setBuyVolume(0);
-					newCandle.setSellVolume(0);
-					candles[c] = newCandle;
-					
-				} else if(c>0 && candles[c-1] != null) {
-					
-					// copy forward (values from previous candle)
-					CandleDataPoint newCandle = new CandleDataPoint(candles[c-1]);
-					newCandle.setDateTime(newCandle.getDate().plusMinutes(minutesInPeriod));
-					newCandle.setBuyOpen(candles[c-1].getBuyClose());
-					newCandle.setSellOpen(candles[c-1].getSellClose());
-					newCandle.setBuyClose(candles[c-1].getBuyClose());
-					newCandle.setSellClose(candles[c-1].getSellClose());
-					newCandle.setBuyHigh(candles[c-1].getBuyClose());
-					newCandle.setSellHigh(candles[c-1].getSellClose());
-					newCandle.setBuyLow(candles[c-1].getBuyClose());
-					newCandle.setSellLow(candles[c-1].getSellClose());
-					newCandle.setTickCount(0);
-					newCandle.setBuyVolume(0);
-					newCandle.setSellVolume(0);
-					candles[c] = newCandle;
-
-				} else {
-					System.out.println("*** missing candle at " + c + " ***");
-				}
-			}
-		}
-		
-		return Arrays.asList(candles);
+//		int minutesInPeriod = (int)(cw.getPeriod().getInterval() / 1000 / 60);
+//		int periodsInDay = 1440 / minutesInPeriod;
+//		
+//		// check off candles
+//		CandleDataPoint[] candles = new CandleDataPoint[periodsInDay];
+//		for(int c=0; c<candleList.size(); c++) {
+//			CandleDataPoint candle = candleList.get(c);
+//			
+//			if(candle.getInstrument() == request.getInstrument()) {
+//				int minuteOfDay = (candle.getDate().getMillisOfDay() / 1000 / 60);
+//				int periodOfDay = minuteOfDay / minutesInPeriod;
+//				candles[periodOfDay] = candle;
+//			}
+//		}
+//		
+//		// find and fill any missing candles
+//		for(int c=0; c<periodsInDay; c++) {
+//			if(candles[c] == null) {
+//				if(c>0 && c<periodsInDay-1 && candles[c-1] != null && candles[c+1] != null) {
+//					
+//					// interpolate from surrounding candles
+//					CandleDataPoint newCandle = new CandleDataPoint(candles[c-1]);
+//					newCandle.setDateTime(newCandle.getDate().plusMinutes(minutesInPeriod));
+//					newCandle.setBuyOpen(candles[c-1].getBuyClose());
+//					newCandle.setSellOpen(candles[c-1].getSellClose());
+//					newCandle.setBuyClose(candles[c+1].getBuyOpen());
+//					newCandle.setSellClose(candles[c+1].getSellOpen());
+//					newCandle.setBuyHigh(Math.max(newCandle.getBuyOpen(), newCandle.getBuyClose()));
+//					newCandle.setSellHigh(Math.max(newCandle.getSellOpen(), newCandle.getSellClose()));
+//					newCandle.setBuyLow(Math.min(newCandle.getBuyClose(), newCandle.getBuyClose()));
+//					newCandle.setSellLow(Math.min(newCandle.getSellClose(), newCandle.getSellClose()));
+//					newCandle.setTickCount(0);
+//					newCandle.setBuyVolume(0);
+//					newCandle.setSellVolume(0);
+//					candles[c] = newCandle;
+//					
+//				} else if(c>0 && candles[c-1] != null) {
+//					
+//					// copy forward (values from previous candle)
+//					CandleDataPoint newCandle = new CandleDataPoint(candles[c-1]);
+//					newCandle.setDateTime(newCandle.getDate().plusMinutes(minutesInPeriod));
+//					newCandle.setBuyOpen(candles[c-1].getBuyClose());
+//					newCandle.setSellOpen(candles[c-1].getSellClose());
+//					newCandle.setBuyClose(candles[c-1].getBuyClose());
+//					newCandle.setSellClose(candles[c-1].getSellClose());
+//					newCandle.setBuyHigh(candles[c-1].getBuyClose());
+//					newCandle.setSellHigh(candles[c-1].getSellClose());
+//					newCandle.setBuyLow(candles[c-1].getBuyClose());
+//					newCandle.setSellLow(candles[c-1].getSellClose());
+//					newCandle.setTickCount(0);
+//					newCandle.setBuyVolume(0);
+//					newCandle.setSellVolume(0);
+//					candles[c] = newCandle;
+//
+//				} else {
+//					System.out.println("*** missing candle at " + c + " ***");
+//				}
+//			}
+//		}
 	}
 	
-	private CandleWeek retrieve(FXDataSource dataSource, Instrument instrument, LocalDate date, Period period) throws IOException {
+	private CandleWeek retrieve(FXDataRequest request) throws IOException {
+		return retrieve(request.getDataSource(), request.getInstrument(), request.getDate(), request.getPeriod());
+	}
 		
+	private CandleWeek retrieve(FXDataSource dataSource, Instrument instrument, LocalDate date, Period period) throws IOException {
+			
 		CandleWeek cw = null;
 
 		if(date != null) {

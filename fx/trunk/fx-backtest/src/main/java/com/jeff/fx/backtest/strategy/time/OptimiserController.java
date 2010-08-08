@@ -4,15 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 import javax.swing.SwingWorker;
 
-import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.CandleCollection;
 
 public class OptimiserController {
 
-	private List<CandleDataPoint> candles;
+	private CandleCollection candles;
 	private OptimiserView view;
 
 	public OptimiserController(final StrategyView parent) {
@@ -40,7 +39,7 @@ public class OptimiserController {
 		return view;
 	}
 	
-	public void setCandles(List<CandleDataPoint> candles) {
+	public void setCandles(CandleCollection candles) {
 		this.candles = candles;
 	}
 	

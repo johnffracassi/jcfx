@@ -3,7 +3,6 @@ package com.jeff.fx.backtest.strategy.time;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.JTabbedPane;
@@ -15,6 +14,7 @@ import org.jdesktop.swingx.JXPanel;
 import com.jeff.fx.backtest.AppCtx;
 import com.jeff.fx.backtest.engine.OrderBook;
 import com.jeff.fx.backtest.strategy.StrategyPropertyChangeListener;
+import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
 
 @SuppressWarnings("serial")
@@ -26,7 +26,7 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 	private TimeStrategyChartController chart = new TimeStrategyChartController();
 	private OptimiserController optimiser = new OptimiserController(this);
 	private TimeStrategyConfigView config = null;
-	private List<CandleDataPoint> candles = Collections.<CandleDataPoint>emptyList();
+	private CandleCollection candles = new CandleCollection();
 	
 	public StrategyView() {
 

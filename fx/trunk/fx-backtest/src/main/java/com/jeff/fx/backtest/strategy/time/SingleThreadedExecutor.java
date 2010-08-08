@@ -7,13 +7,13 @@ import java.util.Map;
 import javax.swing.SwingUtilities;
 
 import com.jeff.fx.backtest.engine.OrderBookReport;
-import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.TimeOfWeek;
 
 
 public class SingleThreadedExecutor implements OptimiserExecutor {
 	
-	public void run(final List<CandleDataPoint> candles, final OptimiserView view) {
+	public void run(final CandleCollection candles, final OptimiserView view) {
 		
 		List<OptimiserParameter> params = view.getParameters();
 		
