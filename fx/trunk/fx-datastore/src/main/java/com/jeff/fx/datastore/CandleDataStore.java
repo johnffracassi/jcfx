@@ -55,11 +55,22 @@ public class CandleDataStore {
 		}
 	}
 	
+	/**
+	 * does the requested data exist in the local data store?
+	 * @param request
+	 * @return
+	 */
 	public boolean exists(FXDataRequest request) {
 		File file = fileLocator.locate(request.getDataSource(), request.getInstrument(), request.getDate(), request.getPeriod());
 		return file.exists();
 	}
 
+	/**
+	 * Load multiple weeks of data (from either local store or actual data source)
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
 	public CandleDataResponse loadCandles(FXDataRequest request) throws IOException {
 		
 		if(request.isRangeOfDates()) {
@@ -80,6 +91,12 @@ public class CandleDataStore {
 		}
 	}
 	
+	/**
+	 * Load candles from either local store or from the actual data source
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
 	public CandleWeek loadCandlesForWeek(FXDataRequest request) throws IOException {
 		
 		log.debug("Load candles for " + request);
@@ -108,10 +125,28 @@ public class CandleDataStore {
 	}
 
 	
+	/**
+	 * Read from the local data store
+	 * @param dataSource
+	 * @param instrument
+	 * @param date
+	 * @param period
+	 * @return
+	 * @throws IOException
+	 */
 	private CandleWeek retrieve(FXDataRequest request) throws IOException {
 		return retrieve(request.getDataSource(), request.getInstrument(), request.getDate(), request.getPeriod());
 	}
 		
+	/**
+	 * Read from the local data store
+	 * @param dataSource
+	 * @param instrument
+	 * @param date
+	 * @param period
+	 * @return
+	 * @throws IOException
+	 */
 	private CandleWeek retrieve(FXDataSource dataSource, Instrument instrument, LocalDate date, Period period) throws IOException {
 			
 		CandleWeek cw = null;
@@ -140,6 +175,11 @@ public class CandleDataStore {
 		return cw;
 	}
 	
+	/**
+	 * Write to the local data store
+	 * @param data
+	 * @throws IOException
+	 */
 	private void store(CandleWeek data) throws IOException {
 		
 		if(data != null) {
@@ -173,6 +213,9 @@ public class CandleDataStore {
 		}
 	}
 	
+	/**
+	 * wipe the local data store
+	 */
 	public void clearStoreCache() {
 		File storeCacheRoot = new File(fileLocator.getDataRoot());
 		boolean success = storeCacheRoot.delete();

@@ -45,18 +45,21 @@ public class ForexiteCandleWeekLoader {
 		
 		for(int i=0; i<6; i++) {
 			String url = locator.generateUrl(instrument, startDate.plusDays(i), period);
-			byte[] zippedFile = downloader.download(url);
-			String data = new String(ZipUtil.unzipBytes(zippedFile));
-			String[] lines = data.split("\n");
-			for(String line : lines) {
-				if(line.startsWith(instrument.toString())) {
-					CandleDataPoint candle = reader.line(line, 0);
-					cw.setCandle(candle);
+			byte[] downloadedData = downloader.download(url);
+			if(downloadedData.length > 0) {
+				String data = new String(ZipUtil.unzipBytes(downloadedData));
+				String[] lines = data.split("\n");
+				for(String line : lines) {
+					if(line.startsWith(instrument.toString())) {
+						CandleDataPoint candle = reader.line(line, 0);
+						cw.setCandle(candle);
+					}
 				}
-			}
+			} 
 		}
 		
-		cw.fillGaps();		
+		cw.fillGaps();	 
+		
 		return cw;
 	}
 }

@@ -183,7 +183,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 				
 				// check the report and add if interesting
 				final OrderBookReport report = new OrderBookReport(test.getOrderBook());
-				if((report.getWinPercentage() > 66 && report.getBalance() > 0.0) || (report.getLossPercentage() > 75)) {
+				if((report.getWinPercentage() > 53 && report.getBalance() > 0.0)) {
 					SwingUtilities.invokeLater(new Runnable() {
 						public void run() {
 							view.getReportModel().addRow(new OptimiserReportRow(test.getId(), report, map));
