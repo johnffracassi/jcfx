@@ -1,6 +1,6 @@
 package com.jeff.fx.common;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.joda.time.LocalDate;
@@ -14,7 +14,7 @@ public class CandleCollection {
 	private LocalDate end;
 	
 	public CandleCollection() {
-		weeks = new HashMap<LocalDate, CandleWeek>();
+		weeks = new LinkedHashMap<LocalDate, CandleWeek>();
 	}
 
 	public CandleCollection(CandleWeek cw) {
@@ -48,5 +48,21 @@ public class CandleCollection {
 
 	public LocalDate getEnd() {
 		return end;
+	}
+
+	public int getCandleCount() {
+		int count = 0;
+		for(CandleWeek cw : weeks.values()) {
+			count += cw.getCandleCount();
+		}
+		return count;
+	}
+
+	public int getWeekCount() {
+		return weeks.size();
+	}
+
+	public CandleWeek getCandleWeek(int currentWeek) {
+		return weeks.get(start.plusDays(7*currentWeek));
 	}
 }

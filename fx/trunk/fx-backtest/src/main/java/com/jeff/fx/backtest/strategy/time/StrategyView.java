@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXPanel;
 
 import com.jeff.fx.backtest.AppCtx;
+import com.jeff.fx.backtest.dataviewer.CandleDataController;
 import com.jeff.fx.backtest.engine.OrderBook;
 import com.jeff.fx.backtest.strategy.StrategyPropertyChangeListener;
 import com.jeff.fx.backtest.strategy.optimiser.OptimiserController;
@@ -26,6 +27,7 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 	private TimeStrategyChartController chart = new TimeStrategyChartController();
 	private OptimiserController optimiser = new OptimiserController(this);
 	private TimeStrategyConfigView config = null;
+	private CandleDataController dataDisplay = new CandleDataController();
 	private CandleCollection candles = new CandleCollection();
 	
 	public StrategyView() {
@@ -42,6 +44,7 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 		tabbedPane.add(chart.getView(), "Chart View");
 		tabbedPane.add(orderBook.getView(), "Order Book");
 		tabbedPane.add(optimiser.getView(), "Optimiser");
+		tabbedPane.add(dataDisplay.getView(), "Data");
 
 		// add the config panel at the bottom of the screen
 		config = new TimeStrategyConfigView(this);
@@ -60,6 +63,7 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 				try {
 					candles = AppCtx.getDataManager().getCandles();
 					optimiser.setCandles(candles);
+					dataDisplay.setCandles(candles);
 				} catch(Exception ex) {
 					log.error("Error getting candles", ex);
 				}
