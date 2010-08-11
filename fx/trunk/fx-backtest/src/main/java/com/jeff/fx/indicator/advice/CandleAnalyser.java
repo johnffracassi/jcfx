@@ -7,7 +7,6 @@ import static java.lang.Math.min;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.joda.time.LocalDate;
@@ -16,18 +15,19 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
+import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.FXDataRequest;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.datastore.DataStoreImpl;
+import com.jeff.fx.datastore.CandleDataStore;
 
 @Component
 public class CandleAnalyser 
 {
 	@Autowired
-	private DataStoreImpl dm;
+	private CandleDataStore dm;
 	
 	public static void main(String[] args) {
 		try {
@@ -41,13 +41,13 @@ public class CandleAnalyser
 	
 	public void run() throws Exception {
 		
-		List<CandleDataPoint> candles = dm.loadCandles(new FXDataRequest(FXDataSource.Forexite, Instrument.AUDUSD, new LocalDate(2010, 04, 28), Period.FifteenMin)).getData();
+		CandleCollection candles = dm.loadCandles(new FXDataRequest(FXDataSource.Forexite, Instrument.AUDUSD, new LocalDate(2010, 04, 28), Period.FifteenMin)).getCandles();
 		
 		Map<String,Integer> counts = new HashMap<String, Integer>();
 		
 		CandleDataPoint[] candleArray = candles.toArray(new CandleDataPoint[candles.size()]);
-		for(int i=1; i < candleArray.length; i++)
-		{
+		for(int i=1; i < candleArray.length; i++) {
+			
 			String key = generateFingerprint(candleArray[i-1]) + generateFingerprint(candleArray[i]);
 			
 			if(counts.get(key) == null)
