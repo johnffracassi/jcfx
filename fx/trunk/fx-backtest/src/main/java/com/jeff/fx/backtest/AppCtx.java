@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.prefs.Preferences;
 
+import javax.swing.JOptionPane;
+
 import org.jfree.util.Log;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
@@ -55,8 +57,10 @@ public class AppCtx {
 		if(tempRegister.containsKey(key)) {
 			return (Integer)tempRegister.get(key);
 		} else {
-			Log.info("uh oh, can't find int " + key);
-			return 0;
+			String valueStr = JOptionPane.showInputDialog(null, "Enter value for " + key);
+			int value = new Integer(valueStr);
+			set(key, value);
+			return getInt(key);
 		}
 	}
 	
@@ -92,6 +96,22 @@ public class AppCtx {
 		} else {
 			return ISODateTimeFormat.dateParser().parseDateTime(dateStr).toLocalDate();
 		}
+	}
+	
+	public static int retrieveInt(String key) {
+		try {
+			int val = prefs.getInt(key, Integer.MIN_VALUE);
+			
+			if(val != Integer.MIN_VALUE) {
+				return val;
+			}
+		} catch(Exception ex) {
+		} 
+	
+		String valueStr = JOptionPane.showInputDialog(null, "Enter value for " + key);
+		int value = new Integer(valueStr);
+		prefs.putInt(key, value);
+		return value;
 	}
 	
 	public static void register(Class<? extends FXActionEvent> c, FXActionEventListener listener) {

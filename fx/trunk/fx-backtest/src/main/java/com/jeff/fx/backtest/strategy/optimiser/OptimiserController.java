@@ -1,4 +1,4 @@
-package com.jeff.fx.backtest.strategy.time;
+package com.jeff.fx.backtest.strategy.optimiser;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +7,8 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.SwingWorker;
 
+import com.jeff.fx.backtest.strategy.MultiThreadedExecutor;
+import com.jeff.fx.backtest.strategy.time.StrategyView;
 import com.jeff.fx.common.CandleCollection;
 
 public class OptimiserController {

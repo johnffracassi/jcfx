@@ -1,4 +1,4 @@
-package com.jeff.fx.backtest.strategy.time;
+package com.jeff.fx.backtest.strategy.optimiser;
 
 public abstract class OptimiserParameter<T,S> {
 	

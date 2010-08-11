@@ -13,6 +13,8 @@ import org.jdesktop.swingx.JXPanel;
 import com.jeff.fx.backtest.AppCtx;
 import com.jeff.fx.backtest.engine.OrderBook;
 import com.jeff.fx.backtest.strategy.StrategyPropertyChangeListener;
+import com.jeff.fx.backtest.strategy.optimiser.OptimiserController;
+import com.jeff.fx.backtest.strategy.orderbook.OrderBookController;
 import com.jeff.fx.common.CandleCollection;
 
 @SuppressWarnings("serial")

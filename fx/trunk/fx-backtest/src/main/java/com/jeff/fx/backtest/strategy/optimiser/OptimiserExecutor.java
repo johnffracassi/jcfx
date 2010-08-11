@@ -1,4 +1,4 @@
-package com.jeff.fx.backtest.strategy.time;
+package com.jeff.fx.backtest.strategy.optimiser;
 
 import com.jeff.fx.common.CandleCollection;
 

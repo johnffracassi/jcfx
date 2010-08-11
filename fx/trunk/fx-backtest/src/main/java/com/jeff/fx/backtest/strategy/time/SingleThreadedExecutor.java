@@ -7,6 +7,11 @@ import java.util.Map;
 import javax.swing.SwingUtilities;
 
 import com.jeff.fx.backtest.engine.OrderBookReport;
+import com.jeff.fx.backtest.strategy.optimiser.OptimiserExecutor;
+import com.jeff.fx.backtest.strategy.optimiser.OptimiserParameter;
+import com.jeff.fx.backtest.strategy.optimiser.OptimiserReportRow;
+import com.jeff.fx.backtest.strategy.optimiser.OptimiserView;
+import com.jeff.fx.backtest.strategy.optimiser.Permutator;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.TimeOfWeek;
 

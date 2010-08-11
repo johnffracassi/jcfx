@@ -1,4 +1,4 @@
-package com.jeff.fx.backtest.strategy.time;
+package com.jeff.fx.backtest.strategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +7,14 @@ import java.util.Map;
 
 import javax.swing.SwingUtilities;
 
+import com.jeff.fx.backtest.AppCtx;
 import com.jeff.fx.backtest.engine.OrderBookReport;
+import com.jeff.fx.backtest.strategy.optimiser.OptimiserExecutor;
+import com.jeff.fx.backtest.strategy.optimiser.OptimiserParameter;
+import com.jeff.fx.backtest.strategy.optimiser.OptimiserReportRow;
+import com.jeff.fx.backtest.strategy.optimiser.OptimiserView;
+import com.jeff.fx.backtest.strategy.optimiser.Permutator;
+import com.jeff.fx.backtest.strategy.time.TimeStrategy;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.TimeOfWeek;
 
@@ -34,7 +41,8 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		view.getLblCompleted().setText("Completed: 0");
 		
 		// execute the tests asynchronously
-		Manager manager = new Manager(2, candles, permutator.getPermutationCount());
+		int threadCount = AppCtx.retrieveInt("multiThreadExecutor.threads");
+		Manager manager = new Manager(threadCount, candles, permutator.getPermutationCount());
 		manager.run();
 	}
 
