@@ -2,12 +2,14 @@ package com.jeff.fx.common;
 
 import java.io.Serializable;
 
+import org.apache.log4j.Logger;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 public class CandleWeek implements Serializable {
 	
-	private static final long serialVersionUID = 100000001l;
+	private static Logger log = Logger.getLogger(CandleWeek.class);
+	private static final long serialVersionUID = 12416234512345l;
 
 	private LocalDate date;
 	private FXDataSource dataSource;
@@ -43,13 +45,48 @@ public class CandleWeek implements Serializable {
 		volumes = new int[2][periodsInWeek];
 	}
 	
-	public CandleDataPoint findNextLowBelowPrice(TimeOfWeek from, TimeOfWeek to, float targetPrice, boolean useBuyPrice) {
+	public void fillGaps() {
+		for(int i=1; i<buy[OPEN].length-1; i++) {
+			
+			// if we have an empty candle...
+			if(buy[OPEN][i] == 0.0) {
+				
+				// if there are 2 surrounding candles
+				if(buy[OPEN][i-1] > 0 && buy[OPEN][i+1] > 0) {
+					buy[OPEN][i] = buy[CLOSE][i-1];
+					buy[CLOSE][i] = buy[OPEN][i+1];
+					buy[HIGH][i] = Math.max(buy[OPEN][i], buy[CLOSE][i]);
+					buy[LOW][i] = Math.min(buy[OPEN][i], buy[CLOSE][i]);
+					sell[OPEN][i] = sell[CLOSE][i-1];
+					sell[CLOSE][i] = sell[OPEN][i+1];
+					sell[HIGH][i] = Math.max(sell[OPEN][i], sell[CLOSE][i]);
+					sell[LOW][i] = Math.min(sell[OPEN][i], sell[CLOSE][i]);
+					volumes[0][i] = 0;
+					volumes[1][i] = 0;
+				} // copy forward if the following candle is also null
+				else if(buy[OPEN][i-1] > 0 && buy[OPEN][i+1] == 0) {
+					buy[OPEN][i] = buy[CLOSE][i-1];
+					buy[CLOSE][i] = buy[OPEN][i];
+					buy[HIGH][i] = buy[OPEN][i];
+					buy[LOW][i] = buy[OPEN][i];
+					sell[OPEN][i] = sell[CLOSE][i-1];
+					sell[CLOSE][i] = sell[OPEN][i];
+					sell[HIGH][i] = sell[OPEN][i];
+					sell[LOW][i] = sell[OPEN][i];
+					volumes[0][i] = 0;
+					volumes[1][i] = 0;
+				}
+			}
+		}
+	}
+	
+	public CandleDataPoint findNextLowBelowPrice(TimeOfWeek from, TimeOfWeek to, float targetPrice, OfferSide offerSide) {
 		
 		int startIdx = from.periodOfWeek(this.period) - this.startIdx;
 		int endIdx = (to == null ? buy[LOW].length : (to.periodOfWeek(this.period) - this.startIdx));
 		
 		for(int idx=startIdx; idx<endIdx; idx++) {
-			float price = useBuyPrice ? buy[LOW][idx] : sell[LOW][idx];
+			float price = (offerSide == OfferSide.Ask) ? sell[LOW][idx] : buy[LOW][idx];
 			if(price <= targetPrice) {
 				return getCandle(idx);
 			}
@@ -58,13 +95,13 @@ public class CandleWeek implements Serializable {
 		return null;
 	}
 	
-	public CandleDataPoint findNextHighAbovePrice(TimeOfWeek from, TimeOfWeek to, float targetPrice, boolean useBuyPrice) {
+	public CandleDataPoint findNextHighAbovePrice(TimeOfWeek from, TimeOfWeek to, float targetPrice, OfferSide offerSide) {
 		
 		int startIdx = from.periodOfWeek(this.period) - this.startIdx;
 		int endIdx = (to == null ? buy[LOW].length : (to.periodOfWeek(this.period) - this.startIdx));
 		
 		for(int idx=startIdx; idx<endIdx; idx++) {
-			float price = useBuyPrice ? buy[HIGH][idx] : sell[HIGH][idx];
+			float price = (offerSide == OfferSide.Ask) ? sell[HIGH][idx] : buy[HIGH][idx];
 			if(price >= targetPrice) {
 				return getCandle(idx);
 			}
@@ -134,19 +171,19 @@ public class CandleWeek implements Serializable {
 		int idx = time.periodOfWeek(candle.getPeriod()) - startIdx;
 
 		if(idx < 0 || idx > endIdx - startIdx || idx >= buy[0].length) {
-			System.out.println("INVALID: #" + idx + "/" + buy[0].length + " = " + candle);
+			log.error("INVALID: #" + idx + "/" + buy[0].length + " = " + candle);
+		} else {
+			buy[0][idx] = (float)candle.getBuyOpen();
+			buy[1][idx] = (float)candle.getBuyHigh();
+			buy[2][idx] = (float)candle.getBuyLow();
+			buy[3][idx] = (float)candle.getBuyClose();
+			sell[0][idx] = (float)candle.getSellOpen();
+			sell[1][idx] = (float)candle.getSellHigh();
+			sell[2][idx] = (float)candle.getSellLow();
+			sell[3][idx] = (float)candle.getSellClose();
+			volumes[0][idx] = (int)candle.getBuyVolume();
+			volumes[1][idx] = (int)candle.getSellVolume();
 		}
-		
-		buy[0][idx] = (float)candle.getBuyOpen();
-		buy[1][idx] = (float)candle.getBuyHigh();
-		buy[2][idx] = (float)candle.getBuyLow();
-		buy[3][idx] = (float)candle.getBuyClose();
-		sell[0][idx] = (float)candle.getSellOpen();
-		sell[1][idx] = (float)candle.getSellHigh();
-		sell[2][idx] = (float)candle.getSellLow();
-		sell[3][idx] = (float)candle.getSellClose();
-		volumes[0][idx] = (int)candle.getBuyVolume();
-		volumes[1][idx] = (int)candle.getSellVolume();
 	}
 	
 	/**

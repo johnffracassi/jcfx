@@ -35,6 +35,7 @@ public class BackTestApp {
 	}
 
 	private void run() {
+		
 		log.info("Starting application");
 		
 		try {
@@ -43,10 +44,12 @@ public class BackTestApp {
 			e.printStackTrace();
 		}
 		
+		log.info("Building application frame");
 		frame = new BackTestFrame();
 		frame.init();
 		frame.setVisible(true);
 		
+		log.info("Registering event listeners");
 		AppCtx.register(NewCandleChartEvent.class, new FXActionEventListener() {
 			public void event(com.jeff.fx.backtest.FXActionEvent ev) {
 				try {
@@ -68,6 +71,8 @@ public class BackTestApp {
 				tsv.initialise();
 			}
 		});
+		
+		log.info("Application initialised");
 	}
 }
 

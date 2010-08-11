@@ -34,7 +34,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		view.getLblCompleted().setText("Completed: 0");
 		
 		// execute the tests asynchronously
-		Manager manager = new Manager(4, candles, permutator.getPermutationCount());
+		Manager manager = new Manager(2, candles, permutator.getPermutationCount());
 		manager.run();
 	}
 
@@ -165,16 +165,17 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 				map.put("takeProfit", values[1]);
 				map.put("open", new TimeOfWeek((Integer)values[2]));
 				map.put("close", new TimeOfWeek((Integer)values[3]));
+				map.put("offerSide", values[4]);
 				
 				// build the test
 				final TimeStrategy test = new TimeStrategy(idx, map);
-				if(test.validate()) {
+				if(test.runTest()) {
 					test.execute(candles);
 				}
 				
 				// check the report and add if interesting
 				final OrderBookReport report = new OrderBookReport(test.getOrderBook());
-				if(report.getWinPercentage() > 66.667 && report.getBalance() > 0.0) {
+				if((report.getWinPercentage() > 66 && report.getBalance() > 0.0) || (report.getLossPercentage() > 75)) {
 					SwingUtilities.invokeLater(new Runnable() {
 						public void run() {
 							view.getReportModel().addRow(new OptimiserReportRow(test.getId(), report, map));

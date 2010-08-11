@@ -15,8 +15,12 @@ public class ProgressMonitor {
 				instance.setMaximum(progress.getSteps());
 				instance.setProgress(progress.getProgress());
 				instance.setMessage(String.format("Loading data for day %d of %d (%.1f%%)", progress.getProgress(), progress.getSteps(), progress.getPercentage()));		
-				instance.setVisible(progress.getProgress() < progress.getSteps());
+				instance.setVisible(true);
 			}
 		});
+	}
+
+	public static void complete() {
+		instance.setVisible(false);
 	}
 }
