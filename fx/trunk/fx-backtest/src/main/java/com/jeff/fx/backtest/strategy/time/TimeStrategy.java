@@ -59,6 +59,10 @@ public class TimeStrategy extends AbstractStrategy {
 		CandleDataPoint openCandle = cw.getCandle(open);
 		CandleDataPoint closeCandle = cw.getCandle(close);
 		
+		if(openCandle == null || closeCandle == null) {
+			return;
+		}
+		
 		// create and lodge the order
 		BTOrder order = new BTOrder();
 		order.setOfferSide(offerSide);

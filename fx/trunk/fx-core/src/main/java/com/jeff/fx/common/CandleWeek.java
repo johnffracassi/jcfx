@@ -1,6 +1,8 @@
 package com.jeff.fx.common;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.joda.time.LocalDate;
@@ -46,38 +48,67 @@ public class CandleWeek implements Serializable {
 	}
 	
 	public void fillGaps() {
+		
+		// fill in the gaps
 		for(int i=1; i<buy[OPEN].length-1; i++) {
 			
 			// if we have an empty candle...
 			if(buy[OPEN][i] == 0.0) {
-				
-				// if there are 2 surrounding candles
-				if(buy[OPEN][i-1] > 0 && buy[OPEN][i+1] > 0) {
-					buy[OPEN][i] = buy[CLOSE][i-1];
-					buy[CLOSE][i] = buy[OPEN][i+1];
-					buy[HIGH][i] = Math.max(buy[OPEN][i], buy[CLOSE][i]);
-					buy[LOW][i] = Math.min(buy[OPEN][i], buy[CLOSE][i]);
-					sell[OPEN][i] = sell[CLOSE][i-1];
-					sell[CLOSE][i] = sell[OPEN][i+1];
-					sell[HIGH][i] = Math.max(sell[OPEN][i], sell[CLOSE][i]);
-					sell[LOW][i] = Math.min(sell[OPEN][i], sell[CLOSE][i]);
-					volumes[0][i] = 0;
-					volumes[1][i] = 0;
-				} // copy forward if the following candle is also null
-				else if(buy[OPEN][i-1] > 0 && buy[OPEN][i+1] == 0) {
-					buy[OPEN][i] = buy[CLOSE][i-1];
-					buy[CLOSE][i] = buy[OPEN][i];
-					buy[HIGH][i] = buy[OPEN][i];
-					buy[LOW][i] = buy[OPEN][i];
-					sell[OPEN][i] = sell[CLOSE][i-1];
-					sell[CLOSE][i] = sell[OPEN][i];
-					sell[HIGH][i] = sell[OPEN][i];
-					sell[LOW][i] = sell[OPEN][i];
-					volumes[0][i] = 0;
-					volumes[1][i] = 0;
+				if(!isEmptyCandle(i-1) && !isEmptyCandle(i+1)) {
+					// if there are 2 populated surrounding candles
+					merge(i, i-1, i+1);
+				} else if(!isEmptyCandle(i-1) && isEmptyCandle(i+1) && checkGapSize(i) < 5) {
+					// copy forward (up to 5 candles) if the following candle is also null
+					copyForward(i, i-1);
 				}
 			}
 		}
+	}
+	
+	private void merge(int dest, int srcOpen, int srcClose) {
+		buy[OPEN][dest] = buy[CLOSE][srcOpen];
+		buy[CLOSE][dest] = buy[OPEN][srcClose];
+		buy[HIGH][dest] = Math.max(buy[OPEN][dest], buy[CLOSE][dest]);
+		buy[LOW][dest] = Math.min(buy[OPEN][dest], buy[CLOSE][dest]);
+		sell[OPEN][dest] = sell[CLOSE][srcOpen];
+		sell[CLOSE][dest] = sell[OPEN][srcClose];
+		sell[HIGH][dest] = Math.max(sell[OPEN][dest], sell[CLOSE][dest]);
+		sell[LOW][dest] = Math.min(sell[OPEN][dest], sell[CLOSE][dest]);
+		volumes[0][dest] = 0;
+		volumes[1][dest] = 0;
+	}
+	
+	private void copyForward(int dest, int src) {
+		buy[OPEN][dest] = buy[CLOSE][src];
+		buy[CLOSE][dest] = buy[OPEN][dest];
+		buy[HIGH][dest] = buy[OPEN][dest];
+		buy[LOW][dest] = buy[OPEN][dest];
+		sell[OPEN][dest] = sell[CLOSE][src];
+		sell[CLOSE][dest] = sell[OPEN][dest];
+		sell[HIGH][dest] = sell[OPEN][dest];
+		sell[LOW][dest] = sell[OPEN][dest];
+		volumes[0][dest] = 0;
+		volumes[1][dest] = 0;
+	}
+	
+	private int checkGapSize(int idx) {
+		if(!isEmptyCandle(idx)) {
+			return 0;
+		} else {
+			int count = 0;
+			while(isEmptyCandle(idx) && idx<buy[OPEN].length) {
+				idx++;
+				count++;
+			}
+			return count;
+		}
+	}
+	
+	private boolean isEmptyCandle(int idx) {
+		if(idx < 0 || idx >= buy[OPEN].length)
+			return true;
+		else 
+			return (buy[OPEN][idx] == 0);
 	}
 	
 	public CandleDataPoint findNextLowBelowPrice(TimeOfWeek from, TimeOfWeek to, float targetPrice, OfferSide offerSide) {
@@ -162,7 +193,12 @@ public class CandleWeek implements Serializable {
 	public CandleDataPoint getCandle(TimeOfWeek time) {
 		
 		int idx = time.periodOfWeek(period) - startIdx;
-		return getCandle(idx);
+		
+		if(isEmptyCandle(idx)) {
+			return null;
+		} else {
+			return getCandle(idx);
+		}
 	}
 	
 	public void setCandle(CandleDataPoint candle) {
