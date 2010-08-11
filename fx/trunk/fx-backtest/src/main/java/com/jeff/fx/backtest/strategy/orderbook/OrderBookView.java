@@ -8,9 +8,9 @@ import javax.swing.JScrollPane;
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTable;
 
-import com.jeff.fx.backtest.strategy.LocalDateTimeCellRenderer;
-import com.jeff.fx.backtest.strategy.PriceCellRenderer;
-import com.jeff.fx.backtest.strategy.ProfitCellRenderer;
+import com.jeff.fx.gui.LocalDateTimeCellRenderer;
+import com.jeff.fx.gui.PriceCellRenderer;
+import com.jeff.fx.gui.ProfitCellRenderer;
 
 import javax.swing.ScrollPaneConstants;
 

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.jeff.fx.backtest.chart.CandleChart;
 import com.jeff.fx.backtest.chart.NewCandleChartEvent;
-import com.jeff.fx.backtest.strategy.NewTimeStrategyChartEvent;
+import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartEvent;
 import com.jeff.fx.backtest.strategy.time.StrategyView;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.Instrument;

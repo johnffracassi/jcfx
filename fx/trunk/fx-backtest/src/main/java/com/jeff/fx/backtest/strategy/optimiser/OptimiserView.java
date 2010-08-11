@@ -17,8 +17,8 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXTable;
 
 import com.jeff.fx.backtest.GUIUtil;
-import com.jeff.fx.backtest.strategy.PriceCellRenderer;
-import com.jeff.fx.backtest.strategy.ProfitCellRenderer;
+import com.jeff.fx.gui.PriceCellRenderer;
+import com.jeff.fx.gui.ProfitCellRenderer;
 
 @SuppressWarnings("serial")
 public class OptimiserView extends JPanel {

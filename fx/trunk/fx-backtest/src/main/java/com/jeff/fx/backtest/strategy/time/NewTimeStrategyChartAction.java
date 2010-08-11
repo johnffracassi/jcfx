@@ -1,4 +1,4 @@
-package com.jeff.fx.backtest.strategy;
+package com.jeff.fx.backtest.strategy.time;
 
 import java.awt.event.ActionEvent;
 

@@ -1,4 +1,4 @@
-package com.jeff.fx.backtest.strategy;
+package com.jeff.fx.backtest.strategy.time;
 
 import com.jeff.fx.backtest.FXActionEvent;
 
