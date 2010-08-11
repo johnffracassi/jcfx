@@ -14,6 +14,7 @@ public class DateUtil
 	private static SimpleDateFormat hourDf = new SimpleDateFormat("H");
 	
 	public static String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+	public static String[] DAYS = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 	
 	public static String format(LocalDateTime date)
 	{
@@ -51,5 +52,9 @@ public class DateUtil
 		time = time + (period.getInterval() - (time % interval));
 		
 		return new LocalDateTime(time);
+	}
+
+	public static String getDayOfWeek(int dayOfWeek) {
+		return DAYS[dayOfWeek % 7];
 	}
 }
