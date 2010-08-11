@@ -19,7 +19,7 @@ public class OrderBookReportTableModel extends DefaultTableModel {
 
 	public int getRowCount() {
 		if(report == null) return 0;
-		return 7;
+		return 9;
 	}
 
 	public Object getValueAt(int row, int col) {
@@ -28,7 +28,9 @@ public class OrderBookReportTableModel extends DefaultTableModel {
 		if(row == i++) return col == 0 ? "Balance" : String.format("%.0f", report.getBalance());
 		if(row == i++) return col == 0 ? "Peak/Drawdown" : String.format("%.0f / %.0f", report.getMaxBalance(), report.getMinBalance());
 		if(row == i++) return col == 0 ? "Wins" : String.format("%d (%.1f%%)", report.getWins(), report.getWinPercentage()); 
+		if(row == i++) return col == 0 ? "Take Profits" : String.format("%d", report.getTakeProfits()); 
 		if(row == i++) return col == 0 ? "Losses" : String.format("%d (%.1f%%)", report.getLosses(), report.getLossPercentage());
+		if(row == i++) return col == 0 ? "Stop Losses" : String.format("%d", report.getStopLosses());
 		if(row == i++) return col == 0 ? "Best" : String.format("%.0f", report.getHigh());
 		if(row == i++) return col == 0 ? "Worst" : String.format("%.0f", report.getLow());
 		return "";

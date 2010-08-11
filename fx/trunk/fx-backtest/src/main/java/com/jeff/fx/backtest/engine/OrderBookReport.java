@@ -10,6 +10,8 @@ public class OrderBookReport {
 	private double maxBalance = 0;
 	private int wins = 0;
 	private int losses = 0;
+	private int stops = 0;
+	private int takes = 0;
 	private double high = Double.MIN_VALUE;
 	private double low = Double.MAX_VALUE;
 	
@@ -34,6 +36,9 @@ public class OrderBookReport {
 			
 			if(profit > high) high = profit;
 			if(profit < low) low = profit;
+			
+			if(order.getCloseType() == OrderCloseType.StopLoss) stops ++;
+			if(order.getCloseType() == OrderCloseType.TakeProfit) takes ++;
 			
 			if(balance < minBalance) minBalance = balance;
 			if(balance > maxBalance) maxBalance = balance;
@@ -84,5 +89,13 @@ public class OrderBookReport {
 
 	public double getMaxBalance() {
 		return maxBalance;
+	}
+
+	public int getTakeProfits() {
+		return takes;
+	}
+	
+	public int getStopLosses() {
+		return stops;
 	}
 }
