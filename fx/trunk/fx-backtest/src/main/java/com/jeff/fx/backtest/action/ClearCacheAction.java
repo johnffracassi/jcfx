@@ -1,13 +1,20 @@
-package com.jeff.fx.action;
+package com.jeff.fx.backtest.action;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import com.jeff.fx.backtest.AppCtx;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.jeff.fx.backtest.BackTestDataManager;
 
 @SuppressWarnings("serial")
+@Component
 public class ClearCacheAction extends AbstractAction {
+	
+	@Autowired
+	private BackTestDataManager dataManager;
 	
 	public ClearCacheAction() {
 		putValue(SHORT_DESCRIPTION, "Clear Cache");
@@ -16,6 +23,6 @@ public class ClearCacheAction extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent ev) {
-		AppCtx.getDataManager().clearStoreCache();
+		dataManager.clearStoreCache();
 	}
 }

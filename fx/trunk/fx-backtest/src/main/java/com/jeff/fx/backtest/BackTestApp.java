@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.jeff.fx.backtest.chart.CandleChart;
 import com.jeff.fx.backtest.chart.NewCandleChartEvent;
-import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartEvent;
+import com.jeff.fx.backtest.strategy.NewTimeStrategyChartEvent;
 import com.jeff.fx.backtest.strategy.time.StrategyView;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.Instrument;
@@ -22,6 +22,7 @@ public class BackTestApp {
 	
 	private static Logger log = Logger.getLogger(BackTestApp.class);
 
+	@Autowired
 	private BackTestFrame frame;
 	
 	@Autowired
@@ -45,7 +46,6 @@ public class BackTestApp {
 		}
 		
 		log.info("Building application frame");
-		frame = new BackTestFrame();
 		frame.init();
 		frame.setVisible(true);
 		

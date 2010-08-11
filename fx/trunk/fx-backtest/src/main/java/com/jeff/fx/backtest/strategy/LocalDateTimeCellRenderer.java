@@ -1,4 +1,4 @@
-package com.jeff.fx.backtest.strategy.time;
+package com.jeff.fx.backtest.strategy;
 
 import javax.swing.table.DefaultTableCellRenderer;
 

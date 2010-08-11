@@ -10,7 +10,6 @@ import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.JXLabel;
 import org.jdesktop.swingx.JXPanel;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 
 import com.jeff.fx.backtest.chart.NewCandleChartAction;
 import com.jeff.fx.common.FXDataSource;

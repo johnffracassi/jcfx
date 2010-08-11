@@ -1,4 +1,4 @@
-package com.jeff.fx.backtest.strategy.time;
+package com.jeff.fx.backtest.strategy.orderbook;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -7,6 +7,11 @@ import javax.swing.JScrollPane;
 
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTable;
+
+import com.jeff.fx.backtest.strategy.LocalDateTimeCellRenderer;
+import com.jeff.fx.backtest.strategy.PriceCellRenderer;
+import com.jeff.fx.backtest.strategy.ProfitCellRenderer;
+
 import javax.swing.ScrollPaneConstants;
 
 @SuppressWarnings("serial")

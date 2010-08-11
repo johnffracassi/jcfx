@@ -1,5 +1,6 @@
-package com.jeff.fx.backtest.strategy.time;
+package com.jeff.fx.backtest.strategy;
 
+import com.jeff.fx.backtest.strategy.optimiser.OptimiserParameter;
 import com.jeff.fx.common.OfferSide;
 
 public class OPOfferSide extends OptimiserParameter<OfferSide,Integer> {

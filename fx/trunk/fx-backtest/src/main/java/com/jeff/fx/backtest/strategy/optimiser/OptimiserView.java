@@ -1,4 +1,4 @@
-package com.jeff.fx.backtest.strategy.time;
+package com.jeff.fx.backtest.strategy.optimiser;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -17,6 +17,8 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXTable;
 
 import com.jeff.fx.backtest.GUIUtil;
+import com.jeff.fx.backtest.strategy.PriceCellRenderer;
+import com.jeff.fx.backtest.strategy.ProfitCellRenderer;
 
 @SuppressWarnings("serial")
 public class OptimiserView extends JPanel {

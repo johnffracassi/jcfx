@@ -1,4 +1,6 @@
-package com.jeff.fx.backtest.strategy.time;
+package com.jeff.fx.backtest.strategy;
+
+import com.jeff.fx.backtest.strategy.optimiser.OptimiserParameter;
 
 public class OPDouble extends OptimiserParameter<Double,Double> {
 

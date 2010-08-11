@@ -5,7 +5,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
+import org.springframework.stereotype.Component;
+
 @SuppressWarnings("serial")
+@Component
 public class AboutAction extends AbstractAction {
 	
 	public AboutAction() {
