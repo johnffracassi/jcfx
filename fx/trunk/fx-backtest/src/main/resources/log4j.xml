@@ -20,7 +20,7 @@
     </appender>
     
     <logger name="com.jeff" additivity="false">
-        <level value="info"/> 
+        <level value="debug"/> 
 		<appender-ref ref="Console" />
     </logger>
     
@@ -30,7 +30,7 @@
     </logger>
 
     <logger name="com.jeff.fx.datastore" additivity="false">
-        <level value="error"/> 
+        <level value="debug"/> 
 		<appender-ref ref="Console" />
     </logger>
 
@@ -40,7 +40,7 @@
 	</logger>
 
     <logger name="com.jeff.fx.datasource" additivity="false">
-        <level value="error"/> 
+        <level value="debug"/> 
 		<appender-ref ref="Console" />
     </logger>
 

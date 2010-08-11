@@ -56,6 +56,7 @@ public class ForexiteCandleWeekLoader {
 			}
 		}
 		
+		cw.fillGaps();		
 		return cw;
 	}
 }

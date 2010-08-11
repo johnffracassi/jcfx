@@ -10,7 +10,6 @@ import com.jeff.fx.common.OfferSide;
 public abstract class AbstractStrategy {
 	
 	private int id = -1;
-
 	private OrderBook orderBook;
 
 	public AbstractStrategy(int id) {
@@ -18,16 +17,8 @@ public abstract class AbstractStrategy {
 		orderBook = new OrderBook();
 	}
 	
-	/**
-	 * Process the next candle
-	 */
-	public abstract void candle(CandleDataPoint candle);
-	
-	/**
-	 * Should the test be run?
-	 * @return
-	 */
-	public abstract boolean validate();
+	public void candle(CandleDataPoint candle) {}
+	public abstract boolean runTest();
 	
 	/**
 	 * Execute the test with all strategies

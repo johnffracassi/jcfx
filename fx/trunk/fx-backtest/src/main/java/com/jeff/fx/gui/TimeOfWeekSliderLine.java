@@ -31,11 +31,11 @@ public class TimeOfWeekSliderLine extends JXPanel {
 		
 		final JXLabel lblLabel = new JXLabel(label);
 		final JXLabel lblValue = new JXLabel(String.valueOf(new TimeOfWeek()));
-		slider = new JSlider(0, ticks);
+		slider = new JSlider(1320/multiplier, 8460/multiplier);
 
-		lblLabel.setPreferredSize(new Dimension(100, 20));
-		lblValue.setPreferredSize(new Dimension(100, 20));
-		slider.setPreferredSize(new Dimension(200, 25));
+		lblLabel.setPreferredSize(new Dimension(75, 20));
+		lblValue.setPreferredSize(new Dimension(75, 20));
+		slider.setPreferredSize(new Dimension(150, 25));
 		
 		slider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent ev) {

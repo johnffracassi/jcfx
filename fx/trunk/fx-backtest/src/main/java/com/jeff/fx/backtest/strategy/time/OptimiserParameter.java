@@ -7,6 +7,10 @@ public abstract class OptimiserParameter<T,S> {
 	private T end;
 	private S step;
 	
+	public abstract T fromString(String val);
+	public abstract int getStepCount();
+	public abstract T getValue(int step);
+	
 	public OptimiserParameter(String key, T start, T end, S step) {
 		super();
 		this.key = key;
@@ -15,10 +19,6 @@ public abstract class OptimiserParameter<T,S> {
 		this.step = step;
 	}
 
-	public abstract T fromString(String val);
-	public abstract int getStepCount();
-	public abstract T getValue(int step);
-	
 	public String getKey() {
 		return key;
 	}

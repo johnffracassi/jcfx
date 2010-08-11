@@ -13,6 +13,7 @@ import com.jeff.fx.common.FXDataRequest;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
+import com.jeff.fx.common.TimeOfWeek;
 
 @Component("storeValidator")
 public class StoreValidator {
@@ -21,25 +22,23 @@ public class StoreValidator {
 	private ForexiteCandleWeekLoader loader;
 
 	private FXDataSource dataSource = FXDataSource.Forexite;
-	private Instrument instrument = Instrument.AUDUSD;
+	private Instrument instrument = Instrument.EURGBP;
 	private Period period = Period.OneMin;
 	private LocalDate startDate = new LocalDate(2010, 7, 25);
 	private LocalDate endDate = new LocalDate();
 
 	public static void main(String[] args) throws Exception {
 		
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-cwl.xml");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-datastore.xml");
 		StoreValidator sv = (StoreValidator) ctx.getBean("storeValidator");
 		sv.run();
 	}
 	
 	public void run() {
-		for(int i=0; i<6; i++) {
-			validateDay(startDate.plusDays(i));
-		}
+		validateWeek(startDate);
 	}
 	
-	public void validateDay(LocalDate date) {
+	public void validateWeek(LocalDate date) {
 
 		FXDataRequest request = new FXDataRequest();
 		request.setDataSource(dataSource);
@@ -70,7 +69,9 @@ public class StoreValidator {
 					System.out.println("invalid instrument: " + candle);
 				} else if(candle.getDate().getMinuteOfHour() % candleSize != 0) {
 					System.out.println("invalid time: " + candle);
-				} else {		
+				} else if(candle.getBuyOpen() == 0) {
+					System.out.println("missing candle: " + (new TimeOfWeek(i)));
+				} else {
 					int minuteOfDay = (candle.getDate().getMillisOfDay() / 1000 / 60);
 					int periodOfDay = minuteOfDay / candleSize;
 					markers[periodOfDay] = true;

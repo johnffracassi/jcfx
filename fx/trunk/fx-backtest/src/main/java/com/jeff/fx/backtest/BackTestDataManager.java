@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.SwingWorker;
 
+import org.apache.log4j.Logger;
 import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,8 @@ import com.jeff.fx.datastore.DataStoreProgress;
 @Component
 public class BackTestDataManager {
 	
+	private static Logger log = Logger.getLogger(BackTestDataManager.class);
+
 	@Autowired
 	private CandleDataStore dataManager;
 	
@@ -35,12 +38,17 @@ public class BackTestDataManager {
 		
 		// run the data load in a new thread
 		DataLoaderWorker dlw = new DataLoaderWorker(request);
-		dlw.execute();
-		CandleDataResponse response = dlw.get();
+//		dlw.execute();
+//		CandleDataResponse response = dlw.get();
+		CandleDataResponse response = dlw.doInBackground();
 		
 		return response.getCandles();
 	}
 
+	public void clearStoreCache() {
+		dataManager.clearStoreCache();
+	}
+	
 	/**
 	 * Load dataset and monitor progress
 	 */
@@ -65,17 +73,23 @@ public class BackTestDataManager {
 			});
 		}
 		
+		protected void done() {
+			ProgressMonitor.complete();
+		}
+		
 		/**
 		 * load the data day by day
 		 */
-		protected CandleDataResponse doInBackground() throws Exception {
+		public CandleDataResponse doInBackground() throws Exception {
 			
 			CandleCollection data = new CandleCollection();
-			
 			for(int day = 0; day<dayCount; day+=7) {
 				FXDataRequest newReq = new FXDataRequest(request);
 				newReq.setDate(request.getDate().plusDays(day));
 				newReq.setEndDate(null);
+
+				log.debug("Loading candle data (" + day + "/" + dayCount + " = " + newReq.getDate() + ")");
+
 				CandleWeek cw = dataManager.loadCandlesForWeek(newReq);
 				data.putCandleWeek(cw);
 				firePropertyChange("day", day, day+1);

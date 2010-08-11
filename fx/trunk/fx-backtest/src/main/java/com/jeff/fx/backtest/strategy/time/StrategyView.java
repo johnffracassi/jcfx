@@ -2,7 +2,6 @@ package com.jeff.fx.backtest.strategy.time;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.Collections;
 import java.util.Map;
 
 import javax.swing.JTabbedPane;
@@ -15,7 +14,6 @@ import com.jeff.fx.backtest.AppCtx;
 import com.jeff.fx.backtest.engine.OrderBook;
 import com.jeff.fx.backtest.strategy.StrategyPropertyChangeListener;
 import com.jeff.fx.common.CandleCollection;
-import com.jeff.fx.common.CandleDataPoint;
 
 @SuppressWarnings("serial")
 public class StrategyView extends JXPanel implements StrategyPropertyChangeListener {
@@ -30,6 +28,8 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 	
 	public StrategyView() {
 
+		log.debug("building new StrategyView");
+		
 		setLayout(new BorderLayout());
 
 		// create tabs for chart & order book
@@ -52,6 +52,7 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 	}
 	
 	private void loadCandles() {
+		
 		new SwingWorker<Object,Object>() {
 			protected Object doInBackground() throws Exception {
 				try {

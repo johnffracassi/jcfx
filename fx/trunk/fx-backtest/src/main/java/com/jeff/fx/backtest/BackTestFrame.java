@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 
@@ -14,6 +15,7 @@ import org.jdesktop.swingx.JXFrame;
 import org.jdesktop.swingx.JXPanel;
 
 import com.jeff.fx.action.AboutAction;
+import com.jeff.fx.action.ClearCacheAction;
 import com.jeff.fx.action.ExitAction;
 import com.jeff.fx.backtest.chart.NewCandleChartAction;
 import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartAction;
@@ -55,12 +57,18 @@ public class BackTestFrame extends JXFrame {
 	private JMenuBar buildMenu() {
 		// Menu setup
 		JMenuBar menuBar = new JMenuBar();
+		
 		JMenu fileMenu = new JMenu("File");
+		fileMenu.add(new ClearCacheAction());
+		fileMenu.add(new JSeparator());
 		fileMenu.add(new ExitAction());		
+		
 		JMenu helpMenu = new JMenu("Help");
 		helpMenu.add(new AboutAction());
+		
 		menuBar.add(fileMenu);
 		menuBar.add(helpMenu);
+		
 		return menuBar;
 	}
 }
