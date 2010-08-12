@@ -3,13 +3,11 @@ package com.jeff.fx.backtest;
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
-import org.jfree.chart.ChartPanel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.jeff.fx.backtest.chart.CandleChart;
 import com.jeff.fx.backtest.chart.NewCandleChartEvent;
 import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartEvent;
 import com.jeff.fx.backtest.strategy.time.StrategyView;
@@ -29,9 +27,14 @@ public class BackTestApp {
 	private BackTestDataManager dataManager;
 	
 	public static void main(String[] args) {
+		log.info("Setting up Spring context");
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-*.xml");
+
+		log.info("Getting application bean from Spring context");
 		BackTestApp app = (BackTestApp)ctx.getBean("backTestApp");
+		
 		AppCtx.initialise(ctx);
+		
 		app.run();
 	}
 
