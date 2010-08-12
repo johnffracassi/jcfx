@@ -14,10 +14,10 @@ public class OptimiserParameterTableModel extends DefaultTableModel {
 	private List<OptimiserParameter> params = new ArrayList<OptimiserParameter>();
 	
 	public OptimiserParameterTableModel() {
-		addParameter(new OPInteger("stopLoss", 0, 300, 75));
-		addParameter(new OPInteger("takeProfit", 0, 300, 75));
-		addParameter(new OPInteger("open", 1320, 8460, 60));
-		addParameter(new OPInteger("close", 1320, 8460, 60));
+		addParameter(new OPInteger("stopLoss", 0, 300, 150));
+		addParameter(new OPInteger("takeProfit", 0, 300, 150));
+		addParameter(new OPInteger("open", 1320, 8460, 120));
+		addParameter(new OPInteger("close", 1320, 8460, 120));
 		addParameter(new OPOfferSide("offerSide"));
 	}
 	

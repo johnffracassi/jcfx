@@ -10,8 +10,8 @@ import com.jeff.fx.backtest.engine.OrderBookReport;
 @SuppressWarnings("serial")
 public class OptimiserReportTableModel extends DefaultTableModel {
 
-	private double winPercentageThreshold = 54;
-	private double priceThreshold = 500;
+	private double winPercentageThreshold = 50;
+	private double priceThreshold = 0;
 	private List<OptimiserReportRow> rows;
 
 	public OptimiserReportTableModel() {
@@ -29,7 +29,7 @@ public class OptimiserReportTableModel extends DefaultTableModel {
 		if(priceThreshold > 0 && report.getBalance() < priceThreshold) 
 			accept = false;
 		
-		if(winPercentageThreshold > 0 || report.getWinPercentage() < winPercentageThreshold)
+		if(winPercentageThreshold > 0 && report.getWinPercentage() < winPercentageThreshold)
 			accept = false;
 
 		return accept;

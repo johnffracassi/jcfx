@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JSlider;
+import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -33,9 +34,9 @@ public class TimeOfWeekSliderLine extends JXPanel {
 		final JXLabel lblValue = new JXLabel(String.valueOf(new TimeOfWeek()));
 		slider = new JSlider(1320/multiplier, 8460/multiplier);
 
-		lblLabel.setPreferredSize(new Dimension(75, 20));
-		lblValue.setPreferredSize(new Dimension(75, 20));
-		slider.setPreferredSize(new Dimension(150, 25));
+		lblLabel.setPreferredSize(new Dimension(60, 18));
+		lblValue.setPreferredSize(new Dimension(60, 18));
+		slider.setPreferredSize(new Dimension(150, 18));
 		
 		slider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent ev) {
@@ -74,6 +75,14 @@ public class TimeOfWeekSliderLine extends JXPanel {
 	}
 	
 	public static void main(String[] args) {
+		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.put("Slider.paintValue", false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		JFrame frame = new JFrame();
 		frame.setLayout(new VerticalFlowLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
