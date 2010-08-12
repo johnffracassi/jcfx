@@ -31,7 +31,7 @@ public class BackTestApp {
 	public static void main(String[] args) {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-*.xml");
 		BackTestApp app = (BackTestApp)ctx.getBean("backTestApp");
-		AppCtx.init(ctx);
+		AppCtx.initialise(ctx);
 		app.run();
 	}
 
@@ -51,11 +51,11 @@ public class BackTestApp {
 		frame.setVisible(true);
 		
 		log.info("Registering event listeners");
-		AppCtx.register(NewCandleChartEvent.class, new FXActionEventListener() {
+		AppCtx.registerEventListener(NewCandleChartEvent.class, new FXActionEventListener() {
 			public void event(com.jeff.fx.backtest.FXActionEvent ev) {
 				try {
-					Instrument instrument = Instrument.valueOf(AppCtx.retrieve("newChart.instrument"));
-					Period period = Period.valueOf(AppCtx.retrieve("newChart.period"));
+					Instrument instrument = Instrument.valueOf(AppCtx.getPersistent("newChart.instrument"));
+					Period period = Period.valueOf(AppCtx.getPersistent("newChart.period"));
 					CandleCollection candles = dataManager.getCandles();
 //					ChartPanel chart = CandleChart.createChart(instrument + " (" + period.key + ")", candles);
 //					frame.addMainPanel(chart, instrument + " (" + period.key + ")");
@@ -65,7 +65,7 @@ public class BackTestApp {
 			}
 		});
 		
-		AppCtx.register(NewTimeStrategyChartEvent.class, new FXActionEventListener() {
+		AppCtx.registerEventListener(NewTimeStrategyChartEvent.class, new FXActionEventListener() {
 			public void event(FXActionEvent ev) {
 				StrategyView tsv = new StrategyView();
 				frame.addMainPanel(tsv, "Time Strategy");

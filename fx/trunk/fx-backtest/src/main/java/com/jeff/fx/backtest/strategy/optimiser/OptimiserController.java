@@ -62,8 +62,8 @@ public class OptimiserController {
 		SwingWorker<Object,Object> worker = new SwingWorker<Object, Object>() {
 			protected Object doInBackground() throws Exception {
 				view.getReportModel().reset();
-				view.getReportModel().setPriceThreshold(AppCtx.retrieveInt("optimiser.threshold.balance"));
-				view.getReportModel().setWinPercentageThreshold(AppCtx.retrieveInt("optimiser.threshold.winPercentage"));
+				view.getReportModel().setPriceThreshold(AppCtx.getPersistentInt("optimiser.threshold.balance"));
+				view.getReportModel().setWinPercentageThreshold(AppCtx.getPersistentInt("optimiser.threshold.winPercentage"));
 				executor.run(candles, view);
 				return null;
 			}

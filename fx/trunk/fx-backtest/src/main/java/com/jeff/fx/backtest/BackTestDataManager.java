@@ -31,10 +31,10 @@ public class BackTestDataManager {
 	public CandleCollection getCandles() throws Exception {
 		
 		// build the data request from the user parameters
-		FXDataSource dataSource = FXDataSource.valueOf(AppCtx.retrieve("newChart.dataSource"));
-		Instrument instrument = Instrument.valueOf(AppCtx.retrieve("newChart.instrument"));
-		Period period = Period.valueOf(AppCtx.retrieve("newChart.period"));
-		FXDataRequest request = new FXDataRequest(dataSource, instrument, AppCtx.retrieveDate("newChart.startDate"), AppCtx.retrieveDate("newChart.endDate"), period);
+		FXDataSource dataSource = FXDataSource.valueOf(AppCtx.getPersistent("newChart.dataSource"));
+		Instrument instrument = Instrument.valueOf(AppCtx.getPersistent("newChart.instrument"));
+		Period period = Period.valueOf(AppCtx.getPersistent("newChart.period"));
+		FXDataRequest request = new FXDataRequest(dataSource, instrument, AppCtx.getPersistentDate("newChart.startDate"), AppCtx.getPersistentDate("newChart.endDate"), period);
 		
 		// run the data load in a new thread
 		DataLoaderWorker dlw = new DataLoaderWorker(request);

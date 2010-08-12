@@ -24,11 +24,11 @@ public class NewCandleChartAction extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent ev) {
-		Instrument instrument = Instrument.valueOf(AppCtx.retrieve("newChart.instrument"));
-		FXDataSource dataSource = FXDataSource.valueOf(AppCtx.retrieve("newChart.dataSource"));
-		Period period = Period.valueOf(AppCtx.retrieve("newChart.period"));
-		LocalDate startDate = AppCtx.retrieveDate("newChart.startDate");
-		LocalDate endDate = AppCtx.retrieveDate("newChart.endDate");
+		Instrument instrument = Instrument.valueOf(AppCtx.getPersistent("newChart.instrument"));
+		FXDataSource dataSource = FXDataSource.valueOf(AppCtx.getPersistent("newChart.dataSource"));
+		Period period = Period.valueOf(AppCtx.getPersistent("newChart.period"));
+		LocalDate startDate = AppCtx.getPersistentDate("newChart.startDate");
+		LocalDate endDate = AppCtx.getPersistentDate("newChart.endDate");
 		
 		NewCandleChartEvent nce = new NewCandleChartEvent(instrument, dataSource, period, startDate, endDate);
 		AppCtx.fireEvent(nce);

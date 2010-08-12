@@ -45,8 +45,8 @@ public class TimeOfWeekSliderLine extends JXPanel {
 				lblValue.setText(String.valueOf(time));
 
 				// set the value in the registry
-				AppCtx.set(key + ".dayOfWeek", time.getDayOfWeek());
-				AppCtx.set(key + ".time", time.getTime());
+				AppCtx.setSession(key + ".dayOfWeek", time.getDayOfWeek());
+				AppCtx.setSession(key + ".time", time.getTime());
 				
 				for(ChangeListener listener : listeners) {
 					listener.stateChanged(ev);

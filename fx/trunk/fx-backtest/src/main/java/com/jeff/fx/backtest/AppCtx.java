@@ -17,80 +17,98 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AppCtx {
+
+	/**
+	 * Persistent application values (stored in registry)
+	 */
+	private static Preferences persistentRegister;
+
+	/**
+	 * Application scope preferences (non-persistent)
+	 */
+	private static Map<String,Object> sessionRegister;
 	
-	private static Preferences prefs;
+	/**
+	 * Map event listeners to event types
+	 */
 	private static Map<Class<? extends FXActionEvent>,List<FXActionEventListener>> listeners;
-	private static Map<String,Object> tempRegister;
-	private static ApplicationContext spring;
 	
+	/**
+	 * Spring application context
+	 */
+	private static ApplicationContext springCtx;
+	
+	/**
+	 * Hold a reference to the data manager (shared/thread safe)
+	 */
 	private static BackTestDataManager dataManager;
 	
 	static {
-		prefs = Preferences.userRoot();
+		persistentRegister = Preferences.userRoot();
+		sessionRegister = new HashMap<String, Object>();
 		listeners = new HashMap<Class<? extends FXActionEvent>, List<FXActionEventListener>>();
-		tempRegister = new HashMap<String, Object>();
 	}
 
-	public static void init(ApplicationContext ctx) {
-		spring = ctx;
-		dataManager = (BackTestDataManager)spring.getBean("backTestDataManager");
+	public static void initialise(ApplicationContext ctx) {
+		springCtx = ctx;
+		dataManager = (BackTestDataManager)springCtx.getBean("backTestDataManager");
 	}
 	
 	public static BackTestDataManager getDataManager() {
 		return dataManager;
 	}
 	
-	public static double getDouble(String key) {
+	public static double getSessionDouble(String key) {
 		
-		Object result = tempRegister.get(key);
+		Object result = sessionRegister.get(key);
 		
 		if(result == null) {
 			return 0.0;
 		} else if(result instanceof Integer) {
-			return ((Integer)tempRegister.get(key)).doubleValue();
+			return ((Integer)sessionRegister.get(key)).doubleValue();
 		} else {
-			return (Double)tempRegister.get(key);
+			return (Double)sessionRegister.get(key);
 		}
 	}
 	
-	public static int getInt(String key) {
-		if(tempRegister.containsKey(key)) {
-			return (Integer)tempRegister.get(key);
+	public static int getSessionInt(String key) {
+		if(sessionRegister.containsKey(key)) {
+			return (Integer)sessionRegister.get(key);
 		} else {
 			String valueStr = JOptionPane.showInputDialog(null, "Enter value for " + key);
 			int value = new Integer(valueStr);
-			set(key, value);
-			return getInt(key);
+			setSession(key, value);
+			return getSessionInt(key);
 		}
 	}
 	
-	public static LocalTime getTime(String key) {
-		return (LocalTime)tempRegister.get(key);
+	public static LocalTime getSessionTime(String key) {
+		return (LocalTime)sessionRegister.get(key);
 	}
 	
-	public static LocalDate getDate(String key) {
-		return (LocalDate)tempRegister.get(key);
+	public static LocalDate getSessionDate(String key) {
+		return (LocalDate)sessionRegister.get(key);
 	}
 	
-	public static void set(String key, Object value) {
+	public static void setSession(String key, Object value) {
 		Log.debug("set value of " + key + " to " + value);
-		tempRegister.put(key, value);
+		sessionRegister.put(key, value);
 	}
 	
-	public static void save(String key, Object value) {
-		prefs.put(key, String.valueOf(value));
+	public static void setPersistent(String key, Object value) {
+		persistentRegister.put(key, String.valueOf(value));
 	}
 	
-	public static String retrieve(String key) {
-		return prefs.get(key, null);
+	public static String getPersistent(String key) {
+		return persistentRegister.get(key, null);
 	}
 	
-	public static void save(String key, LocalDate date) {
-		save(key, ISODateTimeFormat.date().print(date));
+	public static void setPersistent(String key, LocalDate date) {
+		setPersistent(key, ISODateTimeFormat.date().print(date));
 	}
 	
-	public static LocalDate retrieveDate(String key) {
-		String dateStr = prefs.get(key, null);
+	public static LocalDate getPersistentDate(String key) {
+		String dateStr = persistentRegister.get(key, null);
 		if(dateStr == null) {
 			return new LocalDate();
 		} else {
@@ -98,9 +116,9 @@ public class AppCtx {
 		}
 	}
 	
-	public static int retrieveInt(String key) {
+	public static int getPersistentInt(String key) {
 		try {
-			int val = prefs.getInt(key, Integer.MIN_VALUE);
+			int val = persistentRegister.getInt(key, Integer.MIN_VALUE);
 			
 			if(val != Integer.MIN_VALUE) {
 				return val;
@@ -110,11 +128,11 @@ public class AppCtx {
 	
 		String valueStr = JOptionPane.showInputDialog(null, "Enter value for " + key);
 		int value = new Integer(valueStr);
-		prefs.putInt(key, value);
+		persistentRegister.putInt(key, value);
 		return value;
 	}
 	
-	public static void register(Class<? extends FXActionEvent> c, FXActionEventListener listener) {
+	public static void registerEventListener(Class<? extends FXActionEvent> c, FXActionEventListener listener) {
 		if(listeners.containsKey(c)) {
 			listeners.get(c).add(listener);
 		} else {
