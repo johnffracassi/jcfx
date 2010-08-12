@@ -1,8 +1,6 @@
 package com.jeff.fx.common;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.joda.time.LocalDate;
@@ -47,6 +45,11 @@ public class CandleWeek implements Serializable {
 		volumes = new int[2][periodsInWeek];
 	}
 	
+	public int getCandleIndex(LocalDateTime ldt) {
+		TimeOfWeek tow = new TimeOfWeek(ldt);
+		return tow.periodOfWeek(period) - startIdx;
+	}
+	
 	public void fillGaps() {
 		
 		// fill in the gaps
@@ -57,7 +60,7 @@ public class CandleWeek implements Serializable {
 				if(!isEmptyCandle(i-1) && !isEmptyCandle(i+1)) {
 					// if there are 2 populated surrounding candles
 					merge(i, i-1, i+1);
-				} else if(!isEmptyCandle(i-1) && isEmptyCandle(i+1) && checkGapSize(i) < 5) {
+				} else if(!isEmptyCandle(i-1) && isEmptyCandle(i+1) && checkGapSize(i) < 15) {
 					// copy forward (up to 5 candles) if the following candle is also null
 					copyForward(i, i-1);
 				}
@@ -117,9 +120,11 @@ public class CandleWeek implements Serializable {
 		int endIdx = (to == null ? buy[LOW].length : (to.periodOfWeek(this.period) - this.startIdx));
 		
 		for(int idx=startIdx; idx<endIdx; idx++) {
-			float price = (offerSide == OfferSide.Ask) ? sell[LOW][idx] : buy[LOW][idx];
-			if(price <= targetPrice) {
-				return getCandle(idx);
+			if(!isEmptyCandle(idx)) {
+				float price = (offerSide == OfferSide.Ask) ? sell[LOW][idx] : buy[LOW][idx];
+				if(price <= targetPrice) {
+					return getCandle(idx);
+				}
 			}
 		}
 		

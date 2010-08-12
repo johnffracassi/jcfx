@@ -55,6 +55,10 @@ public class OrderBookView extends JXPanel {
 		add(GUIUtil.frame("Report", p2), BorderLayout.EAST);
 	}
 	
+	public JXTable getTblBook() {
+		return tblBook;
+	}
+	
 	public void update(OrderBookModel model) {
 		
 		bookTableModel.update(model.getOrderBook());

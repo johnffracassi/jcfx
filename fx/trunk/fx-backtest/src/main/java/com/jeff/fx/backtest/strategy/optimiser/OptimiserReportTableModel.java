@@ -5,9 +5,13 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
+import com.jeff.fx.backtest.engine.OrderBookReport;
+
 @SuppressWarnings("serial")
 public class OptimiserReportTableModel extends DefaultTableModel {
-	
+
+	private double winPercentageThreshold = 54;
+	private double priceThreshold = 500;
 	private List<OptimiserReportRow> rows;
 
 	public OptimiserReportTableModel() {
@@ -16,6 +20,19 @@ public class OptimiserReportTableModel extends DefaultTableModel {
 	
 	public OptimiserReportRow getRow(int idx) {
 		return rows.get(idx);
+	}
+	
+	public boolean accepts(OrderBookReport report) {
+
+		boolean accept = true;
+		
+		if(priceThreshold > 0 && report.getBalance() < priceThreshold) 
+			accept = false;
+		
+		if(winPercentageThreshold > 0 || report.getWinPercentage() < winPercentageThreshold)
+			accept = false;
+
+		return accept;
 	}
 	
 	public void reset() {
@@ -29,8 +46,11 @@ public class OptimiserReportTableModel extends DefaultTableModel {
 	}
 	
 	public void addRow(OptimiserReportRow row) {
-		rows.add(row);
-		fireTableRowsInserted(rows.size()-1, rows.size()-1);
+		
+		if(accepts(row.getBookReport())) {
+			rows.add(row);
+			fireTableRowsInserted(rows.size()-1, rows.size()-1);
+		}
 	}
 
 	public int getColumnCount() {
@@ -81,6 +101,22 @@ public class OptimiserReportTableModel extends DefaultTableModel {
 
 	public boolean isCellEditable(int row, int column) {
 		return false;
+	}
+	
+	public double getWinPercentageThreshold() {
+		return winPercentageThreshold;
+	}
+
+	public void setWinPercentageThreshold(double winPercentageThreshold) {
+		this.winPercentageThreshold = winPercentageThreshold;
+	}
+
+	public double getPriceThreshold() {
+		return priceThreshold;
+	}
+
+	public void setPriceThreshold(double priceThreshold) {
+		this.priceThreshold = priceThreshold;
 	}
 }
 

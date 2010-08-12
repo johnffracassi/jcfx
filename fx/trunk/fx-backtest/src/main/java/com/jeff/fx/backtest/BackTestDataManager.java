@@ -66,13 +66,15 @@ public class BackTestDataManager {
 			addPropertyChangeListener(new PropertyChangeListener() {
 				public void propertyChange(PropertyChangeEvent evt) {
 					if ("day".equals(evt.getPropertyName())) {
-						final int day = (Integer)evt.getNewValue();						
+						int day = (Integer)evt.getNewValue();
 						ProgressMonitor.update(new DataStoreProgress(day, dayCount));
+					} else if("complete".equals(evt.getPropertyName())) {
+						ProgressMonitor.complete();
 					}
 				}
 			});
 		}
-		
+
 		protected void done() {
 			ProgressMonitor.complete();
 		}
@@ -95,6 +97,7 @@ public class BackTestDataManager {
 				firePropertyChange("day", day, day+1);
 			}
 	
+			firePropertyChange("complete", false, true);
 			return new CandleDataResponse(request, data);
 		}
 	}

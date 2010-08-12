@@ -23,6 +23,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 	private Permutator permutator;
 	private List<OptimiserParameter> params;
 	private OptimiserView view;
+	private boolean running = false;
 	
 	public void run(CandleCollection candles, OptimiserView view) {
 		
@@ -46,6 +47,10 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		manager.run();
 	}
 
+	public void stop() {
+		running = false;
+	}
+	
 	class Manager {
 		
 		private Worker[] workers;
@@ -74,6 +79,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		}
 		
 		public void run() {
+			running = true;
 			start = System.nanoTime();
 			for(int w=0; w<workers.length; w++) {
 				workers[w].start();
@@ -81,20 +87,19 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		}
 		
 		public boolean hasNextBlock() {
-			
-			boolean hasMore = blockPointer < permutations;
-			
-//			if(!hasMore) {
-//				for(Job job : jobs) {
-//					System.out.println(job.startIdx + "\t" + job.endIdx + "\t" + job.start + "\t" + job.end);
-//				}
-//			}
-			
-			return hasMore;
+			return (blockPointer < permutations) && running;
 		}
 		
 		public Job getNextJob() {
-			
+			synchronized(jobAllocationSemaphore) {
+				updateStatus();
+				blockPointer += blockSize;
+				Job job = new Job(1, blockPointer, blockPointer + blockSize);
+				return job;
+			}
+		}
+		
+		private void updateStatus() {
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
 					// display the results
@@ -109,12 +114,6 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 					view.getLblSpeed().setText(String.format("Tests/min: %.0f", completedCount / (elapsed / 60.0)));
 				}
 			});
-
-			synchronized(jobAllocationSemaphore) {
-				blockPointer += blockSize;
-				Job job = new Job(1, blockPointer, blockPointer + blockSize);
-				return job;
-			}
 		}
 		
 		public void blockCompleted(Job job) {
@@ -183,7 +182,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 				
 				// check the report and add if interesting
 				final OrderBookReport report = new OrderBookReport(test.getOrderBook());
-				if((report.getWinPercentage() > 53 && report.getBalance() > 0.0)) {
+				if(view.getReportModel().accepts(report)) {
 					SwingUtilities.invokeLater(new Runnable() {
 						public void run() {
 							view.getReportModel().addRow(new OptimiserReportRow(test.getId(), report, map));

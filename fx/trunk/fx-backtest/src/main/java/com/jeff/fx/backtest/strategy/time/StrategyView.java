@@ -50,6 +50,9 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 		config = new TimeStrategyConfigView(this);
 		config.setPreferredSize(new Dimension(150, 150));
 		add(config, BorderLayout.SOUTH);
+		
+		// setup listeners
+		orderBook.addOrderSelectionListener(dataDisplay);
 	}
 
 	public void initialise() {

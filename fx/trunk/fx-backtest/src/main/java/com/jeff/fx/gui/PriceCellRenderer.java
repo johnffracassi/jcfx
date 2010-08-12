@@ -6,10 +6,15 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class PriceCellRenderer extends DefaultTableCellRenderer {
 
 	private int dp = 2;
+	private String customPattern = null;
 	
 	public PriceCellRenderer(int dp) {
 		this.dp = dp;
 		setHorizontalAlignment(RIGHT);
+	}
+	
+	public PriceCellRenderer(String pattern) {
+		this.customPattern = pattern;
 	}
 	
 	protected void setValue(Object value) {
@@ -19,8 +24,12 @@ public class PriceCellRenderer extends DefaultTableCellRenderer {
 			if(x == 0.0) {
 				setText("-");
 			} else {
-				setText(String.format("%." + dp + "f", x));
+				setText(String.format(getPattern(), x));
 			}
 		}
+	}
+	
+	protected String getPattern() {
+		return customPattern == null ? "%." + dp + "f" : customPattern;
 	}
 }
