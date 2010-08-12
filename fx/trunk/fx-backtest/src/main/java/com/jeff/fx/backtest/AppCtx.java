@@ -8,15 +8,15 @@ import java.util.prefs.Preferences;
 
 import javax.swing.JOptionPane;
 
-import org.jfree.util.Log;
+import org.apache.log4j.Logger;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.joda.time.format.ISODateTimeFormat;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 
-@Component
 public class AppCtx {
+
+	private static Logger log = Logger.getLogger(AppCtx.class);
 
 	/**
 	 * Persistent application values (stored in registry)
@@ -43,6 +43,8 @@ public class AppCtx {
 	 */
 	private static BackTestDataManager dataManager;
 	
+	///////////////////////////////////////////////////////////////////////////
+
 	static {
 		persistentRegister = Preferences.userRoot();
 		sessionRegister = new HashMap<String, Object>();
@@ -50,61 +52,68 @@ public class AppCtx {
 	}
 
 	public static void initialise(ApplicationContext ctx) {
+		log.info("Initialising Application Context");
 		springCtx = ctx;
 		dataManager = (BackTestDataManager)springCtx.getBean("backTestDataManager");
 	}
 	
-	public static BackTestDataManager getDataManager() {
-		return dataManager;
+	///////////////////////////////////////////////////////////////////////////
+
+	@SuppressWarnings("unchecked")
+	public static <T> T getSessionValue(String key) {
+		log.debug("get session value for '" + key + "'");
+		return (T)sessionRegister.get(key);
 	}
 	
 	public static double getSessionDouble(String key) {
 		
-		Object result = sessionRegister.get(key);
+		Double result = getSessionValue(key);
 		
 		if(result == null) {
 			return 0.0;
-		} else if(result instanceof Integer) {
-			return ((Integer)sessionRegister.get(key)).doubleValue();
 		} else {
 			return (Double)sessionRegister.get(key);
 		}
 	}
 	
 	public static int getSessionInt(String key) {
-		if(sessionRegister.containsKey(key)) {
-			return (Integer)sessionRegister.get(key);
+		
+		Integer result = getSessionValue(key);
+		
+		if(result == null) {
+			return 0;
 		} else {
-			String valueStr = JOptionPane.showInputDialog(null, "Enter value for " + key);
-			int value = new Integer(valueStr);
-			setSession(key, value);
-			return getSessionInt(key);
+			return (Integer)sessionRegister.get(key);
 		}
 	}
 	
-	public static LocalTime getSessionTime(String key) {
-		return (LocalTime)sessionRegister.get(key);
+	public static LocalTime getSessionLocalTime(String key) {
+		return getSessionValue(key);
 	}
 	
 	public static LocalDate getSessionDate(String key) {
-		return (LocalDate)sessionRegister.get(key);
+		return getSessionValue(key);
 	}
 	
 	public static void setSession(String key, Object value) {
-		Log.debug("set value of " + key + " to " + value);
+		log.debug("set session value of '" + key + "' to " + value);
 		sessionRegister.put(key, value);
 	}
+
+	///////////////////////////////////////////////////////////////////////////
 	
 	public static void setPersistent(String key, Object value) {
 		persistentRegister.put(key, String.valueOf(value));
 	}
 	
-	public static String getPersistent(String key) {
-		return persistentRegister.get(key, null);
-	}
-	
 	public static void setPersistent(String key, LocalDate date) {
 		setPersistent(key, ISODateTimeFormat.date().print(date));
+	}
+	
+	///////////////////////////////////////////////////////////////////////////
+
+	public static String getPersistent(String key) {
+		return persistentRegister.get(key, null);
 	}
 	
 	public static LocalDate getPersistentDate(String key) {
@@ -119,12 +128,10 @@ public class AppCtx {
 	public static int getPersistentInt(String key) {
 		try {
 			int val = persistentRegister.getInt(key, Integer.MIN_VALUE);
-			
 			if(val != Integer.MIN_VALUE) {
 				return val;
 			}
-		} catch(Exception ex) {
-		} 
+		} catch(Exception ex) {	} 
 	
 		String valueStr = JOptionPane.showInputDialog(null, "Enter value for " + key);
 		int value = new Integer(valueStr);
@@ -132,6 +139,22 @@ public class AppCtx {
 		return value;
 	}
 	
+	public static double getPersistentDouble(String key) {
+		try {
+			double val = persistentRegister.getDouble(key, Double.MIN_VALUE);
+			if(val != Double.MIN_VALUE) {
+				return val;
+			}
+		} catch(Exception ex) { } 
+	
+		String valueStr = JOptionPane.showInputDialog(null, "Enter value for " + key);
+		double value = new Double(valueStr);
+		persistentRegister.putDouble(key, value);
+		return value;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////
+
 	public static void registerEventListener(Class<? extends FXActionEvent> c, FXActionEventListener listener) {
 		if(listeners.containsKey(c)) {
 			listeners.get(c).add(listener);
@@ -150,4 +173,8 @@ public class AppCtx {
 			listener.event(ev);
 		}
 	}
+
+	public static BackTestDataManager getDataManager() {
+		return dataManager;
+	}	
 }
