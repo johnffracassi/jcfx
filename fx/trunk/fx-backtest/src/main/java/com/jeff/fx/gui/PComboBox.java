@@ -16,12 +16,12 @@ public abstract class PComboBox extends JComboBox {
 		
 		super(values);
 		
-		String val = AppCtx.retrieve(key);
+		String val = AppCtx.getPersistent(key);
 		setSelectedItem(resolve(val));
 		
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				AppCtx.save(key, String.valueOf(getSelectedItem()));
+				AppCtx.setPersistent(key, String.valueOf(getSelectedItem()));
 			}
 		});
 	}

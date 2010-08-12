@@ -53,12 +53,12 @@ public class DatasetDefinitionPanel extends JXPanel {
 	private JXPanel createDateLine(final String label, final String key) {
 
 		final String name = prefix + "." + key;
-		final LocalDate defaultDate = AppCtx.retrieveDate(name);
+		final LocalDate defaultDate = AppCtx.getPersistentDate(name);
 		final JXDatePicker date = new JXDatePicker(defaultDate.toDateTimeAtStartOfDay().toDate());
 		
 		date.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				AppCtx.save(name, new LocalDate(date.getDate()));
+				AppCtx.setPersistent(name, new LocalDate(date.getDate()));
 			}
 		});
 		

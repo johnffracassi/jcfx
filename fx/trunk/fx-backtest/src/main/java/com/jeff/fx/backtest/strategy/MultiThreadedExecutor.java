@@ -45,8 +45,8 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		view.getLblCompleted().setText("Completed: 0");
 		
 		// execute the tests asynchronously
-		threadCount = AppCtx.retrieveInt("multiThreadExecutor.threads");
-		blockSize = AppCtx.retrieveInt("multiThreadExecutor.blockSize");
+		threadCount = AppCtx.getPersistentInt("multiThreadExecutor.threads");
+		blockSize = AppCtx.getPersistentInt("multiThreadExecutor.blockSize");
 		Manager manager = new Manager(threadCount, candles, permutator.getPermutationCount());
 		manager.run();
 	}

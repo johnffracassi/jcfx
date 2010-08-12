@@ -36,7 +36,7 @@ public class SliderLine extends JXPanel {
 		
 		slider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent ev) {
-				AppCtx.set(key, slider.getValue());
+				AppCtx.setSession(key, slider.getValue());
 				lblValue.setText(String.format("%d", slider.getValue() * step));
 			}
 		});
