@@ -1,4 +1,4 @@
-package com.jeff.fx.backtest.strategy.time;
+package com.jeff.fx.backtest.strategy;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +12,7 @@ import com.jeff.fx.backtest.strategy.optimiser.OptimiserParameter;
 import com.jeff.fx.backtest.strategy.optimiser.OptimiserReportRow;
 import com.jeff.fx.backtest.strategy.optimiser.OptimiserView;
 import com.jeff.fx.backtest.strategy.optimiser.Permutator;
+import com.jeff.fx.backtest.strategy.time.TimeStrategy;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.TimeOfWeek;
 

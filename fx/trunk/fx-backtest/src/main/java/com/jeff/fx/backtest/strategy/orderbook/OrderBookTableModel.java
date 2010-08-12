@@ -58,6 +58,9 @@ public class OrderBookTableModel extends DefaultTableModel {
 		}
 	}
 	
+	public boolean isCellEditable(int arg0, int arg1) {
+		return false;
+	}
 	
 	public int getColumnCount() {
 		return 12;

@@ -151,6 +151,18 @@ public class CandleDataPoint extends AbstractFXDataPoint implements
 		tickCount = 0;
 	}
 
+	public int getSize() {
+		return (int)((buyClose - buyOpen) * 10000);
+	}
+	
+	public double getChangePercentage() {
+		if(buyOpen > 0) {
+			return (buyClose - buyOpen) / buyOpen;
+		} else {
+			return 0.0;
+		}
+	}
+	
 	public double getBuyOpen() {
 		return buyOpen;
 	}
