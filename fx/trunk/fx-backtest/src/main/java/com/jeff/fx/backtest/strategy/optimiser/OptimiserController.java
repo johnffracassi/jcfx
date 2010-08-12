@@ -7,22 +7,32 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.SwingWorker;
 
+import com.jeff.fx.backtest.AppCtx;
 import com.jeff.fx.backtest.strategy.MultiThreadedExecutor;
 import com.jeff.fx.backtest.strategy.time.StrategyView;
 import com.jeff.fx.common.CandleCollection;
 
 public class OptimiserController {
 
+	private ExecutorParametersController epController = new ExecutorParametersController();
 	private CandleCollection candles;
 	private OptimiserView view;
-
+	private OptimiserExecutor executor = new MultiThreadedExecutor();
+	
 	public OptimiserController(final StrategyView parent) {
 		
 		view = new OptimiserView();
+		epController.setView(view.getPnlExecutorParameters());
 		
 		view.getRunButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				runOptimiser();
+			}
+		});
+		
+		view.getBtnPause().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pauseOptimiser();
 			}
 		});
 		
@@ -34,7 +44,6 @@ public class OptimiserController {
 				}
 			}
 		});
-
 	}
 	
 	public OptimiserView getView() {
@@ -45,22 +54,21 @@ public class OptimiserController {
 		this.candles = candles;
 	}
 	
+	public void pauseOptimiser() {
+		executor.pause();
+	}
+	
 	public void runOptimiser() {
 		SwingWorker<Object,Object> worker = new SwingWorker<Object, Object>() {
 			protected Object doInBackground() throws Exception {
-				optimiserWorker();
+				view.getReportModel().reset();
+				view.getReportModel().setPriceThreshold(AppCtx.retrieveInt("optimiser.threshold.balance"));
+				view.getReportModel().setWinPercentageThreshold(AppCtx.retrieveInt("optimiser.threshold.winPercentage"));
+				executor.run(candles, view);
 				return null;
 			}
 		};
 		worker.execute();
-	}
-	
-	private void optimiserWorker() {
-		
-		view.getReportModel().reset();
-		
-		OptimiserExecutor executor = new MultiThreadedExecutor();
-		executor.run(candles, view);
 	}
 }
 

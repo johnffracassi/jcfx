@@ -77,8 +77,8 @@ public class AppCtx {
 		tempRegister.put(key, value);
 	}
 	
-	public static void save(String key, String value) {
-		prefs.put(key, value);
+	public static void save(String key, Object value) {
+		prefs.put(key, String.valueOf(value));
 	}
 	
 	public static String retrieve(String key) {

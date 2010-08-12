@@ -79,4 +79,16 @@ public class SingleThreadedExecutor implements OptimiserExecutor {
 			});
 		}
 	}
+
+	public void pause() {
+	}
+
+	public void resume() {
+	}
+
+	public void stop() {
+	}
+
+	public void reset() {
+	}
 }

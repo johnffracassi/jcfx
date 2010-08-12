@@ -30,9 +30,9 @@ public class SliderLine extends JXPanel {
 
 		this.step = step;
 		
-		lblLabel.setPreferredSize(new Dimension(100, 20));
-		lblValue.setPreferredSize(new Dimension(50, 20));
-		slider.setPreferredSize(new Dimension(250, 25));
+		lblLabel.setPreferredSize(new Dimension(60, 18));
+		lblValue.setPreferredSize(new Dimension(60, 18));
+		slider.setPreferredSize(new Dimension(150, 18));
 		
 		slider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent ev) {

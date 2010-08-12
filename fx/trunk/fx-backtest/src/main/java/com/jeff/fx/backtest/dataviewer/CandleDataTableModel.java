@@ -28,8 +28,30 @@ public class CandleDataTableModel extends DefaultTableModel {
 		new ColumnDescriptor("Close", Double.class),
 		new ColumnDescriptor("Vol", Integer.class),
 		new ColumnDescriptor("Change", Double.class),
+		new ColumnDescriptor("Range", Integer.class),
 		new ColumnDescriptor("Size", Integer.class)
 	};
+
+	public Object getValueAt(int row, int col) {
+		
+		row += startIdx;
+		
+		switch(col) {
+			case 0: return row+1;
+			case 1: return data.getCandle(row).getDate().toLocalDate();
+			case 2: return data.getCandle(row).getDate().getDayOfWeek();
+			case 3: return data.getCandle(row).getDate().toLocalTime();
+			case 4: return data.getCandle(row).getBuyOpen();
+			case 5: return data.getCandle(row).getBuyHigh();
+			case 6: return data.getCandle(row).getBuyLow();
+			case 7: return data.getCandle(row).getBuyClose();
+			case 8: return data.getCandle(row).getBuyVolume();
+			case 9: return data.getCandle(row).getChangePercentage();
+			case 10: return data.getCandle(row).getRange();
+			case 11: return data.getCandle(row).getSize();
+			default: return "X";
+		}
+	}
 
 	public void update(CandleWeek candles, LocalDateTime start, LocalDateTime end) {
 		this.data = candles;
@@ -66,26 +88,6 @@ public class CandleDataTableModel extends DefaultTableModel {
 			return 0;
 		}
 		return (endIdx - startIdx);
-	}
-
-	public Object getValueAt(int row, int col) {
-		
-		row += startIdx;
-		
-		switch(col) {
-			case 0: return row+1;
-			case 1: return data.getCandle(row).getDate().toLocalDate();
-			case 2: return data.getCandle(row).getDate().getDayOfWeek();
-			case 3: return data.getCandle(row).getDate().toLocalTime();
-			case 4: return data.getCandle(row).getBuyOpen();
-			case 5: return data.getCandle(row).getBuyHigh();
-			case 6: return data.getCandle(row).getBuyLow();
-			case 7: return data.getCandle(row).getBuyClose();
-			case 8: return data.getCandle(row).getBuyVolume();
-			case 9: return data.getCandle(row).getChangePercentage();
-			case 10: return data.getCandle(row).getSize();
-			default: return "X";
-		}
 	}
 
 	public boolean isCellEditable(int row, int col) {

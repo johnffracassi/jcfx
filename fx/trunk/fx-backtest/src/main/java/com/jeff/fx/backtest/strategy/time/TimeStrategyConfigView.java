@@ -1,5 +1,7 @@
 package com.jeff.fx.backtest.strategy.time;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -12,6 +14,7 @@ import javax.swing.event.ChangeListener;
 import org.jdesktop.swingx.JXLabel;
 import org.jdesktop.swingx.JXPanel;
 
+import com.jeff.fx.backtest.GUIUtil;
 import com.jeff.fx.backtest.strategy.CommonStrategyPanel;
 import com.jeff.fx.backtest.strategy.StrategyPropertyChangeListener;
 import com.jeff.fx.common.OfferSide;
@@ -66,9 +69,13 @@ public class TimeStrategyConfigView extends JXPanel {
 		sldClose.addChangeListener(listener);
 
 		pnlCommon = new CommonStrategyPanel(spcl);
-				
-		add(pnlCommon);
-		add(pnlConfig);
+		
+		setLayout(new BorderLayout());
+		JXPanel container = new JXPanel(new BorderLayout());
+		container.setLayout(new GridLayout(1, 2));
+		container.add(pnlCommon);
+		container.add(pnlConfig);
+		add(GUIUtil.frame("Strategy Parameters", container), BorderLayout.CENTER);
 	}
 
 	public Map<String,Object> getParams() {

@@ -23,7 +23,10 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 	private Permutator permutator;
 	private List<OptimiserParameter> params;
 	private OptimiserView view;
+	
 	private boolean running = false;
+	private int blockSize = 50;
+	private int threadCount = 1;
 	
 	public void run(CandleCollection candles, OptimiserView view) {
 		
@@ -42,19 +45,31 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		view.getLblCompleted().setText("Completed: 0");
 		
 		// execute the tests asynchronously
-		int threadCount = AppCtx.retrieveInt("multiThreadExecutor.threads");
+		threadCount = AppCtx.retrieveInt("multiThreadExecutor.threads");
+		blockSize = AppCtx.retrieveInt("multiThreadExecutor.blockSize");
 		Manager manager = new Manager(threadCount, candles, permutator.getPermutationCount());
 		manager.run();
 	}
 
 	public void stop() {
+		pause();
+	}
+
+	public void pause() {
 		running = false;
+	}
+
+	public void resume() {
+		running = true;
+	}
+
+	public void reset() {
+		stop();
 	}
 	
 	class Manager {
 		
 		private Worker[] workers;
-		private int blockSize = 50;
 		private int blockPointer = 0;
 		private int permutations = 0;
 		private int completedCount = 0;

@@ -41,6 +41,7 @@ public class BackTestApp {
 		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.put("Slider.paintValue", false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

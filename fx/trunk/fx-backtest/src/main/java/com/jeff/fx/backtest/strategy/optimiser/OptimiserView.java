@@ -24,16 +24,18 @@ import com.jeff.fx.gui.ProfitCellRenderer;
 public class OptimiserView extends JPanel {
 
 	private OptimiserParameterTableModel paramModel;
-	private JXTable tblParams;
 	private OptimiserReportTableModel reportModel;
+	private ExecutorParametersView pnlExecutorParameters;
+	private JXTable tblParams;
 	private JXTable tblReport;
 	private JXTable tblResults;
+	private JProgressBar progressBar;
 	private JButton btnRun;
+	private JButton btnPause;
 	private JLabel lblPermutations;
 	private JLabel lblCompleted;
 	private JLabel lblRemainingTime;
 	private JLabel lblElapsedTime;
-	private JProgressBar progressBar;
 	private JLabel lblSpeed;
 
 	public OptimiserView() {
@@ -56,8 +58,10 @@ public class OptimiserView extends JPanel {
 		JPanel pnlActions = new JPanel();
 		pnlParameters.add(pnlActions, BorderLayout.SOUTH);
 
-		btnRun = new JButton("Run Optimiser");
+		btnRun = new JButton("Start");
 		pnlActions.add(btnRun);
+		btnPause = new JButton("Pause");
+		pnlActions.add(btnPause);
 
 		JPanel pnlStatus = new JPanel();
 		add(GUIUtil.frame("Status", pnlStatus), "cell 1 0,grow");
@@ -107,9 +111,9 @@ public class OptimiserView extends JPanel {
 		lblSpeed = new JLabel("Tests/min: 0");
 		panel_5.add(lblSpeed, BorderLayout.CENTER);
 
-		JPanel pnlRight = new JPanel();
-		pnlRight.setBorder(new EmptyBorder(3, 3, 3, 3));
-		pnlGrid.add(pnlRight);
+		pnlExecutorParameters = new ExecutorParametersView();
+		pnlExecutorParameters.setBorder(new EmptyBorder(3, 3, 3, 3));
+		pnlGrid.add(pnlExecutorParameters);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new EmptyBorder(3, 3, 3, 3));
@@ -167,10 +171,24 @@ public class OptimiserView extends JPanel {
 	public JLabel getLblElapsedTime() {
 		return lblElapsedTime;
 	}
+	
+	public JButton getBtnPause() {
+		return btnPause;
+	}
+	
 	public JProgressBar getProgressBar() {
 		return progressBar;
 	}
+	
 	public JLabel getLblSpeed() {
 		return lblSpeed;
+	}
+
+	public ExecutorParametersView getPnlExecutorParameters() {
+		return pnlExecutorParameters;
+	}
+
+	public JXTable getTblResults() {
+		return tblResults;
 	}
 }

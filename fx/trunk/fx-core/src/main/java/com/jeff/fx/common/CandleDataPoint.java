@@ -152,7 +152,7 @@ public class CandleDataPoint extends AbstractFXDataPoint implements
 	}
 
 	public int getSize() {
-		return (int)((buyClose - buyOpen) * 10000);
+		return (int)((buyClose - buyOpen) / getInstrument().pipValue);
 	}
 	
 	public double getChangePercentage() {
@@ -257,5 +257,9 @@ public class CandleDataPoint extends AbstractFXDataPoint implements
 
 	public double getClose() {
 		return getBuyClose() + getSellClose() / 2.0;
+	}
+
+	public int getRange() {
+		return (int)((buyHigh - buyLow) / getInstrument().pipValue);
 	}
 }
