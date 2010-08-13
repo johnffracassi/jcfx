@@ -21,6 +21,8 @@ import com.jeff.fx.action.ExitAction;
 import com.jeff.fx.backtest.action.ClearCacheAction;
 import com.jeff.fx.backtest.chart.NewCandleChartAction;
 import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartAction;
+import com.jeff.fx.gui.ButtonTabComponent;
+import com.jeff.fx.gui.GUIUtil;
 import com.siebentag.gui.VerticalFlowLayout;
 
 @SuppressWarnings("serial")
@@ -35,7 +37,12 @@ public class BackTestFrame extends JXFrame {
 	@Autowired private NewCandleChartAction newCandleChartAction;
 	@Autowired private NewTimeStrategyChartAction newTimeStrategyChartAction;
 	
+	/**
+	 * Build the frame. Not done in constructor because the autowiring isn't 
+	 * done by then
+	 */
 	public void init() {
+		
 		setSize(1200, 900);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -45,20 +52,24 @@ public class BackTestFrame extends JXFrame {
 		DatasetDefinitionPanel ddp = new DatasetDefinitionPanel("newChart");
 		pnlWest.add(GUIUtil.frame("Dataset", ddp));
 
+		// add left and right components
         add(tabs, BorderLayout.CENTER);
         add(pnlWest, BorderLayout.WEST);
         
+        // add menu and toolbar
         setToolBar(buildToolBar());
         setJMenuBar(buildMenu());
     }
 	
 	public void addMainPanel(JPanel panel, String title) {
+		
 		tabs.add(panel, title);
 		tabs.setTabComponentAt(tabs.getTabCount()-1, new ButtonTabComponent(tabs));
 		invalidate();
 	}
 	
 	private JToolBar buildToolBar() {
+		
         JToolBar toolBar = new JToolBar("Main");
         toolBar.add(aboutAction);
         toolBar.add(newCandleChartAction);
@@ -67,7 +78,7 @@ public class BackTestFrame extends JXFrame {
 	}
 	
 	private JMenuBar buildMenu() {
-		// Menu setup
+
 		JMenuBar menuBar = new JMenuBar();
 		
 		JMenu fileMenu = new JMenu("File");

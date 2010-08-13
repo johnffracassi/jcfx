@@ -1,9 +1,12 @@
-package com.jeff.fx.backtest;
+package com.jeff.fx.gui;
 
 import org.apache.log4j.Logger;
 
 import com.jeff.fx.datastore.DataStoreProgress;
 
+/**
+ * TODO Progress monitor needs to be more generic
+ */
 public class ProgressMonitor {
 
 	private static Logger log = Logger.getLogger(ProgressMonitor.class);

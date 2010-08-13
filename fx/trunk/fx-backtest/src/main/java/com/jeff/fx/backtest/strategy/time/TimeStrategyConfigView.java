@@ -14,11 +14,11 @@ import javax.swing.event.ChangeListener;
 import org.jdesktop.swingx.JXLabel;
 import org.jdesktop.swingx.JXPanel;
 
-import com.jeff.fx.backtest.GUIUtil;
 import com.jeff.fx.backtest.strategy.CommonStrategyPanel;
 import com.jeff.fx.backtest.strategy.StrategyPropertyChangeListener;
 import com.jeff.fx.common.OfferSide;
 import com.jeff.fx.common.TimeOfWeek;
+import com.jeff.fx.gui.GUIUtil;
 import com.jeff.fx.gui.TimeOfWeekSliderLine;
 import com.siebentag.gui.VerticalFlowLayout;
 

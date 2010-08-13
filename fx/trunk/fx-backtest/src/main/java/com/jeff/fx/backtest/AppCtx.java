@@ -103,6 +103,7 @@ public class AppCtx {
 	///////////////////////////////////////////////////////////////////////////
 	
 	public static void setPersistent(String key, Object value) {
+		log.debug("set persistent value of '" + key + "' to " + value);
 		persistentRegister.put(key, String.valueOf(value));
 	}
 	
@@ -113,6 +114,7 @@ public class AppCtx {
 	///////////////////////////////////////////////////////////////////////////
 
 	public static String getPersistent(String key) {
+		log.debug("get persistent value of '" + key + "'");
 		return persistentRegister.get(key, null);
 	}
 	
