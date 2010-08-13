@@ -35,7 +35,7 @@ public class TimeStrategy extends AbstractStrategy {
 		offerSide = (OfferSide)parameters.get("offerSide");
 	}
 	
-	public boolean runTest() {
+	public boolean isTestValid() {
 		return (!open.equals(close));
 	}
 	

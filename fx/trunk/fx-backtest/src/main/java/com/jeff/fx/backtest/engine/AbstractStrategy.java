@@ -1,43 +1,48 @@
 package com.jeff.fx.backtest.engine;
 
-import org.joda.time.LocalDate;
-
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
-import com.jeff.fx.common.CandleWeek;
 import com.jeff.fx.common.OfferSide;
 
 public abstract class AbstractStrategy {
 	
+	/**
+	 * unique test id (usually a reference to the parameter set) 
+	 */
 	private int id = -1;
+	
+	/**
+	 * order book for this instance
+	 */
 	private OrderBook orderBook;
 
+	/**
+	 * @param id
+	 */
 	public AbstractStrategy(int id) {
 		this.id = id;
 		orderBook = new OrderBook();
 	}
-	
-	public void candle(CandleDataPoint candle) {}
-	public abstract boolean runTest();
-	
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isTestValid() {
+		return true;
+	}
+
 	/**
 	 * Execute the test with all strategies
-	 * 
 	 * @param cc
 	 */
-	public void execute(CandleCollection cc) {
-		
-		LocalDate date = cc.getStart();
-		
-		while(date.isBefore(cc.getEnd())) {
-			CandleWeek cw = cc.getCandleWeek(date);
-			for(int i=0; i<cw.getCandleCount(); i++) {
-				candle(cw.getCandle(i));
-			}
-			date = date.plusDays(7);
-		}
-	}
+	public abstract void execute(CandleCollection cc);
 	
+	/**
+	 * 
+	 * @param order
+	 * @param candle
+	 */
 	protected void openOrder(BTOrder order, CandleDataPoint candle) {
 		order.setInstrument(candle.getInstrument());
 		order.setOpenTime(candle.getDate());
