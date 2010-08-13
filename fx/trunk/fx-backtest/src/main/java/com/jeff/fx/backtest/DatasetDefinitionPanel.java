@@ -15,7 +15,7 @@ import com.jeff.fx.backtest.chart.NewCandleChartAction;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.gui.PComboBox;
+import com.jeff.fx.gui.PEnumComboBox;
 import com.siebentag.gui.VerticalFlowLayout;
 
 @SuppressWarnings("serial")
@@ -29,18 +29,9 @@ public class DatasetDefinitionPanel extends JXPanel {
 		
 		setLayout(new VerticalFlowLayout(0));
 		
-		add(createLine("Data Source", 130, new PComboBox(FXDataSource.values(), prefix + ".dataSource") {
-			public Object resolve(String str) { return (str == null) ? (FXDataSource.values()[0]) : (FXDataSource.valueOf(str)); }
-		}));
-		
-		add(createLine("Instrument", 130, new PComboBox(Instrument.values(), prefix + ".instrument") {
-			public Object resolve(String str) { return (str == null) ? (Instrument.values()[0]) : (Instrument.valueOf(str)); }
-		}));
-		
-		add(createLine("Period", 130, new PComboBox(Period.values(), prefix + ".period") {
-			public Object resolve(String str) { return (str == null) ? (Period.values()[0]) : (Period.valueOf(str)); }
-		}));
-
+		add(createLine("Data Source", 130, new PEnumComboBox<FXDataSource>(prefix + ".dataSource", FXDataSource.class)));
+		add(createLine("Instrument", 130, new PEnumComboBox<Instrument>(prefix + ".instrument", Instrument.class)));
+		add(createLine("Period", 130, new PEnumComboBox<Period>(prefix + ".period", Period.class)));
 		add(createDateLine("Start Date", "startDate"));
 		add(createDateLine("End Date", "endDate"));
 		

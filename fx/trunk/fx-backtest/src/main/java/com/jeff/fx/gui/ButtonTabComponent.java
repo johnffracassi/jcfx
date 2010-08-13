@@ -29,22 +29,39 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.jeff.fx.backtest;
+package com.jeff.fx.gui;
 
-import javax.swing.*;
-import javax.swing.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.plaf.basic.BasicButtonUI;
-import java.awt.*;
-import java.awt.event.*;
 
 /**
  * Component to be used as tabComponent; Contains a JLabel to show the text and
  * a JButton to close the tab it belongs to
  */
+@SuppressWarnings("serial")
 public class ButtonTabComponent extends JPanel {
 	private final JTabbedPane pane;
 
 	public ButtonTabComponent(final JTabbedPane pane) {
+		
 		// unset default FlowLayout' gaps
 		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		if (pane == null) {

@@ -19,6 +19,7 @@ import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.datastore.CandleDataStore;
 import com.jeff.fx.datastore.DataStoreProgress;
+import com.jeff.fx.gui.ProgressMonitor;
 
 @Component
 public class BackTestDataManager {
@@ -38,6 +39,7 @@ public class BackTestDataManager {
 		
 		// run the data load in a new thread
 		DataLoaderWorker dlw = new DataLoaderWorker(request);
+		
 //		dlw.execute();
 //		CandleDataResponse response = dlw.get();
 		CandleDataResponse response = dlw.doInBackground();

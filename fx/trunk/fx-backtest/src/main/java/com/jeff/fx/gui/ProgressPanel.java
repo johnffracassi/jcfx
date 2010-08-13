@@ -1,4 +1,4 @@
-package com.jeff.fx.backtest;
+package com.jeff.fx.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

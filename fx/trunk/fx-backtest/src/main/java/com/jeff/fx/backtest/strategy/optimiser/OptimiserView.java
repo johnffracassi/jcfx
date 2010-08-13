@@ -16,7 +16,7 @@ import net.miginfocom.swing.MigLayout;
 
 import org.jdesktop.swingx.JXTable;
 
-import com.jeff.fx.backtest.GUIUtil;
+import com.jeff.fx.gui.GUIUtil;
 import com.jeff.fx.gui.PriceCellRenderer;
 import com.jeff.fx.gui.ProfitCellRenderer;
 

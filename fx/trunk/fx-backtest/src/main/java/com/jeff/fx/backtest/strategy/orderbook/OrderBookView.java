@@ -9,7 +9,7 @@ import javax.swing.ScrollPaneConstants;
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTable;
 
-import com.jeff.fx.backtest.GUIUtil;
+import com.jeff.fx.gui.GUIUtil;
 import com.jeff.fx.gui.LocalDateTimeCellRenderer;
 import com.jeff.fx.gui.PriceCellRenderer;
 import com.jeff.fx.gui.ProfitCellRenderer;
