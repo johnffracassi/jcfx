@@ -8,11 +8,6 @@ import org.springframework.stereotype.Component;
 import com.jeff.fx.backtest.engine.BTOrder;
 import com.jeff.fx.backtest.strategy.orderbook.OrderSelectionListener;
 import com.jeff.fx.common.CandleCollection;
-import com.jeff.fx.gui.DayOfWeekCellRenderer;
-import com.jeff.fx.gui.LocalDateCellRenderer;
-import com.jeff.fx.gui.LocalTimeCellRenderer;
-import com.jeff.fx.gui.PercentageChangeCellRenderer;
-import com.jeff.fx.gui.PriceCellRenderer;
 
 @Component
 public class CandleDataController implements OrderSelectionListener {
@@ -27,18 +22,16 @@ public class CandleDataController implements OrderSelectionListener {
     	view = new CandleDataView();
     	model = new CandleDataTableModel();
         
+    	// setup the table
     	view.getTable().setModel(model);
     	view.getTable().setColumnControlVisible(true);
-    	view.getTable().getColumn(1).setCellRenderer(new LocalDateCellRenderer());
-    	view.getTable().getColumn(2).setCellRenderer(new DayOfWeekCellRenderer());
-    	view.getTable().getColumn(3).setCellRenderer(new LocalTimeCellRenderer());
-    	view.getTable().getColumn(4).setCellRenderer(new PriceCellRenderer(4));
-    	view.getTable().getColumn(5).setCellRenderer(new PriceCellRenderer(4));
-    	view.getTable().getColumn(6).setCellRenderer(new PriceCellRenderer(4));
-    	view.getTable().getColumn(7).setCellRenderer(new PriceCellRenderer(4));
-    	view.getTable().getColumn(8).setCellRenderer(new PriceCellRenderer(0));
-    	view.getTable().getColumn(9).setCellRenderer(new PercentageChangeCellRenderer(3));
+    	for(int i=0; i<model.getColumnCount(); i++) {
+    		if(model.getRenderer(i) != null) {
+    			view.getTable().getColumn(i).setCellRenderer(model.getRenderer(i));
+    		}
+    	}
 
+    	// setup the listeners
     	view.getBtnNextWeek().addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent ev) { nextWeek(); }
     	});

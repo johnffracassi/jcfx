@@ -1,13 +1,21 @@
 package com.jeff.fx.backtest.dataviewer;
 
+import javax.swing.table.TableCellRenderer;
+
 public class ColumnDescriptor {
 	
 	private String name;
 	private Class<?> type;
+	private TableCellRenderer renderer;
 
 	public ColumnDescriptor(String name, Class<?> type) {
+		this(name, type, null);
+	}
+	
+	public ColumnDescriptor(String name, Class<?> type, TableCellRenderer renderer) {
 		this.name = name;
 		this.type = type;
+		this.renderer = renderer;
 	}
 	
 	public String getName() {
@@ -24,5 +32,13 @@ public class ColumnDescriptor {
 	
 	public void setType(Class<?> clazz) {
 		this.type = clazz;
+	}
+
+	public TableCellRenderer getRenderer() {
+		return renderer;
+	}
+
+	public void setRenderer(TableCellRenderer renderer) {
+		this.renderer = renderer;
 	}
 }
