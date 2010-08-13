@@ -1,12 +1,18 @@
 package com.jeff.fx.backtest.dataviewer;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
 import com.jeff.fx.common.CandleWeek;
+import com.jeff.fx.gui.DayOfWeekCellRenderer;
+import com.jeff.fx.gui.LocalDateCellRenderer;
+import com.jeff.fx.gui.LocalTimeCellRenderer;
+import com.jeff.fx.gui.PercentageChangeCellRenderer;
+import com.jeff.fx.gui.PriceCellRenderer;
 
 @SuppressWarnings("serial")
 public class CandleDataTableModel extends DefaultTableModel {
@@ -19,15 +25,15 @@ public class CandleDataTableModel extends DefaultTableModel {
 	
 	private ColumnDescriptor[] columns = new ColumnDescriptor[] {
 		new ColumnDescriptor("Idx", Integer.class),
-		new ColumnDescriptor("Date", LocalDate.class),
-		new ColumnDescriptor("Day", Integer.class),
-		new ColumnDescriptor("Time", LocalTime.class),
-		new ColumnDescriptor("Open", Double.class),
-		new ColumnDescriptor("High", Double.class),
-		new ColumnDescriptor("Low", Double.class),
-		new ColumnDescriptor("Close", Double.class),
+		new ColumnDescriptor("Date", LocalDate.class, new LocalDateCellRenderer()),
+		new ColumnDescriptor("Day", Integer.class, new DayOfWeekCellRenderer()),
+		new ColumnDescriptor("Time", LocalTime.class, new LocalTimeCellRenderer()),
+		new ColumnDescriptor("Open", Double.class, new PriceCellRenderer(4)),
+		new ColumnDescriptor("High", Double.class, new PriceCellRenderer(4)),
+		new ColumnDescriptor("Low", Double.class, new PriceCellRenderer(4)),
+		new ColumnDescriptor("Close", Double.class, new PriceCellRenderer(4)),
 		new ColumnDescriptor("Vol", Integer.class),
-		new ColumnDescriptor("Change", Double.class),
+		new ColumnDescriptor("Change", Double.class, new PercentageChangeCellRenderer(3)),
 		new ColumnDescriptor("Range", Integer.class),
 		new ColumnDescriptor("Size", Integer.class)
 	};
@@ -108,5 +114,9 @@ public class CandleDataTableModel extends DefaultTableModel {
 
 	public void setEnd(LocalDateTime end) {
 		this.end = end;
+	}
+	
+	public TableCellRenderer getRenderer(int col) {
+		return columns[col].getRenderer();
 	}
 }
