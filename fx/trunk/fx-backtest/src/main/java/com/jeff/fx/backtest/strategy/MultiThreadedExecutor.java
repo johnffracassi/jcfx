@@ -1,11 +1,15 @@
 package com.jeff.fx.backtest.strategy;
 
+import static java.lang.Math.min;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.SwingUtilities;
+
+import org.apache.log4j.Logger;
 
 import com.jeff.fx.backtest.AppCtx;
 import com.jeff.fx.backtest.engine.OrderBookReport;
@@ -19,15 +23,27 @@ import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.TimeOfWeek;
 
 public class MultiThreadedExecutor implements OptimiserExecutor {
+
+	private static Logger log = Logger.getLogger(MultiThreadedExecutor.class);
 	
-	private Permutator permutator;
-	private List<OptimiserParameter> params;
+	// shared user feedback
 	private OptimiserView view;
+
+	// shared, accessed by multiple threads
+	private volatile boolean running = false;
+
+	// shared
+	@SuppressWarnings("rawtypes") 
+	private List<OptimiserParameter> params;
+	private Permutator permutator;
 	
-	private boolean running = false;
-	private int blockSize = 50;
+	// used by manager
+	private int jobSize = 50;
 	private int threadCount = 1;
 	
+	/**
+	 * Create and start the executor threads
+	 */
 	public void run(CandleCollection candles, OptimiserView view) {
 		
 		this.view = view;
@@ -43,11 +59,13 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		permutator = new Permutator(perms);
 		view.getLblPermutations().setText("Permutations: " + permutator.getPermutationCount());
 		view.getLblCompleted().setText("Completed: 0");
+
+		// get the parameters for the executor
+		threadCount = AppCtx.getPersistentInt("multiThreadExecutor.threads");
+		jobSize = AppCtx.getPersistentInt("multiThreadExecutor.blockSize");
 		
 		// execute the tests asynchronously
-		threadCount = AppCtx.getPersistentInt("multiThreadExecutor.threads");
-		blockSize = AppCtx.getPersistentInt("multiThreadExecutor.blockSize");
-		Manager manager = new Manager(threadCount, candles, permutator.getPermutationCount());
+		Manager manager = new Manager(candles, permutator.getPermutationCount());
 		manager.run();
 	}
 
@@ -67,56 +85,92 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		stop();
 	}
 	
-	class Manager {
+	class Manager implements Runnable {
 		
-		private Worker[] workers;
-		private int blockPointer = 0;
-		private int permutations = 0;
-		private int completedCount = 0;
-		private long start = 0;
+		// pointer to the start of the next job
+		private volatile int blockPointer = 0;
 		
-		private Object jobAllocationSemaphore = new Object();
-		private Object counterSemaphore = new Object();
-		private List<Job> jobs;
+		// total number of jobs completed 
+		private volatile int completedCount = 0;
+		
+		// start time of the batch (in nano seconds)
+		private volatile long start = 0;
+		
+		// total number of permutations, including discarded & invalid permutations
+		private final int permutations;
+		
+		private final Object jobAllocationSemaphore = new Object();
+		private final Object counterSemaphore = new Object();
 
+		// all candles required for the batch
 		private CandleCollection candles;
-
-		public Manager(int threads, CandleCollection candles, int permutations) {
+		
+		// worker threads. probably should be pooled?
+		private ThreadGroup workerGroup;
+		private List<WorkerThread> workerList = new ArrayList<MultiThreadedExecutor.Manager.WorkerThread>();
+		
+		public Manager(CandleCollection candles, int permutations) {
+			
+			log.debug("creating multi-threaded executor manager");
 			
 			this.candles = candles;
 			this.permutations = permutations;
-			jobs = new ArrayList<Job>(permutations);
-			
-			this.workers = new Worker[threads];
-			for(int w=0; w<workers.length; w++) {
-				workers[w] = new Worker();
+
+			workerGroup = new ThreadGroup("executor");
+			for(int w=0; w<threadCount; w++) {
+				workerList.add(new WorkerThread(workerGroup, workerGroup.getName() + "-" + (w+1)));
 			}
 		}
 		
 		public void run() {
+			
+			log.debug("starting multi-threaded executor manager");
+
 			running = true;
 			start = System.nanoTime();
-			for(int w=0; w<workers.length; w++) {
-				workers[w].start();
+
+			// start the thread group
+			for(Thread thread : workerList) {
+				thread.start();
+			} 
+		}
+		
+		/**
+		 * are there more jobs to be executed?
+		 * @return
+		 */
+		public boolean hasNextJob() {
+			
+			synchronized(jobAllocationSemaphore) {
+				return (blockPointer < permutations) && running;
 			}
 		}
 		
-		public boolean hasNextBlock() {
-			return (blockPointer < permutations) && running;
-		}
-		
-		public Job getNextJob() {
+		/**
+		 * 
+		 * @return
+		 */
+		public ExecutorJob getNextJob() {
+			
+			// update display
+			updateStatus();
+
+			// increment job start index and allocate a new job block
 			synchronized(jobAllocationSemaphore) {
-				updateStatus();
-				blockPointer += blockSize;
-				Job job = new Job(1, blockPointer, blockPointer + blockSize);
-				return job;
+				
+				blockPointer += jobSize;
+				
+				int startIdx = blockPointer;
+				int endIdx = min(blockPointer + jobSize, permutations);
+				
+				return new ExecutorJob(startIdx / jobSize, startIdx, endIdx);
 			}
 		}
 		
 		private void updateStatus() {
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
+					
 					// display the results
 					view.getLblCompleted().setText("Completed: " + completedCount);
 					view.getProgressBar().setValue(completedCount);
@@ -131,44 +185,35 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 			});
 		}
 		
-		public void blockCompleted(Job job) {
+		public void jobCompleted(ExecutorJob job) {
 			synchronized(counterSemaphore) {
 				completedCount += (job.endIdx - job.startIdx);
-				jobs.add(job);
-			}
-		}
-
-		class Job {
-			
-			public int id;
-			public int startIdx;
-			public int endIdx;
-			public long start;
-			public long end;
-			
-			public Job(int id, int startIdx, int endIdx) {
-				super();
-				this.id = id;
-				this.startIdx = startIdx;
-				this.endIdx = endIdx;
 			}
 		}
 		
-		class Worker extends Thread {
+
+		class WorkerThread extends Thread {
+			
+			public WorkerThread(ThreadGroup group, String name) {
+				super(group, name);
+				log.debug("created new worker: " + this.getName());
+			}
 			
 			public void run() {
 				
-				while(hasNextBlock()) {
+				log.debug("starting multi-threaded worker (" + getName() + ")");
+
+				while(hasNextJob()) {
 					
-					Job job = getNextJob();
+					ExecutorJob job = getNextJob();
 					
-					job.start = System.nanoTime();
+					job.setStartTime(System.nanoTime());
 					for(int i=job.startIdx; i<job.endIdx; i++) {
 						executeSingleTest(i);
 					}
-					job.end = System.nanoTime();
+					job.setEndTime(System.nanoTime());
 
-					blockCompleted(job);					
+					jobCompleted(job);					
 				}
 			}
 	
@@ -191,7 +236,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 				
 				// build the test
 				final TimeStrategy test = new TimeStrategy(idx, map);
-				if(test.runTest()) {
+				if(test.isTestValid()) {
 					test.execute(candles);
 				}
 				
@@ -208,3 +253,4 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		}
 	}
 }
+

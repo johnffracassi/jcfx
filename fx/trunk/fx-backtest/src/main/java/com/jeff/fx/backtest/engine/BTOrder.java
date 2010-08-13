@@ -26,6 +26,30 @@ public class BTOrder {
 			return 10000.0 * (getOpenPrice() - getClosePrice());
 		}
 	}
+
+	public double getStopLossPrice() {
+		if(stopLoss == 0.0) {
+			return 0.0;
+		}
+		
+		if(offerSide == OfferSide.Ask) {
+			return getOpenPrice() - (stopLoss * instrument.getPipValue());
+		} else {
+			return getOpenPrice() + (stopLoss * instrument.getPipValue());
+		}
+	}
+
+	public double getTakeProfitPrice() {
+		if(takeProfit == 0.0) {
+			return 0.0;
+		}
+		
+		if(offerSide == OfferSide.Ask) {
+			return getOpenPrice() + (takeProfit * instrument.getPipValue());
+		} else {
+			return getOpenPrice() - (takeProfit * instrument.getPipValue());
+		}
+	}
 	
 	public OfferSide getOfferSide() {
 		return offerSide;
@@ -89,30 +113,6 @@ public class BTOrder {
 
 	public void setInstrument(Instrument instrument) {
 		this.instrument = instrument;
-	}
-
-	public double getStopLossPrice() {
-		if(stopLoss == 0.0) {
-			return 0.0;
-		}
-		
-		if(offerSide == OfferSide.Ask) {
-			return getOpenPrice() - (stopLoss * instrument.getPipValue());
-		} else {
-			return getOpenPrice() + (stopLoss * instrument.getPipValue());
-		}
-	}
-
-	public double getTakeProfitPrice() {
-		if(takeProfit == 0.0) {
-			return 0.0;
-		}
-		
-		if(offerSide == OfferSide.Ask) {
-			return getOpenPrice() + (takeProfit * instrument.getPipValue());
-		} else {
-			return getOpenPrice() - (takeProfit * instrument.getPipValue());
-		}
 	}
 
 	public boolean hasTakeProfit() {
