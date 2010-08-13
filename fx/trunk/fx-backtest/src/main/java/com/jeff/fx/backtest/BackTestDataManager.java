@@ -47,8 +47,8 @@ public class BackTestDataManager {
 		return response.getCandles();
 	}
 
-	public void clearStoreCache() {
-		dataManager.clearStoreCache();
+	public boolean clearStoreCache() {
+		return dataManager.clearStoreCache();
 	}
 	
 	/**
