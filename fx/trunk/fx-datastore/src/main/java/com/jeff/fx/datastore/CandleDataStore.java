@@ -216,12 +216,13 @@ public class CandleDataStore {
 	/**
 	 * wipe the local data store
 	 */
-	public void clearStoreCache() {
+	public boolean clearStoreCache() {
 		File storeCacheRoot = new File(fileLocator.getDataRoot());
 		boolean success = storeCacheRoot.delete();
 		if(!success) {
 			log.error("failed to clear store cache");
 		}
+		return success;
 	}
 	
 	public Map<FXDataSource, DataSource<CandleDataPoint>> getCandleDataSources() {

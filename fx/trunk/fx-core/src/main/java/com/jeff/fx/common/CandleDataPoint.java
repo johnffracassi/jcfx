@@ -3,8 +3,8 @@ package com.jeff.fx.common;
 import java.io.Serializable;
 import java.util.List;
 
-public class CandleDataPoint extends AbstractFXDataPoint implements
-		Serializable {
+public class CandleDataPoint extends AbstractFXDataPoint implements Serializable {
+	
 	private static final long serialVersionUID = -1074171723478712229L;
 
 	private Period period;
