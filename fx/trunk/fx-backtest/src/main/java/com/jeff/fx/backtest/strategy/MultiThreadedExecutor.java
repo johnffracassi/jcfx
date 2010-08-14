@@ -172,7 +172,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 				public void run() {
 					
 					// display the results
-					view.getLblCompleted().setText("Completed: " + completedCount);
+					view.getLblCompleted().setText(String.format("Completed: %d (%.1f%%)", completedCount, ((double)completedCount / permutator.getPermutationCount()) * 100.0));
 					view.getProgressBar().setValue(completedCount);
 					view.getProgressBar().setMaximum(permutations);
 					
