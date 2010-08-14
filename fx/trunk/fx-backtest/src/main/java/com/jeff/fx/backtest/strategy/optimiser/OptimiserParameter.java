@@ -1,17 +1,17 @@
 package com.jeff.fx.backtest.strategy.optimiser;
 
-public abstract class OptimiserParameter<T,S> {
+public abstract class OptimiserParameter<ValueType,StepType> {
 	
 	private String key;
-	private T start;
-	private T end;
-	private S step;
+	private ValueType start;
+	private ValueType end;
+	private StepType step;
 	
-	public abstract T fromString(String val);
+	public abstract ValueType fromString(String val);
 	public abstract int getStepCount();
-	public abstract T getValue(int step);
+	public abstract ValueType getValue(int step);
 	
-	public OptimiserParameter(String key, T start, T end, S step) {
+	public OptimiserParameter(String key, ValueType start, ValueType end, StepType step) {
 		super();
 		this.key = key;
 		this.start = start;
@@ -27,27 +27,27 @@ public abstract class OptimiserParameter<T,S> {
 		this.key = key;
 	}
 
-	public T getStart() {
+	public ValueType getStart() {
 		return start;
 	}
 
-	public void setStart(T start) {
+	public void setStart(ValueType start) {
 		this.start = start;
 	}
 
-	public T getEnd() {
+	public ValueType getEnd() {
 		return end;
 	}
 
-	public void setEnd(T end) {
+	public void setEnd(ValueType end) {
 		this.end = end;
 	}
 
-	public S getStep() {
+	public StepType getStep() {
 		return step;
 	}
 
-	public void setStep(S step) {
+	public void setStep(StepType step) {
 		this.step = step;
 	}
 }

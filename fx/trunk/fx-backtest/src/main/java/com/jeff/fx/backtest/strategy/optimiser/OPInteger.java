@@ -1,6 +1,5 @@
-package com.jeff.fx.backtest.strategy;
+package com.jeff.fx.backtest.strategy.optimiser;
 
-import com.jeff.fx.backtest.strategy.optimiser.OptimiserParameter;
 
 public class OPInteger extends OptimiserParameter<Integer,Integer> {
 

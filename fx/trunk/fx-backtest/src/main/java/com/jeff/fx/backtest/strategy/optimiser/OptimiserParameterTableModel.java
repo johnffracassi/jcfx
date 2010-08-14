@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-import com.jeff.fx.backtest.strategy.OPInteger;
-import com.jeff.fx.backtest.strategy.OPOfferSide;
 
 @SuppressWarnings("serial")
 public class OptimiserParameterTableModel extends DefaultTableModel {

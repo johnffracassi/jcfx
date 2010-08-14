@@ -14,10 +14,10 @@ public class CommonStrategyPanel extends JXPanel {
 	final SliderLine pnlTakeProfit;
 	final SliderLine pnlStopLoss;
 	
-	public CommonStrategyPanel(final StrategyPropertyChangeListener spcl) {
+	public CommonStrategyPanel(String prefix, final StrategyPropertyChangeListener spcl) {
 		
-		pnlTakeProfit = new SliderLine("common.takeProfit", "Take Profit", 0, 250, 5);
-		pnlStopLoss = new SliderLine("common.stopLoss", "Stop Loss", 0, 250, 5);
+		pnlTakeProfit = new SliderLine(prefix + ".takeProfit", "Take Profit", 0, 250, 5);
+		pnlStopLoss = new SliderLine(prefix + ".stopLoss", "Stop Loss", 0, 250, 5);
 		setLayout(new VerticalFlowLayout(0));
 		add(pnlStopLoss);
 		add(pnlTakeProfit);
