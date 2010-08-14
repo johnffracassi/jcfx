@@ -3,11 +3,14 @@ package com.jeff.fx.backtest.dataviewer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import org.jfree.chart.ChartPanel;
 import org.springframework.stereotype.Component;
 
+import com.jeff.fx.backtest.chart.SimplePriceChart;
 import com.jeff.fx.backtest.engine.BTOrder;
 import com.jeff.fx.backtest.strategy.orderbook.OrderSelectionListener;
 import com.jeff.fx.common.CandleCollection;
+import com.jeff.fx.common.CandleWeek;
 
 @Component
 public class CandleDataController implements OrderSelectionListener {
@@ -65,6 +68,21 @@ public class CandleDataController implements OrderSelectionListener {
     }
 
 	public void orderSelected(BTOrder order) {
+		
+		// update the data table
 		model.update(data.getCandleWeek(order.getOpenTime().toLocalDate()), order.getOpenTime(), order.getCloseTime());
+		
+		// update the summary data
+		CandleWeek cw = data.getCandleWeek(currentWeek);
+		view.getLblDetails().setText(String.format("%s / %s / %s", cw.getDataSource(), cw.getInstrument(), cw.getPeriod()));
+		view.getLblOpenTime().setText(String.valueOf(order.getOpenTime()));
+		view.getLblCloseTime().setText(String.valueOf(order.getCloseTime()));
+		view.getLblCandleCount().setText(String.valueOf(model.getRowCount()));
+		view.getLblPriceRange().setText("-");
+		view.getLblOpenClose().setText(String.format("%.4f / %.4f", 0.0, 0.0));
+		
+		// update the chart
+		ChartPanel chart = SimplePriceChart.createChart(String.valueOf(cw.getInstrument()), data, order.getOpenTime(), order.getCloseTime());
+		view.setPnlChart(chart);
 	}
 }

@@ -50,6 +50,10 @@ public class CandleWeek implements Serializable {
 		return tow.periodOfWeek(period) - startIdx;
 	}
 	
+	public float getTypicalPrice(int idx) {
+		return (sell[HIGH][idx] + sell[LOW][idx] + sell[CLOSE][idx]) / 3.0f;
+	}
+	
 	public void fillGaps() {
 		
 		// fill in the gaps
