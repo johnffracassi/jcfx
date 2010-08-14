@@ -68,7 +68,7 @@ public class TimeStrategyConfigView extends JXPanel {
 		sldOpen.addChangeListener(listener);
 		sldClose.addChangeListener(listener);
 
-		pnlCommon = new CommonStrategyPanel(spcl);
+		pnlCommon = new CommonStrategyPanel("timeStrategy", spcl);
 		
 		setLayout(new BorderLayout());
 		JXPanel container = new JXPanel(new BorderLayout());
