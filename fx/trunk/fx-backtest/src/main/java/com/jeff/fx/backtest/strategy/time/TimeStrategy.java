@@ -23,7 +23,7 @@ public class TimeStrategy extends AbstractStrategy {
 	private int stopLoss = 0;
 	private int takeProfit = 0;
 	private OfferSide offerSide = OfferSide.Ask;
-	
+
 	public TimeStrategy(int id, Map<String,Object> parameters) {
 		
 		super(id);

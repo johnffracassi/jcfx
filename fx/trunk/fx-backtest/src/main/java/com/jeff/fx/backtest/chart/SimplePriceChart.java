@@ -11,6 +11,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.joda.time.LocalDateTime;
 
 import com.jeff.fx.common.CandleCollection;
+import com.jeff.fx.common.CandleValueModel;
 import com.jeff.fx.common.CandleWeek;
 
 @SuppressWarnings("serial")
@@ -48,7 +49,7 @@ public class SimplePriceChart extends JPanel {
     	
     	for(int idx = startIdx; idx < endIdx; idx++) {
     		int pt = idx - startIdx;
-    		float price = cw.getTypicalPrice(idx);
+    		float price = cw.getPrice(idx, CandleValueModel.Typical);
     		
     		if(price < low)
     			low = price;
