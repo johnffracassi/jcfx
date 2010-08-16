@@ -75,7 +75,9 @@ public class CandleDataStore {
 		
 		if(request.isRangeOfDates()) {
 			
-			int weeks = Days.daysBetween(DateUtil.getStartOfWeek(request.getDate()), DateUtil.getStartOfWeek(request.getEndDate())).getDays() / 7;
+			LocalDate sow1 = DateUtil.getStartOfWeek(request.getDate());
+			LocalDate sow2 = DateUtil.getStartOfWeek(request.getEndDate());
+			int weeks = Days.daysBetween(sow1, sow2).getDays() / 7 + 1;
 			
 			CandleCollection cc = new CandleCollection();
 			for(int week=0; week<weeks; week++) {
