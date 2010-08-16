@@ -36,7 +36,7 @@ public class ZipUtil
 	
 	public static byte[] unzipBytes(byte[] fileBytes) throws IOException
 	{
-		File temp = new File("c:/temp/temp" + System.nanoTime());
+		File temp = new File("../cache/temp/zip-" + System.nanoTime());
 		temp.getParentFile().mkdirs();
 		temp.deleteOnExit();
 		

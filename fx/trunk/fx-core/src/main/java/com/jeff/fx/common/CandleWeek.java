@@ -45,13 +45,16 @@ public class CandleWeek implements Serializable {
 		volumes = new int[2][periodsInWeek];
 	}
 	
-	public int getCandleIndex(LocalDateTime ldt) {
-		TimeOfWeek tow = new TimeOfWeek(ldt);
+	public int getCandleIndex(TimeOfWeek tow) {
 		return tow.periodOfWeek(period) - startIdx;
 	}
 	
-	public float getTypicalPrice(int idx) {
-		return (sell[HIGH][idx] + sell[LOW][idx] + sell[CLOSE][idx]) / 3.0f;
+	public int getCandleIndex(LocalDateTime ldt) {
+		return getCandleIndex(new TimeOfWeek(ldt));
+	}
+	
+	public float getPrice(int idx, CandleValueModel model) {
+		return model.evaluate(buy[OPEN][idx], buy[HIGH][idx], buy[LOW][idx], buy[CLOSE][idx], sell[OPEN][idx], sell[HIGH][idx], sell[LOW][idx], sell[CLOSE][idx]);
 	}
 	
 	public void fillGaps() {

@@ -3,35 +3,32 @@ package com.jeff.fx.common;
 public enum CandleValueModel {
 
 	AverageOfHL(new Evaluator() {
-		public double evaluate(CandleDataPoint dp) {
-			return (dp.getBuyHigh() + dp.getBuyLow() + dp.getSellHigh() + dp
-					.getSellLow()) / 4.0;
+		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
+			return (bh + bl + sh + sl) / 4.0f;
 		};
 	}),
 
 	AverageOfOHLC(new Evaluator() {
-		public double evaluate(CandleDataPoint dp) {
-			return (dp.getBuyOpen() + dp.getBuyClose() + dp.getSellClose()
-					+ dp.getSellClose() + dp.getBuyHigh() + dp.getBuyLow()
-					+ dp.getSellHigh() + dp.getSellLow()) / 8.0;
+		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
+			return (bh + bl + bo + bc + so + sh + sl + sc) / 8.0f;
 		};
 	}),
 	
 	Typical(new Evaluator() {
-		public double evaluate(CandleDataPoint dp) {
-			return (dp.getSellHigh() + dp.getSellClose() + dp.getSellClose()) / 3.0;
+		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
+			return (sh + sl + sc) / 3.0f;
 		};
 	}),
 	
 	OpenSell(new Evaluator() {
-		public double evaluate(CandleDataPoint dp) {
-			return (dp.getSellOpen());
+		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
+			return (so);
 		};
 	}),
 	
 	CloseSell(new Evaluator() {
-		public double evaluate(CandleDataPoint dp) {
-			return (dp.getSellClose());
+		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
+			return (sc);
 		};
 	});
 	
@@ -41,11 +38,20 @@ public enum CandleValueModel {
 		this.evaluator = evaluator;
 	}
 
-	public double evaluate(CandleDataPoint dp) {
+	public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
+		return evaluator.evaluate(bo, bh, bl, bc, so, sh, sl, sc);
+	}
+	
+	public float evaluate(CandleDataPoint dp) {
 		return evaluator.evaluate(dp);
 	}
+}
 
-	interface Evaluator {
-		double evaluate(CandleDataPoint dp);
+abstract class Evaluator {
+	
+	float evaluate(CandleDataPoint dp) {
+		return evaluate((float)dp.getBuyOpen(), (float)dp.getBuyHigh(), (float)dp.getBuyLow(), (float)dp.getBuyClose(), (float)dp.getSellOpen(), (float)dp.getSellHigh(), (float)dp.getSellLow(), (float)dp.getSellClose());
 	}
+	
+	abstract float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc);
 }
