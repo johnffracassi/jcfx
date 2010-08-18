@@ -41,10 +41,10 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 		add(tabbedPane, BorderLayout.CENTER);
 
 		// add the tabs
+		tabbedPane.add(optimiser.getView(), "Optimiser");
 		tabbedPane.add(chart.getView(), "Chart View");
 		tabbedPane.add(orderBook.getView(), "Order Book");
-		tabbedPane.add(optimiser.getView(), "Optimiser");
-		tabbedPane.add(dataDisplay.getView(), "Data");
+		tabbedPane.add(dataDisplay.getView(), "Candle Data");
 
 		// add the config panel at the bottom of the screen
 		config = new TimeStrategyConfigView(this);
@@ -83,7 +83,7 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 		
 		// perform the test, get the order book
 		TimeStrategy strategy = new TimeStrategy(1, config.getParams());
-		strategy.execute(candles);
+		strategy.execute(candles, new IndicatorCache());
 
 		// update the controllers
 		OrderBook orders = strategy.getOrderBook();

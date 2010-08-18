@@ -18,12 +18,14 @@ public class NewCandleChartAction extends AbstractAction {
 	private static final long serialVersionUID = 7750607693375928071L;
 
 	public NewCandleChartAction() {
+		
 		putValue(SHORT_DESCRIPTION, "New Chart");
 		putValue(LONG_DESCRIPTION, "Create a new strategy set");
 		putValue(NAME, "New Chart");
 	}
 
 	public void actionPerformed(ActionEvent ev) {
+		
 		Instrument instrument = Instrument.valueOf(AppCtx.getPersistent("newChart.instrument"));
 		FXDataSource dataSource = FXDataSource.valueOf(AppCtx.getPersistent("newChart.dataSource"));
 		Period period = Period.valueOf(AppCtx.getPersistent("newChart.period"));

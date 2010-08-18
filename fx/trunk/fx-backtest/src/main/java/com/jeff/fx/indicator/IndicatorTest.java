@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
+import com.jeff.fx.backtest.strategy.time.IndicatorCache;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataResponse;
 import com.jeff.fx.common.CandleValueModel;
@@ -33,11 +34,12 @@ public class IndicatorTest {
 		try {
 			CandleDataResponse cdr = app.dataManager.loadCandles(request);
 			CandleCollection cc = cdr.getCandles();
-			SimpleMovingAverage sma = new SimpleMovingAverage(14, CandleValueModel.Typical);
-			sma.calculate(cc);
 			
-			for(int i=0; i<sma.getLength(); i++) {
-				System.out.println(i + ") " + cc.getCandle(i) + " - " + sma.getValue(i));
+			SimpleMovingAverage sma7 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(7, CandleValueModel.Typical), cc);
+			SimpleMovingAverage sma28 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(28, CandleValueModel.Typical), cc);
+			
+			for(int i=0; i<cc.getCandleCount(); i++) {
+				System.out.println(i + ") " + cc.getCandle(i) + " - sma(7)=" + sma7.getValue(i) + "/" + sma7.getDirection(i) + " sma(28)=" + sma28.getValue(i) + "/" + sma7.getDirection(i));
 			}
 			
 		} catch (IOException e) {

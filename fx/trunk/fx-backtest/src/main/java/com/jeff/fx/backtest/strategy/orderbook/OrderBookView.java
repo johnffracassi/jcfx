@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import net.miginfocom.swing.MigLayout;
+
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTable;
 
@@ -25,8 +27,8 @@ public class OrderBookView extends JXPanel {
 	
 	public OrderBookView() {
 	
-		setLayout(new BorderLayout());
-
+		setLayout(new MigLayout("", "[grow,fill][250px,fill]", "[grow,fill]"));
+		
 		tblBook = new JXTable(bookTableModel);
 		tblBook.setColumnControlVisible(true);
 		tblBook.getColumnModel().getColumn(1).setCellRenderer(new LocalDateTimeCellRenderer());
@@ -38,21 +40,27 @@ public class OrderBookView extends JXPanel {
 		tblBook.getColumnModel().getColumn(9).setCellRenderer(new PriceCellRenderer(4));
 		tblBook.getColumnModel().getColumn(10).setCellRenderer(new ProfitCellRenderer(2));
 		tblBook.getColumnModel().getColumn(11).setCellRenderer(new ProfitCellRenderer(0));
+		
 		JScrollPane sp1 = new JScrollPane(tblBook);
-		JXPanel p1 = new JXPanel(new BorderLayout());
-		p1.add(sp1, BorderLayout.CENTER);
+		JXPanel pnlTable = new JXPanel(new BorderLayout());
+		pnlTable.add(sp1, BorderLayout.CENTER);
+		pnlTable = GUIUtil.frame("Orders", pnlTable);
 		sp1.setPreferredSize(new Dimension(640, 200));
 		sp1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		tblReport = new JXTable(reportTableModel);
 		JScrollPane sp2 = new JScrollPane(tblReport);
-		JXPanel p2 = new JXPanel(new BorderLayout());
-		p2.add(sp2, BorderLayout.CENTER);
+		JXPanel pnlReport = new JXPanel(new BorderLayout());
+		BorderLayout bl_pnlReport = (BorderLayout) pnlReport.getLayout();
+		bl_pnlReport.setVgap(3);
+		bl_pnlReport.setHgap(3);
+		pnlReport.add(sp2, BorderLayout.CENTER);
+		pnlReport = GUIUtil.frame("Report", pnlReport);
 		sp2.setPreferredSize(new Dimension(240, 200));
 		sp2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
-		add(GUIUtil.frame("Orders", p1), BorderLayout.CENTER);
-		add(GUIUtil.frame("Report", p2), BorderLayout.EAST);
+		add(pnlTable);
+		add(pnlReport);
 	}
 	
 	public JXTable getTblBook() {

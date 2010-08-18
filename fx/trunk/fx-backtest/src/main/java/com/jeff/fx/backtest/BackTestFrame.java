@@ -34,7 +34,6 @@ public class BackTestFrame extends JXFrame {
 	@Autowired private ClearCacheAction clearCacheAction;	
 	@Autowired private ExitAction exitAction;	
 	@Autowired private AboutAction aboutAction;
-	@Autowired private NewCandleChartAction newCandleChartAction;
 	@Autowired private NewTimeStrategyChartAction newTimeStrategyChartAction;
 	
 	/**
@@ -51,6 +50,9 @@ public class BackTestFrame extends JXFrame {
 		
 		DatasetDefinitionPanel ddp = new DatasetDefinitionPanel("newChart");
 		pnlWest.add(GUIUtil.frame("Dataset", ddp));
+		
+		AppPrefsController appPrefsController = new AppPrefsController();
+		pnlWest.add(GUIUtil.frame("Preferences", appPrefsController.getView()));
 
 		// add left and right components
         add(tabs, BorderLayout.CENTER);
@@ -71,8 +73,6 @@ public class BackTestFrame extends JXFrame {
 	private JToolBar buildToolBar() {
 		
         JToolBar toolBar = new JToolBar("Main");
-        toolBar.add(aboutAction);
-        toolBar.add(newCandleChartAction);
         toolBar.add(newTimeStrategyChartAction);
         return toolBar;
 	}

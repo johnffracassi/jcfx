@@ -11,7 +11,7 @@ public class PEnumComboBox<T extends Enum<T>> extends PComboBox {
 		super(key);
 		this.type = enumClass;
 		
-		setValues(values());
+		setValues((Object[])values());
 	}
 	
 	@SuppressWarnings("unchecked")

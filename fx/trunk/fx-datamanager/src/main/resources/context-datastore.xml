@@ -9,13 +9,14 @@
        		http://www.springframework.org/schema/context
        		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
+
 	<context:component-scan base-package="com.jeff.fx.datastore" />
 	<context:component-scan base-package="com.jeff.fx.datasource" />
 
 
 	<!-- ====== Data store setup ================================================================================ -->
 	<bean id="candleWeekFileLocator" class="com.jeff.fx.datastore.file.CandleWeekFileLocator">
-		<property name="dataRoot" value="/temp/fx/cache/store" />
+		<property name="dataRoot" value="../cache/store" />
 		<property name="filenamePattern" value="/ser/%s/%s/y%04d/m%02d/d%02d" />
 		<property name="extension" value="ser" />
 	</bean>
@@ -32,7 +33,7 @@
 	</bean>
 	
 	<bean id="cacheDownloader" class="com.jeff.fx.datasource.CachedDownloader">
-		<property name="cacheRoot" value="cache/download" />
+		<property name="cacheRoot" value="../cache/download" />
 	</bean>
 	
 	<bean id="internetDownloader" class="com.jeff.fx.datasource.DownloaderImpl">
