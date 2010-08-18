@@ -34,8 +34,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 	private volatile boolean running = false;
 
 	// shared
-	@SuppressWarnings("rawtypes") 
-	private List<OptimiserParameter> params;
+	private List<OptimiserParameter<?,?>> params;
 	private Permutator permutator;
 	
 	// used by manager

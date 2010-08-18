@@ -21,8 +21,7 @@ public class SingleThreadedExecutor implements OptimiserExecutor {
 	
 	public void run(final CandleCollection candles, final OptimiserView view) {
 		
-		@SuppressWarnings("rawtypes")
-		List<OptimiserParameter> params = view.getParameters();
+		List<OptimiserParameter<?,?>> params = view.getParameters();
 		
 		// find the number of steps for each param
 		int[] perms = new int[params.size()];
