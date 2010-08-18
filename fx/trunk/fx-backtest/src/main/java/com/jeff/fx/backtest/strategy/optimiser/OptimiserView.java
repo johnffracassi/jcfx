@@ -140,7 +140,7 @@ public class OptimiserView extends JPanel {
 		reportScrollPane.setViewportView(tblReport);
 	}
 
-	public List<OptimiserParameter> getParameters() {
+	public List<OptimiserParameter<?,?>> getParameters() {
 		return paramModel.getParameters();
 	}
 	

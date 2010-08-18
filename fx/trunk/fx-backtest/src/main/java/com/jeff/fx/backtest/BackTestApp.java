@@ -3,7 +3,6 @@ package com.jeff.fx.backtest;
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
-import org.jfree.chart.ChartPanel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

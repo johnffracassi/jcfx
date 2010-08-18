@@ -21,6 +21,7 @@ public class SingleThreadedExecutor implements OptimiserExecutor {
 	
 	public void run(final CandleCollection candles, final OptimiserView view) {
 		
+		@SuppressWarnings("rawtypes")
 		List<OptimiserParameter> params = view.getParameters();
 		
 		// find the number of steps for each param
@@ -55,7 +56,7 @@ public class SingleThreadedExecutor implements OptimiserExecutor {
 			
 			// build the test
 			final TimeStrategy test = new TimeStrategy(i, map);
-			test.execute(candles);
+//			test.execute(candles);
 			
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {

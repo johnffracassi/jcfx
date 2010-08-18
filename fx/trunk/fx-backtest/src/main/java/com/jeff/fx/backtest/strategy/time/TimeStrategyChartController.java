@@ -1,12 +1,10 @@
 package com.jeff.fx.backtest.strategy.time;
 
-import org.apache.log4j.Logger;
-
 import com.jeff.fx.backtest.engine.OrderBook;
 
 public class TimeStrategyChartController {
 	
-	private static Logger log = Logger.getLogger(TimeStrategyChartController.class);
+//	private static Logger log = Logger.getLogger(TimeStrategyChartController.class);
 
 	private TimeStrategyChartView view = new TimeStrategyChartView();
 	private TimeStrategyChartModel model = new TimeStrategyChartModel();
