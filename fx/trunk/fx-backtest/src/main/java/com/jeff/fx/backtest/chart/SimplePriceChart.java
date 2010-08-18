@@ -63,17 +63,18 @@ public class SimplePriceChart extends JPanel {
     	XYSeriesCollection dataset = new XYSeriesCollection(s1);
         
         final JFreeChart chart = ChartFactory.createXYLineChart(
-                "Price Chart",      // chart title
-                "Date",                   // x axis label
-                "Price",                  // y axis label
-                dataset,                  // data
+                null,    // chart title
+                null,    // x axis label
+                null,    // y axis label
+                dataset, // data
                 PlotOrientation.VERTICAL,
-                false,                     // include legend
-                true,                     // tooltips
-                false                     // urls
+                false,   // include legend
+                true,    // tooltips
+                false    // urls
             ); 
 
-        chart.getXYPlot().getRangeAxis().setRange(low * 0.9995, high * 1.0005);
+        chart.getXYPlot().getRangeAxis().setRange(low * 0.999, high * 1.001);
+        chart.getXYPlot().getDomainAxis().setTickLabelsVisible(false);
         
         return chart;
     }

@@ -17,6 +17,8 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
+import com.jeff.fx.gui.GUIUtil;
+
 @SuppressWarnings("serial")
 public class TimeStrategyChartView extends JXPanel {
 	
@@ -31,7 +33,7 @@ public class TimeStrategyChartView extends JXPanel {
 		
 		try {
 			chartPanel = new ChartPanel(createChart());
-			add(chartPanel, BorderLayout.CENTER);
+			add(GUIUtil.frame("Balance Chart", chartPanel), BorderLayout.CENTER);
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
@@ -52,7 +54,7 @@ public class TimeStrategyChartView extends JXPanel {
 		
 		// build the new chart
         chart = ChartFactory.createTimeSeriesChart(
-            "Balance Chart", "Date", "Value", dataset, true, true, false
+            null, "Date", "Value", dataset, false, false, false
         );
         
 		chart.setBackgroundPaint(Color.white);

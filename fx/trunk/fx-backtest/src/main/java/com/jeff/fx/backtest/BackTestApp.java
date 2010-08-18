@@ -3,11 +3,13 @@ package com.jeff.fx.backtest;
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
+import org.jfree.chart.ChartPanel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
+import com.jeff.fx.backtest.chart.EnhancedCandleChart;
 import com.jeff.fx.backtest.chart.NewCandleChartEvent;
 import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartEvent;
 import com.jeff.fx.backtest.strategy.time.StrategyView;
@@ -43,6 +45,7 @@ public class BackTestApp {
 		log.info("Starting application");
 		
 		try {
+			log.debug("Setting application look and feel");
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			UIManager.put("Slider.paintValue", false);
 		} catch (Exception e) {
@@ -60,8 +63,8 @@ public class BackTestApp {
 					Instrument instrument = Instrument.valueOf(AppCtx.getPersistent("newChart.instrument"));
 					Period period = Period.valueOf(AppCtx.getPersistent("newChart.period"));
 					CandleCollection candles = dataManager.getCandles();
-//					ChartPanel chart = CandleChart.createChart(instrument + " (" + period.key + ")", candles);
-//					frame.addMainPanel(chart, instrument + " (" + period.key + ")");
+					EnhancedCandleChart chart = new EnhancedCandleChart(candles);
+					frame.addMainPanel(chart, instrument + " (" + period.key + ")");
 				} catch(Exception ex) {
 					ex.printStackTrace();
 				}
@@ -75,7 +78,7 @@ public class BackTestApp {
 				tsv.initialise();
 			}
 		});
-		
+
 		log.info("Application initialised");
 	}
 }

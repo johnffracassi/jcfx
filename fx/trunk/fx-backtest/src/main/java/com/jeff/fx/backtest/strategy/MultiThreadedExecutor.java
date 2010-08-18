@@ -18,6 +18,7 @@ import com.jeff.fx.backtest.strategy.optimiser.OptimiserParameter;
 import com.jeff.fx.backtest.strategy.optimiser.OptimiserReportRow;
 import com.jeff.fx.backtest.strategy.optimiser.OptimiserView;
 import com.jeff.fx.backtest.strategy.optimiser.Permutator;
+import com.jeff.fx.backtest.strategy.time.IndicatorCache;
 import com.jeff.fx.backtest.strategy.time.TimeStrategy;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.TimeOfWeek;
@@ -63,7 +64,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		// get the parameters for the executor
 		threadCount = AppCtx.getPersistentInt("multiThreadExecutor.threads");
 		jobSize = AppCtx.getPersistentInt("multiThreadExecutor.blockSize");
-		
+
 		// execute the tests asynchronously
 		Manager manager = new Manager(candles, permutator.getPermutationCount());
 		manager.run();
@@ -92,6 +93,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		
 		// total number of jobs completed 
 		private volatile int completedCount = 0;
+		private volatile boolean firstEntry = true;
 		
 		// start time of the batch (in nano seconds)
 		private volatile long start = 0;
@@ -99,15 +101,19 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		// total number of permutations, including discarded & invalid permutations
 		private final int permutations;
 		
-		private final Object jobAllocationSemaphore = new Object();
-		private final Object counterSemaphore = new Object();
-
 		// all candles required for the batch
-		private CandleCollection candles;
+		private volatile CandleCollection candles;
+		
+		// all indicators required for the batch
+		private volatile IndicatorCache indicators = new IndicatorCache();
 		
 		// worker threads. probably should be pooled?
-		private ThreadGroup workerGroup;
-		private List<WorkerThread> workerList = new ArrayList<MultiThreadedExecutor.Manager.WorkerThread>();
+		private volatile ThreadGroup workerGroup;
+		private volatile List<WorkerThread> workerList = new ArrayList<MultiThreadedExecutor.Manager.WorkerThread>();
+
+		// semaphores
+		private final Object jobAllocationSemaphore = new Object();
+		private final Object counterSemaphore = new Object();
 		
 		public Manager(CandleCollection candles, int permutations) {
 			
@@ -116,6 +122,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 			this.candles = candles;
 			this.permutations = permutations;
 
+			// create and execute workers
 			workerGroup = new ThreadGroup("executor");
 			for(int w=0; w<threadCount; w++) {
 				workerList.add(new WorkerThread(workerGroup, workerGroup.getName() + "-" + (w+1)));
@@ -191,7 +198,9 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 			}
 		}
 		
-
+		/**
+		 * 
+		 */
 		class WorkerThread extends Thread {
 			
 			public WorkerThread(ThreadGroup group, String name) {
@@ -237,7 +246,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 				// build the test
 				final TimeStrategy test = new TimeStrategy(idx, map);
 				if(test.isTestValid()) {
-					test.execute(candles);
+					test.execute(candles, indicators);
 				}
 				
 				// check the report and add if interesting
@@ -246,6 +255,11 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 					SwingUtilities.invokeLater(new Runnable() {
 						public void run() {
 							view.getReportModel().addRow(new OptimiserReportRow(test.getId(), report, map));
+							
+							if(firstEntry) {
+//								view.getTblResults().packAll();
+								firstEntry = false;
+							}
 						}
 					});
 				}

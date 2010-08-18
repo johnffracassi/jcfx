@@ -10,14 +10,14 @@ public class BTOrder {
 	private int id;
 	private Instrument instrument;
 	private OfferSide offerSide;
+	private LocalDateTime openTime;
+	private LocalDateTime closeTime;
+	private OrderCloseType closeType = OrderCloseType.Open;
 	private double units;
 	private double openPrice;
 	private double closePrice;
 	private double stopLoss;
 	private double takeProfit;
-	private LocalDateTime openTime;
-	private LocalDateTime closeTime;
-	private OrderCloseType closeType = OrderCloseType.Open;
 
 	public double getProfit() {
 		if(offerSide == OfferSide.Ask) {

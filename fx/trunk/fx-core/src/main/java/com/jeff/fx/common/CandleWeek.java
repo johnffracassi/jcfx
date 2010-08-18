@@ -19,6 +19,9 @@ public class CandleWeek implements Serializable {
 	private float[][] sell;
 	private int[][] volumes;
 	
+	private float highPrice = Float.MIN_VALUE;
+	private float lowPrice = Float.MAX_VALUE;
+	
 	private boolean complete;
 	private int startIdx;
 	private int endIdx;
@@ -43,6 +46,10 @@ public class CandleWeek implements Serializable {
 		buy = new float[4][periodsInWeek];
 		sell = new float[4][periodsInWeek];
 		volumes = new int[2][periodsInWeek];
+	}
+	
+	public float[] getRawValues(int price) {
+		return sell[price];
 	}
 	
 	public int getCandleIndex(TimeOfWeek tow) {
@@ -231,6 +238,13 @@ public class CandleWeek implements Serializable {
 			sell[3][idx] = (float)candle.getSellClose();
 			volumes[0][idx] = (int)candle.getBuyVolume();
 			volumes[1][idx] = (int)candle.getSellVolume();
+			
+			if(buy[HIGH][idx] > highPrice) {
+				highPrice = buy[HIGH][idx];
+			} 
+			if(sell[LOW][idx] < lowPrice) {
+				lowPrice = sell[LOW][idx];
+			}
 		}
 	}
 	
@@ -246,6 +260,7 @@ public class CandleWeek implements Serializable {
 		candle.setDataSource(dataSource);
 		candle.setInstrument(instrument);
 		candle.setPeriod(period);
+		candle.setDateTime(indexToDateTime(idx));
 		candle.setBuyOpen(buy[0][idx]);
 		candle.setBuyHigh(buy[1][idx]);
 		candle.setBuyLow(buy[2][idx]);
@@ -258,10 +273,12 @@ public class CandleWeek implements Serializable {
 		candle.setSellVolume(volumes[1][idx]);
 		candle.setTickCount(0);
 		
-		LocalDateTime dateTime = new LocalDateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(), 0, 0, 0);
-		candle.setDateTime(dateTime.plusMillis((int)((startIdx + idx) * period.getInterval())));
-		
 		return candle;
+	}
+	
+	public LocalDateTime indexToDateTime(int idx) {
+		LocalDateTime dateTime = new LocalDateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(), 0, 0, 0);
+		return (dateTime.plusMillis((int)((startIdx + idx) * period.getInterval())));
 	}
 	
 	public int getCandleCount() {
@@ -290,5 +307,13 @@ public class CandleWeek implements Serializable {
 	
 	public Period getPeriod() {
 		return period;
+	}
+
+	public float getHighPrice() {
+		return highPrice;
+	}
+
+	public float getLowPrice() {
+		return lowPrice;
 	}
 }

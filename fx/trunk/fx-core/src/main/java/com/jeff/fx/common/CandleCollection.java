@@ -1,10 +1,13 @@
 package com.jeff.fx.common;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.Weeks;
 
 import com.jeff.fx.util.DateUtil;
 
@@ -15,16 +18,69 @@ public class CandleCollection {
 	private LocalDate end;
 	private Period period;
 	private int periodsInWeek;
+	private float highPrice = Float.MIN_VALUE;
+	private float lowPrice = Float.MAX_VALUE;
 	
 	public CandleCollection() {
 		weeks = new ArrayList<CandleWeek>();
 	}
-
+	
 	public CandleCollection(CandleWeek cw) {
+		
 		this();
+		
 		putCandleWeek(cw);
 		period = cw.getPeriod();
 		periodsInWeek = cw.getCandleCount();
+	}
+	
+	public float[] getRawValues(CandleValueModel model) {
+		float[] data = new float[getCandleCount()];
+		for(int i=0; i<data.length; i++) {
+			data[i] = getPrice(i, model);
+		}
+		return data;
+	}
+	
+	public float[] getRawValues(int price) {
+		
+		float[] data = new float[getCandleCount()];
+		
+		for(int i=0; i<weeks.size(); i++) {
+			CandleWeek week = weeks.get(i);
+			for(int j=0; j<week.getRawValues(price).length; j++) {
+				data[i * periodsInWeek + j] = week.getRawValues(price)[j];				                                                       
+			}
+		}
+		
+		return data;		
+	}
+	
+	public Date[] getRawCandleDates() {
+
+		Date[] dates = new Date[getCandleCount()];
+		for(int i=0; i<weeks.size(); i++) {
+			CandleWeek cw = weeks.get(i);
+			LocalDateTime ldt = cw.getCandle(0).getDate();
+			for(int j=0; j<periodsInWeek; j++) {
+				dates[i * periodsInWeek + j] = ldt.plusMillis((int)(j * period.getInterval())).toDateTime().toDate();
+			}
+		}
+		return dates;		
+	}
+	
+	public double[] getRawValuesAsDouble(int price) {
+		
+		double[] data = new double[getCandleCount()];
+		
+		for(int i=0; i<weeks.size(); i++) {
+			CandleWeek week = weeks.get(i);
+			for(int j=0; j<week.getRawValues(price).length; j++) {
+				data[i * periodsInWeek + j] = week.getRawValues(price)[j];				                                                       
+			}
+		}
+		
+		return data;		
 	}
 	
 	private int getWeekIdx(int idx) {
@@ -66,6 +122,13 @@ public class CandleCollection {
 			period = cw.getPeriod();
 			periodsInWeek = cw.getCandleCount();
 		}
+		
+		if(cw.getHighPrice() > highPrice) {
+			highPrice = cw.getHighPrice();
+		}
+		if(cw.getLowPrice() < lowPrice) {
+			lowPrice = cw.getLowPrice();
+		}
 	}
 
 	public LocalDate getStart() {
@@ -90,5 +153,19 @@ public class CandleCollection {
 
 	public CandleWeek getCandleWeek(int week) {
 		return weeks.get(week);
+	}
+
+	public float getHighPrice() {
+		return highPrice;
+	}
+
+	public float getLowPrice() {
+		return lowPrice;
+	}
+
+	public int getCandleIndex(LocalDateTime ldt) {
+		int weekIdx = Weeks.weeksBetween(start, ldt).getWeeks();
+		int candleIdx = getCandleWeek(weekIdx).getCandleIndex(ldt);
+		return weekIdx * periodsInWeek + candleIdx;
 	}
 }

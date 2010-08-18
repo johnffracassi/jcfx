@@ -1,5 +1,6 @@
 package com.jeff.fx.backtest.engine;
 
+import com.jeff.fx.backtest.strategy.time.IndicatorCache;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.OfferSide;
@@ -36,7 +37,7 @@ public abstract class AbstractStrategy {
 	 * Execute the test with all strategies
 	 * @param cc
 	 */
-	public abstract void execute(CandleCollection cc);
+	public abstract void execute(CandleCollection cc, IndicatorCache indicators);
 	
 	/**
 	 * 

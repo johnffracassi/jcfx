@@ -59,6 +59,7 @@ public class OptimiserController {
 	}
 	
 	public void runOptimiser() {
+		
 		SwingWorker<Object,Object> worker = new SwingWorker<Object, Object>() {
 			protected Object doInBackground() throws Exception {
 				view.getReportModel().reset();

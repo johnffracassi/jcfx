@@ -15,6 +15,8 @@ import org.jdesktop.swingx.JXTable;
 import org.jfree.chart.ChartPanel;
 
 import com.jeff.fx.gui.GUIUtil;
+import javax.swing.border.EmptyBorder;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
@@ -36,7 +38,6 @@ public class CandleDataView extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSplitPane1 = new javax.swing.JSplitPane();
         pnlData = new javax.swing.JPanel();
         pnlActions = new javax.swing.JPanel();
         btnPrevWeek = new javax.swing.JButton();
@@ -46,6 +47,7 @@ public class CandleDataView extends javax.swing.JPanel {
         table = new JXTable();
         pnlDetails = new javax.swing.JPanel();
         pnlSummary = new javax.swing.JPanel();
+        pnlSummary.setBorder(new EmptyBorder(5, 5, 5, 5));
         jLabel7 = new javax.swing.JLabel();
         lblDetails = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -60,8 +62,6 @@ public class CandleDataView extends javax.swing.JPanel {
         lblPriceRange = new javax.swing.JLabel();
         pnlChart = new javax.swing.JPanel();
         pnlChart.setLayout(new BorderLayout());
-
-        setLayout(new java.awt.BorderLayout());
 
         pnlData.setLayout(new java.awt.BorderLayout());
 
@@ -85,23 +85,9 @@ public class CandleDataView extends javax.swing.JPanel {
         pnlActions.add(btnDone);
 
         pnlData.add(pnlActions, java.awt.BorderLayout.SOUTH);
-
-        table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
         scrollPane.setViewportView(table);
 
         pnlData.add(scrollPane, java.awt.BorderLayout.CENTER);
-
-        jSplitPane1.setLeftComponent(GUIUtil.frame("Candles", pnlData));
 
         pnlDetails.setLayout(new java.awt.BorderLayout());
 
@@ -142,13 +128,15 @@ public class CandleDataView extends javax.swing.JPanel {
 
         lblPriceRange.setText("+84");
         pnlSummary.add(lblPriceRange);
+        setLayout(new MigLayout("", "[600px:n,grow 20][250:n,grow 80]", "[160][grow,fill]"));
 
-        pnlDetails.add(GUIUtil.frame("Dataset Summary", pnlSummary), java.awt.BorderLayout.NORTH);
-        pnlDetails.add(GUIUtil.frame("Price History", pnlChart), java.awt.BorderLayout.CENTER);
+        pnlSummary = GUIUtil.frame("Dataset Summary", pnlSummary);
+        pnlChart = GUIUtil.frame("Price History", pnlChart);
+        pnlData = GUIUtil.frame("Candle Data", pnlData);
 
-        jSplitPane1.setRightComponent(pnlDetails);
-
-        add(jSplitPane1, java.awt.BorderLayout.CENTER);
+        add(pnlSummary, "cell 1 0,grow");
+        add(pnlChart, "cell 1 1,grow");
+        add(pnlData, "cell 0 0 1 2,grow");
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoneActionPerformed
@@ -170,7 +158,6 @@ public class CandleDataView extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JLabel lblCandleCount;
     private javax.swing.JLabel lblCloseTime;
     private javax.swing.JLabel lblDetails;
