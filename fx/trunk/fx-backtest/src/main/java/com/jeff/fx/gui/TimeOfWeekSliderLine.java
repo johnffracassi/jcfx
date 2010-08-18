@@ -27,9 +27,6 @@ public class TimeOfWeekSliderLine extends JXPanel {
 	
 	public TimeOfWeekSliderLine(final String key, final String label, final int startValue, final int endValue) {
 		
-		int minutes = 1440 * 7;
-		int ticks = minutes / multiplier - 1;
-		
 		final JXLabel lblLabel = new JXLabel(label);
 		final JXLabel lblValue = new JXLabel(String.valueOf(new TimeOfWeek()));
 		slider = new JSlider(1320/multiplier, 8460/multiplier);

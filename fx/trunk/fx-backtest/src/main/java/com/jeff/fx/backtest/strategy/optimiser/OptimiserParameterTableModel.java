@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 @SuppressWarnings("serial")
 public class OptimiserParameterTableModel extends DefaultTableModel {
 
-	private List<OptimiserParameter> params = new ArrayList<OptimiserParameter>();
+	private List<OptimiserParameter<?,?>> params = new ArrayList<OptimiserParameter<?,?>>();
 	
 	public OptimiserParameterTableModel() {
 		addParameter(new OPInteger("stopLoss", 0, 300, 150));
@@ -19,7 +19,7 @@ public class OptimiserParameterTableModel extends DefaultTableModel {
 		addParameter(new OPOfferSide("offerSide"));
 	}
 	
-	public void addParameter(OptimiserParameter param) {
+	public void addParameter(OptimiserParameter<?,?> param) {
 		params.add(param);
 	}
 	
@@ -51,7 +51,7 @@ public class OptimiserParameterTableModel extends DefaultTableModel {
 		if(row == params.size()) {
 			if(col == 4) {
 				int perms = 1;
-				for(OptimiserParameter param : params) {
+				for(OptimiserParameter<?,?> param : params) {
 					perms *= param.getStepCount();
 				}
 				return perms;
@@ -75,6 +75,7 @@ public class OptimiserParameterTableModel extends DefaultTableModel {
 		return (col != 0 && col != 4 && row != params.size());
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void setValueAt(Object val, int row, int col) {
 		
 		if(col == 0 || col == 4 || row == params.size()) {
@@ -95,11 +96,11 @@ public class OptimiserParameterTableModel extends DefaultTableModel {
 		fireTableCellUpdated(params.size(), 4);
 	}
 
-	public List<OptimiserParameter> getParameters() {
+	public List<OptimiserParameter<?,?>> getParameters() {
 		return params;
 	}
 
-	public void setParams(List<OptimiserParameter> params) {
+	public void setParams(List<OptimiserParameter<?,?>> params) {
 		this.params = params;
 	}
 }

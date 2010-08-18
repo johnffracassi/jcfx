@@ -1,8 +1,5 @@
 package com.jeff.fx.backtest;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.UIManager;
-
 public class AppPrefsController {
 	
 	private AppPrefsPanel view;

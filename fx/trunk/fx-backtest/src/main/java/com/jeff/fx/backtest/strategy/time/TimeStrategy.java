@@ -2,7 +2,6 @@ package com.jeff.fx.backtest.strategy.time;
 
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.joda.time.LocalDate;
 
 import com.jeff.fx.backtest.engine.AbstractStrategy;
@@ -18,7 +17,7 @@ import com.jeff.fx.indicator.SimpleMovingAverage;
 
 public class TimeStrategy extends AbstractStrategy {
 	
-	private static Logger log = Logger.getLogger(TimeStrategy.class);
+//	private static Logger log = Logger.getLogger(TimeStrategy.class);
 
 	private TimeOfWeek open = null;
 	private TimeOfWeek close = null;
@@ -43,8 +42,8 @@ public class TimeStrategy extends AbstractStrategy {
 	
 	public void execute(CandleCollection candles, IndicatorCache indicators) {
 
-		SimpleMovingAverage sma1 = (SimpleMovingAverage)indicators.calculate(new SimpleMovingAverage(15, CandleValueModel.Typical), candles);
-		SimpleMovingAverage sma2 = (SimpleMovingAverage)indicators.calculate(new SimpleMovingAverage(60, CandleValueModel.Typical), candles);
+		SimpleMovingAverage sma1 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(15, CandleValueModel.Typical), candles);
+		SimpleMovingAverage sma2 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(60, CandleValueModel.Typical), candles);
 		
 		if(candles != null && candles.getStart() != null) {
 			

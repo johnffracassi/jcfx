@@ -1,14 +1,16 @@
 package com.jeff.fx.backtest;
 
-import javax.swing.JPanel;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import net.miginfocom.swing.MigLayout;
 
 public class AppPrefsPanel extends JPanel {
 	
+	private static final long serialVersionUID = -8344441518165657902L;
 	private JTextField txtDataStore;
 	private JTextField txtDownloadCache;
 	private JComboBox cboLookAndFeel;

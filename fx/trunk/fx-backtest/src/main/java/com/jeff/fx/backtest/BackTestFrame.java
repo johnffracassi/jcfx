@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 import com.jeff.fx.action.AboutAction;
 import com.jeff.fx.action.ExitAction;
 import com.jeff.fx.backtest.action.ClearCacheAction;
-import com.jeff.fx.backtest.chart.NewCandleChartAction;
 import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartAction;
 import com.jeff.fx.gui.ButtonTabComponent;
 import com.jeff.fx.gui.GUIUtil;
