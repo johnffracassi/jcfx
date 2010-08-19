@@ -5,15 +5,14 @@ package com.jeff.fx.common;
  */
 public enum Period {
 	
-    Tick(TimeUnit.Second, 1, "t"),
-    TenSecond(TimeUnit.Second, 10, "s10"),
+    Tick(TimeUnit.Second, 0, "t"),
     OneMin(TimeUnit.Minute, 1, "m1"),
     FiveMin(TimeUnit.Minute, 5, "m5"),
     TenMin(TimeUnit.Minute, 10, "m10"),
     FifteenMin(TimeUnit.Minute, 15, "m15"),
     ThirtyMin(TimeUnit.Minute, 30, "m30"),
-    OneHour(TimeUnit.Hour, 1, "h1");
-//    FourHour(TimeUnit.Hour, 4, "h4"),
+    OneHour(TimeUnit.Hour, 1, "h1"),
+    FourHour(TimeUnit.Hour, 4, "h4");
 //    Day(TimeUnit.Day, 1, "day"),
 //    Week(TimeUnit.Week, 1, "week"),
 //    Month(TimeUnit.Month, 1, "month");
@@ -29,6 +28,6 @@ public enum Period {
     }
 
     public final long getInterval()     {
-        return this == Tick ? -1 : unit.getInterval() * numOfUnits;
+        return unit.getInterval() * numOfUnits;
     }
 }

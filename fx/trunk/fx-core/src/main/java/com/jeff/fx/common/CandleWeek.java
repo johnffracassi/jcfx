@@ -73,9 +73,10 @@ public class CandleWeek implements Serializable {
 			if(buy[OPEN][i] == 0.0) {
 				if(!isEmptyCandle(i-1) && !isEmptyCandle(i+1)) {
 					// if there are 2 populated surrounding candles
-					merge(i, i-1, i+1);
+					//merge(i, i-1, i+1);
+					copyForward(i, i-1);
 				} else if(!isEmptyCandle(i-1) && isEmptyCandle(i+1) && checkGapSize(i) < 15) {
-					// copy forward (up to 5 candles) if the following candle is also null
+					// copy forward (up to 15 candles) if the following candle is also null
 					copyForward(i, i-1);
 				}
 			}
@@ -173,34 +174,43 @@ public class CandleWeek implements Serializable {
 		// how many source periods in 1 of the target periods
 		int ratio = (int)(target.getInterval() / source.getPeriod().getInterval());
 		
+		LocalDateTime startTime = source.getCandle(0).getDate();
+		
 		// perform the candle merging
 		for(int destIdx=0; destIdx<getCandleCount(); destIdx++) {
 			
 			// map the destination index to the source index
-			int srcIdx = destIdx * ratio;
-			int srcEndIdx = Math.min(srcIdx + ratio - 1, buy[OPEN].length - 1);
-			
-			// get the new open and close values
-			buy[OPEN][destIdx] = source.buy[OPEN][srcIdx];
-			sell[OPEN][destIdx] = source.sell[OPEN][srcIdx];
-			buy[CLOSE][destIdx] = source.buy[CLOSE][srcEndIdx];
-			sell[CLOSE][destIdx] = source.sell[CLOSE][srcEndIdx];
-			
-			// find the high and lows
-			for(int idx=srcIdx; idx<srcEndIdx; idx++) {
+			int srcStartIdx = destIdx * ratio;
+			int srcEndIdx = Math.min(srcStartIdx + ratio - 1, source.buy[OPEN].length - 1);
 
-				if(source.buy[HIGH][idx] > buy[HIGH][destIdx])
-					buy[HIGH][destIdx] = source.buy[HIGH][idx];
-				if(source.sell[HIGH][idx] > sell[HIGH][destIdx])
-					sell[HIGH][destIdx] = source.sell[HIGH][idx];
-				
-				if(source.buy[LOW][idx] < buy[LOW][destIdx] || buy[LOW][destIdx] == 0.0)
-					buy[LOW][destIdx] = source.buy[LOW][idx];
-				if(source.sell[LOW][idx] < sell[LOW][destIdx] || sell[LOW][destIdx] == 0.0)
-					sell[LOW][destIdx] = source.sell[LOW][idx];
-				
-				// TODO add candle volumes
+			// create a new candle
+			CandleDataPoint candle = new CandleDataPoint();
+			candle.setDateTime(startTime.plusMillis((int)(srcStartIdx * 60000)));	
+			candle.setPeriod(target);
+			
+			// get the new open values
+			candle.setBuyOpen(source.buy[OPEN][srcStartIdx]);
+			candle.setSellOpen(source.sell[OPEN][srcStartIdx]);
+
+			// get the new close values
+			candle.setBuyClose(source.buy[CLOSE][srcEndIdx]);
+			candle.setSellClose(source.sell[CLOSE][srcEndIdx]);
+			
+			// find the new high and lows
+			float bh = Float.MIN_VALUE, sh = Float.MIN_VALUE, bl = Float.MAX_VALUE, sl = Float.MAX_VALUE;
+			for(int idx=srcStartIdx; idx<=srcEndIdx; idx++) {
+				if(source.buy[HIGH][idx] > bh) bh = source.buy[HIGH][idx];
+				if(source.sell[HIGH][idx] > sh) sh = source.sell[HIGH][idx];
+				if(source.buy[LOW][idx] < bl) bl = source.buy[LOW][idx];
+				if(source.sell[LOW][idx] < sl) sl = source.sell[LOW][idx];
 			}
+			candle.setBuyHigh(bh);
+			candle.setBuyLow(bl);
+			candle.setSellHigh(sh);
+			candle.setSellLow(sl);
+			
+			// commit the candle
+			setCandle(candle);
 		}
 	}
 	
@@ -226,7 +236,7 @@ public class CandleWeek implements Serializable {
 		int idx = time.periodOfWeek(candle.getPeriod()) - startIdx;
 
 		if(idx < 0 || idx > endIdx - startIdx || idx >= buy[0].length) {
-			log.error("INVALID: #" + idx + "/" + buy[0].length + " = " + candle);
+//			log.error("INVALID: #" + idx + "/" + buy[0].length + " = " + candle);
 		} else {
 			buy[0][idx] = (float)candle.getBuyOpen();
 			buy[1][idx] = (float)candle.getBuyHigh();
