@@ -31,20 +31,24 @@ public class ClearCacheAction extends AbstractAction {
 		
 		if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Are you sure you want to clear the entire data store?", "Confirm", JOptionPane.YES_NO_OPTION)) {
 			
-			SwingWorker<Boolean,Boolean> worker = new SwingWorker<Boolean,Boolean>() {
+			SwingWorker<Exception,Exception> worker = new SwingWorker<Exception,Exception>() {
 				@Override
-				protected Boolean doInBackground() throws Exception {
+				protected Exception doInBackground() throws Exception {
 					log.debug("clearing data store");
-					boolean success = dataManager.clearStoreCache();
-					return success;
+					try {
+						dataManager.clearStoreCache();
+					} catch(Exception ex) {
+						return ex;
+					}
+					return null;
 				}
 				
 				@Override
 				protected void done() {
 					log.debug("cache clear complete");
 					try {
-						if(get() == false) {
-							JOptionPane.showMessageDialog(null, "Clearing of data store failed", "Error", JOptionPane.OK_OPTION);
+						if(get() != null) {
+							JOptionPane.showMessageDialog(null, get().getMessage(), get().getClass().getName(), JOptionPane.OK_OPTION);
 						}
 					} catch(Exception ex) {
 						JOptionPane.showMessageDialog(null, "Clearing of data store failed", ex.getClass().getName(), JOptionPane.OK_OPTION);

@@ -7,6 +7,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import java.awt.Insets;
 
 public class AppPrefsPanel extends JPanel {
 	
@@ -14,6 +19,8 @@ public class AppPrefsPanel extends JPanel {
 	private JTextField txtDataStore;
 	private JTextField txtDownloadCache;
 	private JComboBox cboLookAndFeel;
+	private JButton btnDataStore;
+	private JButton btnDownloadCache;
 
 	/**
 	 * Create the panel.
@@ -26,7 +33,7 @@ public class AppPrefsPanel extends JPanel {
 		add(lblDataStoreLocation, "cell 1 1,alignx left");
 		
 		txtDataStore = new JTextField();
-		add(txtDataStore, "cell 2 1,growx");
+		add(txtDataStore, "flowx,cell 2 1,growx");
 		txtDataStore.setColumns(10);
 		
 		JLabel lblDownloadCache = new JLabel("Download Cache");
@@ -34,7 +41,7 @@ public class AppPrefsPanel extends JPanel {
 		add(lblDownloadCache, "cell 1 2,alignx left");
 		
 		txtDownloadCache = new JTextField();
-		add(txtDownloadCache, "cell 2 2,growx");
+		add(txtDownloadCache, "flowx,cell 2 2,growx");
 		txtDownloadCache.setColumns(10);
 		
 		JLabel lblLookAndFeel = new JLabel("Look and Feel");
@@ -43,6 +50,16 @@ public class AppPrefsPanel extends JPanel {
 		
 		cboLookAndFeel = new JComboBox();
 		add(cboLookAndFeel, "cell 2 3,alignx left");
+		
+		btnDataStore = new JButton("");
+		btnDataStore.setMargin(new Insets(2, 2, 2, 2));
+		btnDataStore.setIcon(new ImageIcon(AppPrefsPanel.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
+		add(btnDataStore, "cell 2 1");
+		
+		btnDownloadCache = new JButton("");
+		btnDownloadCache.setMargin(new Insets(2, 2, 2, 2));
+		btnDownloadCache.setIcon(new ImageIcon(AppPrefsPanel.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
+		add(btnDownloadCache, "cell 2 2");
 
 	}
 
@@ -54,5 +71,11 @@ public class AppPrefsPanel extends JPanel {
 	}
 	public JComboBox getCboLookAndFeel() {
 		return cboLookAndFeel;
+	}
+	public JButton getBtnDataStore() {
+		return btnDataStore;
+	}
+	public JButton getBtnDownloadCache() {
+		return btnDownloadCache;
 	}
 }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -218,13 +219,9 @@ public class CandleDataStore {
 	/**
 	 * wipe the local data store
 	 */
-	public boolean clearStoreCache() {
+	public void clearStoreCache() throws IOException {
 		File storeCacheRoot = new File(fileLocator.getDataRoot());
-		boolean success = storeCacheRoot.delete();
-		if(!success) {
-			log.error("failed to clear store cache");
-		}
-		return success;
+		FileUtils.deleteDirectory(storeCacheRoot);
 	}
 	
 	public Map<FXDataSource, DataSource<CandleDataPoint>> getCandleDataSources() {

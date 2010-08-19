@@ -2,6 +2,7 @@ package com.jeff.fx.backtest;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 import javax.swing.SwingWorker;
 
@@ -47,8 +48,8 @@ public class BackTestDataManager {
 		return response.getCandles();
 	}
 
-	public boolean clearStoreCache() {
-		return dataManager.clearStoreCache();
+	public void clearStoreCache() throws IOException{
+		dataManager.clearStoreCache();
 	}
 	
 	/**

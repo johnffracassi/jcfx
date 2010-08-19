@@ -48,7 +48,12 @@
 		    <version>1.4.0.9</version>
 		</dependency>
 		
-		
+		<dependency>
+		    <groupId>com.miglayout</groupId>
+		    <artifactId>miglayout</artifactId>
+		    <version>3.7.3.1</version>
+		</dependency>
+				
 		<dependency>
 		    <groupId>jfree</groupId>
 		    <artifactId>jfreechart</artifactId>
