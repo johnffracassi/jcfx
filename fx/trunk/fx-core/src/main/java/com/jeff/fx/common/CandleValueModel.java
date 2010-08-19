@@ -20,15 +20,39 @@ public enum CandleValueModel {
 		};
 	}),
 	
-	OpenSell(new Evaluator() {
+	High(new Evaluator() {
+		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
+			return (bh + sh) / 2.0f;
+		};
+	}),
+	
+	Low(new Evaluator() {
+		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
+			return (bl + sl) / 2.0f;
+		};
+	}),
+	
+	SellOpen(new Evaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
 			return (so);
 		};
 	}),
 	
-	CloseSell(new Evaluator() {
+	SellClose(new Evaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
 			return (sc);
+		};
+	}),
+	
+	SellHigh(new Evaluator() {
+		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
+			return (sh);
+		};
+	}),
+	
+	SellLow(new Evaluator() {
+		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
+			return (sl);
 		};
 	});
 	

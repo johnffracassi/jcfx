@@ -1,22 +1,34 @@
 package com.jeff.fx.backtest.chart;
 
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.util.List;
 
 import javax.swing.JScrollBar;
 
 import org.jdesktop.swingx.JXPanel;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.annotations.XYAnnotation;
+import org.jfree.chart.annotations.XYDrawableAnnotation;
+import org.jfree.chart.annotations.XYPointerAnnotation;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.SeriesRenderingOrder;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
-import org.jfree.data.xy.OHLCDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.TextAnchor;
 
 import com.jeff.fx.common.CandleCollection;
+import com.jeff.fx.indicator.IndicatorMarker;
+import com.jeff.fx.indicator.ZigZagIndicator;
 
 public class EnhancedCandleChart extends JXPanel {
 	
@@ -84,7 +96,13 @@ public class EnhancedCandleChart extends JXPanel {
 
     	CandleCollectionDataset ccd = new CandleCollectionDataset("Candles", candles);
     	
-        final JFreeChart chart = createCandlestickChart(ccd, true);
+    	NumberAxis timeAxis = new NumberAxis();
+		NumberAxis valueAxis = new NumberAxis();
+		XYPlot plot = new XYPlot(ccd, timeAxis, valueAxis, null);
+		
+		plot.setRenderer(new CandlestickRenderer());
+		JFreeChart chart = new JFreeChart(null, JFreeChart.DEFAULT_TITLE_FONT, plot, true);
+        timeAxis.setNumberFormatOverride(new DateTranslatingFormat((CandleCollectionDataset)chart.getXYPlot().getDataset()));
         
         // set domain/category/x-axis bounds
         domainAxis = (NumberAxis)chart.getXYPlot().getDomainAxis();
@@ -97,20 +115,31 @@ public class EnhancedCandleChart extends JXPanel {
         rangeAxis.setAutoRangeMinimumSize(0.005);
 
         // add indicators
-        final XYPlot plot = (XYPlot) chart.getPlot();
-        plot.setDataset(1, new TypicalValueDataset("Typical", candles));
+        ZigZagIndicator zzi = new ZigZagIndicator();
+        List<IndicatorMarker> markers = zzi.calculate(candles);
+        XYSeries zzis = new XYSeries("Zig-Zag");
+        for(IndicatorMarker marker : markers) {
+        	
+        	// add point to the line
+        	zzis.add((double)marker.getIndex(), marker.getValue());
+        	
+        	// add marker and label
+            final CircleDrawer cd = new CircleDrawer(Color.red, new BasicStroke(1.0f), null);
+            final XYAnnotation bestBid = new XYDrawableAnnotation(marker.getIndex(), marker.getValue(), 11, 11, cd);
+            plot.addAnnotation(bestBid);
+            final XYPointerAnnotation pointer = new XYPointerAnnotation(marker.getLabel(), marker.getIndex(), marker.getValue(), marker.getLabelLocation() * 3.0 * Math.PI / 4.0);
+            pointer.setBaseRadius(35.0);
+            pointer.setTipRadius(10.0);
+            pointer.setFont(new Font("SansSerif", Font.PLAIN, 9));
+            pointer.setPaint(Color.blue);
+            pointer.setTextAnchor(TextAnchor.HALF_ASCENT_RIGHT);
+            plot.addAnnotation(pointer);        
+        }
+
+        plot.setDataset(1, new XYSeriesCollection(zzis));
         plot.setRenderer(1, new StandardXYItemRenderer());
+        plot.setSeriesRenderingOrder(SeriesRenderingOrder.FORWARD);
         
         return chart;
     }
-
-    private JFreeChart createCandlestickChart(OHLCDataset dataset, boolean legend) {
-    	NumberAxis timeAxis = new NumberAxis();
-		NumberAxis valueAxis = new NumberAxis();
-		XYPlot plot = new XYPlot(dataset, timeAxis, valueAxis, null);
-		plot.setRenderer(new CandlestickRenderer());
-		JFreeChart chart = new JFreeChart(null, JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
-        timeAxis.setNumberFormatOverride(new DateTranslatingFormat((CandleCollectionDataset)chart.getXYPlot().getDataset()));
-		return chart;
-    } 
 }

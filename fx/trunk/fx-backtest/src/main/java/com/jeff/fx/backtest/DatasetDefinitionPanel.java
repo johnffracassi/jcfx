@@ -12,6 +12,7 @@ import org.jdesktop.swingx.JXPanel;
 import org.joda.time.LocalDate;
 
 import com.jeff.fx.backtest.chart.NewCandleChartAction;
+import com.jeff.fx.backtest.chart.NewPriceChartAction;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
@@ -36,8 +37,8 @@ public class DatasetDefinitionPanel extends JXPanel {
 		add(createDateLine("End Date", "endDate"));
 		
 		JXPanel pnlActions = new JXPanel();
-		JXButton btnNewChart = new JXButton(new NewCandleChartAction());
-		pnlActions.add(btnNewChart);
+		pnlActions.add(new JXButton(new NewPriceChartAction()));
+		pnlActions.add(new JXButton(new NewCandleChartAction()));
 		add(pnlActions);
 	}
 	

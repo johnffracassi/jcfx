@@ -17,7 +17,8 @@ public class TypicalValueDataset extends DefaultXYDataset {
 	}
 
 	public double getYValue(int series, int item) {
-		return candles.getPrice(item, CandleValueModel.Typical);
+		double price = candles.getPrice(item, CandleValueModel.Typical);
+		return (price == 0) ? Double.NaN : candles.getPrice(item, CandleValueModel.Typical);
 	}
 	
 	public double getXValue(int series, int item) {
