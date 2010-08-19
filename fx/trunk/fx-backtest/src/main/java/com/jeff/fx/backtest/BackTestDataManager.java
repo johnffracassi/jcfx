@@ -41,9 +41,9 @@ public class BackTestDataManager {
 		// run the data load in a new thread
 		DataLoaderWorker dlw = new DataLoaderWorker(request);
 		
-//		dlw.execute();
-//		CandleDataResponse response = dlw.get();
-		CandleDataResponse response = dlw.doInBackground();
+		dlw.execute();
+		CandleDataResponse response = dlw.get();
+//		CandleDataResponse response = dlw.doInBackground();
 		
 		return response.getCandles();
 	}

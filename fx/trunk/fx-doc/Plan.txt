@@ -2,10 +2,12 @@ Strategy Miner
 ==============
 1. search a chart for all the good buy/sell points
    - find and mark all the local minimums/maximums
+
 2. determine how the indicators performed in the lead up to the optimum price points
    - check the effect of news items/outcomes
    - monitor performance of RSI/CCI/etc... (direction, acceleration, difference)
    - time of day, day of week
+
 
 Data Store Manager
 ====================
@@ -14,6 +16,8 @@ GUI Application to manage the Data Store
 - Show which date ranges, datasources, currency pair are populated
 - Validate data
 
+
 Back tester
 ===========
-
+Todo:
+* Lightweight OptimiserReportRows
