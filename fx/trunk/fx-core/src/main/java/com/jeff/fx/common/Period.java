@@ -8,7 +8,6 @@ public enum Period {
     Tick(TimeUnit.Second, 0, "t"),
     OneMin(TimeUnit.Minute, 1, "m1"),
     FiveMin(TimeUnit.Minute, 5, "m5"),
-    TenMin(TimeUnit.Minute, 10, "m10"),
     FifteenMin(TimeUnit.Minute, 15, "m15"),
     ThirtyMin(TimeUnit.Minute, 30, "m30"),
     OneHour(TimeUnit.Hour, 1, "h1"),

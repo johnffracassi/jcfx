@@ -13,15 +13,15 @@ import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 
 @Component
-public class NewCandleChartAction extends AbstractAction {
+public class NewPriceChartAction extends AbstractAction {
 	
-	private static final long serialVersionUID = 775060769337328071L;
+	private static final long serialVersionUID = 7750607693375928071L;
 
-	public NewCandleChartAction() {
+	public NewPriceChartAction() {
 		
-		putValue(SHORT_DESCRIPTION, "Candle Chart");
-		putValue(LONG_DESCRIPTION, "Create a new candle chart of the dataset");
-		putValue(NAME, "Candle Chart");
+		putValue(SHORT_DESCRIPTION, "Price Chart");
+		putValue(LONG_DESCRIPTION, "Create a new price chart of the dataset");
+		putValue(NAME, "Price Chart");
 	}
 
 	public void actionPerformed(ActionEvent ev) {
@@ -32,7 +32,7 @@ public class NewCandleChartAction extends AbstractAction {
 		LocalDate startDate = AppCtx.getPersistentDate("newChart.startDate");
 		LocalDate endDate = AppCtx.getPersistentDate("newChart.endDate");
 		
-		NewCandleChartEvent ncce = new NewCandleChartEvent(instrument, dataSource, period, startDate, endDate);
-		AppCtx.fireEvent(ncce);
+		NewPriceChartEvent npce = new NewPriceChartEvent(instrument, dataSource, period, startDate, endDate);
+		AppCtx.fireEvent(npce);
 	}
 }

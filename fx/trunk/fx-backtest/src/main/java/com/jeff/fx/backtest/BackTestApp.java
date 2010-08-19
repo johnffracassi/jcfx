@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import com.jeff.fx.backtest.chart.EnhancedCandleChart;
 import com.jeff.fx.backtest.chart.NewCandleChartEvent;
+import com.jeff.fx.backtest.chart.NewPriceChartEvent;
+import com.jeff.fx.backtest.chart.TypicalValueChart;
 import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartEvent;
 import com.jeff.fx.backtest.strategy.time.StrategyView;
 import com.jeff.fx.common.CandleCollection;
@@ -57,12 +59,26 @@ public class BackTestApp {
 		
 		log.info("Registering event listeners");
 		AppCtx.registerEventListener(NewCandleChartEvent.class, new FXActionEventListener() {
-			public void event(com.jeff.fx.backtest.FXActionEvent ev) {
+			public void event(FXActionEvent ev) {
 				try {
 					Instrument instrument = Instrument.valueOf(AppCtx.getPersistent("newChart.instrument"));
 					Period period = Period.valueOf(AppCtx.getPersistent("newChart.period"));
 					CandleCollection candles = dataManager.getCandles();
 					EnhancedCandleChart chart = new EnhancedCandleChart(candles);
+					frame.addMainPanel(chart, instrument + " (" + period.key + ")");
+				} catch(Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});		
+		
+		AppCtx.registerEventListener(NewPriceChartEvent.class, new FXActionEventListener() {
+			public void event(FXActionEvent ev) {
+				try {
+					Instrument instrument = Instrument.valueOf(AppCtx.getPersistent("newChart.instrument"));
+					Period period = Period.valueOf(AppCtx.getPersistent("newChart.period"));
+					CandleCollection candles = dataManager.getCandles();
+					TypicalValueChart chart = new TypicalValueChart(candles);
 					frame.addMainPanel(chart, instrument + " (" + period.key + ")");
 				} catch(Exception ex) {
 					ex.printStackTrace();

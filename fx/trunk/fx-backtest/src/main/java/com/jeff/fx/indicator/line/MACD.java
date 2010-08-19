@@ -18,8 +18,8 @@ public class MACD implements Indicator {
 		emaShort = new ExponentialMovingAverage(ema1);
 		emaLong = new ExponentialMovingAverage(ema2);
 		
-		emaShort.setValueModel(CandleValueModel.OpenSell);
-		emaLong.setValueModel(CandleValueModel.OpenSell);
+		emaShort.setValueModel(CandleValueModel.SellOpen);
+		emaLong.setValueModel(CandleValueModel.SellOpen);
 		
 		this.ema1 = ema1;
 		this.ema2 = ema2;
