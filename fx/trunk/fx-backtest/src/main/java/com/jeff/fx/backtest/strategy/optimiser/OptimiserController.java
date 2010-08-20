@@ -16,7 +16,7 @@ import com.jeff.fx.common.CandleCollection;
 
 public class OptimiserController {
 
-	private ExecutorParametersController epController = new ExecutorParametersController();
+	private ExecutorParametersController executorParametersController = new ExecutorParametersController();
 	private CandleCollection candles;
 	private OptimiserView view;
 	private OptimiserExecutor executor = new MultiThreadedExecutor();
@@ -24,7 +24,7 @@ public class OptimiserController {
 	public OptimiserController(final StrategyView parent) {
 		
 		view = new OptimiserView();
-		epController.setView(view.getPnlExecutorParameters());
+		executorParametersController.setView(view.getPnlExecutorParameters());
 		
 		view.getRunButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -53,8 +53,9 @@ public class OptimiserController {
 			public void tableChanged(TableModelEvent ev) {
 				if(!packed && view.getReportModel().getRowCount() > 0) {
 					view.getReportTable().packAll();
+					System.out.println("packing table...");
 					packed = true;
-				} else { 
+				} else if(view.getReportModel().getRowCount() == 0){ 
 					packed = false;
 				}					
 			}

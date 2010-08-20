@@ -3,6 +3,7 @@ package com.jeff.fx.backtest.action;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,9 @@ public class ApplicationPreferencesAction extends AbstractAction {
 	private AppPrefsController controller;
 	
 	public ApplicationPreferencesAction() {
-		putValue(SHORT_DESCRIPTION, "Application Preferences");
+		super("Application Preferences", new ImageIcon(ApplicationPreferencesAction.class.getResource("/images/application_key.png")));
 		putValue(LONG_DESCRIPTION, "Show the Application Preferences dialog");
-		putValue(NAME, "Application Preferences");
+		putValue(SHORT_DESCRIPTION, "Application Preferences");
 	}
 
 	public void actionPerformed(ActionEvent ev) {

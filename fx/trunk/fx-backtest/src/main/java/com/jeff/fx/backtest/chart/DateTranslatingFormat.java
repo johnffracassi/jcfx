@@ -9,11 +9,16 @@ import java.util.Date;
 public class DateTranslatingFormat extends DecimalFormat {
 	
 	private static final long serialVersionUID = -7724154348969179720L;
-	final CandleCollectionDataset dataset;
-    final DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	private CandleCollectionDataset ccd = null;
+	private TypicalValueDataset tvd = null;
+    private DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     public DateTranslatingFormat(CandleCollectionDataset ds) {
-        dataset = ds;
+        ccd = ds;
+    }
+    
+    public DateTranslatingFormat(TypicalValueDataset ds) {
+        tvd = ds;
     }
     
     public StringBuffer format(double number, StringBuffer toAppendTo, FieldPosition pos) {
@@ -21,7 +26,7 @@ public class DateTranslatingFormat extends DecimalFormat {
     	if (Double.isNaN(number))
             return toAppendTo;
         
-        double timeval = dataset.getDisplayXValue(0, (int)number);
+        double timeval = ccd != null ? ccd.getDisplayXValue(0, (int)number) : tvd.getDisplayXValue(0, (int)number);
         if (Double.isNaN(timeval))
             return toAppendTo;
         

@@ -3,6 +3,7 @@ package com.jeff.fx.backtest.action;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
@@ -21,10 +22,13 @@ public class ClearCacheAction extends AbstractAction {
 	@Autowired
 	private BackTestDataManager dataManager;
 	
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public ClearCacheAction() {
-		putValue(SHORT_DESCRIPTION, "Clear Cache");
+		super("Clear Cache", new ImageIcon(ClearCacheAction.class.getResource("/images/bomb.png")));
 		putValue(LONG_DESCRIPTION, "Clear the data store cache");
-		putValue(NAME, "Clear Cache");
+		putValue(SHORT_DESCRIPTION, "Clear Cache");
 	}
 
 	public void actionPerformed(ActionEvent ev) {

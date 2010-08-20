@@ -19,6 +19,7 @@ import org.jdesktop.swingx.JXTable;
 import com.jeff.fx.gui.GUIUtil;
 import com.jeff.fx.gui.PriceCellRenderer;
 import com.jeff.fx.gui.ProfitCellRenderer;
+import javax.swing.ImageIcon;
 
 @SuppressWarnings("serial")
 public class OptimiserView extends JPanel {
@@ -59,8 +60,10 @@ public class OptimiserView extends JPanel {
 		pnlParameters.add(pnlActions, BorderLayout.SOUTH);
 
 		btnRun = new JButton("Start");
+		btnRun.setIcon(new ImageIcon(OptimiserView.class.getResource("/images/bullet_go.png")));
 		pnlActions.add(btnRun);
-		btnPause = new JButton("Pause");
+		btnPause = new JButton("Stop");
+		btnPause.setIcon(new ImageIcon(OptimiserView.class.getResource("/images/bullet_red.png")));
 		pnlActions.add(btnPause);
 
 		JPanel pnlStatus = new JPanel();

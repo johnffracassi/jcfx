@@ -30,7 +30,7 @@ public class TypicalValueDataset extends DefaultXYDataset {
 	public double getDisplayXValue(int series, int item) {
 		if ((item < 0) || (item >= getItemCount(series)))
             return Double.NaN;
-        return super.getXValue(series, item);
+        return getXValue(series, item);
     }
     
     public int findFirstXValueGE(long timeval) {
