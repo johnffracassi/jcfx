@@ -254,11 +254,6 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 					SwingUtilities.invokeLater(new Runnable() {
 						public void run() {
 							view.getReportModel().addRow(new OptimiserReportRow(test.getId(), report, map));
-							
-							if(firstEntry) {
-//								view.getTblResults().packAll();
-								firstEntry = false;
-							}
 						}
 					});
 				}

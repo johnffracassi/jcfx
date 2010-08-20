@@ -6,6 +6,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.SwingWorker;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 import com.jeff.fx.backtest.AppCtx;
 import com.jeff.fx.backtest.strategy.MultiThreadedExecutor;
@@ -42,6 +44,17 @@ public class OptimiserController {
 					int testIdx = view.getReportTable().convertRowIndexToModel(view.getReportTable().getSelectedRow());
 					parent.setParams(view.getReportModel().getRow(testIdx).getParams());
 				}
+			}
+		});
+		
+		// pack the columns when there is data in it
+		view.getReportModel().addTableModelListener(new TableModelListener() {
+			private boolean packed = false;
+			public void tableChanged(TableModelEvent ev) {
+				if(!packed && view.getReportModel().getRowCount() > 0)
+					view.getReportTable().packAll();
+				else 
+					packed = false;
 			}
 		});
 	}
