@@ -3,6 +3,7 @@ package com.jeff.fx.action;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import org.springframework.stereotype.Component;
@@ -12,9 +13,9 @@ import org.springframework.stereotype.Component;
 public class ExitAction extends AbstractAction {
 	
 	public ExitAction() {
+		super("Exit", new ImageIcon(ExitAction.class.getResource("/images/cross.png")));
 		putValue(SHORT_DESCRIPTION, "Quit the application");
 		putValue(LONG_DESCRIPTION, "Quit the application");
-		putValue(NAME, "Exit");
 	}
 
 	public void actionPerformed(ActionEvent ev) {

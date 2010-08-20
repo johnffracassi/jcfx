@@ -92,7 +92,6 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		
 		// total number of jobs completed 
 		private volatile int completedCount = 0;
-		private volatile boolean firstEntry = true;
 		
 		// start time of the batch (in nano seconds)
 		private volatile long start = 0;

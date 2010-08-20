@@ -1,5 +1,7 @@
 package com.jeff.fx.backtest.orderbook.report;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ public class OrderBookReportController {
 	private List<OrderSelectionListener> listeners = new ArrayList<OrderSelectionListener>();
 	
 	public OrderBookReportController() {
+		
 		view.getTblBook().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent ev) {
 				if(ev.getClickCount() == 2 && ev.getButton() == MouseEvent.BUTTON1) {
@@ -29,6 +32,16 @@ public class OrderBookReportController {
 				}
 			}
 		});
+		
+		view.getBtnExport().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doExport();
+			}
+		});
+	}
+	
+	public void doExport() {
+		
 	}
 	
 	public void addOrderSelectionListener(OrderSelectionListener listener) {

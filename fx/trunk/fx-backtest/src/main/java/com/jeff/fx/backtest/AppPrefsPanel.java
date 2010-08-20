@@ -11,7 +11,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
-import java.awt.Dimension;
 
 public class AppPrefsPanel extends JPanel {
 	
@@ -53,12 +52,12 @@ public class AppPrefsPanel extends JPanel {
 		
 		btnDataStore = new JButton("");
 		btnDataStore.setMargin(new Insets(2, 2, 2, 2));
-		btnDataStore.setIcon(new ImageIcon(AppPrefsPanel.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
+		btnDataStore.setIcon(new ImageIcon(AppPrefsPanel.class.getResource("/images/folder.png")));
 		add(btnDataStore, "cell 2 1");
 		
 		btnDownloadCache = new JButton("");
 		btnDownloadCache.setMargin(new Insets(2, 2, 2, 2));
-		btnDownloadCache.setIcon(new ImageIcon(AppPrefsPanel.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
+		btnDownloadCache.setIcon(new ImageIcon(AppPrefsPanel.class.getResource("/images/folder.png")));
 		add(btnDownloadCache, "cell 2 2");
 
 	}

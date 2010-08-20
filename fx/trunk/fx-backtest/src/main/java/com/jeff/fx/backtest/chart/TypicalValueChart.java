@@ -95,11 +95,12 @@ public class TypicalValueChart extends JXPanel {
     	TypicalValueDataset ccd = new TypicalValueDataset("Price", candles);
     	
         chart = ChartFactory.createXYLineChart(null, null, null, ccd, PlotOrientation.VERTICAL, false, false, false);
-        
+
         // set domain/category/x-axis bounds
         domainAxis = (NumberAxis)chart.getXYPlot().getDomainAxis();
-        domainAxis.setRange(0, 200);
-        domainAxis.setAutoRangeMinimumSize(200);
+        domainAxis.setNumberFormatOverride(new DateTranslatingFormat((TypicalValueDataset)chart.getXYPlot().getDataset()));
+//        domainAxis.setRange(0, 200);
+//        domainAxis.setAutoRangeMinimumSize(200);
 
         // set range/value/y-axis bounds
         rangeAxis = (NumberAxis)chart.getXYPlot().getRangeAxis();
