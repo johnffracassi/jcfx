@@ -51,10 +51,12 @@ public class OptimiserController {
 		view.getReportModel().addTableModelListener(new TableModelListener() {
 			private boolean packed = false;
 			public void tableChanged(TableModelEvent ev) {
-				if(!packed && view.getReportModel().getRowCount() > 0)
+				if(!packed && view.getReportModel().getRowCount() > 0) {
 					view.getReportTable().packAll();
-				else 
+					packed = true;
+				} else { 
 					packed = false;
+				}					
 			}
 		});
 	}
