@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.jeff.fx.backtest.chart.SimplePriceChart;
 import com.jeff.fx.backtest.engine.BTOrder;
-import com.jeff.fx.backtest.strategy.orderbook.OrderSelectionListener;
+import com.jeff.fx.backtest.orderbook.OrderSelectionListener;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleWeek;
 
