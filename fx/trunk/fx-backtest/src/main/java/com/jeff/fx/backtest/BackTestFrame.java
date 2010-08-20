@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import com.jeff.fx.action.AboutAction;
 import com.jeff.fx.action.ExitAction;
+import com.jeff.fx.backtest.action.ApplicationPreferencesAction;
 import com.jeff.fx.backtest.action.ClearCacheAction;
 import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartAction;
 import com.jeff.fx.gui.ButtonTabComponent;
@@ -34,6 +35,7 @@ public class BackTestFrame extends JXFrame {
 	@Autowired private ExitAction exitAction;	
 	@Autowired private AboutAction aboutAction;
 	@Autowired private NewTimeStrategyChartAction newTimeStrategyChartAction;
+	@Autowired private ApplicationPreferencesAction applicationPreferencesAction;
 	
 	/**
 	 * Build the frame. Not done in constructor because the autowiring isn't 
@@ -50,9 +52,6 @@ public class BackTestFrame extends JXFrame {
 		DatasetDefinitionPanel ddp = new DatasetDefinitionPanel("newChart");
 		pnlWest.add(GUIUtil.frame("Dataset", ddp));
 		
-		AppPrefsController appPrefsController = new AppPrefsController();
-		pnlWest.add(GUIUtil.frame("Preferences", appPrefsController.getView()));
-
 		// add left and right components
         add(tabs, BorderLayout.CENTER);
         add(pnlWest, BorderLayout.WEST);
@@ -82,6 +81,7 @@ public class BackTestFrame extends JXFrame {
 		
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.add(clearCacheAction);
+		fileMenu.add(applicationPreferencesAction);
 		fileMenu.add(new JSeparator());
 		fileMenu.add(exitAction);		
 		

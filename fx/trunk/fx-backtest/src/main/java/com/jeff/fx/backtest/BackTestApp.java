@@ -44,7 +44,8 @@ public class BackTestApp {
 	private void run() {
 		
 		log.info("Starting application");
-		
+
+		log.debug("Setting application look and feel");
 		try {
 			log.debug("Setting application look and feel");
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -52,11 +53,10 @@ public class BackTestApp {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		log.info("Building application frame");
 		frame.init();
-		frame.setVisible(true);
-		
+
 		log.info("Registering event listeners");
 		AppCtx.registerEventListener(NewCandleChartEvent.class, new FXActionEventListener() {
 			public void event(FXActionEvent ev) {
@@ -94,6 +94,7 @@ public class BackTestApp {
 			}
 		});
 
+		frame.setVisible(true);
 		log.info("Application initialised");
 	}
 }

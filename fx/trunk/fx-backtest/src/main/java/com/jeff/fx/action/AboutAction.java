@@ -3,9 +3,13 @@ package com.jeff.fx.action;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.border.EtchedBorder;
 
 import org.springframework.stereotype.Component;
+
+import com.jeff.fx.backtest.GenericDialog;
 
 @SuppressWarnings("serial")
 @Component
@@ -18,6 +22,10 @@ public class AboutAction extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent ev) {
-		JOptionPane.showMessageDialog(null, "FX Backtesting Applicaion v0.01\n(c)2010 Jeffrey Cann");
+		GenericDialog gd = new GenericDialog(new AboutPanel(), "About");
+		gd.setUndecorated(true);
+		gd.setSize(350, 190);
+		((JPanel)gd.getContentPane()).setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+		gd.setVisible(true);
 	}
 }

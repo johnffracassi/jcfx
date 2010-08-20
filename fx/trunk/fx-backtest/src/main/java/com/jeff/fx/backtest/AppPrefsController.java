@@ -1,17 +1,26 @@
 package com.jeff.fx.backtest;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import org.apache.log4j.Logger;
+import org.jdesktop.swingx.JXDialog;
+import org.springframework.stereotype.Component;
+
+@Component
 public class AppPrefsController {
 	
+	private static Logger log = Logger.getLogger(AppPrefsController.class);
+
 	private AppPrefsPanel view;
 	
 	public AppPrefsController() {
@@ -66,7 +75,13 @@ public class AppPrefsController {
 				}
 			}
 		});
-	    
+	}
+
+	public void showDialog() {
+		log.debug("showing application preferences dialog");
+		SwingUtilities.updateComponentTreeUI(view);
+		final GenericDialog gd = new GenericDialog(view, "Application Preferences");
+		gd.setVisible(true);
 	}
 	
 	public AppPrefsPanel getView() {

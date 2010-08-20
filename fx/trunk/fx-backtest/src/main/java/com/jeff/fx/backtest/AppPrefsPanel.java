@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
+import java.awt.Dimension;
 
 public class AppPrefsPanel extends JPanel {
 	
