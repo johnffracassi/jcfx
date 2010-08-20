@@ -13,18 +13,19 @@ import org.jdesktop.swingx.JXPanel;
 import com.jeff.fx.backtest.AppCtx;
 import com.jeff.fx.backtest.dataviewer.CandleDataController;
 import com.jeff.fx.backtest.engine.OrderBook;
+import com.jeff.fx.backtest.orderbook.balancechart.BalanceChartController;
+import com.jeff.fx.backtest.orderbook.report.OrderBookReportController;
 import com.jeff.fx.backtest.strategy.StrategyPropertyChangeListener;
 import com.jeff.fx.backtest.strategy.optimiser.OptimiserController;
-import com.jeff.fx.backtest.strategy.orderbook.OrderBookController;
 import com.jeff.fx.common.CandleCollection;
 
 @SuppressWarnings("serial")
 public class StrategyView extends JXPanel implements StrategyPropertyChangeListener {
 
-	private static Logger log = Logger.getLogger(TimeStrategyChartController.class);
+	private static Logger log = Logger.getLogger(BalanceChartController.class);
 
-	private OrderBookController orderBook = new OrderBookController();
-	private TimeStrategyChartController chart = new TimeStrategyChartController();
+	private OrderBookReportController orderBook = new OrderBookReportController();
+	private BalanceChartController chart = new BalanceChartController();
 	private OptimiserController optimiser = new OptimiserController(this);
 	private TimeStrategyConfigView config = null;
 	private CandleDataController dataDisplay = new CandleDataController();

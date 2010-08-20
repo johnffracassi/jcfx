@@ -45,20 +45,20 @@ public class CandleAnalyser
 		
 		Map<String,Integer> counts = new HashMap<String, Integer>();
 		
-		CandleDataPoint[] candleArray = candles.toArray(new CandleDataPoint[candles.size()]);
-		for(int i=1; i < candleArray.length; i++) {
-			
-			String key = generateFingerprint(candleArray[i-1]) + generateFingerprint(candleArray[i]);
-			
-			if(counts.get(key) == null)
-			{
-				counts.put(key, 1);
-			}
-			else
-			{
-				counts.put(key, counts.get(key) + 1);
-			}
-		}
+//		CandleDataPoint[] candleArray = candles.toArray(new CandleDataPoint[candles.size()]);
+//		for(int i=1; i < candleArray.length; i++) {
+//			
+//			String key = generateFingerprint(candleArray[i-1]) + generateFingerprint(candleArray[i]);
+//			
+//			if(counts.get(key) == null)
+//			{
+//				counts.put(key, 1);
+//			}
+//			else
+//			{
+//				counts.put(key, counts.get(key) + 1);
+//			}
+//		}
 		
 		StringBuffer buf = new StringBuffer();
 		for(String key : counts.keySet())
