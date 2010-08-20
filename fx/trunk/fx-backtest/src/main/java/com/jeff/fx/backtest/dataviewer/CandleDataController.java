@@ -15,10 +15,11 @@ import com.jeff.fx.common.CandleWeek;
 @Component
 public class CandleDataController implements OrderSelectionListener {
 
-	private CandleCollection data;
-	private int currentWeek = 0;
 	private CandleDataView view;
     private CandleDataTableModel model;
+	
+    private CandleCollection data;
+	private int currentWeek = 0;
 
     public CandleDataController() {
     	
@@ -43,7 +44,7 @@ public class CandleDataController implements OrderSelectionListener {
     	});
     }
 
-    public void setCandles(CandleCollection candles) {
+    public void update(CandleCollection candles) {
     	this.data = candles;
     	this.currentWeek = 0;
     	update();
@@ -84,5 +85,8 @@ public class CandleDataController implements OrderSelectionListener {
 		// update the chart
 		ChartPanel chart = SimplePriceChart.createChart(String.valueOf(cw.getInstrument()), data, order.getOpenTime(), order.getCloseTime());
 		view.setPnlChart(chart);
+		
+		// resize the columns
+		view.getTable().packAll();
 	}
 }

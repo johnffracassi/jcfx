@@ -11,10 +11,9 @@ import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXPanel;
 
 import com.jeff.fx.backtest.AppCtx;
-import com.jeff.fx.backtest.dataviewer.CandleDataController;
 import com.jeff.fx.backtest.engine.OrderBook;
+import com.jeff.fx.backtest.orderbook.OrderBookController;
 import com.jeff.fx.backtest.orderbook.balancechart.BalanceChartController;
-import com.jeff.fx.backtest.orderbook.report.OrderBookReportController;
 import com.jeff.fx.backtest.strategy.StrategyPropertyChangeListener;
 import com.jeff.fx.backtest.strategy.optimiser.OptimiserController;
 import com.jeff.fx.common.CandleCollection;
@@ -24,11 +23,12 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 
 	private static Logger log = Logger.getLogger(BalanceChartController.class);
 
-	private OrderBookReportController orderBook = new OrderBookReportController();
-	private BalanceChartController chart = new BalanceChartController();
+	private OrderBookController orderBook = new OrderBookController();
 	private OptimiserController optimiser = new OptimiserController(this);
 	private TimeStrategyConfigView config = null;
-	private CandleDataController dataDisplay = new CandleDataController();
+	
+	private JTabbedPane tabbedPane;
+	
 	private CandleCollection candles = new CandleCollection();
 	
 	public StrategyView() {
@@ -38,22 +38,17 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 		setLayout(new BorderLayout());
 
 		// create tabs for chart & order book
-		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane = new JTabbedPane();
 		add(tabbedPane, BorderLayout.CENTER);
 
 		// add the tabs
 		tabbedPane.add(optimiser.getView(), "Optimiser");
-		tabbedPane.add(chart.getView(), "Chart View");
 		tabbedPane.add(orderBook.getView(), "Order Book");
-		tabbedPane.add(dataDisplay.getView(), "Candle Data");
 
 		// add the config panel at the bottom of the screen
 		config = new TimeStrategyConfigView(this);
 		config.setPreferredSize(new Dimension(150, 150));
 		add(config, BorderLayout.SOUTH);
-		
-		// setup listeners
-		orderBook.addOrderSelectionListener(dataDisplay);
 	}
 
 	public void initialise() {
@@ -67,7 +62,7 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 				try {
 					candles = AppCtx.getDataManager().getCandles();
 					optimiser.setCandles(candles);
-					dataDisplay.setCandles(candles);
+					orderBook.update(candles, null);
 				} catch(Exception ex) {
 					log.error("Error getting candles", ex);
 				}
@@ -88,7 +83,9 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 
 		// update the controllers
 		OrderBook orders = strategy.getOrderBook();
-		chart.update(orders);
-		orderBook.update(orders);
+		orderBook.update(candles, orders);
+		
+		// activate the order book tab
+		tabbedPane.setSelectedIndex(1);
 	}
 }
