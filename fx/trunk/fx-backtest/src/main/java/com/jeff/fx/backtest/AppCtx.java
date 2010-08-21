@@ -57,6 +57,10 @@ public class AppCtx {
 		dataManager = (BackTestDataManager)springCtx.getBean("backTestDataManager");
 	}
 	
+	public static Object getBean(String name) {
+		return springCtx.getBean(name);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////
 
 	@SuppressWarnings("unchecked")
