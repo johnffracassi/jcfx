@@ -2,10 +2,12 @@ package com.jeff.fx.backtest.strategy.time;
 
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.joda.time.LocalDate;
 
 import com.jeff.fx.backtest.engine.AbstractStrategy;
 import com.jeff.fx.backtest.engine.BTOrder;
+import com.jeff.fx.backtest.engine.OrderBook;
 import com.jeff.fx.backtest.engine.OrderCloseType;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
@@ -17,7 +19,7 @@ import com.jeff.fx.indicator.SimpleMovingAverage;
 
 public class TimeStrategy extends AbstractStrategy {
 	
-//	private static Logger log = Logger.getLogger(TimeStrategy.class);
+	private static Logger log = Logger.getLogger(TimeStrategy.class);
 
 	private TimeOfWeek open = null;
 	private TimeOfWeek close = null;
@@ -40,7 +42,7 @@ public class TimeStrategy extends AbstractStrategy {
 		return (!open.equals(close));
 	}
 	
-	public void execute(CandleCollection candles, IndicatorCache indicators) {
+	public OrderBook execute(CandleCollection candles, IndicatorCache indicators) {
 
 		SimpleMovingAverage sma1 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(15, CandleValueModel.Typical), candles);
 		SimpleMovingAverage sma2 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(60, CandleValueModel.Typical), candles);
@@ -127,6 +129,8 @@ public class TimeStrategy extends AbstractStrategy {
 				date = date.plusDays(7);
 			}
 		}
+		
+		return getOrderBook();
 	}
 
 	public void setOfferSide(OfferSide offerSide) {

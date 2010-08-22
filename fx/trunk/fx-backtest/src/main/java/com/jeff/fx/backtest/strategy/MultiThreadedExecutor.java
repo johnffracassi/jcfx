@@ -4,19 +4,17 @@ import static java.lang.Math.min;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 
 import com.jeff.fx.backtest.AppCtx;
+import com.jeff.fx.backtest.engine.OrderBook;
 import com.jeff.fx.backtest.engine.OrderBookReport;
 import com.jeff.fx.backtest.strategy.optimiser.OptimiserExecutor;
 import com.jeff.fx.backtest.strategy.optimiser.OptimiserParameter;
-import com.jeff.fx.backtest.strategy.optimiser.OptimiserReportRow;
-import com.jeff.fx.backtest.strategy.optimiser.OptimiserView;
 import com.jeff.fx.backtest.strategy.optimiser.Permutator;
 import com.jeff.fx.backtest.strategy.time.IndicatorCache;
 import com.jeff.fx.backtest.strategy.time.TimeStrategy;
@@ -28,7 +26,8 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 	private static Logger log = Logger.getLogger(MultiThreadedExecutor.class);
 	
 	// shared user feedback
-	private OptimiserView view;
+	private ExecutorJobListener jobListener;
+	private ExecutorStatusListener statusListener;
 
 	// shared, accessed by multiple threads
 	private volatile boolean running = false;
@@ -44,12 +43,13 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 	/**
 	 * Create and start the executor threads
 	 */
-	public void run(CandleCollection candles, OptimiserView view) {
+	public void run(CandleCollection candles, List<OptimiserParameter<?,?>> params, ExecutorJobListener jobListener, ExecutorStatusListener statusListener) {
 		
-		this.view = view;
+		this.jobListener = jobListener;
+		this.statusListener = statusListener;
+		this.params = params;
 		
 		// find the number of steps for each param
-		params = view.getParameters();
 		int[] perms = new int[params.size()];
 		for(int i=0; i<params.size(); i++) {
 			perms[i] = params.get(i).getStepCount();
@@ -57,8 +57,6 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		
 		// build the permutator
 		permutator = new Permutator(perms);
-		view.getLblPermutations().setText("Permutations: " + permutator.getPermutationCount());
-		view.getLblCompleted().setText("Completed: 0");
 
 		// get the parameters for the executor
 		threadCount = AppCtx.getPersistentInt("multiThreadExecutor.threads");
@@ -91,7 +89,8 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		private volatile int blockPointer = 0;
 		
 		// total number of jobs completed 
-		private volatile int completedCount = 0;
+		private volatile int tasksExecuted = 0;
+		private volatile int jobsExecuted = 0;
 		
 		// start time of the batch (in nano seconds)
 		private volatile long start = 0;
@@ -157,9 +156,6 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		 */
 		public ExecutorJob getNextJob() {
 			
-			// update display
-			updateStatus();
-
 			// increment job start index and allocate a new job block
 			synchronized(jobAllocationSemaphore) {
 				
@@ -172,27 +168,16 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 			}
 		}
 		
-		private void updateStatus() {
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					
-					// display the results
-					view.getLblCompleted().setText(String.format("Completed: %d (%.1f%%)", completedCount, ((double)completedCount / permutator.getPermutationCount()) * 100.0));
-					view.getProgressBar().setValue(completedCount);
-					view.getProgressBar().setMaximum(permutations);
-					
-					double elapsed = (System.nanoTime() - start) / 1000000000.0;
-					double remaining = (elapsed / completedCount) * (permutator.getPermutationCount() - completedCount);
-					view.getLblElapsedTime().setText(String.format("Elapsed Time: %.2fs", elapsed));
-					view.getLblRemainingTime().setText(String.format("Remaining Time: %.2fs", remaining));
-					view.getLblSpeed().setText(String.format("Tests/min: %.0f", completedCount / (elapsed / 60.0)));
-				}
-			});
-		}
-		
-		public void jobCompleted(ExecutorJob job) {
+		public void jobCompleted(ExecutorJobResult result) {
 			synchronized(counterSemaphore) {
-				completedCount += (job.endIdx - job.startIdx);
+				
+				tasksExecuted += (result.getJob().endIdx - result.getJob().startIdx);
+				jobsExecuted ++;
+
+				ExecutorStatus status = new ExecutorStatus(System.nanoTime() - start, permutations, tasksExecuted, jobsExecuted, permutations / jobSize);
+				statusListener.executorStatusUpdate(status);
+
+				jobListener.jobExecuted(result);
 			}
 		}
 		
@@ -209,22 +194,28 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 			public void run() {
 				
 				log.debug("starting multi-threaded worker (" + getName() + ")");
-
+				
 				while(hasNextJob()) {
 					
 					ExecutorJob job = getNextJob();
 					
+					ExecutorJobResult jobResult = new ExecutorJobResult(job, new LinkedList<ExecutorTaskResult>());
+					List<ExecutorTaskResult> taskResults = jobResult.getTaskResults();
+					
 					job.setStartTime(System.nanoTime());
 					for(int i=job.startIdx; i<job.endIdx; i++) {
-						executeSingleTest(i);
+						ExecutorTaskResult result = executeTask(i);
+						if(result != null) {
+							taskResults.add(result);
+						}
 					}
 					job.setEndTime(System.nanoTime());
 
-					jobCompleted(job);					
+					jobCompleted(new ExecutorJobResult(job, taskResults));	
 				}
 			}
 	
-			private void executeSingleTest(int idx) {
+			private Map<String,Object> generateParameters(int idx) {
 				
 				// get the parameter values for this single test
 				int[] valueIndexes = permutator.getPermutation(idx);
@@ -232,7 +223,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 				for(int v=0; v<values.length; v++) {
 					values[v] = params.get(v).getValue(valueIndexes[v]);
 				}
-		
+
 				// create a map of the parameters for this run
 				final Map<String,Object> map = new HashMap<String,Object>();
 				map.put("stopLoss", values[0]);
@@ -241,21 +232,22 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 				map.put("close", new TimeOfWeek((Integer)values[3]));
 				map.put("offerSide", values[4]);
 				
+				return map;
+			}
+			
+			private ExecutorTaskResult executeTask(int idx) {
+		
+				final Map<String,Object> map = generateParameters(idx);
+				
 				// build the test
 				final TimeStrategy test = new TimeStrategy(idx, map);
 				if(test.isTestValid()) {
-					test.execute(candles, indicators);
+					OrderBook book = test.execute(candles, indicators);
+					ExecutorTaskResult result = new ExecutorTaskResult(idx, new OrderBookReport(book), map);
+					return result;
 				}
 				
-				// check the report and add if interesting
-				final OrderBookReport report = new OrderBookReport(test.getOrderBook());
-				if(view.getReportModel().accepts(report)) {
-					SwingUtilities.invokeLater(new Runnable() {
-						public void run() {
-							view.getReportModel().addRow(new OptimiserReportRow(test.getId(), report, map));
-						}
-					});
-				}
+				return null;
 			}
 		}
 	}
