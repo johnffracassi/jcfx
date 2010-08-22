@@ -37,14 +37,14 @@ public abstract class AbstractStrategy {
 	 * Execute the test with all strategies
 	 * @param cc
 	 */
-	public abstract void execute(CandleCollection cc, IndicatorCache indicators);
+	public abstract OrderBook execute(CandleCollection cc, IndicatorCache indicators);
 	
 	/**
 	 * 
 	 * @param order
 	 * @param candle
 	 */
-	protected void openOrder(BTOrder order, CandleDataPoint candle) {
+	protected final void openOrder(BTOrder order, CandleDataPoint candle) {
 		order.setInstrument(candle.getInstrument());
 		order.setOpenTime(candle.getDate());
 		order.setOpenPrice(order.getOfferSide() == OfferSide.Ask ? candle.getBuyOpen() : candle.getSellOpen());
@@ -58,8 +58,7 @@ public abstract class AbstractStrategy {
 	 * @param candle
 	 * @return
 	 */
-	protected boolean isOrderStopped(BTOrder order, CandleDataPoint candle) {
-		
+	protected final boolean isOrderStopped(BTOrder order, CandleDataPoint candle) {
 		return getCloseType(order, candle) != OrderCloseType.Close;
 	}
 	
@@ -70,7 +69,7 @@ public abstract class AbstractStrategy {
 	 * @param candle
 	 * @return
 	 */
-	protected OrderCloseType getCloseType(BTOrder order, CandleDataPoint candle) {
+	protected final OrderCloseType getCloseType(BTOrder order, CandleDataPoint candle) {
 
 		OrderCloseType type = OrderCloseType.Close;
 		
@@ -92,7 +91,7 @@ public abstract class AbstractStrategy {
 		return type;
 	}
 
-	protected double getClosePrice(BTOrder order, CandleDataPoint candle) {
+	protected final double getClosePrice(BTOrder order, CandleDataPoint candle) {
 
 		double closePrice = order.getOfferSide() == OfferSide.Ask ? candle.getSellOpen() : candle.getBuyOpen();
 		
@@ -120,7 +119,7 @@ public abstract class AbstractStrategy {
 	 * @param order
 	 * @param candle
 	 */
-	protected void closeOrder(BTOrder order, CandleDataPoint candle) {
+	protected final void closeOrder(BTOrder order, CandleDataPoint candle) {
 
 		order.setClosePrice(getClosePrice(order, candle));
 		order.setCloseType(getCloseType(order, candle));
@@ -129,15 +128,15 @@ public abstract class AbstractStrategy {
 		orderBook.close(order);
 	}
 	
-	public OrderBook getOrderBook() {
+	public final OrderBook getOrderBook() {
 		return orderBook;
 	}
 	
-	public boolean hasOpenOrder() {
+	public final boolean hasOpenOrder() {
 		return orderBook.hasOpenOrders();
 	}
 
-	public int getId() {
+	public final int getId() {
 		return id;
 	}
 }
