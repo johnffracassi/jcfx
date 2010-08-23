@@ -124,6 +124,7 @@ public class FileUtil {
 	}
 
 	public static byte[] readTextFile(File file) throws IOException {
+		
 		InputStream is = new FileInputStream(file);
 
 		long length = file.length();
@@ -135,14 +136,14 @@ public class FileUtil {
 
 		int offset = 0;
 		int numRead = 0;
-		while (numRead >= 0) {
+		do {
 			numRead = is.read(bytes, offset, bytes.length - offset);
 			offset += numRead;
-		}
+			System.out.println("read " + numRead + " bytes");
+		} while (numRead > 0);
 
 		if (offset < bytes.length) {
-			throw new IOException("Could not completely read file "
-					+ file.getName());
+			throw new IOException("Could not completely read file " + file.getName());
 		}
 
 		is.close();

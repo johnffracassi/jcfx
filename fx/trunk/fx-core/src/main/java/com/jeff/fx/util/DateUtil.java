@@ -1,29 +1,36 @@
 package com.jeff.fx.util;
 
-import java.text.SimpleDateFormat;
-
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import com.jeff.fx.common.Period;
 
 public class DateUtil
 {
-	private static SimpleDateFormat shortDf = new SimpleDateFormat("dd/MM/yyyy");
-	private static SimpleDateFormat hourDf = new SimpleDateFormat("H");
+	private static DateTimeFormatter shortDateFormatter = DateTimeFormat.forPattern("dd/MM/yyyy");
+	private static DateTimeFormatter timeFormatter = DateTimeFormat.forPattern("hh:mm");
+	private static DateTimeFormatter hourDf = DateTimeFormat.forPattern("H");
 	
 	public static String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 	public static String[] DAYS = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 	
-	public static String format(LocalDateTime date)
-	{
-		return shortDf.format(date);
+	public static String format(LocalDateTime date) {
+		return shortDateFormatter.print(date);
 	}
 	
-	public static String formatHour(LocalDateTime date)
-	{
-		return hourDf.format(date) + "h";
+	public static String formatDate(LocalDateTime date) {
+		return shortDateFormatter.print(date);
+	}
+	
+	public static String formatTime(LocalDateTime date) {
+		return timeFormatter.print(date);
+	}
+	
+	public static String formatHour(LocalDateTime date) {
+		return hourDf.print(date) + "h";
 	}
 	
 	public static LocalDate getStartOfWeek(LocalDate date) {
