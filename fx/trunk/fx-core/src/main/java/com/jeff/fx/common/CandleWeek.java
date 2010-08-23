@@ -2,13 +2,12 @@ package com.jeff.fx.common;
 
 import java.io.Serializable;
 
-import org.apache.log4j.Logger;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 public class CandleWeek implements Serializable {
 	
-	private static Logger log = Logger.getLogger(CandleWeek.class);
+//	private static Logger log = Logger.getLogger(CandleWeek.class);
 	private static final long serialVersionUID = 12416234512345l;
 
 	private LocalDate date;
