@@ -54,16 +54,17 @@ public class OptimiserReportTableModel extends DefaultTableModel {
 	}
 
 	public int getColumnCount() {
-		return 5;
+		return 6;
 	}
 
 	public String getColumnName(int column) {
 		switch(column) {
-			case 0: return "Order";
+			case 0: return "ID";
 			case 1: return "Params";
 			case 2: return "Balance";
-			case 3: return "Wins";
-			case 4: return "Losses";
+			case 3: return "Orders";
+			case 4: return "Win%";
+			case 5: return "Loss%";
 			default: return "";
 		}
 	}
@@ -80,8 +81,9 @@ public class OptimiserReportTableModel extends DefaultTableModel {
 			case 0: return Integer.class;
 			case 1: return String.class;
 			case 2: return Double.class;
-			case 3: return Double.class;
+			case 3: return Integer.class;
 			case 4: return Double.class;
+			case 5: return Double.class;
 			default: return String.class;
 		}
 	}
@@ -94,8 +96,9 @@ public class OptimiserReportTableModel extends DefaultTableModel {
 			case 0: return row.getId();
 			case 1: return row.getParams();
 			case 2: return row.getBookReport().getBalance();
-			case 3: return row.getBookReport().getWinPercentage();
-			case 4: return row.getBookReport().getLossPercentage();
+			case 3: return row.getBookReport().getOrderCount();
+			case 4: return row.getBookReport().getWinPercentage();
+			case 5: return row.getBookReport().getLossPercentage();
 			default: return "";
 	}	}
 

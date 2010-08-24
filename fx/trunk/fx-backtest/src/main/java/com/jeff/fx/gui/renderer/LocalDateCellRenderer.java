@@ -1,4 +1,4 @@
-package com.jeff.fx.gui;
+package com.jeff.fx.gui.renderer;
 
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;

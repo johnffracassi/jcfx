@@ -5,6 +5,10 @@ import java.awt.Dimension;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JScrollBar;
 
 import org.jdesktop.swingx.JXPanel;
@@ -13,11 +17,8 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 
 import com.jeff.fx.common.CandleCollection;
-import com.jeff.fx.indicator.Indicator;
 
 public class TypicalValueChart extends JXPanel {
 	
@@ -29,18 +30,22 @@ public class TypicalValueChart extends JXPanel {
 	private int firstCandle = 0;
 	private int candlesPerView = 1000;
 	private int multiplier = 100;
+	private JScrollBar offsetScrollBar = new JScrollBar();
+	private CandleCollection candles;
+	private ChartPanel panel;
+	private JMenu mnuIndicators;
+	private JMenu mnuView;
 
-	public TypicalValueChart(CandleCollection cc) {
+	public TypicalValueChart() {
 		
 		setLayout(new BorderLayout());
 		
-		ChartPanel pnl = createPanel(cc);
-		add(pnl, BorderLayout.CENTER);
+		candles = new CandleCollection();
+		panel = createPanel(candles);
+		add(panel, BorderLayout.CENTER);
 		
 		JXPanel pnlScrolls = new JXPanel(new BorderLayout());
-		JScrollBar offsetScrollBar = new JScrollBar();
 		offsetScrollBar.setOrientation(JScrollBar.HORIZONTAL);
-		offsetScrollBar.setMaximum(cc.getCandleCount() - candlesPerView);
 		offsetScrollBar.addAdjustmentListener(new AdjustmentListener() {
 			public void adjustmentValueChanged(AdjustmentEvent e) {
 				scrollTo(e.getValue());
@@ -61,6 +66,26 @@ public class TypicalValueChart extends JXPanel {
 		pnlScrolls.add(offsetScrollBar, BorderLayout.CENTER);
 		pnlScrolls.add(zoomScrollBar, BorderLayout.EAST);
 		add(pnlScrolls, BorderLayout.SOUTH);
+		
+		JMenuBar menuBar = new JMenuBar();
+		add(menuBar, BorderLayout.NORTH);
+		
+		mnuIndicators = new JMenu("");
+		mnuIndicators.setIcon(new ImageIcon(TypicalValueChart.class.getResource("/images/chart_line.png")));
+		menuBar.add(mnuIndicators);
+		
+		mnuView = new JMenu("");
+		mnuView.setIcon(new ImageIcon(TypicalValueChart.class.getResource("/images/magnifier.png")));
+		menuBar.add(mnuView);
+		
+		JMenuItem mntmResetZoom = new JMenuItem("Reset Zoom");
+		mnuView.add(mntmResetZoom);
+	}
+	
+	public void update(CandleCollection candles) {
+		this.candles = candles;
+		offsetScrollBar.setMaximum(candles.getCandleCount() - candlesPerView);
+		panel.setChart(createChart(candles));
 	}
 	
 	public void setZoom(int zoom) {
@@ -79,10 +104,8 @@ public class TypicalValueChart extends JXPanel {
 		return new ChartPanel(chart);
 	}
 	
-	public void addIndicator(Indicator indicator) {
-		final XYPlot plot = (XYPlot) chart.getPlot();
-		plot.setDataset(plot.getDatasetCount(), new IndicatorDataset("Typical", indicator));
-		plot.setRenderer(plot.getDatasetCount(), new StandardXYItemRenderer());
+	public JFreeChart getChart() {
+		return chart;
 	}
 	
     /**
@@ -109,4 +132,12 @@ public class TypicalValueChart extends JXPanel {
 
         return chart;
     }
+    
+	public JMenu getIndicatorsMenu() {
+		return mnuIndicators;
+	}
+	
+	public JMenu getViewMenu() {
+		return mnuView;
+	}
 }

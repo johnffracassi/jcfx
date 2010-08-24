@@ -44,8 +44,8 @@ public class TimeStrategy extends AbstractStrategy {
 	
 	public OrderBook execute(CandleCollection candles, IndicatorCache indicators) {
 
-		SimpleMovingAverage sma1 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(15, CandleValueModel.Typical), candles);
-		SimpleMovingAverage sma2 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(60, CandleValueModel.Typical), candles);
+		SimpleMovingAverage sma1 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(18, CandleValueModel.Typical), candles);
+		SimpleMovingAverage sma2 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(197, CandleValueModel.Typical), candles);
 		
 		if(candles != null && candles.getStart() != null) {
 			

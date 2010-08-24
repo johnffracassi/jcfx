@@ -3,32 +3,41 @@ package com.jeff.fx.indicator;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleValueModel;
 
+@ChartType(ChartTypes.PriceRelative)
 public class SimpleMovingAverage implements Indicator {
 
 	private float[] value;
-	private int periods;
-	private CandleValueModel model;
 	private boolean calculated;
+	
+	@Property(key="sma.periods")
+	@ValidationRange(min=0, max=1000)
+	@Label("Periods")
+	private Integer periods;
+	
+	@Property(key="sma.cvm")
+	@Label("Price Model")
+	private CandleValueModel model;
+
+	public SimpleMovingAverage() {
+		this.calculated = false;
+	}
 	
 	public SimpleMovingAverage(int periods, CandleValueModel cvm) {
 		this.periods = periods;
 		this.model = cvm;
 		this.calculated = false;
 	}
-	
+
 	public void calculate(CandleCollection candles) {
 		
 		synchronized(this) {
 			
-			int count = candles.getCandleCount();
-			value = new float[count];
+			FixedSizeNumberQueue q = new FixedSizeNumberQueue(periods);
+			value = new float[candles.getCandleCount()];
 			
-			for(int idx=periods; idx<count; idx++) {
-				float sum = 0.0f;
-				for(int i=0; i<periods; i++) {
-					sum += candles.getPrice(idx-i, model);
-				}
-				value[idx] = sum / periods;
+			for(int i=0, n=candles.getCandleCount(); i<n; i++) {
+				q.add(candles.getPrice(i, model));
+				value[i] = q.average();
 			}
 			
 			calculated = true;
@@ -79,11 +88,11 @@ public class SimpleMovingAverage implements Indicator {
 		return false;
 	}
 	
-	public int getPeriods() {
+	public Integer getPeriods() {
 		return periods;
 	}
 
-	public void setPeriods(int periods) {
+	public void setPeriods(Integer periods) {
 		this.periods = periods;
 	}
 
@@ -101,6 +110,10 @@ public class SimpleMovingAverage implements Indicator {
 
 	public int getSize() {
 		return value.length;
+	}
+	
+	public String toString() {
+		return getName() + " (" + getModel() + ")";
 	}
 }
 

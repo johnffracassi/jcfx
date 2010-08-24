@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 
 import org.jdesktop.swingx.JXLabel;
 
-import com.jeff.fx.gui.PIntComboBox;
+import com.jeff.fx.gui.field.PIntComboBox;
 
 /**
  *

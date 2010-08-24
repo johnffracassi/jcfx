@@ -1,4 +1,4 @@
-package com.jeff.fx.gui;
+package com.jeff.fx.gui.field;
 
 
 @SuppressWarnings("serial")

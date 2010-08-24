@@ -1,4 +1,4 @@
-package com.jeff.fx.gui;
+package com.jeff.fx.gui.renderer;
 
 import java.awt.Color;
 import java.awt.Graphics;

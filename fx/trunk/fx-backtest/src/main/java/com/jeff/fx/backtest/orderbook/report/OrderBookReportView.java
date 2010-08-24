@@ -12,9 +12,10 @@ import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTable;
 
 import com.jeff.fx.gui.GUIUtil;
-import com.jeff.fx.gui.LocalDateTimeCellRenderer;
-import com.jeff.fx.gui.PriceCellRenderer;
-import com.jeff.fx.gui.ProfitCellRenderer;
+import com.jeff.fx.gui.renderer.LocalDateTimeCellRenderer;
+import com.jeff.fx.gui.renderer.PriceCellRenderer;
+import com.jeff.fx.gui.renderer.ProfitCellRenderer;
+
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.FlowLayout;

@@ -18,7 +18,7 @@ import com.jeff.fx.backtest.chart.NewPriceChartAction;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.gui.PEnumComboBox;
+import com.jeff.fx.gui.field.PEnumComboBox;
 import com.siebentag.gui.VerticalFlowLayout;
 import javax.swing.ImageIcon;
 
