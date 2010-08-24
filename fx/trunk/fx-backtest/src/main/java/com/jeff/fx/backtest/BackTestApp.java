@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.jeff.fx.backtest.chart.EnhancedCandleChart;
 import com.jeff.fx.backtest.chart.NewCandleChartEvent;
 import com.jeff.fx.backtest.chart.NewPriceChartEvent;
+import com.jeff.fx.backtest.chart.PriceChartController;
 import com.jeff.fx.backtest.chart.TypicalValueChart;
 import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartEvent;
 import com.jeff.fx.backtest.strategy.time.StrategyView;
@@ -77,9 +78,9 @@ public class BackTestApp {
 				try {
 					Instrument instrument = Instrument.valueOf(AppCtx.getPersistent("newChart.instrument"));
 					Period period = Period.valueOf(AppCtx.getPersistent("newChart.period"));
-					CandleCollection candles = dataManager.getCandles();
-					TypicalValueChart chart = new TypicalValueChart(candles);
-					frame.addMainPanel(chart, instrument + " (" + period.key + ")");
+					PriceChartController pcc = new PriceChartController();
+					pcc.update(dataManager.getCandles());
+					frame.addMainPanel(pcc.getView(), instrument + " (" + period.key + ")");
 				} catch(Exception ex) {
 					ex.printStackTrace();
 				}

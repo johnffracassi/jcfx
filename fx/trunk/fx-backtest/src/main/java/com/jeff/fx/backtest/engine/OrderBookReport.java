@@ -2,8 +2,6 @@ package com.jeff.fx.backtest.engine;
 
 public class OrderBookReport {
 
-	private OrderBook book;
-	
 	private int orderCount = 0;
 	private double balance = 0;
 	private double minBalance = 0;
@@ -16,11 +14,10 @@ public class OrderBookReport {
 	private double low = Double.MAX_VALUE;
 	
 	public OrderBookReport(OrderBook book) {
-		this.book = book;
-		analyse();
+		analyse(book);
 	}
 
-	private void analyse() {
+	private void analyse(OrderBook book) {
 
 		orderCount = book.getClosedOrders().size();
 		
@@ -43,10 +40,6 @@ public class OrderBookReport {
 			if(balance < minBalance) minBalance = balance;
 			if(balance > maxBalance) maxBalance = balance;
 		}
-	}
-
-	public OrderBook getBook() {
-		return book;
 	}
 
 	public int getOrderCount() {

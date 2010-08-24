@@ -17,8 +17,9 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXTable;
 
 import com.jeff.fx.gui.GUIUtil;
-import com.jeff.fx.gui.PriceCellRenderer;
-import com.jeff.fx.gui.ProfitCellRenderer;
+import com.jeff.fx.gui.renderer.PriceCellRenderer;
+import com.jeff.fx.gui.renderer.ProfitCellRenderer;
+
 import javax.swing.ImageIcon;
 
 @SuppressWarnings("serial")
@@ -138,8 +139,8 @@ public class OptimiserView extends JPanel {
 		tblReport = new JXTable(reportModel);
 		tblReport.setColumnControlVisible(true);
 		tblReport.getColumnModel().getColumn(2).setCellRenderer(new ProfitCellRenderer(0));
-		tblReport.getColumnModel().getColumn(3).setCellRenderer(new PriceCellRenderer(2));
 		tblReport.getColumnModel().getColumn(4).setCellRenderer(new PriceCellRenderer(2));
+		tblReport.getColumnModel().getColumn(5).setCellRenderer(new PriceCellRenderer(2));
 		reportScrollPane.setViewportView(tblReport);
 	}
 

@@ -145,6 +145,17 @@ public class AppCtx {
 		return value;
 	}
 	
+	public static int getPersistentInt(String key, int defaultValue) {
+		try {
+			int val = persistentRegister.getInt(key, Integer.MIN_VALUE);
+			if(val != Integer.MIN_VALUE) {
+				return val;
+			}
+		} catch(Exception ex) {	}
+		
+		return defaultValue;
+	}
+	
 	public static double getPersistentDouble(String key) {
 		try {
 			double val = persistentRegister.getDouble(key, Double.MIN_VALUE);

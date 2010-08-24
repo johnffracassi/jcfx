@@ -115,8 +115,9 @@ public class EnhancedCandleChart extends JXPanel {
         rangeAxis.setAutoRangeMinimumSize(0.005);
 
         // add indicators
-        ZigZagIndicator zzi = new ZigZagIndicator();
-        List<IndicatorMarker> markers = zzi.calculate(candles);
+        ZigZagIndicator zzi = new ZigZagIndicator(30);
+        zzi.calculate(candles);
+        List<IndicatorMarker> markers = zzi.getValues();
         XYSeries zzis = new XYSeries("Zig-Zag");
         for(IndicatorMarker marker : markers) {
         	

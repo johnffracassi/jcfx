@@ -2,23 +2,23 @@ package com.jeff.fx.indicator;
 
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class FixedSizeNumberQueue extends ArrayBlockingQueue<Double> {
+public class FixedSizeNumberQueue extends ArrayBlockingQueue<Float> {
 
 	private static final long serialVersionUID = 6506626739170263513L;
 
 	private int capacity = 0;
-	private double sum = 0.0;
-	private double high = Double.MIN_VALUE;
-	private double low = Double.MAX_VALUE;
-	private double head = Double.NaN;
-	private double tail = Double.NaN;
+	private float sum = 0.0f;
+	private float high = Float.MIN_VALUE;
+	private float low = Float.MAX_VALUE;
+	private float head = Float.NaN;
+	private float tail = Float.NaN;
 
 	public FixedSizeNumberQueue(int capacity) {
 		super(capacity);
 		this.capacity = capacity;
 	}
 
-	public double value() {
+	public float value() {
 		return average();
 	}
 
@@ -27,7 +27,7 @@ public class FixedSizeNumberQueue extends ArrayBlockingQueue<Double> {
 	}
 
 	@Override
-	public boolean add(Double val) {
+	public boolean add(Float val) {
 		sum += val;
 
 		if (remainingCapacity() == 0) {
@@ -47,16 +47,16 @@ public class FixedSizeNumberQueue extends ArrayBlockingQueue<Double> {
 		return super.add(val);
 	}
 
-	public Double poll() {
+	public Float poll() {
 
-		double num = super.poll();
+		float num = super.poll();
 
 		sum -= num;
 
 		// has the highest value been removed?
 		if (num == high) {
-			high = Double.MIN_VALUE;
-			for (Double x : this) {
+			high = Float.MIN_VALUE;
+			for (Float x : this) {
 				if (x > high)
 					high = x;
 			}
@@ -64,8 +64,8 @@ public class FixedSizeNumberQueue extends ArrayBlockingQueue<Double> {
 
 		// has the lowest value been removed?
 		if (num == low) {
-			low = Double.MAX_VALUE;
-			for (Double x : this) {
+			low = Float.MAX_VALUE;
+			for (Float x : this) {
 				if (x < low)
 					low = x;
 			}
@@ -78,35 +78,35 @@ public class FixedSizeNumberQueue extends ArrayBlockingQueue<Double> {
 		return capacity;
 	}
 
-	public double sum() {
+	public float sum() {
 		return sum;
 	}
 
-	public double average() {
+	public float average() {
 
 		if (size() == 0)
-			return 0.0;
+			return 0.0f;
 
 		return sum / size();
 	}
 
-	public double open() {
+	public float open() {
 		return head;
 	}
 
-	public double close() {
+	public float close() {
 		return tail;
 	}
 
-	public double high() {
+	public float high() {
 		return high;
 	}
 
-	public double low() {
+	public float low() {
 		return low;
 	}
 
-	public double direction() {
+	public float direction() {
 		return head - tail;
 	}
 }

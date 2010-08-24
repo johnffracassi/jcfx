@@ -8,11 +8,11 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
 import com.jeff.fx.common.CandleWeek;
-import com.jeff.fx.gui.DayOfWeekCellRenderer;
-import com.jeff.fx.gui.LocalDateCellRenderer;
-import com.jeff.fx.gui.LocalTimeCellRenderer;
-import com.jeff.fx.gui.PercentageChangeCellRenderer;
-import com.jeff.fx.gui.PriceCellRenderer;
+import com.jeff.fx.gui.renderer.DayOfWeekCellRenderer;
+import com.jeff.fx.gui.renderer.LocalDateCellRenderer;
+import com.jeff.fx.gui.renderer.LocalTimeCellRenderer;
+import com.jeff.fx.gui.renderer.PercentageChangeCellRenderer;
+import com.jeff.fx.gui.renderer.PriceCellRenderer;
 
 @SuppressWarnings("serial")
 public class CandleDataTableModel extends DefaultTableModel {

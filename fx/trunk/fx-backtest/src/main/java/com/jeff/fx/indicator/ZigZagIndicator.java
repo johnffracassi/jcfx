@@ -1,14 +1,26 @@
 package com.jeff.fx.indicator;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleValueModel;
 
-public class ZigZagIndicator {
+@ChartType(ChartTypes.Annotated)
+public class ZigZagIndicator implements Indicator {
 	
+	private Map<Integer,IndicatorMarker> idxs;
+	private boolean calculated = false;
+	private CandleCollection candles;
+
+	@Property(key="zz.windowSize")
+	@ValidationRange(min=0,max=250)
+	@Label("Window Size")
 	private int windowSize = 40;
+	
+	public ZigZagIndicator(int windowSize) {
+		this.windowSize = windowSize;
+	}
 	
 	public void set(String property, int value) {
 		
@@ -20,13 +32,20 @@ public class ZigZagIndicator {
 		}
 		
 		if(triggerUpdate) {
-			// do some shit...
+			recalculate();
 		}
 	}
 	
-	public List<IndicatorMarker> calculate(CandleCollection cc) {
+	public void recalculate() {
+		calculate(candles);
+	}
+	
+	public void calculate(CandleCollection cc) {
 		
-		List<IndicatorMarker> idxs = new ArrayList<IndicatorMarker>();
+		calculated = false;
+		candles = cc;
+		
+		idxs = new HashMap<Integer,IndicatorMarker>();
 		
 		float currentHighVal = Float.MIN_VALUE;
 		int countSinceHigh = 0;
@@ -63,16 +82,40 @@ public class ZigZagIndicator {
 				i = i - windowSize;
 				countSinceHigh = 0;
 				currentHighVal = cc.getPrice(i, CandleValueModel.High);
-				idxs.add(new IndicatorMarker(i, currentLowVal, "Buy", 1));
+				idxs.put(i, new IndicatorMarker(i, currentLowVal, "Buy", 1));
 			} else if(lookingFor != -1 && countSinceHigh == windowSize) {
 				lookingFor = -1;
 				i = i - windowSize;
 				countSinceLow = 0;
 				currentLowVal = cc.getPrice(i, CandleValueModel.Low);
-				idxs.add(new IndicatorMarker(i, currentHighVal, "Sell", -1));
+				idxs.put(i, new IndicatorMarker(i, currentHighVal, "Sell", -1));
 			}
 		}
 		
-		return idxs;
+		calculated = true;
+	}
+
+	public String getName() {
+		return "ZigZag";
+	}
+
+	public float getValue(int idx) {
+		return idxs.containsKey(idx) ? (float)idxs.get(idx).getValue() : Float.NaN;
+	}
+
+	public boolean requiresCalculation() {
+		return !calculated;
+	}
+
+	public int getSize() {
+		return idxs.size();
+	}
+
+	public int getWindowSize() {
+		return windowSize;
+	}
+
+	public void setWindowSize(int windowSize) {
+		this.windowSize = windowSize;
 	}
 }
