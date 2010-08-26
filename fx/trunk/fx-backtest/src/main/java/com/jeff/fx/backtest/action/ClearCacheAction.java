@@ -26,7 +26,7 @@ public class ClearCacheAction extends AbstractAction {
 	 * @wbp.parser.entryPoint
 	 */
 	public ClearCacheAction() {
-		super("Clear Cache", new ImageIcon(ClearCacheAction.class.getResource("/images/bomb.png")));
+		super("Clear Cache", new ImageIcon(ClearCacheAction.class.getResource("/images/bin_empty.png")));
 		putValue(LONG_DESCRIPTION, "Clear the data store cache");
 		putValue(SHORT_DESCRIPTION, "Clear Cache");
 	}

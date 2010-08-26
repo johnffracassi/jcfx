@@ -1,9 +1,9 @@
 package com.jeff.fx.gui;
 
 import java.awt.Color;
+import java.awt.Container;
 
 import javax.swing.BorderFactory;
-import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import org.jdesktop.swingx.JXPanel;
@@ -18,7 +18,7 @@ public class GUIUtil {
 	 * @param pnl
 	 * @return
 	 */
-	public static JXPanel frame(String title, JPanel pnl) {
+	public static JXPanel frame(String title, Container pnl) {
 		
         JXTitledPanel titled = new JXTitledPanel(title, pnl);
         Border shadow = new DropShadowBorder(Color.BLACK, 3, 0.66f, 3, false, false, true, true);

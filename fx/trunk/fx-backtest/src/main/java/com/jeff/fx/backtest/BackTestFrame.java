@@ -20,7 +20,8 @@ import com.jeff.fx.action.AboutAction;
 import com.jeff.fx.action.ExitAction;
 import com.jeff.fx.backtest.action.ApplicationPreferencesAction;
 import com.jeff.fx.backtest.action.ClearCacheAction;
-import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartAction;
+import com.jeff.fx.backtest.strategy.coder.NewStrategyCoderAction;
+import com.jeff.fx.backtest.strategy.time.NewTimeStrategyAction;
 import com.jeff.fx.gui.ButtonTabComponent;
 import com.jeff.fx.gui.GUIUtil;
 import com.siebentag.gui.VerticalFlowLayout;
@@ -34,7 +35,8 @@ public class BackTestFrame extends JXFrame {
 	@Autowired private ClearCacheAction clearCacheAction;	
 	@Autowired private ExitAction exitAction;	
 	@Autowired private AboutAction aboutAction;
-	@Autowired private NewTimeStrategyChartAction newTimeStrategyChartAction;
+	@Autowired private NewTimeStrategyAction newTimeStrategyAction;
+	@Autowired private NewStrategyCoderAction newStrategyCoderAction;
 	@Autowired private ApplicationPreferencesAction applicationPreferencesAction;
 	
 	/**
@@ -71,7 +73,8 @@ public class BackTestFrame extends JXFrame {
 	private JToolBar buildToolBar() {
 		
         JToolBar toolBar = new JToolBar("Main");
-        toolBar.add(newTimeStrategyChartAction);
+        toolBar.add(newTimeStrategyAction);
+        toolBar.add(newStrategyCoderAction);
         return toolBar;
 	}
 	

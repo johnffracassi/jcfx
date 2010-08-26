@@ -61,10 +61,10 @@ public class OptimiserView extends JPanel {
 		pnlParameters.add(pnlActions, BorderLayout.SOUTH);
 
 		btnRun = new JButton("Start");
-		btnRun.setIcon(new ImageIcon(OptimiserView.class.getResource("/images/bullet_go.png")));
+		btnRun.setIcon(new ImageIcon(OptimiserView.class.getResource("/images/control_play_blue.png")));
 		pnlActions.add(btnRun);
 		btnPause = new JButton("Stop");
-		btnPause.setIcon(new ImageIcon(OptimiserView.class.getResource("/images/bullet_red.png")));
+		btnPause.setIcon(new ImageIcon(OptimiserView.class.getResource("/images/control_stop_blue.png")));
 		pnlActions.add(btnPause);
 
 		JPanel pnlStatus = new JPanel();
@@ -78,38 +78,38 @@ public class OptimiserView extends JPanel {
 		JPanel pnlLeft = new JPanel();
 		pnlLeft.setBorder(new EmptyBorder(3, 3, 3, 3));
 		pnlGrid.add(pnlLeft);
-		pnlLeft.setLayout(new GridLayout(0, 1, 0, 0));
+		pnlLeft.setLayout(new MigLayout("", "[178px]", "[][][][][][grow]"));
 
 		JPanel panel_1 = new JPanel();
-		pnlLeft.add(panel_1);
+		pnlLeft.add(panel_1, "cell 0 0,grow");
 		panel_1.setLayout(new BorderLayout(0, 0));
 
 		lblPermutations = new JLabel("Permutations: 0");
 		panel_1.add(lblPermutations);
 
 		JPanel panel_4 = new JPanel();
-		pnlLeft.add(panel_4);
+		pnlLeft.add(panel_4, "cell 0 1,grow");
 		panel_4.setLayout(new BorderLayout(0, 0));
 
 		lblCompleted = new JLabel("Completed: 0");
 		panel_4.add(lblCompleted, BorderLayout.CENTER);
 
 		JPanel panel_2 = new JPanel();
-		pnlLeft.add(panel_2);
+		pnlLeft.add(panel_2, "cell 0 2,grow");
 		panel_2.setLayout(new BorderLayout(0, 0));
 
 		lblElapsedTime = new JLabel("Elapsed Time: 0h 0m 0s");
 		panel_2.add(lblElapsedTime);
 
 		JPanel panel_3 = new JPanel();
-		pnlLeft.add(panel_3);
+		pnlLeft.add(panel_3, "cell 0 3,grow");
 		panel_3.setLayout(new BorderLayout(0, 0));
 
 		lblRemainingTime = new JLabel("Remaining Time: 0h 0m 0s");
 		panel_3.add(lblRemainingTime);
 		
 		JPanel panel_5 = new JPanel();
-		pnlLeft.add(panel_5);
+		pnlLeft.add(panel_5, "cell 0 4,grow");
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
 		lblSpeed = new JLabel("Tests/min: 0");

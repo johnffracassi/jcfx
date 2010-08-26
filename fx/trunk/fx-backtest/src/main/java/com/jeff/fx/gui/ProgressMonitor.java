@@ -16,8 +16,12 @@ public class ProgressMonitor {
 	public static void update(final DataStoreProgress progress) {
 		instance.setTaskHeading("Loading Data");
 		instance.setMaximum(progress.getSteps());
-		instance.setProgress(progress.getProgress());
-		instance.setMessage(String.format("Loading data for day %d of %d (%.1f%%)", progress.getProgress(), progress.getSteps(), progress.getPercentage()));		
+		if(progress.getSteps() == 0) {
+			instance.getProgressBar().setIndeterminate(true);
+		} else {
+			instance.setProgress(progress.getProgress());
+		}
+		instance.setMessage(progress.getMessage());		
 		instance.setVisible(true);
 		log.debug("updating progress to " + progress.getProgress() + "/" + progress.getSteps());
 	}

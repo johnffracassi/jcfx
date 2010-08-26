@@ -1,6 +1,7 @@
 package com.jeff.fx.backtest;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -8,17 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import org.jdesktop.beansbinding.AutoBinding;
-import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
-import org.jdesktop.beansbinding.BeanProperty;
-import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.swingx.JXPanel;
 
 import com.jgoodies.forms.factories.FormFactory;
@@ -26,7 +23,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-public class GenericDialog extends JFrame {
+public class GenericDialog extends JDialog {
 	
 	private static final long serialVersionUID = -6792643327788512180L;
 
@@ -36,6 +33,11 @@ public class GenericDialog extends JFrame {
 	private JLabel lblTitle;
 	private JPanel pnlWest;
 	private JButton btnDone;
+	private JButton btnCancel;
+	
+	public static final int DONE = 1;
+	public static final int CANCEL = 2;
+	private int value = 0;
 	
 	public GenericDialog(JPanel contentPanel, String title) {
 		
@@ -52,6 +54,14 @@ public class GenericDialog extends JFrame {
 		
 		btnDone = new JButton("Done");
 		pnlActions.add(btnDone);
+		
+		btnCancel = new JButton("Canel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				close(CANCEL);
+			}
+		});
+		pnlActions.add(btnCancel);
 		
 		JPanel pnlTitle = new JPanel();
 		pnlTitle.setFocusable(false);
@@ -84,14 +94,27 @@ public class GenericDialog extends JFrame {
 		
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				setVisible(false);
-				dispose();
+				close(DONE);
 			}
 		});		
 
-		initDataBindings();
-
+		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		lblTitle.setText(title);
+		setTitle(title);
+	}
+	
+	private void close(int value) {
+		this.value = value;
+		setVisible(false);
+		dispose();
+	}
+	
+	public boolean isCancelled() {
+		return value == CANCEL;
+	}
+	
+	public boolean isDone() {
+		return value == DONE;
 	}
 	
 	public GenericDialog() {
@@ -101,25 +124,24 @@ public class GenericDialog extends JFrame {
 	public JPanel getPnlEast() {
 		return pnlEast;
 	}
+	
 	public JPanel getPnlActions() {
 		return pnlActions;
 	}
+	
 	public JPanel getPnlContent() {
 		return pnlContent;
 	}
+	
 	public JLabel getLblTitle() {
 		return lblTitle;
 	}
+	
 	public JPanel getPnlWest() {
 		return pnlWest;
 	}
+	
 	public JButton getBtnDone() {
 		return btnDone;
-	}
-	protected void initDataBindings() {
-		BeanProperty<JLabel, String> jLabelBeanProperty = BeanProperty.create("text");
-		BeanProperty<JFrame, String> jFrameBeanProperty = BeanProperty.create("title");
-		AutoBinding<JLabel, String, JFrame, String> autoBinding = Bindings.createAutoBinding(UpdateStrategy.READ, lblTitle, jLabelBeanProperty, this, jFrameBeanProperty);
-		autoBinding.bind();
 	}
 }

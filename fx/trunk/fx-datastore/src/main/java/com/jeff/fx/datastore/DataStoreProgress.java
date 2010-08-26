@@ -2,10 +2,12 @@ package com.jeff.fx.datastore;
 
 public class DataStoreProgress {
 	
+	private String message = null;
 	private int steps = 0;
 	private int progress = 0;
 
-	public DataStoreProgress(int progress, int steps) {
+	public DataStoreProgress(String message, int progress, int steps) {
+		this.message = message;
 		this.steps = steps;
 		this.progress = progress;
 	}
@@ -32,6 +34,14 @@ public class DataStoreProgress {
 
 	public void setProgress(int progress) {
 		this.progress = progress;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 }

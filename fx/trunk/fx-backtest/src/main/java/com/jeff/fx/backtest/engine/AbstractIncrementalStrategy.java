@@ -25,17 +25,20 @@ public abstract class AbstractIncrementalStrategy extends AbstractStrategy {
 	 * Execute the test with all strategies
 	 * 
 	 * @param cc
+	 * @return 
 	 */
-	public void execute(CandleCollection cc) {
+	public OrderBook execute(CandleCollection cc) {
 		
 		LocalDate date = cc.getStart();
 		
 		while(date.isBefore(cc.getEnd())) {
 			CandleWeek cw = cc.getCandleWeek(date);
-			for(int i=0; i<cw.getCandleCount(); i++) {
+			for(int i=0, n=cw.getCandleCount(); i<n; i++) {
 				candle(cw.getCandle(i));
 			}
 			date = date.plusDays(7);
 		}
+		
+		return getOrderBook();
 	}
 }

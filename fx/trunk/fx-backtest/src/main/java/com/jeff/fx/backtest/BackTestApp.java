@@ -12,8 +12,9 @@ import com.jeff.fx.backtest.chart.EnhancedCandleChart;
 import com.jeff.fx.backtest.chart.NewCandleChartEvent;
 import com.jeff.fx.backtest.chart.NewPriceChartEvent;
 import com.jeff.fx.backtest.chart.PriceChartController;
-import com.jeff.fx.backtest.chart.TypicalValueChart;
-import com.jeff.fx.backtest.strategy.time.NewTimeStrategyChartEvent;
+import com.jeff.fx.backtest.strategy.coder.NewStrategyCoderEvent;
+import com.jeff.fx.backtest.strategy.coder.StrategyCoderController;
+import com.jeff.fx.backtest.strategy.time.NewTimeStrategyEvent;
 import com.jeff.fx.backtest.strategy.time.StrategyView;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.Instrument;
@@ -87,11 +88,18 @@ public class BackTestApp {
 			}
 		});
 		
-		AppCtx.registerEventListener(NewTimeStrategyChartEvent.class, new FXActionEventListener() {
+		AppCtx.registerEventListener(NewTimeStrategyEvent.class, new FXActionEventListener() {
 			public void event(FXActionEvent ev) {
 				StrategyView tsv = new StrategyView();
 				frame.addMainPanel(tsv, "Time Strategy");
 				tsv.initialise();
+			}
+		});
+
+		AppCtx.registerEventListener(NewStrategyCoderEvent.class, new FXActionEventListener() {
+			public void event(FXActionEvent ev) {
+				StrategyCoderController controller = new StrategyCoderController();
+				frame.addMainPanel(controller.getView(), "Strategy Coder");
 			}
 		});
 

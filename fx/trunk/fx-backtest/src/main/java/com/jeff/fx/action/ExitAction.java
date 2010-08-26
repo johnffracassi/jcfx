@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class ExitAction extends AbstractAction {
 	
 	public ExitAction() {
-		super("Exit", new ImageIcon(ExitAction.class.getResource("/images/cross.png")));
+		super("Exit", new ImageIcon(ExitAction.class.getResource("/images/door_out.png")));
 		putValue(SHORT_DESCRIPTION, "Quit the application");
 		putValue(LONG_DESCRIPTION, "Quit the application");
 	}

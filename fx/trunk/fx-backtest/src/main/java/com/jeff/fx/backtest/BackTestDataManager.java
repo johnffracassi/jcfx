@@ -32,6 +32,8 @@ public class BackTestDataManager {
 	
 	public CandleCollection getCandles() throws Exception {
 		
+		ProgressMonitor.update(new DataStoreProgress("Loading candles...", 0, 0));
+
 		// build the data request from the user parameters
 		FXDataSource dataSource = FXDataSource.valueOf(AppCtx.getPersistent("newChart.dataSource"));
 		Instrument instrument = Instrument.valueOf(AppCtx.getPersistent("newChart.instrument"));
@@ -39,8 +41,7 @@ public class BackTestDataManager {
 		FXDataRequest request = new FXDataRequest(dataSource, instrument, AppCtx.getPersistentDate("newChart.startDate"), AppCtx.getPersistentDate("newChart.endDate"), period);
 		
 		// run the data load in a new thread
-		DataLoaderWorker dlw = new DataLoaderWorker(request);
-		
+		DataLoaderWorker dlw = new DataLoaderWorker(request);		
 		dlw.execute();
 		CandleDataResponse response = dlw.get();
 //		CandleDataResponse response = dlw.doInBackground();
@@ -70,7 +71,7 @@ public class BackTestDataManager {
 				public void propertyChange(PropertyChangeEvent evt) {
 					if ("day".equals(evt.getPropertyName())) {
 						int day = (Integer)evt.getNewValue();
-						ProgressMonitor.update(new DataStoreProgress(day, dayCount));
+						ProgressMonitor.update(new DataStoreProgress(String.format("Loading data for day %d of %d (%.1f%%)", day, dayCount, ((double)day / dayCount) * 100.0), day, dayCount));
 					} else if("complete".equals(evt.getPropertyName())) {
 						ProgressMonitor.complete();
 					}
