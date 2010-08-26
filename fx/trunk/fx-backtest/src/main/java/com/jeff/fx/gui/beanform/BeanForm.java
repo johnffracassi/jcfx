@@ -14,7 +14,7 @@ import com.jeff.fx.indicator.ValueListener;
 
 import net.miginfocom.swing.MigLayout;
 
-public class BeanEditor extends JPanel {
+public class BeanForm extends JPanel {
 
 	private static final long serialVersionUID = 770458164263389928L;
 
@@ -22,7 +22,7 @@ public class BeanEditor extends JPanel {
 	
 	public static void main(String[] args) {
 		
-		BeanEditor bt = new BeanEditor();
+		BeanForm bt = new BeanForm();
 		bt.buildForm(new SimpleMovingAverage());
 		
 		JFrame jf = new JFrame();
@@ -36,7 +36,7 @@ public class BeanEditor extends JPanel {
 		return bean;
 	}
 	
-	private void buildForm(final Object bean) {
+	public void buildForm(final Object bean) {
 		
 		this.bean = bean;
 		
@@ -67,8 +67,8 @@ public class BeanEditor extends JPanel {
 					editor.setListener(new ValueListener() {
 						public void valueChanged(Object newValue) {
 							try {
-								setterMethod.invoke(BeanEditor.this.bean, newValue);
-								System.out.println("new value = " + BeanEditor.this.bean + " / " + newValue);
+								setterMethod.invoke(BeanForm.this.bean, newValue);
+								System.out.println("new value = " + BeanForm.this.bean + " / " + newValue);
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -82,12 +82,12 @@ public class BeanEditor extends JPanel {
 		}
 	}
 
-	public BeanEditor(Object Bean) {
+	public BeanForm(Object Bean) {
 		this();
 		buildForm(bean);
 	}
 	
-	public BeanEditor() {
+	public BeanForm() {
 		setLayout(new MigLayout("", "[][grow]", "[]"));
 	}
 }

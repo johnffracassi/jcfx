@@ -19,6 +19,7 @@ import com.jeff.fx.backtest.strategy.StrategyPropertyChangeListener;
 import com.jeff.fx.common.OfferSide;
 import com.jeff.fx.common.TimeOfWeek;
 import com.jeff.fx.gui.GUIUtil;
+import com.jeff.fx.gui.SliderLine;
 import com.jeff.fx.gui.TimeOfWeekSliderLine;
 import com.siebentag.gui.VerticalFlowLayout;
 
@@ -30,6 +31,8 @@ public class TimeStrategyConfigView extends JXPanel {
 	private TimeOfWeekSliderLine sldOpen;
 	private TimeOfWeekSliderLine sldClose;
 	private JComboBox cboOfferSide;
+	private SliderLine sldShortSma;
+	private SliderLine sldLongSma;
 	
 	public TimeStrategyConfigView(final StrategyPropertyChangeListener spcl) {
 		
@@ -37,8 +40,8 @@ public class TimeStrategyConfigView extends JXPanel {
 		pnlConfig.setLayout(new VerticalFlowLayout(0));
 		sldOpen = new TimeOfWeekSliderLine("timeStrategy.openAt", "Open", 0, 100);
 		sldClose = new TimeOfWeekSliderLine("timeStrategy.closeAt", "Close", 0, 100);
-		pnlConfig.add(sldOpen);
-		pnlConfig.add(sldClose);
+		sldShortSma = new SliderLine("timeStrategy.shortSma", "Short SMA", 5, 100, 1);
+		sldLongSma = new SliderLine("timeStrategy.longSma", "Long SMA", 20, 1000, 10);
 		
 		JXPanel pnlOfferSide = new JXPanel();
 		cboOfferSide = new JComboBox(OfferSide.values());
@@ -53,7 +56,6 @@ public class TimeStrategyConfigView extends JXPanel {
 		});
 		pnlOfferSide.add(new JXLabel("Offer Side:"));
 		pnlOfferSide.add(cboOfferSide);
-		pnlConfig.add(pnlOfferSide);
 		
 		ChangeListener listener = new ChangeListener() {
 			public void stateChanged(ChangeEvent ev) {
@@ -65,10 +67,18 @@ public class TimeStrategyConfigView extends JXPanel {
 			}
 		};
 		
+		sldShortSma.addChangeListener(listener);
+		sldLongSma.addChangeListener(listener);
 		sldOpen.addChangeListener(listener);
 		sldClose.addChangeListener(listener);
 
 		pnlCommon = new CommonStrategyPanel("timeStrategy", spcl);
+		pnlCommon.add(sldShortSma);
+		pnlCommon.add(sldLongSma);
+		
+		pnlConfig.add(sldOpen);
+		pnlConfig.add(sldClose);
+		pnlConfig.add(pnlOfferSide);
 		
 		setLayout(new BorderLayout());
 		JXPanel container = new JXPanel(new BorderLayout());
@@ -82,6 +92,8 @@ public class TimeStrategyConfigView extends JXPanel {
 		Map<String,Object> params = new HashMap<String,Object>();
 		params.put("stopLoss", getStopLoss());
 		params.put("takeProfit", getTakeProfit());
+		params.put("shortSma", getShortSma());
+		params.put("longSma", getLongSma());
 		params.put("open", getOpen());
 		params.put("close", getClose());
 		params.put("offerSide", getOfferSide());
@@ -89,11 +101,21 @@ public class TimeStrategyConfigView extends JXPanel {
 	}
 	
 	public void setParams(Map<String,Object> params) {
+		sldShortSma.setValue((Integer)params.get("shortSma"));
+		sldLongSma.setValue((Integer)params.get("longSma"));
 		sldOpen.setTimeOfWeek((TimeOfWeek)params.get("open"));
 		sldClose.setTimeOfWeek((TimeOfWeek)params.get("close"));
 		pnlCommon.setStopLoss((Integer)params.get("stopLoss"));
 		pnlCommon.setTakeProfit((Integer)params.get("takeProfit"));
 		cboOfferSide.setSelectedItem((OfferSide)params.get("offerSide"));
+	}
+	
+	public int getShortSma() {
+		return sldShortSma.getValue();
+	}
+	
+	public int getLongSma() {
+		return sldLongSma.getValue();
 	}
 	
 	public OfferSide getOfferSide() {

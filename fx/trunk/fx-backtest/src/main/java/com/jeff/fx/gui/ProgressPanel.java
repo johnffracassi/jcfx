@@ -1,6 +1,9 @@
 package com.jeff.fx.gui;
 
 import java.awt.BorderLayout;
+import java.awt.ComponentOrientation;
+import java.awt.Cursor;
+import java.awt.Dialog.ModalExclusionType;
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -11,12 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 
 import org.jdesktop.swingx.JXLabel;
-import java.awt.Dialog.ModalExclusionType;
-import java.awt.Cursor;
-import java.awt.ComponentOrientation;
-import javax.swing.border.EtchedBorder;
 
 @SuppressWarnings("serial")
 class ProgressPanel extends JFrame {
@@ -78,27 +78,39 @@ class ProgressPanel extends JFrame {
 		pnlProgress.add(progressBar);
 	}
 
+	public JProgressBar getProgressBar() {
+		return progressBar;
+	}
+	
 	public String getTaskHeading() {
 		return lblTaskHeading.getText();
 	}
+	
 	public void setTaskHeading(String text) {
 		lblTaskHeading.setText(text);
 	}
+	
 	public String getMessage() {
 		return lblMessage.getText();
 	}
+	
 	public void setMessage(String text_1) {
 		lblMessage.setText(text_1);
 	}
+	
 	public int getProgress() {
 		return progressBar.getValue();
 	}
+	
 	public void setProgress(int value) {
+		progressBar.setIndeterminate(true);
 		progressBar.setValue(value);
 	}
+	
 	public int getMaximum() {
 		return progressBar.getMaximum();
 	}
+	
 	public void setMaximum(int maximum) {
 		progressBar.setMaximum(maximum);
 	}

@@ -1,6 +1,6 @@
 package com.jeff.fx.backtest.engine;
 
-import com.jeff.fx.backtest.strategy.time.IndicatorCache;
+import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.OfferSide;
@@ -16,6 +16,11 @@ public abstract class AbstractStrategy {
 	 * order book for this instance
 	 */
 	private OrderBook orderBook;
+
+	/**
+	 * indicator cache for this instance
+	 */
+	protected IndicatorCache indicators;
 
 	/**
 	 * @param id
@@ -37,7 +42,7 @@ public abstract class AbstractStrategy {
 	 * Execute the test with all strategies
 	 * @param cc
 	 */
-	public abstract OrderBook execute(CandleCollection cc, IndicatorCache indicators);
+	public abstract OrderBook execute(CandleCollection candles);
 	
 	/**
 	 * 
@@ -136,6 +141,10 @@ public abstract class AbstractStrategy {
 		return orderBook.hasOpenOrders();
 	}
 
+	public final void setId(int id) {
+		this.id = id;
+	}
+	
 	public final int getId() {
 		return id;
 	}

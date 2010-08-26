@@ -9,6 +9,7 @@ import com.jeff.fx.backtest.engine.AbstractStrategy;
 import com.jeff.fx.backtest.engine.BTOrder;
 import com.jeff.fx.backtest.engine.OrderBook;
 import com.jeff.fx.backtest.engine.OrderCloseType;
+import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.CandleValueModel;
@@ -20,17 +21,23 @@ import com.jeff.fx.indicator.SimpleMovingAverage;
 public class TimeStrategy extends AbstractStrategy {
 	
 	private static Logger log = Logger.getLogger(TimeStrategy.class);
-
+	
 	private TimeOfWeek open = null;
 	private TimeOfWeek close = null;
 	private int stopLoss = 0;
 	private int takeProfit = 0;
+	private int shortSma = 14;
+	private int longSma = 140;
 	private OfferSide offerSide = OfferSide.Ask;
 
-	public TimeStrategy(int id, Map<String,Object> parameters) {
+	public TimeStrategy(int id, Map<String,Object> parameters, IndicatorCache indicators) {
 		
 		super(id);
 		
+		this.indicators = indicators;
+		
+		shortSma = (Integer)parameters.get("shortSma");
+		longSma = (Integer)parameters.get("longSma");
 		stopLoss = (Integer)parameters.get("stopLoss");
 		takeProfit = (Integer)parameters.get("takeProfit");
 		open = (TimeOfWeek)parameters.get("open");
@@ -42,10 +49,10 @@ public class TimeStrategy extends AbstractStrategy {
 		return (!open.equals(close));
 	}
 	
-	public OrderBook execute(CandleCollection candles, IndicatorCache indicators) {
+	public OrderBook execute(CandleCollection candles) {
 
-		SimpleMovingAverage sma1 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(18, CandleValueModel.Typical), candles);
-		SimpleMovingAverage sma2 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(197, CandleValueModel.Typical), candles);
+		SimpleMovingAverage sma1 = (SimpleMovingAverage)indicators.calculate(new SimpleMovingAverage(shortSma, CandleValueModel.Typical), candles);
+		SimpleMovingAverage sma2 = (SimpleMovingAverage)indicators.calculate(new SimpleMovingAverage(longSma, CandleValueModel.Typical), candles);
 		
 		if(candles != null && candles.getStart() != null) {
 			

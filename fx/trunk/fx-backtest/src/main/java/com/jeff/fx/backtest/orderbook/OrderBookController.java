@@ -1,5 +1,7 @@
 package com.jeff.fx.backtest.orderbook;
 
+import javax.swing.ImageIcon;
+
 import com.jeff.fx.backtest.dataviewer.CandleDataController;
 import com.jeff.fx.backtest.engine.BTOrder;
 import com.jeff.fx.backtest.engine.OrderBook;
@@ -23,9 +25,9 @@ public class OrderBookController implements OrderSelectionListener {
 
 		// create tabbed panels in view
 		view = new OrderBookView();
-		view.getTabbedPane().add(balance.getView(), "Balance Chart");
-		view.getTabbedPane().add(report.getView(), "Orders");
-		view.getTabbedPane().add(dataViewer.getView(), "Candles");
+		view.getTabbedPane().addTab("Balance Chart", new ImageIcon(getClass().getResource("/images/chart_curve.png")), balance.getView());
+		view.getTabbedPane().addTab("Orders", new ImageIcon(getClass().getResource("/images/book_open.png")), report.getView());
+		view.getTabbedPane().addTab("Candles", new ImageIcon(getClass().getResource("/images/application_view_columns.png")), dataViewer.getView());
 		
 		// wire the listeners together
 		report.addOrderSelectionListener(dataViewer);

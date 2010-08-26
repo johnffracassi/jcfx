@@ -16,7 +16,6 @@ import com.jeff.fx.backtest.engine.OrderBookReport;
 import com.jeff.fx.backtest.strategy.optimiser.OptimiserExecutor;
 import com.jeff.fx.backtest.strategy.optimiser.OptimiserParameter;
 import com.jeff.fx.backtest.strategy.optimiser.Permutator;
-import com.jeff.fx.backtest.strategy.time.IndicatorCache;
 import com.jeff.fx.backtest.strategy.time.TimeStrategy;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.TimeOfWeek;
@@ -226,11 +225,13 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 
 				// create a map of the parameters for this run
 				final Map<String,Object> map = new HashMap<String,Object>();
-				map.put("stopLoss", values[0]);
-				map.put("takeProfit", values[1]);
-				map.put("open", new TimeOfWeek((Integer)values[2]));
-				map.put("close", new TimeOfWeek((Integer)values[3]));
+				map.put("open", new TimeOfWeek((Integer)values[0]));
+				map.put("close", new TimeOfWeek((Integer)values[1]));
+				map.put("shortSma", values[2]);
+				map.put("longSma", values[3]);
 				map.put("offerSide", values[4]);
+				map.put("stopLoss", values[5]);
+				map.put("takeProfit", values[6]);
 				
 				return map;
 			}
@@ -240,9 +241,9 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 				final Map<String,Object> map = generateParameters(idx);
 				
 				// build the test
-				final TimeStrategy test = new TimeStrategy(idx, map);
+				final TimeStrategy test = new TimeStrategy(idx, map, indicators);
 				if(test.isTestValid()) {
-					OrderBook book = test.execute(candles, indicators);
+					OrderBook book = test.execute(candles);
 					ExecutorTaskResult result = new ExecutorTaskResult(idx, new OrderBookReport(book), map);
 					return result;
 				}

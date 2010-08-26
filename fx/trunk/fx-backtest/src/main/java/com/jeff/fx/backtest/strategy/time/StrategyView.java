@@ -14,6 +14,7 @@ import com.jeff.fx.backtest.AppCtx;
 import com.jeff.fx.backtest.engine.OrderBook;
 import com.jeff.fx.backtest.orderbook.OrderBookController;
 import com.jeff.fx.backtest.orderbook.balancechart.BalanceChartController;
+import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.backtest.strategy.StrategyPropertyChangeListener;
 import com.jeff.fx.backtest.strategy.optimiser.OptimiserController;
 import com.jeff.fx.common.CandleCollection;
@@ -26,6 +27,7 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 	private OrderBookController orderBook = new OrderBookController();
 	private OptimiserController optimiser = new OptimiserController(this);
 	private TimeStrategyConfigView config = null;
+	private IndicatorCache indicators = new IndicatorCache();
 	
 	private JTabbedPane tabbedPane;
 	
@@ -78,8 +80,8 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 	public void update() throws Exception {
 		
 		// perform the test, get the order book
-		TimeStrategy strategy = new TimeStrategy(1, config.getParams());
-		strategy.execute(candles, new IndicatorCache());
+		TimeStrategy strategy = new TimeStrategy(1, config.getParams(), indicators);
+		strategy.execute(candles);
 
 		// update the controllers
 		OrderBook orders = strategy.getOrderBook();

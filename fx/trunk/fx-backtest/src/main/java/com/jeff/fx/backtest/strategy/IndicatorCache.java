@@ -1,4 +1,4 @@
-package com.jeff.fx.backtest.strategy.time;
+package com.jeff.fx.backtest.strategy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,10 +12,10 @@ public class IndicatorCache {
 	
 	private static Logger log = Logger.getLogger(IndicatorCache.class);
 
-	private static Map<Key,Indicator> map = new HashMap<Key, Indicator>();
-	private static Object lock = new Object();
+	private Map<Key,Indicator> map = new HashMap<Key, Indicator>();
+	private Object lock = new Object();
 	
-	public static Indicator calculate(Indicator indicator, CandleCollection candles) {
+	public Indicator calculate(Indicator indicator, CandleCollection candles) {
 		
 		Key key = new Key(indicator, candles);
 
@@ -35,7 +35,7 @@ public class IndicatorCache {
 		}
 	}
 	
-	public static void flush() {
+	public void flush() {
 		map.clear();
 	}
 }
