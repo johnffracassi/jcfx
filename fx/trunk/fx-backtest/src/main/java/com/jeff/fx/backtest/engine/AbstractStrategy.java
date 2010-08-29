@@ -49,7 +49,7 @@ public abstract class AbstractStrategy {
 	 * @param order
 	 * @param candle
 	 */
-	protected final void openOrder(BTOrder order, CandleDataPoint candle) {
+	protected void openOrder(BTOrder order, CandleDataPoint candle) {
 		order.setInstrument(candle.getInstrument());
 		order.setOpenTime(candle.getDate());
 		order.setOpenPrice(order.getOfferSide() == OfferSide.Ask ? candle.getBuyOpen() : candle.getSellOpen());
@@ -124,7 +124,7 @@ public abstract class AbstractStrategy {
 	 * @param order
 	 * @param candle
 	 */
-	protected final void closeOrder(BTOrder order, CandleDataPoint candle) {
+	protected void closeOrder(BTOrder order, CandleDataPoint candle) {
 
 		order.setClosePrice(getClosePrice(order, candle));
 		order.setCloseType(getCloseType(order, candle));

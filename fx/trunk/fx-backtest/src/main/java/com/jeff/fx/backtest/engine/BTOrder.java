@@ -16,19 +16,22 @@ public class BTOrder {
 	private double units;
 	private double openPrice;
 	private double closePrice;
-	private double stopLoss;
-	private double takeProfit;
+	private int stopLoss;
+	private int takeProfit;
 
-	public double getProfit() {
+
+	public int getProfit() {
+		
 		if(offerSide == OfferSide.Ask) {
-			return 10000.0 * (getClosePrice() - getOpenPrice());
+			return (int)StrictMath.round((10000.0 * (getClosePrice() - getOpenPrice())));
 		} else {
-			return 10000.0 * (getOpenPrice() - getClosePrice());
+			return (int)StrictMath.round((10000.0 * (getOpenPrice() - getClosePrice())));
 		}
 	}
 
 	public double getStopLossPrice() {
-		if(stopLoss == 0.0) {
+		
+		if(stopLoss == 0) {
 			return 0.0;
 		}
 		
@@ -39,8 +42,22 @@ public class BTOrder {
 		}
 	}
 
+	public void setStopLossPrice(double newPrice) {
+		
+		if(newPrice == 0.0) {
+			stopLoss = 0;
+		}
+		
+		if(offerSide == OfferSide.Ask) {
+			setStopLoss((int)StrictMath.round(((getOpenPrice() - newPrice) / instrument.getPipValue())));
+		} else {
+			setStopLoss((int)StrictMath.round(((newPrice - getOpenPrice()) / instrument.getPipValue())));
+		}
+	}
+
 	public double getTakeProfitPrice() {
-		if(takeProfit == 0.0) {
+		
+		if(takeProfit == 0) {
 			return 0.0;
 		}
 		
@@ -48,6 +65,19 @@ public class BTOrder {
 			return getOpenPrice() + (takeProfit * instrument.getPipValue());
 		} else {
 			return getOpenPrice() - (takeProfit * instrument.getPipValue());
+		}
+	}
+	
+	public void setTakeProfitPrice(double newPrice) {
+		
+		if(newPrice == 0.0) {
+			takeProfit = 0;
+		}
+		
+		if(offerSide == OfferSide.Ask) {
+			setTakeProfit((int)StrictMath.round(((newPrice - getOpenPrice()) / instrument.getPipValue())));
+		} else {
+			setTakeProfit((int)StrictMath.round(((getOpenPrice() - newPrice) / instrument.getPipValue())));
 		}
 	}
 	
@@ -131,19 +161,19 @@ public class BTOrder {
 		this.closeType = closeType;
 	}
 
-	public double getStopLoss() {
+	public int getStopLoss() {
 		return stopLoss;
 	}
 
-	public void setStopLoss(double stopLoss) {
+	public void setStopLoss(int stopLoss) {
 		this.stopLoss = stopLoss;
 	}
 
-	public double getTakeProfit() {
+	public int getTakeProfit() {
 		return takeProfit;
 	}
 
-	public void setTakeProfit(double takeProfit) {
+	public void setTakeProfit(int takeProfit) {
 		this.takeProfit = takeProfit;
 	}
 }
