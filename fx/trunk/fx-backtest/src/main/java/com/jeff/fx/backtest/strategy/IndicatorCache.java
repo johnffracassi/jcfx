@@ -13,7 +13,13 @@ public class IndicatorCache {
 	private static Logger log = Logger.getLogger(IndicatorCache.class);
 
 	private Map<Key,Indicator> map = new HashMap<Key, Indicator>();
-	private Object lock = new Object();
+	private Map<String,Indicator> lookupByName = new HashMap<String, Indicator>();
+
+	public Object evaluate(String key, CandleCollection candles, int idx) {
+		Indicator indicator = lookupByName.get(key);
+		indicator = map.get(new Key(indicator, candles));
+		return indicator.getValue(idx);
+	}
 	
 	public Indicator calculate(Indicator indicator, CandleCollection candles) {
 		
@@ -22,7 +28,7 @@ public class IndicatorCache {
 		if(map.containsKey(key)) {
 			return map.get(key);
 		} else {
-			synchronized(lock) {
+			synchronized(this) {
 				if(map.containsKey(key)) {
 					return map.get(key);
 				} else {				
