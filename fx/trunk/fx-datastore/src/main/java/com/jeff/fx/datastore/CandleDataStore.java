@@ -51,7 +51,7 @@ public class CandleDataStore {
 	private void updateProgress(int progress, int steps) {
 		if(listeners != null && listeners.size() > 0) {
 			for(DataStoreProgressListener listener : listeners) {
-				listener.dataStoreProgressUpdate(new DataStoreProgress(progress, steps));
+				listener.dataStoreProgressUpdate(new DataStoreProgress("", progress, steps));
 			}
 		}
 	}

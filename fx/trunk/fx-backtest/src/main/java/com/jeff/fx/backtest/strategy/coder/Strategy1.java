@@ -23,7 +23,7 @@ public class Strategy1 extends CodedStrategy {
 			boolean open = false;
 			BTOrder order = new BTOrder();
 			
-			// body
+			/** body */
 			
 			if(open) {
 				openOrder(order, candle);
@@ -40,7 +40,7 @@ public class Strategy1 extends CodedStrategy {
 			BTOrder order = getOrderBook().getOpenOrders().get(0);
 			boolean close = false;
 			
-			// body
+			/** body */
 			
 			if(close) {
 				closeOrder(order, candle);

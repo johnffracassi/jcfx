@@ -25,7 +25,9 @@
 		<module>../fx-datasource</module>
 		<module>../fx-datamanager</module>
 		<module>../fx-backtest</module>
+		<!-- 
 		<module>../fx-backtestclient</module>
+		-->
 	</modules>
 
 	<scm>

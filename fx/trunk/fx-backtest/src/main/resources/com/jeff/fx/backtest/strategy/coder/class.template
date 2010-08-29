@@ -2,22 +2,23 @@ import static java.lang.Math.*;
 import java.io.*;
 import org.joda.time.*;
 import java.util.*;
-import com.jeff.fx.backtest.engine.BTOrder;
+import com.jeff.fx.backtest.engine.*;
+import com.jeff.fx.backtest.strategy.*;
 import com.jeff.fx.backtest.strategy.coder.*;
 import com.jeff.fx.common.*;
 import com.jeff.fx.util.*;
-import com.jeff.fx.backtest.strategy.*;
 import com.jeff.fx.indicator.*;
 
 public class ~className extends CodedStrategy {
 
 	public String getName() {
-		return "** ~className **";
+		return "~className";
 	}
 
 	public boolean open(CandleDataPoint candle, Map<String, Object> param, IndicatorCache indicators) {
 		
 		if(getOrderBook().getOpenOrders().size() == 0) {
+		
 			boolean open = false;
 			BTOrder order = new BTOrder();
 			
@@ -35,6 +36,7 @@ public class ~className extends CodedStrategy {
 	public boolean close(CandleDataPoint candle, Map<String, Object> param, IndicatorCache indicators) {
 		
 		if(getOrderBook().getOpenOrders().size() > 0) {			
+		
 			BTOrder order = getOrderBook().getOpenOrders().get(0);
 			boolean close = false;
 			
