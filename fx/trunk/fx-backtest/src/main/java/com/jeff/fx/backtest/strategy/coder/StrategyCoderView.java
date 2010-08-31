@@ -35,6 +35,8 @@ public class StrategyCoderView extends JPanel {
 	private JButton btnOpen;
 	private JButton btnSaveSource;
 	private JButton btnRunFromSource;
+	private StrategyCodeParametersView scpv;
+	private JSplitPane sh2;
 
 	/**
 	 * Create the panel.
@@ -111,8 +113,15 @@ public class StrategyCoderView extends JPanel {
 		splitHorizontal.setLeftComponent(GUIUtil.frame("Open Conditions", new JScrollPane(txtOpenConditions)));
 
 		treeDataModel = new JTree();
+		sh2 = new JSplitPane();
+		sh2.setResizeWeight(0.33);
+		sh2.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		scpv = new StrategyCodeParametersView();
+		scpv.setPreferredSize(new Dimension(140, 240));
+		sh2.setLeftComponent(scpv);
 		JScrollPane scrollPane = new JScrollPane(treeDataModel);
-		splitVertical.setRightComponent(GUIUtil.frame("Data Model", scrollPane));
+		sh2.setRightComponent(GUIUtil.frame("Data Model", scrollPane));
+		splitVertical.setRightComponent(sh2);
 		
 		toolBar_1 = new JToolBar();
 		pnlCode.add(toolBar_1, BorderLayout.NORTH);
@@ -167,5 +176,11 @@ public class StrategyCoderView extends JPanel {
 	}
 	public JButton getBtnRunFromSource() {
 		return btnRunFromSource;
+	}
+	public StrategyCodeParametersView getParametersView() {
+		return scpv;
+	}
+	public JSplitPane getParamsSplit() {
+		return sh2;
 	}
 }
