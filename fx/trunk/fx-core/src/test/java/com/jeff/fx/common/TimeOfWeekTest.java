@@ -23,7 +23,7 @@ public class TimeOfWeekTest {
 			Assert.assertTrue(period + "/" + t1 + " = " + t1.periodOfWeek(period), 0 == t1.periodOfWeek(period));
 		}
 
-		Assert.assertTrue(36 == t2.periodOfWeek(Period.OneHour));
+		Assert.assertTrue(36 + " != " + t2.periodOfWeek(Period.OneHour), 36 == t2.periodOfWeek(Period.OneHour));
 		
 	}
 	
