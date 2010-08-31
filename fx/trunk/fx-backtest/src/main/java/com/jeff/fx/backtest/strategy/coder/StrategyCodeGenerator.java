@@ -11,6 +11,8 @@ import com.jeff.fx.util.FileUtil;
 
 public class StrategyCodeGenerator {
 
+	private StrategyCodeEnhancer enhancer = new StrategyCodeEnhancer();
+	
 	public static void main(String[] args) {
 		StrategyCodeModel model = new StrategyCodeModel();
 		model.setClassName("Strategy2");
@@ -52,8 +54,8 @@ public class StrategyCodeGenerator {
 	
 			String classTemplate = getResource("class.template");
 			classTemplate = classTemplate.replaceAll("~className", model.getClassName());
-			classTemplate = classTemplate.replaceAll("~openCode", model.getOpenCode());
-			classTemplate = classTemplate.replaceAll("~closeCode", model.getCloseCode());
+			classTemplate = classTemplate.replaceAll("~openCode", enhancer.enhance(model.getOpenCode()));
+			classTemplate = classTemplate.replaceAll("~closeCode", enhancer.enhance(model.getCloseCode()));
 			classTemplate = classTemplate.replaceAll("~params", params);
 			classTemplate = classTemplate.replaceAll("~fields", fields);
 			

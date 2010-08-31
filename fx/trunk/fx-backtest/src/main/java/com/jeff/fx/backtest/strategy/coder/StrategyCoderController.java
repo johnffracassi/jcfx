@@ -13,12 +13,14 @@ import com.jeff.fx.backtest.engine.OrderBook;
 import com.jeff.fx.backtest.orderbook.OrderBookController;
 import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.common.CandleCollection;
+import com.jeff.fx.gui.GUIUtil;
 
 public class StrategyCoderController {
 
 	private StrategyCoderView view;
 	private StrategyCompiler compiler;
 	private OrderBookController orderBookController;
+	private StrategyCodeParametersController paramsController;
 	private CandleCollection candles;
 	private CodedStrategy compiledStrategy;
 	private IndicatorCache indicators;
@@ -28,6 +30,7 @@ public class StrategyCoderController {
 		view = new StrategyCoderView();
 		compiler = new StrategyCompiler();
 		orderBookController = new OrderBookController();
+		paramsController = new StrategyCodeParametersController();
 		indicators = new IndicatorCache();
 		
 		view.getBtnCompile().addActionListener(new ActionListener() {
@@ -73,12 +76,12 @@ public class StrategyCoderController {
 		});
 		
 		view.getTabbedPane().addTab("Strategy Test", new ImageIcon(getClass().getResource("/images/book_open.png")), orderBookController.getView());
+		view.getParamsSplit().setLeftComponent(GUIUtil.frame("Parameters", paramsController.getView()));
 		
 		// setup some initial default code
 		view.getTxtOpenConditions().setText("if(candle.getDate().getDayOfWeek() == 3)\n\topen = true;\n");
 		view.getTxtCloseConditions().setText("if(candle.getDate().getDayOfWeek() == 4)\n\tclose = true;\n");
 		generate();
-		compile();
 	}
 	
 	private void runStrategy() {
@@ -107,10 +110,12 @@ public class StrategyCoderController {
 		model.setClassName("Strategy1");
 		model.setOpenCode(view.getTxtOpenConditions().getText());
 		model.setCloseCode(view.getTxtCloseConditions().getText());
+		model.setParams(paramsController.getParams());
 		
 		StrategyCodeGenerator generator = new StrategyCodeGenerator();
 		
 		String content = generator.buildClass(model);
+		
 		view.getTxtGenerated().setText(content);
 		
 		compile();
