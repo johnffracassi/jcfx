@@ -72,7 +72,7 @@ public class StrategyCoderController {
 			}
 		});
 		
-		view.getTabbedPane().addTab("Order Book", new ImageIcon(getClass().getResource("/images/book_open.png")), orderBookController.getView());
+		view.getTabbedPane().addTab("Strategy Test", new ImageIcon(getClass().getResource("/images/book_open.png")), orderBookController.getView());
 		
 		// setup some initial default code
 		view.getTxtOpenConditions().setText("if(candle.getDate().getDayOfWeek() == 3)\n\topen = true;\n");

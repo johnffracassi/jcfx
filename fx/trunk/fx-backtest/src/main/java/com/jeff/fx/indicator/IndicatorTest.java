@@ -36,8 +36,8 @@ public class IndicatorTest {
 			FXDataRequest request = new FXDataRequest(FXDataSource.Forexite, Instrument.AUDUSD, new LocalDate(2010, 8, 1), new LocalDate(2010, 8, 12), Period.OneMin);
 			CandleDataResponse cdr = dataManager.loadCandles(request);
 			CandleCollection cc = cdr.getCandles();
-			ZigZagIndicator zzi = new ZigZagIndicator();
-			List<IndicatorMarker> idxs = zzi.calculate(cc);
+//			ZigZagIndicator zzi = new ZigZagIndicator();
+//			List<IndicatorMarker> idxs = zzi.calculate(cc);
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
@@ -50,12 +50,12 @@ public class IndicatorTest {
 			CandleDataResponse cdr = dataManager.loadCandles(request);
 			CandleCollection cc = cdr.getCandles();
 			
-			SimpleMovingAverage sma7 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(7, CandleValueModel.Typical), cc);
-			SimpleMovingAverage sma28 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(28, CandleValueModel.Typical), cc);
+//			SimpleMovingAverage sma7 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(7, CandleValueModel.Typical), cc);
+//			SimpleMovingAverage sma28 = (SimpleMovingAverage)IndicatorCache.calculate(new SimpleMovingAverage(28, CandleValueModel.Typical), cc);
 			
-			for(int i=0; i<cc.getCandleCount(); i++) {
-				System.out.println(i + ") " + cc.getCandle(i) + " - sma(7)=" + sma7.getValue(i) + "/" + sma7.getDirection(i) + " sma(28)=" + sma28.getValue(i) + "/" + sma7.getDirection(i));
-			}
+//			for(int i=0; i<cc.getCandleCount(); i++) {
+//				System.out.println(i + ") " + cc.getCandle(i) + " - sma(7)=" + sma7.getValue(i) + "/" + sma7.getDirection(i) + " sma(28)=" + sma28.getValue(i) + "/" + sma7.getDirection(i));
+//			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
