@@ -49,24 +49,24 @@ public class CandleChartTest {
 		frame.setSize(1000, 750);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		try {
-			CandleDataResponse cdr = dataManager.loadCandles(new FXDataRequest(FXDataSource.Forexite, Instrument.AUDUSD, new LocalDate(2010, 8, 1), new LocalDate(2010, 8, 10), Period.OneMin));
-			candles = cdr.getCandles();
-//			chart = new EnhancedCandleChart(cc);
-			chart = new TypicalValueChart(candles);
-			frame.add(GUIUtil.frame("Chart date", chart), BorderLayout.CENTER);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		JButton btnAdd = new JButton("Add SMA");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int periods = new Integer(JOptionPane.showInputDialog("SMA periods"));
-				chart.addIndicator(IndicatorCache.calculate(new SimpleMovingAverage(periods, CandleValueModel.Typical), candles));
-			}
-		});
-		frame.add(btnAdd, BorderLayout.SOUTH);
+//		try {
+//			CandleDataResponse cdr = dataManager.loadCandles(new FXDataRequest(FXDataSource.Forexite, Instrument.AUDUSD, new LocalDate(2010, 8, 1), new LocalDate(2010, 8, 10), Period.OneMin));
+//			candles = cdr.getCandles();
+////			chart = new EnhancedCandleChart(cc);
+//			chart = new TypicalValueChart(candles);
+//			frame.add(GUIUtil.frame("Chart date", chart), BorderLayout.CENTER);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//		JButton btnAdd = new JButton("Add SMA");
+//		btnAdd.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				int periods = new Integer(JOptionPane.showInputDialog("SMA periods"));
+//				chart.addIndicator(IndicatorCache.calculate(new SimpleMovingAverage(periods, CandleValueModel.Typical), candles));
+//			}
+//		});
+//		frame.add(btnAdd, BorderLayout.SOUTH);
 		
 		frame.setVisible(true);
 	}
