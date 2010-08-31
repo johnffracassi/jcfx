@@ -1,7 +1,8 @@
 import static java.lang.Math.*;
+import java.util.*;
 import java.io.*;
 import org.joda.time.*;
-import java.util.*;
+import static com.jeff.fx.common.CandleValueModel.*;
 import com.jeff.fx.backtest.engine.*;
 import com.jeff.fx.backtest.strategy.*;
 import com.jeff.fx.backtest.strategy.coder.*;
@@ -9,13 +10,28 @@ import com.jeff.fx.common.*;
 import com.jeff.fx.util.*;
 import com.jeff.fx.indicator.*;
 
+
 public class ~className extends CodedStrategy {
 
+	private List<StrategyParam> paramsList = new ArrayList<StrategyParam>();
+	private IndicatorCache indicators;
+	private CandleCollection candles;
+	
+~fields
+
+	public void setup(Map<String, Object> param, IndicatorCache indicators, CandleCollection candles) {
+		
+		this.indicators = indicators;
+		this.candles = candles;
+
+~params	
+	}
+	
 	public String getName() {
 		return "~className";
 	}
 
-	public boolean open(CandleDataPoint candle, Map<String, Object> param, IndicatorCache indicators) {
+	public boolean open(CandleDataPoint candle) {
 		
 		if(getOrderBook().getOpenOrders().size() == 0) {
 		
@@ -33,7 +49,7 @@ public class ~className extends CodedStrategy {
 		return false;
 	}
 
-	public boolean close(CandleDataPoint candle, Map<String, Object> param, IndicatorCache indicators) {
+	public boolean close(CandleDataPoint candle) {
 		
 		if(getOrderBook().getOpenOrders().size() > 0) {			
 		

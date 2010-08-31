@@ -1,23 +1,46 @@
 package com.jeff.fx.backtest.strategy.coder;
 
-import static java.lang.Math.*;
-import java.io.*;
-import org.joda.time.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.joda.time.LocalDateTime;
 
 import com.jeff.fx.backtest.engine.BTOrder;
-import com.jeff.fx.backtest.strategy.coder.*;
-import com.jeff.fx.common.*;
-import com.jeff.fx.util.*;
-import com.jeff.fx.backtest.strategy.*;
+import com.jeff.fx.backtest.strategy.IndicatorCache;
+import com.jeff.fx.common.CandleCollection;
+import com.jeff.fx.common.CandleDataPoint;
 
 public class Strategy1 extends CodedStrategy {
 
+	private List<StrategyParam> paramsList = new ArrayList<StrategyParam>();
+	private IndicatorCache indicators;
+	private CandleCollection candles;
+	
+	private LocalDateTime openTime;
+	private LocalDateTime closeTime;
+	
 	public String getName() {
 		return "** Strategy1 **";
 	}
+	
+	public List<StrategyParam> getParams() {
+		return paramsList;
+	}
 
-	public boolean open(CandleDataPoint candle, Map<String, Object> param, IndicatorCache indicators) {
+	public void setup(Map<String, Object> param, IndicatorCache indicators, CandleCollection candles) {
+		
+		this.indicators = indicators;
+		this.candles = candles;
+		
+		openTime = (LocalDateTime)param.get("openTime");
+		paramsList.add(new StrategyParam("openTime", LocalDateTime.class));
+
+		closeTime = (LocalDateTime)param.get("closeTime");
+		paramsList.add(new StrategyParam("closeTime", LocalDateTime.class));
+	}
+	
+	public boolean open(CandleDataPoint candle) {
 		
 		if(getOrderBook().getOpenOrders().size() == 0) {
 			boolean open = false;
@@ -34,7 +57,7 @@ public class Strategy1 extends CodedStrategy {
 		return false;
 	}
 
-	public boolean close(CandleDataPoint candle, Map<String, Object> param, IndicatorCache indicators) {
+	public boolean close(CandleDataPoint candle) {
 		
 		if(getOrderBook().getOpenOrders().size() > 0) {			
 			BTOrder order = getOrderBook().getOpenOrders().get(0);

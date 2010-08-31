@@ -16,13 +16,13 @@ public abstract class CodedStrategy extends AbstractIncrementalStrategy {
 	}
 	
 	public void candle(CandleDataPoint candle) {
-		close(candle, param, indicators);
-		open(candle, param, indicators);
+		close(candle);
+		open(candle);
 	}
 
 	public abstract String getName();
-	public abstract boolean open(CandleDataPoint candle, Map<String, Object> param, IndicatorCache indicators);
-	public abstract boolean close(CandleDataPoint candle, Map<String, Object> param, IndicatorCache indicators);
+	public abstract boolean open(CandleDataPoint candle);
+	public abstract boolean close(CandleDataPoint candle);
 	
 	public boolean isTestValid() {
 		return true;

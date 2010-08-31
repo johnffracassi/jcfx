@@ -2,20 +2,65 @@ package com.jeff.fx.backtest.strategy.coder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.joda.time.LocalDateTime;
 
 import com.jeff.fx.util.FileUtil;
 
 public class StrategyCodeGenerator {
 
-	protected String buildClass(String className, String openCode, String closeCode) {
+	public static void main(String[] args) {
+		StrategyCodeModel model = new StrategyCodeModel();
+		model.setClassName("Strategy2");
+		model.setOpenCode("OPENCODE");
+		model.setCloseCode("CLOSECODE");
 		
-		String template = getResource("class.template");
+		List<StrategyParam> params = new ArrayList<StrategyParam>();
+		params.add(new StrategyParam("openTime", LocalDateTime.class));
+		params.add(new StrategyParam("closeTime", LocalDateTime.class));
+		params.add(new StrategyParam("stopLoss", Integer.class));
+		model.setParams(params);
 
-		template = template.replaceAll("~className", className);
-		template = template.replaceAll("~openCode", openCode);
-		template = template.replaceAll("~closeCode", closeCode);
-		
-		return template;
+		StrategyCodeGenerator generator = new StrategyCodeGenerator();
+		System.out.println(generator.buildClass(model));
+	}
+	
+	protected String buildClass(StrategyCodeModel model) {
+
+		final String fieldsTemplate = getResource("fields.template");
+		final String paramsTemplate = getResource("params.template");
+		String fields = "";
+		String params = "";
+
+		if(model != null) {
+			
+			if(model.getParams() != null && model.getParams().size() > 0) {
+				for(StrategyParam param : model.getParams()) {
+					String fieldsCode = fieldsTemplate;
+					fieldsCode = fieldsCode.replaceAll("~name", param.getName());
+					fieldsCode = fieldsCode.replaceAll("~type", param.getType().getName());
+					fields += fieldsCode;
+					
+					String paramsCode = paramsTemplate;
+					paramsCode = paramsCode.replaceAll("~name", param.getName());
+					paramsCode = paramsCode.replaceAll("~type", param.getType().getName());
+					params += paramsCode;
+				}
+			}
+	
+			String classTemplate = getResource("class.template");
+			classTemplate = classTemplate.replaceAll("~className", model.getClassName());
+			classTemplate = classTemplate.replaceAll("~openCode", model.getOpenCode());
+			classTemplate = classTemplate.replaceAll("~closeCode", model.getCloseCode());
+			classTemplate = classTemplate.replaceAll("~params", params);
+			classTemplate = classTemplate.replaceAll("~fields", fields);
+			
+			return classTemplate;
+		} else {
+			return "";
+		}
 	}
 	
 	protected String getResource(String name) {

@@ -40,7 +40,7 @@ public class BackTestApp {
 		
 		AppCtx.initialise(ctx);
 		
-		app.run();
+		app.run(); 
 	}
 
 	private void run() {
