@@ -40,7 +40,11 @@ public class TimeOfWeek {
 	}
 	
 	public int periodOfWeek(Period period) {
-		return (int)(getMinuteOfWeek() / (period.getInterval() / 60000));
+		long periodInMillis = period.getInterval();
+		if(periodInMillis < 60000) {
+			periodInMillis = 60000;
+		}
+		return (int)(getMinuteOfWeek() / (periodInMillis / 60000));
 	}
 	
 	public boolean isAfter(TimeOfWeek other) {
