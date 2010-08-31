@@ -90,4 +90,31 @@
 		</dependency> 
 	</dependencies>
 
+
+	<reporting>
+		<outputDirectory>../fx-site</outputDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<configuration>
+					<targetJdk>1.6</targetJdk>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>1.2</version>
+				<configuration>
+					<xmlOutput>false</xmlOutput>
+					<threshold>Normal</threshold>
+					<effort>Default</effort>
+					<debug>true</debug>
+					<relaxed>true</relaxed>
+					<findbugsXmlOutput>false</findbugsXmlOutput>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+	
 </project>
