@@ -1,0 +1,3 @@
+		~name = (~type)param.get("~name");
+		paramsList.add(new StrategyParam("~name", ~type.class));
+		

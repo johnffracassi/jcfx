@@ -103,10 +103,16 @@ public class StrategyCoderController {
 	
 	private void generate() {
 		
-		StrategyCodeGenerator s = new StrategyCodeGenerator();
-		String className = "Strategy1";
-		String content = s.buildClass(className, view.getTxtOpenConditions().getText(), view.getTxtCloseConditions().getText());
+		StrategyCodeModel model = new StrategyCodeModel();
+		model.setClassName("Strategy1");
+		model.setOpenCode(view.getTxtOpenConditions().getText());
+		model.setCloseCode(view.getTxtCloseConditions().getText());
+		
+		StrategyCodeGenerator generator = new StrategyCodeGenerator();
+		
+		String content = generator.buildClass(model);
 		view.getTxtGenerated().setText(content);
+		
 		compile();
 	}
 	
