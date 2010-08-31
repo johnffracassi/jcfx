@@ -171,7 +171,6 @@
 
 	<reporting>
 		<outputDirectory>../fx-site</outputDirectory>
-	
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

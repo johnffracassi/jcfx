@@ -9,11 +9,31 @@ import org.joda.time.LocalDateTime;
 
 public class StrategyCodeParametersModel extends DefaultTableModel {
 
+	private static final long serialVersionUID = 5617270470262295051L;
+
 	private List<StrategyParam> params;
 	
 	public StrategyCodeParametersModel() {
 		params = new ArrayList<StrategyParam>();
 		params.add(new StrategyParam("openTime", LocalDateTime.class));
+	}
+	
+	public void delete(int idx) {
+		params.remove(idx);
+		fireTableRowsDeleted(idx, idx);
+	}
+	
+	public List<StrategyParam> getParams() {
+		return params;
+	}
+	
+	public StrategyParam getParam(int idx) {
+		return params.get(idx);
+	}
+	
+	public void add(StrategyParam param) {
+		params.add(param);
+		fireTableRowsInserted(getRowCount()-1, getRowCount()-1);
 	}
 	
 	public void update(List<StrategyParam> params) {
@@ -36,7 +56,7 @@ public class StrategyCodeParametersModel extends DefaultTableModel {
 	public Class<?> getColumnClass(int column) {
 		switch(column) {
 			case 0: return String.class;
-			case 1: return String.class;
+			case 1: return Class.class;
 			default: return String.class;
 		}
 	}
@@ -58,11 +78,7 @@ public class StrategyCodeParametersModel extends DefaultTableModel {
 		if(column == 0) {
 			param.setName((String)val);
 		} else if(column == 1) {
-			try {
-				param.setType(Class.forName((String)val));
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+			param.setType((Class<?>)val);
 		}
 	}
 	
@@ -71,7 +87,7 @@ public class StrategyCodeParametersModel extends DefaultTableModel {
 		if(column == 0) {
 			return param.getName();
 		} else if(column == 1) {
-			return param.getType().getName();
+			return param.getType().getSimpleName();
 		}
 		return "ERROR";
 	}
