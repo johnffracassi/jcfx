@@ -32,6 +32,12 @@
 		</dependency>
 		
 		<dependency>
+		    <groupId>jgoodies</groupId>
+		    <artifactId>forms</artifactId>
+		    <version>1.0.5</version>
+		</dependency>
+		
+		<dependency>
 		    <groupId>jalopy</groupId>
 		    <artifactId>jalopy</artifactId>
 		    <version>1.5rc3</version>
