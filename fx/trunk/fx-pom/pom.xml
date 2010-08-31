@@ -23,9 +23,9 @@
 		<module>../fx-core</module>
 		<module>../fx-datastore</module>
 		<module>../fx-datasource</module>
-		<module>../fx-datamanager</module>
 		<module>../fx-backtest</module>
 		<!-- 
+		<module>../fx-datamanager</module>
 		<module>../fx-backtestclient</module>
 		-->
 	</modules>
