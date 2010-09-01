@@ -2,10 +2,6 @@ package com.jeff.fx.backtest.strategy.coder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.joda.time.LocalDateTime;
 
 import com.jeff.fx.util.FileUtil;
 
@@ -13,23 +9,7 @@ public class StrategyCodeGenerator {
 
 	private StrategyCodeEnhancer enhancer = new StrategyCodeEnhancer();
 	
-	public static void main(String[] args) {
-		StrategyCodeModel model = new StrategyCodeModel();
-		model.setClassName("Strategy2");
-		model.setOpenCode("OPENCODE");
-		model.setCloseCode("CLOSECODE");
-		
-		List<StrategyParam> params = new ArrayList<StrategyParam>();
-		params.add(new StrategyParam("openTime", LocalDateTime.class));
-		params.add(new StrategyParam("closeTime", LocalDateTime.class));
-		params.add(new StrategyParam("stopLoss", Integer.class));
-		model.setParams(params);
-
-		StrategyCodeGenerator generator = new StrategyCodeGenerator();
-		System.out.println(generator.buildClass(model));
-	}
-	
-	protected String buildClass(StrategyCodeModel model) {
+	public String buildClass(StrategyCodeModel model) {
 
 		final String fieldsTemplate = getResource("fields.template");
 		final String paramsTemplate = getResource("params.template");
@@ -38,8 +18,8 @@ public class StrategyCodeGenerator {
 
 		if(model != null) {
 			
-			if(model.getParams() != null && model.getParams().size() > 0) {
-				for(StrategyParam param : model.getParams()) {
+			if(model.getParameters() != null && model.getParameters().size() > 0) {
+				for(StrategyParam param : model.getParameters()) {
 					String fieldsCode = fieldsTemplate;
 					fieldsCode = fieldsCode.replaceAll("~name", param.getName());
 					fieldsCode = fieldsCode.replaceAll("~type", param.getType().getName());
@@ -65,7 +45,7 @@ public class StrategyCodeGenerator {
 		}
 	}
 	
-	protected String getResource(String name) {
+	private String getResource(String name) {
 		try {
 			String loc = ("/" + getClass().getPackage().getName().replaceAll("\\.", "/") + "/") + name;
 			InputStream is = StrategyCodeGenerator.class.getResourceAsStream(loc);

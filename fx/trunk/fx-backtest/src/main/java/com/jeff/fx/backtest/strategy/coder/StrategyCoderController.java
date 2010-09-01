@@ -4,9 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.xml.bind.JAXBException;
 
 import com.jeff.fx.backtest.AppCtx;
 import com.jeff.fx.backtest.engine.OrderBook;
@@ -19,6 +23,8 @@ public class StrategyCoderController {
 
 	private StrategyCoderView view;
 	private StrategyCompiler compiler;
+	private StrategyCodeGenerator generator;
+	private StrategyCodeModelFileManager fileManager;
 	private OrderBookController orderBookController;
 	private StrategyCodeParametersController paramsController;
 	private CandleCollection candles;
@@ -32,10 +38,24 @@ public class StrategyCoderController {
 		orderBookController = new OrderBookController();
 		paramsController = new StrategyCodeParametersController();
 		indicators = new IndicatorCache();
+		fileManager = new StrategyCodeModelFileManager();
+		generator = new StrategyCodeGenerator();
+
+		view.getBtnGenerate().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				generate();
+			}
+		});
 		
 		view.getBtnCompile().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				compile();
+			}
+		});
+		
+		view.getBtnOpen().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				openSource();
 			}
 		});
 		
@@ -105,24 +125,60 @@ public class StrategyCoderController {
 	}
 	
 	private void generate() {
-		
+		String content = generator.buildClass(getModel());
+		view.getTxtGenerated().setText(content);
+		compile();
+	}
+	
+	private StrategyCodeModel getModel() {
 		StrategyCodeModel model = new StrategyCodeModel();
 		model.setClassName("Strategy1");
 		model.setOpenCode(view.getTxtOpenConditions().getText());
 		model.setCloseCode(view.getTxtCloseConditions().getText());
-		model.setParams(paramsController.getParams());
-		
-		StrategyCodeGenerator generator = new StrategyCodeGenerator();
-		
-		String content = generator.buildClass(model);
-		
-		view.getTxtGenerated().setText(content);
-		
-		compile();
+		model.setParameters(paramsController.getParams());
+		return model;
+	}
+	
+	private void setModel(StrategyCodeModel model) {
+		view.getTxtOpenConditions().setText(model.getOpenCode());
+		view.getTxtCloseConditions().setText(model.getCloseCode());
+		paramsController.setParams(model.getParameters());
+	}
+	
+	private void openSource() {
+
+		JFileChooser chooser = new JFileChooser();
+		chooser.setDialogTitle("Open");
+		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
+
+		int result = chooser.showOpenDialog(null);
+		if(result == JFileChooser.APPROVE_OPTION) {
+			File file = chooser.getSelectedFile();
+			try {
+				setModel(fileManager.importModel(file));
+			} catch (JAXBException e) {
+				JOptionPane.showConfirmDialog(null, e.getMessage());
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	private void saveSource() {
-		System.out.println("save source");
+		
+		JFileChooser chooser = new JFileChooser();
+		chooser.setDialogTitle("Save As...");
+		chooser.setDialogType(JFileChooser.SAVE_DIALOG);
+
+		int result = chooser.showSaveDialog(null);
+		if(result == JFileChooser.APPROVE_OPTION) {
+			File file = chooser.getSelectedFile();
+			try {
+				fileManager.exportModel(getModel(), file);
+			} catch (JAXBException e) {
+				JOptionPane.showConfirmDialog(null, e.getMessage());
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	private void saveGenerated() {

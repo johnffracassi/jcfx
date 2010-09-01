@@ -26,7 +26,12 @@ public class StrategyCodeParametersModel extends DefaultTableModel {
 	public List<StrategyParam> getParams() {
 		return params;
 	}
-	
+
+	public void setParams(List<StrategyParam> parameters) {
+		this.params = parameters;
+		fireTableDataChanged();
+	}
+
 	public StrategyParam getParam(int idx) {
 		return params.get(idx);
 	}

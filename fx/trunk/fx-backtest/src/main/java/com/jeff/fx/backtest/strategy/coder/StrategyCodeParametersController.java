@@ -80,6 +80,10 @@ public class StrategyCodeParametersController {
 	public StrategyCodeParametersView getView() {
 		return view;
 	}
+
+	public void setParams(List<StrategyParam> parameters) {
+		model.setParams(parameters);
+	}
 }
 
 class ClassSelectionComboModel extends KeyValueComboBoxModel<Class<?>> {

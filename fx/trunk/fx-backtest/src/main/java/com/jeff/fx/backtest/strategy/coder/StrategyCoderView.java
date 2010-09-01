@@ -31,12 +31,14 @@ public class StrategyCoderView extends JPanel {
 	private JButton btnCompile;
 	private JTabbedPane tabbedPane;
 	private JButton btnRunFromGenerated;
-	private JToolBar toolBar_1;
+	private JToolBar toolBarCode;
 	private JButton btnOpen;
 	private JButton btnSaveSource;
 	private JButton btnRunFromSource;
 	private StrategyCodeParametersView scpv;
-	private JSplitPane sh2;
+	private JSplitPane splitParamsAndDataModel;
+	private JButton btnSaveSourceAs;
+	private JButton btnGenerate;
 
 	/**
 	 * Create the panel.
@@ -66,77 +68,84 @@ public class StrategyCoderView extends JPanel {
 		tabbedPane.addTab("Generated Code", new ImageIcon(StrategyCoderView.class.getResource("/images/layout_link.png")), pnlGeneratedCode, null);
 		pnlGeneratedCode.setLayout(new BorderLayout(0, 0));
 		
-		JToolBar toolBar = new JToolBar();
-		pnlGeneratedCode.add(toolBar, BorderLayout.NORTH);
+		JToolBar toolBarGenerated = new JToolBar();
+		pnlGeneratedCode.add(toolBarGenerated, BorderLayout.NORTH);
 		
-		btnSaveGenerated = new JButton("");
+		btnSaveGenerated = new JButton("Save As...");
 		btnSaveGenerated.setIcon(new ImageIcon(StrategyCoderView.class.getResource("/images/disk.png")));
-		toolBar.add(btnSaveGenerated);
+		toolBarGenerated.add(btnSaveGenerated);
 		
-		btnCompile = new JButton("");
+		btnGenerate = new JButton("Generate");
+		btnGenerate.setIcon(new ImageIcon(StrategyCoderView.class.getResource("/images/cog_edit.png")));
+		toolBarGenerated.add(btnGenerate);
+		
+		btnCompile = new JButton("Compile");
 		btnCompile.setIcon(new ImageIcon(StrategyCoderView.class.getResource("/images/cog_go.png")));
-		toolBar.add(btnCompile);
+		toolBarGenerated.add(btnCompile);
 		
-		btnRunFromGenerated = new JButton("");
+		btnRunFromGenerated = new JButton("Run");
 		btnRunFromGenerated.setIcon(new ImageIcon(StrategyCoderView.class.getResource("/images/control_play_blue.png")));
-		toolBar.add(btnRunFromGenerated);
+		toolBarGenerated.add(btnRunFromGenerated);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		pnlGeneratedCode.add(scrollPane_1, BorderLayout.CENTER);
+		JScrollPane scrollGenerated = new JScrollPane();
+		scrollGenerated.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollGenerated.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		pnlGeneratedCode.add(scrollGenerated, BorderLayout.CENTER);
 		
 		txtGenerated = new JTextArea();
 		txtGenerated.setEditable(false);
 		txtGenerated.setTabSize(4);
-		scrollPane_1.setViewportView(txtGenerated);
+		scrollGenerated.setViewportView(txtGenerated);
 		
 		JSplitPane splitVertical = new JSplitPane();
-		splitVertical.setResizeWeight(0.8);
+		splitVertical.setResizeWeight(0.85);
 		pnlCode.add(splitVertical);
 
-		JSplitPane splitHorizontal = new JSplitPane();
-		splitHorizontal.setOpaque(false);
-		splitHorizontal.setForeground(Color.BLUE);
-		splitHorizontal.setDividerSize(2);
-		splitHorizontal.setResizeWeight(0.5);
-		splitHorizontal.setAlignmentY(Component.CENTER_ALIGNMENT);
-		splitHorizontal.setAlignmentX(Component.CENTER_ALIGNMENT);
-		splitHorizontal.setPreferredSize(new Dimension(50, 50));
-		splitHorizontal.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		splitVertical.setLeftComponent(splitHorizontal);
+		JSplitPane splitCode = new JSplitPane();
+		splitCode.setOpaque(false);
+		splitCode.setForeground(Color.BLUE);
+		splitCode.setDividerSize(2);
+		splitCode.setResizeWeight(0.5);
+		splitCode.setAlignmentY(Component.CENTER_ALIGNMENT);
+		splitCode.setAlignmentX(Component.CENTER_ALIGNMENT);
+		splitCode.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		splitVertical.setLeftComponent(splitCode);
 		txtCloseConditions = new JTextArea();
 		txtCloseConditions.setTabSize(4);
 		txtOpenConditions = new JTextArea();
 		txtOpenConditions.setTabSize(4);
-		splitHorizontal.setRightComponent(GUIUtil.frame("Close Conditions", new JScrollPane(txtCloseConditions)));
-		splitHorizontal.setLeftComponent(GUIUtil.frame("Open Conditions", new JScrollPane(txtOpenConditions)));
+		splitCode.setRightComponent(GUIUtil.frame("Close Conditions", new JScrollPane(txtCloseConditions)));
+		splitCode.setLeftComponent(GUIUtil.frame("Open Conditions", new JScrollPane(txtOpenConditions)));
 
 		treeDataModel = new JTree();
-		sh2 = new JSplitPane();
-		sh2.setResizeWeight(0.33);
-		sh2.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		splitParamsAndDataModel = new JSplitPane();
+		splitParamsAndDataModel.setResizeWeight(0.33);
+		splitParamsAndDataModel.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		scpv = new StrategyCodeParametersView();
 		scpv.setPreferredSize(new Dimension(140, 240));
-		sh2.setLeftComponent(scpv);
+		splitParamsAndDataModel.setLeftComponent(scpv);
 		JScrollPane scrollPane = new JScrollPane(treeDataModel);
-		sh2.setRightComponent(GUIUtil.frame("Data Model", scrollPane));
-		splitVertical.setRightComponent(sh2);
+		splitParamsAndDataModel.setRightComponent(GUIUtil.frame("Data Model", scrollPane));
+		splitVertical.setRightComponent(splitParamsAndDataModel);
 		
-		toolBar_1 = new JToolBar();
-		pnlCode.add(toolBar_1, BorderLayout.NORTH);
+		toolBarCode = new JToolBar();
+		pnlCode.add(toolBarCode, BorderLayout.NORTH);
 		
-		btnOpen = new JButton("");
+		btnOpen = new JButton("Open");
 		btnOpen.setIcon(new ImageIcon(StrategyCoderView.class.getResource("/images/folder.png")));
-		toolBar_1.add(btnOpen);
+		toolBarCode.add(btnOpen);
 		
-		btnSaveSource = new JButton("");
+		btnSaveSource = new JButton("Save");
 		btnSaveSource.setIcon(new ImageIcon(StrategyCoderView.class.getResource("/images/disk.png")));
-		toolBar_1.add(btnSaveSource);
+		toolBarCode.add(btnSaveSource);
 		
-		btnRunFromSource = new JButton("");
+		btnSaveSourceAs = new JButton("Save As...");
+		btnSaveSourceAs.setIcon(new ImageIcon(StrategyCoderView.class.getResource("/images/disk.png")));
+		toolBarCode.add(btnSaveSourceAs);
+		
+		btnRunFromSource = new JButton("Run");
 		btnRunFromSource.setIcon(new ImageIcon(StrategyCoderView.class.getResource("/images/control_play_blue.png")));
-		toolBar_1.add(btnRunFromSource);
+		toolBarCode.add(btnRunFromSource);
 		
 
 	}
@@ -181,6 +190,9 @@ public class StrategyCoderView extends JPanel {
 		return scpv;
 	}
 	public JSplitPane getParamsSplit() {
-		return sh2;
+		return splitParamsAndDataModel;
+	}
+	public JButton getBtnGenerate() {
+		return btnGenerate;
 	}
 }
