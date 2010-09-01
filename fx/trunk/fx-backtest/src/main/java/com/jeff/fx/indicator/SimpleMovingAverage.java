@@ -31,6 +31,11 @@ public class SimpleMovingAverage implements Indicator {
 		this.calculated = false;
 	}
 
+	public void setParams(Object ... params) {
+		periods = new Integer(String.valueOf(params[0]));
+		model = CandleValueModel.valueOf(String.valueOf(params[1]));
+	}
+	
 	public void calculate(CandleCollection candles) {
 		
 		synchronized(this) {

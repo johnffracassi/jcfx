@@ -2,45 +2,38 @@ package com.jeff.fx.backtest.strategy.coder;
 
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.jeff.fx.backtest.engine.AbstractIncrementalStrategy;
 import com.jeff.fx.backtest.strategy.IndicatorCache;
+import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
 
 public abstract class CodedStrategy extends AbstractIncrementalStrategy {
 	
-	protected IndicatorCache indicators;
-	protected Map<String, Object> param;
-
+	private static Logger log = Logger.getLogger(CodedStrategy.class);
+	
 	public CodedStrategy() {
 		super(-1);
 	}
 	
-	public void candle(CandleDataPoint candle) {
-		close(candle);
-		open(candle);
+	public abstract String getName();
+	public abstract void setup(Map<String, Object> params, IndicatorCache indicators, CandleCollection candles);
+	public abstract boolean open(CandleDataPoint candle, int idx) throws Exception;
+	public abstract boolean close(CandleDataPoint candle, int idx) throws Exception;
+	
+	public void candle(CandleDataPoint candle, int idx) {
+		try {
+			close(candle, idx);
+			open(candle, idx);
+		} catch(Exception ex) {
+			// TODO needs to be reported to user log or something?
+			log.error("error while executing coded strategy", ex);
+			stop();
+		}
 	}
 
-	public abstract String getName();
-	public abstract boolean open(CandleDataPoint candle);
-	public abstract boolean close(CandleDataPoint candle);
-	
 	public boolean isTestValid() {
 		return true;
-	}
-
-	public IndicatorCache getIndicators() {
-		return indicators;
-	}
-
-	public void setIndicators(IndicatorCache indicators) {
-		this.indicators = indicators;
-	}
-
-	public Map<String, Object> getParam() {
-		return param;
-	}
-
-	public void setParam(Map<String, Object> param) {
-		this.param = param;
 	}
 }

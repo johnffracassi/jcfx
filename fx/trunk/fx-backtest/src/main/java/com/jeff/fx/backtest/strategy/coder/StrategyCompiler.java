@@ -41,10 +41,9 @@ public class StrategyCompiler implements DiagnosticListener {
 	public void report(Diagnostic diagnostic) {
 		StringBuffer buf = new StringBuffer();
 		
-		buf.append("message:" + diagnostic.getMessage(Locale.getDefault()) + "\n");
-		buf.append("code:" + diagnostic.getCode() + "\n");
-		buf.append("position:" + diagnostic.getLineNumber() + "/" + diagnostic.getColumnNumber() + "\n");
 		buf.append("===\n");
+		buf.append(diagnostic.getMessage(Locale.getDefault()).substring(8) + "\n");
+		buf.append("line:" + diagnostic.getLineNumber() + " char:" + diagnostic.getColumnNumber() + "\n");
 		
 		errBuf.append(buf);
 	}

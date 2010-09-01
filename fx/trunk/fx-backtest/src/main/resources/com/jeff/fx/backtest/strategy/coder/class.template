@@ -3,6 +3,10 @@ import java.util.*;
 import java.io.*;
 import org.joda.time.*;
 import static com.jeff.fx.common.CandleValueModel.*;
+import static com.jeff.fx.common.OfferSide.*;
+import static com.jeff.fx.common.Instrument.*;
+import static com.jeff.fx.common.FXDataSource.*;
+import static com.jeff.fx.common.Period.*;
 import com.jeff.fx.backtest.engine.*;
 import com.jeff.fx.backtest.strategy.*;
 import com.jeff.fx.backtest.strategy.coder.*;
@@ -31,12 +35,13 @@ public class ~className extends CodedStrategy {
 		return "~className";
 	}
 
-	public boolean open(CandleDataPoint candle) {
+	public boolean open(CandleDataPoint candle, int idx) throws Exception {
 		
 		if(getOrderBook().getOpenOrders().size() == 0) {
 		
 			boolean open = false;
 			BTOrder order = new BTOrder();
+			order.setUnits(1.0);
 			
 			~openCode
 			
@@ -49,7 +54,7 @@ public class ~className extends CodedStrategy {
 		return false;
 	}
 
-	public boolean close(CandleDataPoint candle) {
+	public boolean close(CandleDataPoint candle, int idx) throws Exception {
 		
 		if(getOrderBook().getOpenOrders().size() > 0) {			
 		

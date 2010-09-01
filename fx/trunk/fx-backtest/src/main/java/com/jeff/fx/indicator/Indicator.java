@@ -10,5 +10,6 @@ public interface Indicator {
 	void calculate(CandleCollection candles);
 	boolean requiresCalculation();
 	int getSize();
+	void setParams(Object ... params);
 	
 }

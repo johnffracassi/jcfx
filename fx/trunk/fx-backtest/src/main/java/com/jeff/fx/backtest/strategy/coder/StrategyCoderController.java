@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.TooManyListenersException;
 
@@ -24,7 +25,6 @@ import com.jeff.fx.backtest.orderbook.OrderBookController;
 import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.gui.GUIUtil;
-import com.sun.org.apache.bcel.internal.classfile.Method;
 
 public class StrategyCoderController {
 
@@ -126,6 +126,7 @@ public class StrategyCoderController {
 		
 		// setup drop targets
 		try {
+			// TODO fix d&d drop target
 			view.getTxtOpenConditions().getDropTarget().addDropTargetListener(new DropTargetAdapter() {
 				  public void dragEnter(DropTargetDragEvent dtde) { dtde.acceptDrag(dtde.getDropAction()); }
 				  public void dragOver(DropTargetDragEvent dtde) { dtde.acceptDrag(dtde.getDropAction()); }				  
@@ -136,7 +137,6 @@ public class StrategyCoderController {
 			        	if (tr.isDataFlavorSupported(flavor)) {
 				            dtde.acceptDrop(dtde.getDropAction());
 				            Method method = (Method)tr.getTransferData(flavor);
-				            System.out.println("dropping " + method);
 				            dtde.dropComplete(true);
 				            return;
 				        }
@@ -163,8 +163,7 @@ public class StrategyCoderController {
 			}
 			
 			compiledStrategy.setId(1);
-			compiledStrategy.setIndicators(indicators);
-			compiledStrategy.setParam(new HashMap<String, Object>());
+			compiledStrategy.setup(new HashMap<String, Object>(), indicators, candles);
 			OrderBook book = compiledStrategy.execute(candles);
 			orderBookController.update(candles, book);
 		
