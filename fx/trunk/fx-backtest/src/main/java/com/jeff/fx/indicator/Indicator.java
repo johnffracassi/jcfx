@@ -4,7 +4,8 @@ import com.jeff.fx.common.CandleCollection;
 
 public interface Indicator {
 
-	String getName();
+	String getKey();
+	String getDisplayName();
 	float getValue(int idx);
 	void calculate(CandleCollection candles);
 	boolean requiresCalculation();
