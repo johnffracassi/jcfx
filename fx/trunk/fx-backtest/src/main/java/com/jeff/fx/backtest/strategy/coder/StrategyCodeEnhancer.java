@@ -18,7 +18,7 @@ public class StrategyCodeEnhancer {
 		log.debug("replacing indicator shortcuts with indicators.getValue");
 
 		// eg - #sma(14,Typical)
-		Pattern pattern = Pattern.compile("#(\\w+)\\((.*)\\)\\.");
+		Pattern pattern = Pattern.compile("#(\\w+)\\((.*)\\)");
 		Matcher matcher = pattern.matcher(code);
 
 		while(matcher.find()) {
@@ -27,7 +27,7 @@ public class StrategyCodeEnhancer {
 			String name = matcher.group(1);
 			String args = matcher.group(2);
 			
-			String transformed = "indicators.get(\"" + name + "\", candles, idx, " + args + ").";
+			String transformed = "indicators.get(\"" + name + "\", candles, idx, " + args + ")";
 			code = code.replace(found, transformed);
 		}
 		
@@ -36,14 +36,13 @@ public class StrategyCodeEnhancer {
 	
 	private String getters(String code) {
 		
-		Pattern pattern = Pattern.compile("\\.\\w+[^(\\.]??");
+		Pattern pattern = Pattern.compile("\\.[a-zA-Z_]+[^(\\.]??");
 		Matcher matcher = pattern.matcher(code);
 
 		while(matcher.find()) {
 			
 			String field = matcher.group();
-			System.out.println("matching = " + field);
-			if(!field.startsWith(".get")) {
+			if(!field.startsWith(".get") && !field.startsWith(".set")) {
 				String transformed = "get" + Character.toUpperCase(field.charAt(1)) + field.substring(2) + "()";
 				code = code.replaceAll(field.substring(1), transformed);
 			}

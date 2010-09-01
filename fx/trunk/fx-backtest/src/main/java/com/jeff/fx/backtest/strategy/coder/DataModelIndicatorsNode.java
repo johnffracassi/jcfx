@@ -18,8 +18,8 @@ public class DataModelIndicatorsNode extends DefaultMutableTreeNode {
 		
 		removeAllChildren();
 
-		for(Indicator indicator : IndicatorCache.getAllIndicators()) {
-			DefaultMutableTreeNode node = new DefaultMutableTreeNode(indicator.getKey());
+		for(Class<? extends Indicator> indicator : IndicatorCache.getAllIndicators()) {
+			DefaultMutableTreeNode node = new DefaultMutableTreeNode(indicator.getSimpleName());
 			add(node);
 		}
 	}

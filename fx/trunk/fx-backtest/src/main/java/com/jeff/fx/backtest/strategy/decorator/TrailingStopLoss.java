@@ -10,7 +10,7 @@ public class TrailingStopLoss extends StopLoss {
 		super(client, distance);
 	}
 
-	public void candle(CandleDataPoint candle) {
+	public void candle(CandleDataPoint candle, int idx) {
 		
 		if(hasOpenOrder()) {
 			BTOrder order = getOrderBook().getOpenOrders().get(0);
@@ -23,6 +23,6 @@ public class TrailingStopLoss extends StopLoss {
 			}
 		}
 		
-		super.candle(candle);
+		super.candle(candle, idx);
 	}
 }

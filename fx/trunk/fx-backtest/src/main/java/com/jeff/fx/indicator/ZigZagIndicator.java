@@ -29,6 +29,10 @@ public class ZigZagIndicator implements Indicator {
 		this.windowSize = windowSize;
 	}
 	
+	public void setParams(Object ... params) {
+		this.windowSize = new Integer(String.valueOf(params[0]));
+	}
+	
 	public void set(String property, int value) {
 		
 		boolean triggerUpdate = false;

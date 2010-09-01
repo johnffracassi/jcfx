@@ -14,8 +14,8 @@ public class AbstractStrategyDecorator extends AbstractIncrementalStrategy {
 		this.client = client;
 	}
 
-	public void candle(CandleDataPoint candle) {
-		client.candle(candle);
+	public void candle(CandleDataPoint candle, int idx) {
+		client.candle(candle, idx);
 	}
 
 	public OrderBook execute(CandleCollection cc) {

@@ -1,15 +1,17 @@
 package com.jeff.fx.backtest.strategy.coder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import static java.lang.Math.*;
+import java.util.*;
+import java.io.*;
+import org.joda.time.*;
+import static com.jeff.fx.common.CandleValueModel.*;
+import com.jeff.fx.backtest.engine.*;
+import com.jeff.fx.backtest.strategy.*;
+import com.jeff.fx.backtest.strategy.coder.*;
+import com.jeff.fx.common.*;
+import com.jeff.fx.util.*;
+import com.jeff.fx.indicator.*;
 
-import org.joda.time.LocalDateTime;
-
-import com.jeff.fx.backtest.engine.BTOrder;
-import com.jeff.fx.backtest.strategy.IndicatorCache;
-import com.jeff.fx.common.CandleCollection;
-import com.jeff.fx.common.CandleDataPoint;
 
 public class Strategy1 extends CodedStrategy {
 
@@ -17,36 +19,39 @@ public class Strategy1 extends CodedStrategy {
 	private IndicatorCache indicators;
 	private CandleCollection candles;
 	
-	private LocalDateTime openTime;
-	private LocalDateTime closeTime;
-	
-	public String getName() {
-		return "** Strategy1 **";
-	}
-	
-	public List<StrategyParam> getParams() {
-		return paramsList;
-	}
+	private com.jeff.fx.common.TimeOfWeek openTime;
+	private com.jeff.fx.common.TimeOfWeek closeTime;
+	private java.lang.Integer shortSma;
+
 
 	public void setup(Map<String, Object> param, IndicatorCache indicators, CandleCollection candles) {
 		
 		this.indicators = indicators;
 		this.candles = candles;
-		
-		openTime = (LocalDateTime)param.get("openTime");
-		paramsList.add(new StrategyParam("openTime", LocalDateTime.class));
 
-		closeTime = (LocalDateTime)param.get("closeTime");
-		paramsList.add(new StrategyParam("closeTime", LocalDateTime.class));
+		openTime = (com.jeff.fx.common.TimeOfWeek)param.get("openTime");
+		paramsList.add(new StrategyParam("openTime", com.jeff.fx.common.TimeOfWeek.class));
+		closeTime = (com.jeff.fx.common.TimeOfWeek)param.get("closeTime");
+		paramsList.add(new StrategyParam("closeTime", com.jeff.fx.common.TimeOfWeek.class));
+		shortSma = (java.lang.Integer)param.get("shortSma");
+		paramsList.add(new StrategyParam("shortSma", java.lang.Integer.class));
+			
 	}
 	
-	public boolean open(CandleDataPoint candle) {
+	public String getName() {
+		return "Strategy1";
+	}
+
+	public boolean open(CandleDataPoint candle, int idx) throws Exception {
 		
 		if(getOrderBook().getOpenOrders().size() == 0) {
+		
 			boolean open = false;
 			BTOrder order = new BTOrder();
+			order.setUnits(1.0);
 			
-			/** body */
+			boolean smaAboveHigh = indicators.get("sma", candles, idx, 14,Typical) > candle.getBuyHigh();
+			open = smaAboveHigh;
 			
 			if(open) {
 				openOrder(order, candle);
@@ -57,13 +62,15 @@ public class Strategy1 extends CodedStrategy {
 		return false;
 	}
 
-	public boolean close(CandleDataPoint candle) {
+	public boolean close(CandleDataPoint candle, int idx) throws Exception {
 		
 		if(getOrderBook().getOpenOrders().size() > 0) {			
+		
 			BTOrder order = getOrderBook().getOpenOrders().get(0);
 			boolean close = false;
 			
-			/** body */
+			boolean smaAboveHigh = indicators.get("sma", candles, idx, 14,Typical) > candle.getBuyHigh();
+close = !smaAboveHigh;
 			
 			if(close) {
 				closeOrder(order, candle);
