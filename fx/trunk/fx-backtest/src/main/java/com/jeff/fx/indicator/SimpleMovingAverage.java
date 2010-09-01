@@ -1,8 +1,11 @@
 package com.jeff.fx.indicator;
 
+import org.springframework.stereotype.Component;
+
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleValueModel;
 
+@Component
 @ChartType(ChartTypes.PriceRelative)
 public class SimpleMovingAverage implements Indicator {
 
@@ -19,7 +22,7 @@ public class SimpleMovingAverage implements Indicator {
 	private CandleValueModel model;
 
 	public SimpleMovingAverage() {
-		this.calculated = false;
+		this(14, CandleValueModel.Typical);
 	}
 	
 	public SimpleMovingAverage(int periods, CandleValueModel cvm) {
@@ -72,12 +75,16 @@ public class SimpleMovingAverage implements Indicator {
 		}
 	}
 	
-	public String getName() {
-		return "SMA(" + periods + ")";
+	public String getKey() {
+		return "sma";
+	}
+	
+	public String getDisplayName() {
+		return "SMA(" + periods + "," + model + ")";
 	}
 	
 	public final int hashCode() {
-		return getName().hashCode();
+		return getDisplayName().hashCode();
 	}
 	
 	public boolean equals(Object obj) {
@@ -113,7 +120,7 @@ public class SimpleMovingAverage implements Indicator {
 	}
 	
 	public String toString() {
-		return getName() + " (" + getModel() + ")";
+		return getDisplayName();
 	}
 }
 

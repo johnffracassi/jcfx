@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultCellEditor;
@@ -11,6 +12,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -25,6 +28,7 @@ public class StrategyCodeParametersController {
 
 	private StrategyCodeParametersView view;
 	private StrategyCodeParametersModel model;
+	private List<StrategyParametersListener> listeners = new ArrayList<StrategyParametersListener>();
 
 	public static void main(String[] args) {
 		StrategyCodeParametersController scpc = new StrategyCodeParametersController();
@@ -45,9 +49,25 @@ public class StrategyCodeParametersController {
 		view.getTable().getColumnModel().getColumn(1).setPreferredWidth(220);
 		view.getTable().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+		model.addTableModelListener(new TableModelListener() {
+			public void tableChanged(TableModelEvent e) {
+				System.out.println(e);
+				if(e.getType() == TableModelEvent.UPDATE) {
+					StrategyParam param = model.getParam(e.getFirstRow());
+					for(StrategyParametersListener listener : listeners) {
+						listener.parameterUpdated(param);
+					}
+				}
+			}
+		});
+		
 		view.getBtnNew().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				model.add(new StrategyParam("param" + (1 + model.getRowCount()), String.class));
+				StrategyParam param = new StrategyParam("param" + (1 + model.getRowCount()), String.class);
+				model.add(param);
+				for(StrategyParametersListener listener : listeners) {
+					listener.parameterAdded(param);
+				}
 			}
 		});
 		
@@ -55,8 +75,11 @@ public class StrategyCodeParametersController {
 			public void actionPerformed(ActionEvent e) {
 				int idx = view.getTable().getSelectedRow();
 				if(idx >= 0) {
-					model.delete(idx);
 					view.getBtnDelete().setEnabled(false);
+					StrategyParam param = model.delete(idx);
+					for(StrategyParametersListener listener : listeners) {
+						listener.parameterRemoved(param);
+					}
 				}
 			}
 		});
@@ -83,6 +106,16 @@ public class StrategyCodeParametersController {
 
 	public void setParams(List<StrategyParam> parameters) {
 		model.setParams(parameters);
+		for(StrategyParametersListener listener : listeners) {
+			listener.reset();
+			for(StrategyParam param : parameters) {
+				listener.parameterAdded(param);
+			}
+		}
+	}
+
+	public void addListener(StrategyParametersListener listener) {
+		listeners.add(listener);
 	}
 }
 

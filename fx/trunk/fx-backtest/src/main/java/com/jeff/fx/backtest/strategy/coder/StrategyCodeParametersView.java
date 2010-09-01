@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
+import java.awt.Component;
 
 public class StrategyCodeParametersView extends JPanel {
 
@@ -20,6 +21,7 @@ public class StrategyCodeParametersView extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		
 		JToolBar toolBar = new JToolBar();
+		toolBar.setAlignmentX(Component.LEFT_ALIGNMENT);
 		add(toolBar, BorderLayout.NORTH);
 		
 		btnNewParameter = new JButton("");

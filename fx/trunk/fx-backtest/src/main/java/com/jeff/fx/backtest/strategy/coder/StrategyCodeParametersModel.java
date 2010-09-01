@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-import org.joda.time.LocalDateTime;
-
 public class StrategyCodeParametersModel extends DefaultTableModel {
 
 	private static final long serialVersionUID = 5617270470262295051L;
@@ -15,12 +13,12 @@ public class StrategyCodeParametersModel extends DefaultTableModel {
 	
 	public StrategyCodeParametersModel() {
 		params = new ArrayList<StrategyParam>();
-		params.add(new StrategyParam("openTime", LocalDateTime.class));
 	}
 	
-	public void delete(int idx) {
-		params.remove(idx);
+	public StrategyParam delete(int idx) {
+		StrategyParam param = params.remove(idx);
 		fireTableRowsDeleted(idx, idx);
+		return param;
 	}
 	
 	public List<StrategyParam> getParams() {
@@ -85,6 +83,7 @@ public class StrategyCodeParametersModel extends DefaultTableModel {
 		} else if(column == 1) {
 			param.setType((Class<?>)val);
 		}
+		fireTableCellUpdated(row, column);
 	}
 	
 	public Object getValueAt(int row, int column) {

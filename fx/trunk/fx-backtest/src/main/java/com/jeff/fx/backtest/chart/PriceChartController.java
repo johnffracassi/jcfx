@@ -49,7 +49,7 @@ public class PriceChartController {
 			if(type == ChartTypes.PriceRelative) {
 				
 				XYPlot plot = (XYPlot) view.getChart().getPlot();
-				plot.setDataset(plot.getDatasetCount(), new IndicatorDataset(indicator.getName(), indicator));
+				plot.setDataset(plot.getDatasetCount(), new IndicatorDataset(indicator.getDisplayName(), indicator));
 				plot.setRenderer(plot.getDatasetCount(), new StandardXYItemRenderer());
 				
 			} else if(type == ChartTypes.Oscillator) {

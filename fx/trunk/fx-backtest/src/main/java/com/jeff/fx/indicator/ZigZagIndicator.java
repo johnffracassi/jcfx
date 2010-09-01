@@ -3,9 +3,12 @@ package com.jeff.fx.indicator;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleValueModel;
 
+@Component
 @ChartType(ChartTypes.Annotated)
 public class ZigZagIndicator implements Indicator {
 	
@@ -17,6 +20,10 @@ public class ZigZagIndicator implements Indicator {
 	@ValidationRange(min=0,max=250)
 	@Label("Window Size")
 	private int windowSize = 40;
+	
+	public ZigZagIndicator() {
+		this(40);
+	}
 	
 	public ZigZagIndicator(int windowSize) {
 		this.windowSize = windowSize;
@@ -95,7 +102,11 @@ public class ZigZagIndicator implements Indicator {
 		calculated = true;
 	}
 
-	public String getName() {
+	public String getKey() {
+		return "zzi";
+	}
+	
+	public String getDisplayName() {
 		return "ZigZag";
 	}
 

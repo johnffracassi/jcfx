@@ -1,11 +1,17 @@
 package com.jeff.fx.backtest.strategy.coder;
 
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.DropTargetAdapter;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.HashMap;
+import java.util.TooManyListenersException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -18,6 +24,7 @@ import com.jeff.fx.backtest.orderbook.OrderBookController;
 import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.gui.GUIUtil;
+import com.sun.org.apache.bcel.internal.classfile.Method;
 
 public class StrategyCoderController {
 
@@ -30,6 +37,8 @@ public class StrategyCoderController {
 	private CandleCollection candles;
 	private CodedStrategy compiledStrategy;
 	private IndicatorCache indicators;
+	private DataModelTreeModel treeModel;
+	private File currentFile;
 	
 	public StrategyCoderController() {
 		
@@ -40,6 +49,7 @@ public class StrategyCoderController {
 		indicators = new IndicatorCache();
 		fileManager = new StrategyCodeModelFileManager();
 		generator = new StrategyCodeGenerator();
+		treeModel = new DataModelTreeModel();
 
 		view.getBtnGenerate().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -62,6 +72,12 @@ public class StrategyCoderController {
 		view.getBtnSaveSource().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				saveSource();
+			}
+		});
+		
+		view.getBtnSaveSourceAs().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				saveSourceAs();
 			}
 		});
 		
@@ -99,9 +115,44 @@ public class StrategyCoderController {
 		view.getParamsSplit().setLeftComponent(GUIUtil.frame("Parameters", paramsController.getView()));
 		
 		// setup some initial default code
-		view.getTxtOpenConditions().setText("if(candle.getDate().getDayOfWeek() == 3)\n\topen = true;\n");
-		view.getTxtCloseConditions().setText("if(candle.getDate().getDayOfWeek() == 4)\n\tclose = true;\n");
+		view.getTxtOpenConditions().setText("");
+		view.getTxtCloseConditions().setText("");
 		generate();
+		
+		// setup the dataModel tree
+		view.getDataModelTree().setModel(treeModel);
+		view.getDataModelTree().setRootVisible(false);
+		view.getDataModelTree().setCellRenderer(new DataModelTreeRenderer());
+		
+		// setup drop targets
+		try {
+			view.getTxtOpenConditions().getDropTarget().addDropTargetListener(new DropTargetAdapter() {
+				  public void dragEnter(DropTargetDragEvent dtde) { dtde.acceptDrag(dtde.getDropAction()); }
+				  public void dragOver(DropTargetDragEvent dtde) { dtde.acceptDrag(dtde.getDropAction()); }				  
+				  public void drop(DropTargetDropEvent dtde) {
+				    try {
+				        Transferable tr = dtde.getTransferable();
+				        DataFlavor flavor = new DataFlavor(Method.class, "Method Call");
+			        	if (tr.isDataFlavorSupported(flavor)) {
+				            dtde.acceptDrop(dtde.getDropAction());
+				            Method method = (Method)tr.getTransferData(flavor);
+				            System.out.println("dropping " + method);
+				            dtde.dropComplete(true);
+				            return;
+				        }
+				        dtde.rejectDrop();
+					} catch (Exception e) {
+					    e.printStackTrace();
+					    dtde.rejectDrop();
+					}
+				}
+			});
+		} catch (TooManyListenersException e1) {
+			// TODO handle this with a dialog
+			e1.printStackTrace();
+		}
+		
+		paramsController.addListener(treeModel);
 	}
 	
 	private void runStrategy() {
@@ -156,6 +207,7 @@ public class StrategyCoderController {
 			File file = chooser.getSelectedFile();
 			try {
 				setModel(fileManager.importModel(file));
+				currentFile = file;
 			} catch (JAXBException e) {
 				JOptionPane.showConfirmDialog(null, e.getMessage());
 				e.printStackTrace();
@@ -163,7 +215,7 @@ public class StrategyCoderController {
 		}
 	}
 	
-	private void saveSource() {
+	private void saveSourceAs() {
 		
 		JFileChooser chooser = new JFileChooser();
 		chooser.setDialogTitle("Save As...");
@@ -174,6 +226,21 @@ public class StrategyCoderController {
 			File file = chooser.getSelectedFile();
 			try {
 				fileManager.exportModel(getModel(), file);
+				currentFile = file;
+			} catch (JAXBException e) {
+				JOptionPane.showConfirmDialog(null, e.getMessage());
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void saveSource() {
+		
+		if(currentFile == null) {
+			saveSourceAs();
+		} else {
+			try {
+				fileManager.exportModel(getModel(), currentFile);
 			} catch (JAXBException e) {
 				JOptionPane.showConfirmDialog(null, e.getMessage());
 				e.printStackTrace();
@@ -189,11 +256,12 @@ public class StrategyCoderController {
 		
 		String className = "Strategy1";
 		String content = view.getTxtGenerated().getText();
+		long startTime = System.nanoTime();
 		try {
 			compiledStrategy = (CodedStrategy)compiler.compile(className, content);
-			view.getTxtCompilerOutput().setText("Compiled successfully");
+			view.getTxtCompilerOutput().setText(String.format("Compiled successfully (%.1fms)", (System.nanoTime() - startTime) / 1000000.0));
 		} catch (Exception e) {
-			view.getTxtCompilerOutput().setText("Errors:\n" + compiler.getOutput());
+			view.getTxtCompilerOutput().setText(String.format("Compilation failed (%.1fms)\n%s", (System.nanoTime() - startTime) / 1000000.0, compiler.getOutput()));
 		}
 	}
 	
@@ -201,3 +269,5 @@ public class StrategyCoderController {
 		return view;
 	}
 }
+
+

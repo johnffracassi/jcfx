@@ -17,6 +17,8 @@ import javax.swing.ScrollPaneConstants;
 
 import com.jeff.fx.gui.GUIUtil;
 import java.awt.Color;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 public class StrategyCoderView extends JPanel {
 	
@@ -98,6 +100,7 @@ public class StrategyCoderView extends JPanel {
 		scrollGenerated.setViewportView(txtGenerated);
 		
 		JSplitPane splitVertical = new JSplitPane();
+		splitVertical.setContinuousLayout(true);
 		splitVertical.setResizeWeight(0.85);
 		pnlCode.add(splitVertical);
 
@@ -118,6 +121,34 @@ public class StrategyCoderView extends JPanel {
 		splitCode.setLeftComponent(GUIUtil.frame("Open Conditions", new JScrollPane(txtOpenConditions)));
 
 		treeDataModel = new JTree();
+		treeDataModel.setModel(new DefaultTreeModel(
+			new DefaultMutableTreeNode("JTree") {
+				{
+					DefaultMutableTreeNode node_1;
+					node_1 = new DefaultMutableTreeNode("colors");
+						node_1.add(new DefaultMutableTreeNode("blue"));
+						node_1.add(new DefaultMutableTreeNode("violet"));
+						node_1.add(new DefaultMutableTreeNode("red"));
+						node_1.add(new DefaultMutableTreeNode("yellow"));
+					add(node_1);
+					node_1 = new DefaultMutableTreeNode("sports");
+						node_1.add(new DefaultMutableTreeNode("basketball"));
+						node_1.add(new DefaultMutableTreeNode("soccer"));
+						node_1.add(new DefaultMutableTreeNode("football"));
+						node_1.add(new DefaultMutableTreeNode("hockey"));
+					add(node_1);
+					node_1 = new DefaultMutableTreeNode("food");
+						node_1.add(new DefaultMutableTreeNode("hot dogs"));
+						node_1.add(new DefaultMutableTreeNode("pizza"));
+						node_1.add(new DefaultMutableTreeNode("ravioli"));
+						node_1.add(new DefaultMutableTreeNode("bananas"));
+					add(node_1);
+				}
+			}
+		));
+		treeDataModel.setShowsRootHandles(true);
+		treeDataModel.setAutoscrolls(true);
+		treeDataModel.setDragEnabled(true);
 		splitParamsAndDataModel = new JSplitPane();
 		splitParamsAndDataModel.setResizeWeight(0.33);
 		splitParamsAndDataModel.setOrientation(JSplitPane.VERTICAL_SPLIT);
@@ -127,6 +158,7 @@ public class StrategyCoderView extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(treeDataModel);
 		splitParamsAndDataModel.setRightComponent(GUIUtil.frame("Data Model", scrollPane));
 		splitVertical.setRightComponent(splitParamsAndDataModel);
+		splitVertical.setDividerLocation(700);
 		
 		toolBarCode = new JToolBar();
 		pnlCode.add(toolBarCode, BorderLayout.NORTH);
@@ -159,7 +191,7 @@ public class StrategyCoderView extends JPanel {
 	public JTextArea getTxtCompilerOutput() {
 		return txtCompilerOutput;
 	}
-	public JTree getTreeDataModel() {
+	public JTree getDataModelTree() {
 		return treeDataModel;
 	}
 	public JTextArea getTxtGenerated() {
@@ -194,5 +226,8 @@ public class StrategyCoderView extends JPanel {
 	}
 	public JButton getBtnGenerate() {
 		return btnGenerate;
+	}
+	public JButton getBtnSaveSourceAs() {
+		return btnSaveSourceAs;
 	}
 }
