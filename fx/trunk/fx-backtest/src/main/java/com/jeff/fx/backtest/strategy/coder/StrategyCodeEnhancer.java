@@ -9,22 +9,6 @@ public class StrategyCodeEnhancer {
 	
 	private static Logger log = Logger.getLogger(StrategyCodeEnhancer.class);
 	
-	public static void main(String[] args) {
-
-		StrategyCodeEnhancer sce = new StrategyCodeEnhancer();
-		String generated = sce.enhance(sce.example());
-		System.out.println("=====");
-		System.out.println(generated);
-	}
-	
-	private String example() {
-		
-		return  "if(candle.date.dayOfWeek == 3) {\n" + 
-				"  if(#sma(14,Typical).getDirection(3) > candle.buyHigh) {\n"+
-				"    open = true;\n" + 
-				"  }\n}\n";
-	}	
-	
 	public String enhance(String code) {
 		return getters(indicators(code));
 	}
@@ -43,12 +27,8 @@ public class StrategyCodeEnhancer {
 			String name = matcher.group(1);
 			String args = matcher.group(2);
 			
-			System.out.println("found indicator = " + name + "(" + args + ")");
-			
 			String transformed = "indicators.get(\"" + name + "\", candles, idx, " + args + ").";
 			code = code.replace(found, transformed);
-
-			System.out.println("  replaced [" + found + "] with [" + transformed + "]");
 		}
 		
 		return code;
@@ -65,10 +45,7 @@ public class StrategyCodeEnhancer {
 			System.out.println("matching = " + field);
 			if(!field.startsWith(".get")) {
 				String transformed = "get" + Character.toUpperCase(field.charAt(1)) + field.substring(2) + "()";
-				System.out.println("  substituted=" + transformed);
 				code = code.replaceAll(field.substring(1), transformed);
-			} else {
-				System.out.println("  no substitution");
 			}
 		}
 		

@@ -1,9 +1,17 @@
 package com.jeff.fx.backtest.strategy.coder;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="parameter")
 public class StrategyParam {
 
 	private String name;
 	private Class<?> type;
+	
+	public StrategyParam() {
+		name = "N/A";
+		type = String.class;
+	}
 	
 	public StrategyParam(String name, Class<?> type) {
 		this.name = name;

@@ -82,7 +82,7 @@ public class BeanForm extends JPanel {
 		}
 	}
 
-	public BeanForm(Object Bean) {
+	public BeanForm(Object bean) {
 		this();
 		buildForm(bean);
 	}
