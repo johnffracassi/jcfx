@@ -18,10 +18,12 @@ public class StrategyParam {
 		this.type = type;
 	}
 
+	// @todo implement to/from string
 	public String toString() {
 		return super.toString();
 	}
 	
+	// @todo implement to/from string
 	public Object fromString() {
 		return null;
 	}

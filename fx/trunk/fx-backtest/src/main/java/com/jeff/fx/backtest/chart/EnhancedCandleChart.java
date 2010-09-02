@@ -115,31 +115,35 @@ public class EnhancedCandleChart extends JXPanel {
         rangeAxis.setAutoRangeMinimumSize(0.005);
 
         // add indicators
-//        ZigZagIndicator zzi = new ZigZagIndicator(30);
-//        zzi.calculate(candles);
-//        List<IndicatorMarker> markers = zzi.getValues();
-//        XYSeries zzis = new XYSeries("Zig-Zag");
-//        for(IndicatorMarker marker : markers) {
-//        	
-//        	// add point to the line
-//        	zzis.add((double)marker.getIndex(), marker.getValue());
-//        	
-//        	// add marker and label
-//            final CircleDrawer cd = new CircleDrawer(Color.red, new BasicStroke(1.0f), null);
-//            final XYAnnotation bestBid = new XYDrawableAnnotation(marker.getIndex(), marker.getValue(), 11, 11, cd);
-//            plot.addAnnotation(bestBid);
-//            final XYPointerAnnotation pointer = new XYPointerAnnotation(marker.getLabel(), marker.getIndex(), marker.getValue(), marker.getLabelLocation() * 3.0 * Math.PI / 4.0);
-//            pointer.setBaseRadius(35.0);
-//            pointer.setTipRadius(10.0);
-//            pointer.setFont(new Font("SansSerif", Font.PLAIN, 9));
-//            pointer.setPaint(Color.blue);
-//            pointer.setTextAnchor(TextAnchor.HALF_ASCENT_RIGHT);
-//            plot.addAnnotation(pointer);        
-//        }
-//
-//        plot.setDataset(1, new XYSeriesCollection(zzis));
-//        plot.setRenderer(1, new StandardXYItemRenderer());
-//        plot.setSeriesRenderingOrder(SeriesRenderingOrder.FORWARD);
+        ZigZagIndicator zzi = new ZigZagIndicator(30);
+        zzi.calculate(candles);
+                
+        // @HACK broken to make it compile
+        List<IndicatorMarker> markers = null; 
+        
+        
+        XYSeries zzis = new XYSeries("Zig-Zag");
+        for(IndicatorMarker marker : markers) {
+        	
+        	// add point to the line
+        	zzis.add((double)marker.getIndex(), marker.getValue());
+        	
+        	// add marker and label
+            final CircleDrawer cd = new CircleDrawer(Color.red, new BasicStroke(1.0f), null);
+            final XYAnnotation bestBid = new XYDrawableAnnotation(marker.getIndex(), marker.getValue(), 11, 11, cd);
+            plot.addAnnotation(bestBid);
+            final XYPointerAnnotation pointer = new XYPointerAnnotation(marker.getLabel(), marker.getIndex(), marker.getValue(), marker.getLabelLocation() * 3.0 * Math.PI / 4.0);
+            pointer.setBaseRadius(35.0);
+            pointer.setTipRadius(10.0);
+            pointer.setFont(new Font("SansSerif", Font.PLAIN, 9));
+            pointer.setPaint(Color.blue);
+            pointer.setTextAnchor(TextAnchor.HALF_ASCENT_RIGHT);
+            plot.addAnnotation(pointer);        
+        }
+
+        plot.setDataset(1, new XYSeriesCollection(zzis));
+        plot.setRenderer(1, new StandardXYItemRenderer());
+        plot.setSeriesRenderingOrder(SeriesRenderingOrder.FORWARD);
         
         return chart;
     }
