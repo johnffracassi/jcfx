@@ -1,5 +1,7 @@
 package com.jeff.fx.backtest;
 
+import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
@@ -98,8 +100,17 @@ public class BackTestApp {
 
 		AppCtx.registerEventListener(NewStrategyCoderEvent.class, new FXActionEventListener() {
 			public void event(FXActionEvent ev) {
-				StrategyCoderController controller = new StrategyCoderController();
-				frame.addMainPanel(controller.getView(), "Strategy Coder");
+				new SwingWorker<Object,Object>() {
+					protected Object doInBackground() throws Exception {
+						final StrategyCoderController controller = new StrategyCoderController();
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								frame.addMainPanel(controller.getView(), "Strategy Coder");
+							}
+						});
+						return null;
+					}
+				}.execute();
 			}
 		});
 

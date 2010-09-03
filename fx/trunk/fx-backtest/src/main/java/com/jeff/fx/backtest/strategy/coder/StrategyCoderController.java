@@ -197,6 +197,9 @@ public class StrategyCoderController {
 	
 	private void openSource() {
 
+		// get the preffered 
+		
+		// open the file chooser
 		JFileChooser chooser = new JFileChooser();
 		chooser.setDialogTitle("Open");
 		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
