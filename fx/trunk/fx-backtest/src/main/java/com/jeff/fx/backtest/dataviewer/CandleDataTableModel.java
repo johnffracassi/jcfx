@@ -70,8 +70,8 @@ public class CandleDataTableModel extends DefaultTableModel {
 	
 	public void update(CandleWeek candles) {
 		this.data = candles;
-		this.start = candles.getStartDate().toLocalDateTime(LocalTime.MIDNIGHT);
-		this.end = candles.getStartDate().plusDays(7).toLocalDateTime(LocalTime.MIDNIGHT).minusMinutes(1);
+		this.start = candles.getOpenDateTime();
+		this.end = candles.getCloseDateTime();
 		startIdx = 0;
 		endIdx = candles.getCandleCount();
 		fireTableDataChanged();
