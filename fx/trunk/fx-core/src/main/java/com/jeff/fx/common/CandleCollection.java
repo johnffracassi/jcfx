@@ -107,7 +107,7 @@ public class CandleCollection {
 	
 	public void putCandleWeek(CandleWeek cw) {
 		
-		LocalDate weekStart = DateUtil.getStartOfWeek(cw.getStartDate());
+		LocalDate weekStart = DateUtil.getStartOfWeek(cw.getDateTime());
 		weeks.add(cw);
 		
 		if(start == null || weekStart.isBefore(start)) {

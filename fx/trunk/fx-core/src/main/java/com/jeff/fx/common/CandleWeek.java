@@ -168,7 +168,7 @@ public class CandleWeek implements Serializable {
 	public CandleWeek(CandleWeek source, Period target) {
 		
 		// copy details from source candle week, but with targeted period
-		this(source.getDate(), source.getDataSource(), source.getInstrument(), target);
+		this(source.getDateTime(), source.getDataSource(), source.getInstrument(), target);
 		
 		// how many source periods in 1 of the target periods
 		int ratio = (int)(target.getInterval() / source.getPeriod().getInterval());
@@ -298,11 +298,15 @@ public class CandleWeek implements Serializable {
 		return complete;
 	}
 	
-	public LocalDate getStartDate() {
-		return date;
+	public LocalDateTime getCloseDateTime() {
+		return dataSource.getCalendar().getCloseTime().forWeekContaining(getDateTime());
 	}
 	
-	public LocalDate getDate() {
+	public LocalDateTime getOpenDateTime() {
+		return dataSource.getCalendar().getOpenTime().forWeekContaining(getDateTime());
+	}
+	
+	public LocalDate getDateTime() {
 		return date;
 	}
 

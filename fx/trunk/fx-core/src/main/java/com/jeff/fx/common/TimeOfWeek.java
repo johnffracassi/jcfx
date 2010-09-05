@@ -1,5 +1,6 @@
 package com.jeff.fx.common;
 
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.joda.time.Minutes;
@@ -57,6 +58,14 @@ public class TimeOfWeek {
 		if(dayOfWeek < other.dayOfWeek) return true;
 		if(dayOfWeek > other.dayOfWeek) return false;
 		return time.isBefore(other.time);
+	}
+	
+	public LocalDateTime forWeekContaining(LocalDate date) {
+		return forWeekContaining(date.toLocalDateTime(LocalTime.MIDNIGHT));
+	}
+	
+	public LocalDateTime forWeekContaining(LocalDateTime ldt) {
+		return ldt.minusDays(ldt.getDayOfWeek() % 7).withTime(0, 0, 0, 0).plusMinutes(getMinuteOfWeek());
 	}
 	
 	public String toString() {

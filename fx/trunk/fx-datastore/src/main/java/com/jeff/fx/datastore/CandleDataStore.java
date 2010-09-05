@@ -188,7 +188,7 @@ public class CandleDataStore {
 		if(data != null) {
 			
 			// locate the data file
-			File file = fileLocator.locate(data.getDataSource(), data.getInstrument(), data.getStartDate(), data.getPeriod());
+			File file = fileLocator.locate(data.getDataSource(), data.getInstrument(), data.getOpenDateTime().toLocalDate(), data.getPeriod());
 			log.debug("locating data store at " + file);
 			
 			// if the file exists, delete and replace (check for existence should be performed beforehand)

@@ -1,6 +1,7 @@
 package com.jeff.fx.common;
 
 import org.joda.time.DateTimeConstants;
+import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,6 +25,21 @@ public class TimeOfWeekTest {
 		}
 
 		Assert.assertTrue(36 + " != " + t2.periodOfWeek(Period.OneHour), 36 == t2.periodOfWeek(Period.OneHour));
+		
+	}
+	
+	@Test
+	public void testForWeek() {
+		
+		LocalDateTime dateTime = new LocalDateTime(2010, 9, 6, 1, 7, 0);
+		
+		TimeOfWeek tow = new TimeOfWeek(dateTime);
+
+		LocalDateTime newDateTime = tow.forWeekContaining(dateTime);
+		Assert.assertTrue(newDateTime.equals(dateTime));
+		
+		newDateTime = tow.forWeekContaining(dateTime.toLocalDate());
+		Assert.assertTrue(newDateTime.equals(dateTime));
 		
 	}
 	
