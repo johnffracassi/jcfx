@@ -43,7 +43,7 @@ public class CandleStickCollator
 	
 	private static final String getHashCode(CandleDataPoint candle, Period targetPeriod)
 	{
-		LocalTime time = candle.getDate().toLocalTime();
+		LocalTime time = candle.getDateTime().toLocalTime();
 		int minuteOfDay = time.getHourOfDay() * 60 + time.getMinuteOfHour();
 		int periodOfDay = minuteOfDay / (int)(targetPeriod.getInterval() / 60000);
 		

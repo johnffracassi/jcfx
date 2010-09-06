@@ -45,7 +45,7 @@ public class StoreValidator {
 			CandleWeek cw1 = loader.loadCandlesForWeek(new FXDataRequest(FXDataSource.Forexite, request.getInstrument(), request.getDate(), Period.OneMin));
 			CandleWeek cw = new CandleWeek(cw1, Period.FifteenMin);
 			
-			LocalDateTime startTime = cw.getCandle(0).getDate();
+			LocalDateTime startTime = cw.getCandle(0).getDateTime();
 			int candleSize = (int)(period.getInterval() / 60000);
 			for(int i=0, n=cw.getCandleCount(); i<n; i++) {
 				LocalDateTime time = startTime.plusMinutes(i * candleSize);

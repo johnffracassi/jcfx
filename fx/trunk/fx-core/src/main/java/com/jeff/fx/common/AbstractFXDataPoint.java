@@ -76,7 +76,7 @@ public abstract class AbstractFXDataPoint implements FXDataPoint, Comparable<Abs
 		this.dataSource = dataSource;
 	}
 
-	public LocalDateTime getDate()
+	public LocalDateTime getDateTime()
 	{
 		return date;
 	}

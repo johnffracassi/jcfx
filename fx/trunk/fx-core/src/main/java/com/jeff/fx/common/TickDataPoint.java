@@ -36,7 +36,7 @@ public class TickDataPoint extends AbstractFXDataPoint implements Serializable
 	
 	public String toString()
 	{
-		return getInstrument() + " - " + getDate() + " - " + buy + "/" + sell + " (" + getBuyVolume() + "/" + getSellVolume() + ")";
+		return getInstrument() + " - " + getDateTime() + " - " + buy + "/" + sell + " (" + getBuyVolume() + "/" + getSellVolume() + ")";
 	}
 
 	public Period getPeriod() 

@@ -37,10 +37,14 @@
 	</scm>
 
 	<organization>
-		<name>Keenfresh Ltd</name>
-		<url>http://www.siebentag.com/keenfresh</url>
+		<name>Siebentag Trading Tools Ltd.</name>
+		<url>http://www.siebentag.com/</url>
 	</organization>
 	
+	<issueManagement>
+		<system>Google Code</system>
+		<url>http://code.google.com/p/jcfx/issues/list</url>
+	</issueManagement>
 	<ciManagement>
 		<system>Hudson</system>
 		<url>http://192.168.1.43:9999/job/FX/</url>
