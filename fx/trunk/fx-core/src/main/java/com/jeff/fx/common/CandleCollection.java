@@ -14,8 +14,8 @@ import com.jeff.fx.util.DateUtil;
 public class CandleCollection {
 
 	private List<CandleWeek> weeks;
-	private LocalDate start;
-	private LocalDate end;
+	private LocalDateTime start;
+	private LocalDateTime end;
 	private Period period;
 	private int periodsInWeek;
 	private float highPrice = Float.MIN_VALUE;
@@ -107,15 +107,14 @@ public class CandleCollection {
 	
 	public void putCandleWeek(CandleWeek cw) {
 		
-		LocalDate weekStart = DateUtil.getStartOfWeek(cw.getDateTime());
 		weeks.add(cw);
 		
-		if(start == null || weekStart.isBefore(start)) {
-			start = weekStart;
+		if(start == null || cw.getOpenDateTime().toLocalDate().isBefore(start)) {
+			start = cw.getOpenDateTime();
 		}
 		
-		if(end == null || weekStart.plusDays(7).isAfter(end)) {
-			end = weekStart.plusDays(7);
+		if(end == null || cw.getCloseDateTime().toLocalDate().isAfter(end)) {
+			end = cw.getCloseDateTime();
 		}
 		
 		if(period == null) {
@@ -131,11 +130,11 @@ public class CandleCollection {
 		}
 	}
 
-	public LocalDate getStart() {
+	public LocalDateTime getStart() {
 		return start;
 	}
 
-	public LocalDate getEnd() {
+	public LocalDateTime getEnd() {
 		return end;
 	}
 

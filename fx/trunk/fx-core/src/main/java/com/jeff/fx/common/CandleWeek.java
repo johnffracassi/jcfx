@@ -5,9 +5,10 @@ import java.io.Serializable;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
+import com.jeff.fx.util.DateUtil;
+
 public class CandleWeek implements Serializable {
 	
-//	private static Logger log = Logger.getLogger(CandleWeek.class);
 	private static final long serialVersionUID = 12416234512345l;
 
 	private LocalDate date;
@@ -32,7 +33,7 @@ public class CandleWeek implements Serializable {
 	
 	public CandleWeek(LocalDate date, FXDataSource dataSource, Instrument instrument, Period period) {
 		
-		this.date = date;
+		this.date = DateUtil.getStartOfWeek(date);
 		this.dataSource = dataSource;
 		this.instrument = instrument;
 		this.period = period;
@@ -48,7 +49,7 @@ public class CandleWeek implements Serializable {
 	}
 	
 	public float[] getRawValues(int price) {
-		return sell[price];
+		return buy[price];
 	}
 	
 	public int getCandleIndex(TimeOfWeek tow) {
@@ -82,19 +83,6 @@ public class CandleWeek implements Serializable {
 		}
 	}
 	
-	private void merge(int dest, int srcOpen, int srcClose) {
-		buy[OPEN][dest] = buy[CLOSE][srcOpen];
-		buy[CLOSE][dest] = buy[OPEN][srcClose];
-		buy[HIGH][dest] = Math.max(buy[OPEN][dest], buy[CLOSE][dest]);
-		buy[LOW][dest] = Math.min(buy[OPEN][dest], buy[CLOSE][dest]);
-		sell[OPEN][dest] = sell[CLOSE][srcOpen];
-		sell[CLOSE][dest] = sell[OPEN][srcClose];
-		sell[HIGH][dest] = Math.max(sell[OPEN][dest], sell[CLOSE][dest]);
-		sell[LOW][dest] = Math.min(sell[OPEN][dest], sell[CLOSE][dest]);
-		volumes[0][dest] = 0;
-		volumes[1][dest] = 0;
-	}
-	
 	private void copyForward(int dest, int src) {
 		buy[OPEN][dest] = buy[CLOSE][src];
 		buy[CLOSE][dest] = buy[OPEN][dest];
@@ -121,7 +109,7 @@ public class CandleWeek implements Serializable {
 		}
 	}
 	
-	private boolean isEmptyCandle(int idx) {
+	public boolean isEmptyCandle(int idx) {
 		if(idx < 0 || idx >= buy[OPEN].length)
 			return true;
 		else 
