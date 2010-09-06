@@ -9,7 +9,7 @@
 
 	<groupId>com.jeff.fx</groupId>
 	<artifactId>fx-core</artifactId>
-	<version>${jcfx.version}</version>
+	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>FX Advisor - Core</name>
 	<url>http://www.siebentag.com/maven/site/fx/fx-core</url>

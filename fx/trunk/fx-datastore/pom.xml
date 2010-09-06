@@ -9,9 +9,9 @@
 
 	<groupId>com.jeff.fx</groupId>
 	<artifactId>fx-datastore</artifactId>
-	<version>${jcfx.version}</version>
 	<packaging>jar</packaging>
 	<name>FX Advisor - Datastore</name>
+	<version>0.1-SNAPSHOT</version>
 	<url>http://www.siebentag.com/maven/site/fx/fx-datastore</url>
 
 	<scm>
