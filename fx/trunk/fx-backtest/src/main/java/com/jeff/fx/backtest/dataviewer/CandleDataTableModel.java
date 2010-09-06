@@ -44,9 +44,9 @@ public class CandleDataTableModel extends DefaultTableModel {
 		
 		switch(col) {
 			case 0: return row+1;
-			case 1: return data.getCandle(row).getDate().toLocalDate();
-			case 2: return data.getCandle(row).getDate().getDayOfWeek();
-			case 3: return data.getCandle(row).getDate().toLocalTime();
+			case 1: return data.getCandle(row).getDateTime().toLocalDate();
+			case 2: return data.getCandle(row).getDateTime().getDayOfWeek();
+			case 3: return data.getCandle(row).getDateTime().toLocalTime();
 			case 4: return data.getCandle(row).getBuyOpen();
 			case 5: return data.getCandle(row).getBuyHigh();
 			case 6: return data.getCandle(row).getBuyLow();
@@ -54,7 +54,7 @@ public class CandleDataTableModel extends DefaultTableModel {
 			case 8: return data.getCandle(row).getBuyVolume();
 			case 9: return data.getCandle(row).getChangePercentage();
 			case 10: return data.getCandle(row).getRange();
-			case 11: return data.getCandle(row).getSize();
+			case 11: return data.getCandle(row).getChange();
 			default: return "X";
 		}
 	}

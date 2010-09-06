@@ -161,7 +161,7 @@ public class CandleWeek implements Serializable {
 		// how many source periods in 1 of the target periods
 		int ratio = (int)(target.getInterval() / source.getPeriod().getInterval());
 		
-		LocalDateTime startTime = source.getCandle(0).getDate();
+		LocalDateTime startTime = source.getCandle(0).getDateTime();
 		
 		// perform the candle merging
 		for(int destIdx=0; destIdx<getCandleCount(); destIdx++) {
@@ -219,7 +219,7 @@ public class CandleWeek implements Serializable {
 	
 	public void setCandle(CandleDataPoint candle) {
 		
-		TimeOfWeek time = new TimeOfWeek(candle.getDate());
+		TimeOfWeek time = new TimeOfWeek(candle.getDateTime());
 		int idx = time.periodOfWeek(candle.getPeriod()) - startIdx;
 
 		if(idx < 0 || idx > endIdx - startIdx || idx >= buy[0].length) {

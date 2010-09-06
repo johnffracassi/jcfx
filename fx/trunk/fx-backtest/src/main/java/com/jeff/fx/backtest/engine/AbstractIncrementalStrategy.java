@@ -1,6 +1,6 @@
 package com.jeff.fx.backtest.engine;
 
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
@@ -31,7 +31,7 @@ public abstract class AbstractIncrementalStrategy extends AbstractStrategy {
 	 */
 	public OrderBook execute(CandleCollection cc) {
 		
-		LocalDate date = cc.getStart();
+		LocalDateTime date = cc.getStart();
 		
 		int idx = 0;
 		while(keepGoing && date.isBefore(cc.getEnd())) {

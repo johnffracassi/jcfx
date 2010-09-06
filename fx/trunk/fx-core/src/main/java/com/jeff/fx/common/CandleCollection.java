@@ -61,7 +61,7 @@ public class CandleCollection {
 		Date[] dates = new Date[getCandleCount()];
 		for(int i=0; i<weeks.size(); i++) {
 			CandleWeek cw = weeks.get(i);
-			LocalDateTime ldt = cw.getCandle(0).getDate();
+			LocalDateTime ldt = cw.getCandle(0).getDateTime();
 			for(int j=0; j<periodsInWeek; j++) {
 				dates[i * periodsInWeek + j] = ldt.plusMillis((int)(j * period.getInterval())).toDateTime().toDate();
 			}
@@ -100,20 +100,24 @@ public class CandleCollection {
 	}
 	
 	public CandleWeek getCandleWeek(LocalDate date) {
-		int days = Days.daysBetween(start, date).getDays();
+		int days = Days.daysBetween(start.toLocalDate(), date).getDays();
 		int week = days / 7;
 		return weeks.get(week);
+	}
+	
+	public CandleWeek getCandleWeek(LocalDateTime date) {
+		return getCandleWeek(date.toLocalDate());
 	}
 	
 	public void putCandleWeek(CandleWeek cw) {
 		
 		weeks.add(cw);
 		
-		if(start == null || cw.getOpenDateTime().toLocalDate().isBefore(start)) {
+		if(start == null || cw.getOpenDateTime().isBefore(start)) {
 			start = cw.getOpenDateTime();
 		}
 		
-		if(end == null || cw.getCloseDateTime().toLocalDate().isAfter(end)) {
+		if(end == null || cw.getCloseDateTime().isAfter(end)) {
 			end = cw.getCloseDateTime();
 		}
 		

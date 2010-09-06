@@ -6,7 +6,7 @@ public interface FXDataPoint
 {
 	FXDataSource getDataSource();
 	Instrument getInstrument();
-	LocalDateTime getDate();
+	LocalDateTime getDateTime();
 	Period getPeriod();
 	long getBuyVolume();
 	long getSellVolume();

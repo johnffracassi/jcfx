@@ -3,7 +3,7 @@ package com.jeff.fx.backtest.strategy.time;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 import com.jeff.fx.backtest.engine.AbstractStrategy;
 import com.jeff.fx.backtest.engine.BTOrder;
@@ -56,7 +56,7 @@ public class TimeStrategy extends AbstractStrategy {
 		
 		if(candles != null && candles.getStart() != null) {
 			
-			LocalDate date = candles.getStart();
+			LocalDateTime date = candles.getStart();
 			
 			int weekIdx = 0;
 			while(date.isBefore(candles.getEnd())) {
@@ -106,25 +106,25 @@ public class TimeStrategy extends AbstractStrategy {
 							if(sl == null && tp == null) {
 								order.setClosePrice(offerSide == OfferSide.Ask ? closeCandle.getSellClose() : closeCandle.getBuyClose());
 								order.setCloseType(OrderCloseType.Close);
-								order.setCloseTime(closeCandle.getDate());
+								order.setCloseTime(closeCandle.getDateTime());
 							} else if(sl != null && tp != null) {
-								if(sl.getDate().isBefore(tp.getDate())) {
+								if(sl.getDateTime().isBefore(tp.getDateTime())) {
 									order.setClosePrice(order.getStopLossPrice());
 									order.setCloseType(OrderCloseType.StopLoss);
-									order.setCloseTime(sl.getDate());
+									order.setCloseTime(sl.getDateTime());
 								} else {
 									order.setClosePrice(order.getTakeProfitPrice());
 									order.setCloseType(OrderCloseType.TakeProfit);
-									order.setCloseTime(tp.getDate());
+									order.setCloseTime(tp.getDateTime());
 								}
 							} else if(sl != null) {
 								order.setClosePrice(order.getStopLossPrice());
 								order.setCloseType(OrderCloseType.StopLoss);
-								order.setCloseTime(sl.getDate());
+								order.setCloseTime(sl.getDateTime());
 							} else if(tp != null) {
 								order.setClosePrice(order.getTakeProfitPrice());
 								order.setCloseType(OrderCloseType.TakeProfit);
-								order.setCloseTime(tp.getDate());
+								order.setCloseTime(tp.getDateTime());
 							}
 							
 							getOrderBook().close(order);	

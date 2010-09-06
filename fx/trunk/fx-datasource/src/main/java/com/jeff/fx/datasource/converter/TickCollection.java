@@ -106,8 +106,8 @@ public class TickCollection extends ArrayList<TickDataPoint>
 			instrument = element.getInstrument();
 		}
 		
-	    buys.addPrice(String.valueOf(element.getDate()), element.getBuy());
-	    sells.addPrice(String.valueOf(element.getDate()), element.getSell());
+	    buys.addPrice(String.valueOf(element.getDateTime()), element.getBuy());
+	    sells.addPrice(String.valueOf(element.getDateTime()), element.getSell());
 	    buyVol += element.getBuyVolume();
 	    sellVol += element.getSellVolume();
 	}

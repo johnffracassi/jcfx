@@ -71,9 +71,9 @@ public class CandleDataPoint extends AbstractFXDataPoint implements Serializable
 	@Override
 	public String toString() {
 		if(tickCount > 0) {
-			return String.format("[%s/%s/%s] %s / %.4f %.4f %.4f %.4f (%d ticks)", getInstrument(), getDataSource(), period.key, getDate(), sellOpen, sellHigh, sellLow, sellClose, tickCount);
+			return String.format("[%s/%s/%s] %s / %.4f %.4f %.4f %.4f (%d ticks)", getInstrument(), getDataSource(), period.key, getDateTime(), sellOpen, sellHigh, sellLow, sellClose, tickCount);
 		} else {
-			return String.format("[%s/%s/%s] %s / %.4f %.4f %.4f %.4f", getInstrument(), getDataSource(), period.key, getDate(), sellOpen, sellHigh, sellLow, sellClose);
+			return String.format("[%s/%s/%s] %s / %.4f %.4f %.4f %.4f", getInstrument(), getDataSource(), period.key, getDateTime(), sellOpen, sellHigh, sellLow, sellClose);
 		}
 	}
 
@@ -108,7 +108,7 @@ public class CandleDataPoint extends AbstractFXDataPoint implements Serializable
 
 		tick.setBuy(getBuyOpen());
 		tick.setDataSource(getDataSource());
-		tick.setDateTime(getDate());
+		tick.setDateTime(getDateTime());
 		tick.setInstrument(getInstrument());
 		tick.setSell(getSellOpen());
 		tick.setBuyVolume(getBuyVolume());
@@ -151,7 +151,11 @@ public class CandleDataPoint extends AbstractFXDataPoint implements Serializable
 		tickCount = 0;
 	}
 
-	public int getSize() {
+	/**
+	 * the difference between the open/close prices in points
+	 * @return
+	 */
+	public int getChange() {
 		return (int)((buyClose - buyOpen) / getInstrument().pipValue);
 	}
 	

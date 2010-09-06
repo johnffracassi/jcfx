@@ -28,8 +28,8 @@ public class TickToCandleConverter
 		Collections.sort(ticks);
 		
 		// find the first and last tick dates
-		LocalDateTime startDateTime = DateUtil.roundDown(ticks.get(0).getDate(), period);
-		LocalDateTime endDateTime = DateUtil.roundDown(ticks.get(ticks.size()-1).getDate(), period);
+		LocalDateTime startDateTime = DateUtil.roundDown(ticks.get(0).getDateTime(), period);
+		LocalDateTime endDateTime = DateUtil.roundDown(ticks.get(ticks.size()-1).getDateTime(), period);
 		
 		// work out how many periods we need
 		int seconds = Seconds.secondsBetween(startDateTime, endDateTime).getSeconds();
@@ -48,11 +48,11 @@ public class TickToCandleConverter
 		// file each tick into its collection
 		for(TickDataPoint tick : ticks)
 		{
-			int idx = calculateIndex(startDateTime, tick.getDate(), period);
+			int idx = calculateIndex(startDateTime, tick.getDateTime(), period);
 			
 			if(idx >= candles.length)
 			{
-				log.error("Out of bounds: " + idx + " / " + tick.getDate());
+				log.error("Out of bounds: " + idx + " / " + tick.getDateTime());
 			}
 			else
 			{
