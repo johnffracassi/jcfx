@@ -10,6 +10,8 @@ import com.jeff.fx.backtest.engine.BTOrder;
 import com.jeff.fx.backtest.engine.OrderBook;
 import com.jeff.fx.backtest.engine.OrderCloseType;
 import com.jeff.fx.backtest.strategy.IndicatorCache;
+import com.jeff.fx.backtest.strategy.coder.Description;
+import com.jeff.fx.backtest.strategy.coder.Parameter;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.CandleValueModel;
@@ -22,12 +24,32 @@ public class TimeStrategy extends AbstractStrategy {
 	
 	private static Logger log = Logger.getLogger(TimeStrategy.class);
 	
+	@Parameter("Open Time")
+	@Description("Open a trade at this time")
 	private TimeOfWeek open = null;
+	
+	@Parameter("Close Time")
+	@Description("Close the open trade at this time")
 	private TimeOfWeek close = null;
+
+	@Parameter("Stop Loss")
+	@Description("Close order if it loses this amount")
 	private int stopLoss = 0;
+
+	@Parameter("Take Profit")
+	@Description("Close order if it reaches this amount of profit")
 	private int takeProfit = 0;
+
+	@Parameter("Short SMA")
+	@Description("Only open the trade if SMA(x) is heading in direction of the offer side")
 	private int shortSma = 14;
+	
+	@Parameter("Long SMA")
+	@Description("Only open the trade if SMA(y) is heading in direction of the offer side")
 	private int longSma = 140;
+	
+	@Parameter("Offer Side")
+	@Description("Type of order to open")
 	private OfferSide offerSide = OfferSide.Ask;
 
 	public TimeStrategy(int id, Map<String,Object> parameters, IndicatorCache indicators) {
@@ -178,5 +200,21 @@ public class TimeStrategy extends AbstractStrategy {
 
 	public void setClose(TimeOfWeek close) {
 		this.close = close;
+	}
+
+	public int getShortSma() {
+		return shortSma;
+	}
+
+	public void setShortSma(int shortSma) {
+		this.shortSma = shortSma;
+	}
+
+	public int getLongSma() {
+		return longSma;
+	}
+
+	public void setLongSma(int longSma) {
+		this.longSma = longSma;
 	}
 }

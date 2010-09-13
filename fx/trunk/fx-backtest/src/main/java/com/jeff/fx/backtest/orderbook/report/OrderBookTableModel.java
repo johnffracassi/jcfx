@@ -53,7 +53,7 @@ public class OrderBookTableModel extends DefaultTableModel {
 			case 8: return LocalDateTime.class;
 			case 9: return Double.class;
 			case 10: return Double.class;
-			case 11: return Double.class;
+			case 11: return Integer.class;
 			default: return String.class;
 		}
 	}
