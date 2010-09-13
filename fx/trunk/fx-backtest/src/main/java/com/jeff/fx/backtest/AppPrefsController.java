@@ -1,19 +1,16 @@
 package com.jeff.fx.backtest;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
-import org.jdesktop.swingx.JXDialog;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -28,7 +25,7 @@ public class AppPrefsController {
 		view = new AppPrefsPanel();
 		
 		// select download cache directory
-		final String downloadCache = AppCtx.getPersistent("downloadCache.root");
+		final String downloadCache = AppCtx.getPersistent(Param.DownloadCacheRoot);
 		view.getTxtDownloadCache().setText(downloadCache);
 		view.getBtnDownloadCache().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -37,12 +34,12 @@ public class AppPrefsController {
 				fc.showOpenDialog(view);
 				File selected = fc.getSelectedFile();
 				view.getTxtDownloadCache().setText(selected.getAbsolutePath());
-				AppCtx.setPersistent("downloadCache.root", selected.getAbsolutePath());
+				AppCtx.setPersistent(Param.DownloadCacheRoot, selected.getAbsolutePath());
 			}
 		});
 		
 		// select datastore directory
-		final String dataStore = AppCtx.getPersistent("dataStore.root");
+		final String dataStore = AppCtx.getPersistent(Param.DataStoreRoot);
 		view.getTxtDataStore().setText(dataStore);
 		view.getBtnDataStore().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -51,7 +48,7 @@ public class AppPrefsController {
 				fc.showOpenDialog(view);
 				File selected = fc.getSelectedFile();
 				view.getTxtDataStore().setText(selected.getAbsolutePath());
-				AppCtx.setPersistent("dataStore.root", selected.getAbsolutePath());
+				AppCtx.setPersistent(Param.DataStoreRoot, selected.getAbsolutePath());
 			}
 		});
 				

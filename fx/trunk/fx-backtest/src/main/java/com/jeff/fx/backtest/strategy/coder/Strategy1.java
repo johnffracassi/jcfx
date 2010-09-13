@@ -11,6 +11,7 @@ import com.jeff.fx.backtest.strategy.coder.*;
 import com.jeff.fx.common.*;
 import com.jeff.fx.util.*;
 import com.jeff.fx.indicator.*;
+import com.sun.xml.internal.ws.developer.StreamingAttachment;
 
 
 public class Strategy1 extends CodedStrategy {
@@ -18,9 +19,17 @@ public class Strategy1 extends CodedStrategy {
 	private List<StrategyParam> paramsList = new ArrayList<StrategyParam>();
 	private IndicatorCache indicators;
 	private CandleCollection candles;
-	
+
+	@Parameter("Open Time")
+	@Description("Open a trade at this time")
 	private com.jeff.fx.common.TimeOfWeek openTime;
+
+	@Parameter("Close Time")
+	@Description("Close the open trade at this time")
 	private com.jeff.fx.common.TimeOfWeek closeTime;
+
+	@Parameter("Short SMA")
+	@Description("Only open the trade if SMA(n) is heading in direction of the offer side")
 	private java.lang.Integer shortSma;
 
 
@@ -70,7 +79,7 @@ public class Strategy1 extends CodedStrategy {
 			boolean close = false;
 			
 			boolean smaAboveHigh = indicators.get("sma", candles, idx, 14,Typical) > candle.getBuyHigh();
-close = !smaAboveHigh;
+				close = !smaAboveHigh;
 			
 			if(close) {
 				closeOrder(order, candle);

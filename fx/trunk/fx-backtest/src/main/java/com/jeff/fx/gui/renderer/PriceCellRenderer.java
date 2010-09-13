@@ -18,6 +18,7 @@ public class PriceCellRenderer extends DefaultTableCellRenderer {
 	}
 	
 	protected void setValue(Object value) {
+		
 		if(value instanceof Double) {
 			double x = (Double)value;
 			
@@ -30,6 +31,7 @@ public class PriceCellRenderer extends DefaultTableCellRenderer {
 	}
 	
 	protected String getPattern() {
+		
 		return customPattern == null ? "%." + dp + "f" : customPattern;
 	}
 }

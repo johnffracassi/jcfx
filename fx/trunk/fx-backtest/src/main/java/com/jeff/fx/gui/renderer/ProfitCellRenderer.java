@@ -16,14 +16,23 @@ public class ProfitCellRenderer extends PriceCellRenderer {
 		setHorizontalAlignment(RIGHT);
 	}
 	
-	protected void setValue(Object value) {
-		super.setValue(value);
-		if(value instanceof Double) {
-			this.value = (Double)value;
+	protected void setValue(Object newValue) {
+		
+		if(newValue instanceof Double) {
+			this.value = (Double)newValue;
+		} else if(newValue instanceof Integer) {
+			this.value = ((Integer)newValue).doubleValue();
+		} else if(newValue instanceof Long) {
+			this.value = ((Long)newValue).doubleValue();
+		} else if(newValue instanceof Float) {
+			this.value = ((Float)newValue).doubleValue();
 		}
+
+		super.setValue(this.value);
 	}
 	
 	public void paint(Graphics g) {
+		
 		if(value > 0.0) {
 			setForeground(POSITIVE);
 		} else if(value < 0.0) {

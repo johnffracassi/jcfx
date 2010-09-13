@@ -7,6 +7,7 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -15,11 +16,14 @@ import java.util.HashMap;
 import java.util.TooManyListenersException;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.TransferHandler;
 import javax.xml.bind.JAXBException;
 
 import com.jeff.fx.backtest.AppCtx;
+import com.jeff.fx.backtest.Param;
 import com.jeff.fx.backtest.engine.OrderBook;
 import com.jeff.fx.backtest.orderbook.OrderBookController;
 import com.jeff.fx.backtest.strategy.IndicatorCache;
@@ -123,34 +127,22 @@ public class StrategyCoderController {
 		view.getDataModelTree().setModel(treeModel);
 		view.getDataModelTree().setRootVisible(false);
 		view.getDataModelTree().setCellRenderer(new DataModelTreeRenderer());
+		view.getDataModelTree().setDragEnabled(true);
+
+		view.getDataModelTree().setTransferHandler(new TransferHandler() {
+			public void exportAsDrag(JComponent comp, InputEvent e, int action) {
+				System.out.println(comp + " / " + e + " / " + action);
+				super.exportAsDrag(comp, e, action);
+			}
+		});
 		
 		// setup drop targets
-		try {
-			// TODO fix d&d drop target
-			view.getTxtOpenConditions().getDropTarget().addDropTargetListener(new DropTargetAdapter() {
-				  public void dragEnter(DropTargetDragEvent dtde) { dtde.acceptDrag(dtde.getDropAction()); }
-				  public void dragOver(DropTargetDragEvent dtde) { dtde.acceptDrag(dtde.getDropAction()); }				  
-				  public void drop(DropTargetDropEvent dtde) {
-				    try {
-				        Transferable tr = dtde.getTransferable();
-				        DataFlavor flavor = new DataFlavor(Method.class, "Method Call");
-			        	if (tr.isDataFlavorSupported(flavor)) {
-				            dtde.acceptDrop(dtde.getDropAction());
-				            Method method = (Method)tr.getTransferData(flavor);
-				            dtde.dropComplete(true);
-				            return;
-				        }
-				        dtde.rejectDrop();
-					} catch (Exception e) {
-					    e.printStackTrace();
-					    dtde.rejectDrop();
-					}
-				}
-			});
-		} catch (TooManyListenersException e1) {
-			// TODO handle this with a dialog
-			e1.printStackTrace();
-		}
+		view.getTxtOpenConditions().setTransferHandler(new TransferHandler() {
+			public boolean importData(TransferSupport support) {
+				System.out.println(support);
+				return super.importData(support);
+			}
+		});
 		
 		paramsController.addListener(treeModel);
 	}
@@ -197,17 +189,22 @@ public class StrategyCoderController {
 	
 	private void openSource() {
 
-		// get the preffered 
+		// get the preferred location
+		String defaultFile = AppCtx.getPersistent(Param.StrategySourceLocation);
 		
 		// open the file chooser
 		JFileChooser chooser = new JFileChooser();
 		chooser.setDialogTitle("Open");
 		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
-
+		if(defaultFile != null) {
+			chooser.setSelectedFile(new File(defaultFile));
+		}
+		
 		int result = chooser.showOpenDialog(null);
 		if(result == JFileChooser.APPROVE_OPTION) {
 			File file = chooser.getSelectedFile();
 			try {
+				AppCtx.setPersistent(Param.StrategySourceLocation, file);
 				setModel(fileManager.importModel(file));
 				currentFile = file;
 			} catch (JAXBException e) {
@@ -219,14 +216,21 @@ public class StrategyCoderController {
 	
 	private void saveSourceAs() {
 		
+		// get the preferred location
+		String defaultFile = AppCtx.getPersistent(Param.StrategySourceLocation);
+		
 		JFileChooser chooser = new JFileChooser();
 		chooser.setDialogTitle("Save As...");
 		chooser.setDialogType(JFileChooser.SAVE_DIALOG);
+		if(defaultFile != null) {
+			chooser.setSelectedFile(new File(defaultFile));
+		}
 
 		int result = chooser.showSaveDialog(null);
 		if(result == JFileChooser.APPROVE_OPTION) {
 			File file = chooser.getSelectedFile();
 			try {
+				AppCtx.setPersistent(Param.StrategySourceLocation, file);
 				fileManager.exportModel(getModel(), file);
 				currentFile = file;
 			} catch (JAXBException e) {

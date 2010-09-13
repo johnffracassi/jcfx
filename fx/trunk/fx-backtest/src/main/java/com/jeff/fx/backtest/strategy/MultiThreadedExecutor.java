@@ -11,6 +11,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.jeff.fx.backtest.AppCtx;
+import com.jeff.fx.backtest.Param;
 import com.jeff.fx.backtest.engine.OrderBook;
 import com.jeff.fx.backtest.engine.OrderBookReport;
 import com.jeff.fx.backtest.strategy.optimiser.OptimiserExecutor;
@@ -58,8 +59,8 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 		permutator = new Permutator(perms);
 
 		// get the parameters for the executor
-		threadCount = AppCtx.getPersistentInt("multiThreadExecutor.threads");
-		jobSize = AppCtx.getPersistentInt("multiThreadExecutor.blockSize");
+		threadCount = AppCtx.getPersistentInt(Param.MultiThreadedExecutorThreads);
+		jobSize = AppCtx.getPersistentInt(Param.MultiThreadedExecutorBlockSize);
 
 		// execute the tests asynchronously
 		Manager manager = new Manager(candles, permutator.getPermutationCount());
