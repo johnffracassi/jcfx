@@ -26,8 +26,7 @@ public class StrategyParam implements Comparable<StrategyParam> {
 		this.setter = "set" + Character.toUpperCase(name.charAt(0)) + name.substring(1);
 	}
 
-	public int compareTo(StrategyParam thatObj) {
-		StrategyParam that = (StrategyParam)thatObj;
+	public int compareTo(StrategyParam that) {
 		if(this.ordinal < that.ordinal) return -1;
 		if(this.ordinal > that.ordinal) return 1;
 		return this.name.compareTo(that.name);

@@ -2,6 +2,7 @@ package com.jeff.fx.backtest;
 
 import java.awt.BorderLayout;
 
+import javax.annotation.PostConstruct;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -38,11 +39,8 @@ public class BackTestFrame extends JXFrame {
 	@Autowired private NewTimeStrategyAction newTimeStrategyAction;
 	@Autowired private NewStrategyCoderAction newStrategyCoderAction;
 	@Autowired private ApplicationPreferencesAction applicationPreferencesAction;
-	
-	/**
-	 * Build the frame. Not done in constructor because the autowiring isn't 
-	 * done by then
-	 */
+
+	@PostConstruct
 	public void init() {
 		
 		setSize(1200, 900);

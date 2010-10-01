@@ -93,7 +93,7 @@ public class AppCtx {
 	
 	public static LocalTime getSessionLocalTime(String key) {
 		return getSessionValue(key);
-	}
+	}	
 	
 	public static LocalDate getSessionDate(String key) {
 		return getSessionValue(key);
@@ -158,8 +158,8 @@ public class AppCtx {
 	
 	public static double getPersistentDouble(String key) {
 		try {
-			double val = persistentRegister.getDouble(key, Double.MIN_VALUE);
-			if(val != Double.MIN_VALUE) {
+			double val = persistentRegister.getDouble(key, Double.NEGATIVE_INFINITY);
+			if(val != Double.NEGATIVE_INFINITY) {
 				return val;
 			}
 		} catch(Exception ex) { } 
