@@ -1,3 +1,4 @@
+// $codepro.audit.disable unnecessaryImport
 package com.jeff.fx.backtest.strategy.coder;
 
 import static java.lang.Math.*;

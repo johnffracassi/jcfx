@@ -58,8 +58,8 @@ public class BackTestApp {
 			e.printStackTrace();
 		}
 
-		log.info("Building application frame");
-		frame.init();
+//		log.info("Building application frame");
+//		frame.init();
 
 		log.info("Registering event listeners");
 		AppCtx.registerEventListener(NewCandleChartEvent.class, new FXActionEventListener() {

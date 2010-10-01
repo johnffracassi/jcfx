@@ -15,7 +15,7 @@ public class BTParameterValueSet {
 		double[] values = new double[getNumberOfSteps()];
 		
 		for(int i=0; i<values.length; i++) {
-			values[i] = startValue + ((double)i * (double)step);
+			values[i] = startValue + ((double)i * step);
 		}
 		
 		return values;
