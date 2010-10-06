@@ -12,7 +12,6 @@ import com.jeff.fx.backtest.strategy.coder.*;
 import com.jeff.fx.common.*;
 import com.jeff.fx.util.*;
 import com.jeff.fx.indicator.*;
-import com.sun.xml.internal.ws.developer.StreamingAttachment;
 
 
 public class Strategy1 extends CodedStrategy {

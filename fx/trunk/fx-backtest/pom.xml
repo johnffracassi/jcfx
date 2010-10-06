@@ -64,11 +64,13 @@
 		    <version>1.6</version>
 		</dependency>
 		
+		<!-- 
 		<dependency>
 		    <groupId>jgraphx</groupId>
 		    <artifactId>jgraphx</artifactId>
 		    <version>1.4.0.9</version>
 		</dependency>
+		-->
 		
 		<dependency>
 		    <groupId>com.miglayout</groupId>
