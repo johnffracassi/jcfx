@@ -3,13 +3,12 @@
 
 	<groupId>com.jeff.fx</groupId>
 	<artifactId>fx-pom</artifactId>
-	<version>1.0</version>
+	<version>0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>FX Advisor</name>
 	<url>http://www.siebentag.com/maven/site/fx/fx-proj</url>
 
 	<properties>
-		<jcfx.version>0.1-SNAPSHOT</jcfx.version>
 		<scm.root>scm:svn:https://jcfx.googlecode.com/svn/fx/trunk</scm.root>
 		<svn.user>jeffcann</svn.user>
 		<svn.password>NH4DZ3Zz2au6</svn.password>
@@ -17,6 +16,7 @@
 		<svn.connection.browse>scm:svn:http://${svn.host}</svn.connection.browse>
 		<svn.connection.dev>scm:svn:https://${svn.user}:${svn.password}@${svn.host}</svn.connection.dev>
 		<svn.url>http://code.google.com/p/jcfx/source/browse/#svn/fx/trunk</svn.url>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<modules>
@@ -24,9 +24,9 @@
 		<module>../fx-datastore</module>
 		<module>../fx-datasource</module>
 		<module>../fx-backtest</module>
+		<module>../fx-remote</module>
 		<!-- 
 		<module>../fx-datamanager</module>
-		<module>../fx-backtestclient</module>
 		-->
 	</modules>
 
@@ -45,9 +45,10 @@
 		<system>Google Code</system>
 		<url>http://code.google.com/p/jcfx/issues/list</url>
 	</issueManagement>
+	
 	<ciManagement>
 		<system>Hudson</system>
-		<url>http://192.168.1.43:9999/job/FX/</url>
+		<url>http://terrance:9999/job/FX/</url>
 	</ciManagement>
 	
 	<inceptionYear>2009</inceptionYear>
@@ -64,7 +65,7 @@
 				<role>developer</role>
 				<role>CEO</role>
 			</roles>
-			<timezone>GMT</timezone>
+			<timezone>AEST</timezone>
 		</developer>
 	</developers>
  
@@ -73,19 +74,19 @@
 			<dependency>
 				<groupId>com.jeff.fx</groupId>
 				<artifactId>fx-core</artifactId>
-				<version>${jcfx.version}</version>
+				<version>${project.version}</version>
 			</dependency> 
 			
 			<dependency>
 				<groupId>com.jeff.fx</groupId>
 				<artifactId>fx-datastore</artifactId>
-				<version>${jcfx.version}</version>
+				<version>${project.version}</version>
 			</dependency> 
 			
 			<dependency>
 				<groupId>com.jeff.fx</groupId>
 				<artifactId>fx-datasource</artifactId>
-				<version>${jcfx.version}</version>
+				<version>${project.version}</version>
 			</dependency> 
 			
 			<dependency>

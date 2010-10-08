@@ -4,14 +4,13 @@
 	<parent>
 		<artifactId>fx-pom</artifactId>
 		<groupId>com.jeff.fx</groupId>
-		<version>1.0</version>
+		<version>0.1-SNAPSHOT</version>
 	</parent>
 
 	<groupId>com.jeff.fx</groupId>
 	<artifactId>fx-datastore</artifactId>
 	<packaging>jar</packaging>
 	<name>FX Advisor - Datastore</name>
-	<version>0.1-SNAPSHOT</version>
 	<url>http://www.siebentag.com/maven/site/fx/fx-datastore</url>
 
 	<scm>

@@ -3,14 +3,13 @@
 	<parent>
 		<artifactId>fx-pom</artifactId>
 		<groupId>com.jeff.fx</groupId>
-		<version>1.0</version>
+		<version>0.1-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jeff.fx</groupId>
 	<artifactId>fx-datasource</artifactId>
-	<name>FX Advisor - Data Sources</name>
-	<version>0.1-SNAPSHOT</version>
+	<name>FX Advisor - Data Source</name>
 	<description>FX Advisor - Data Sources</description>
 	
 	<scm>

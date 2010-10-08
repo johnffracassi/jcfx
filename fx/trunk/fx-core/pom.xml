@@ -4,12 +4,11 @@
 	<parent>
 		<artifactId>fx-pom</artifactId>
 		<groupId>com.jeff.fx</groupId>
-		<version>1.0</version>
+		<version>0.1-SNAPSHOT</version>
 	</parent>
 
 	<groupId>com.jeff.fx</groupId>
 	<artifactId>fx-core</artifactId>
-	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>FX Advisor - Core</name>
 	<url>http://www.siebentag.com/maven/site/fx/fx-core</url>
