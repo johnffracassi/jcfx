@@ -21,7 +21,7 @@ public class MassDownloadScripter {
 	
 	public static void main(String[] args) throws IOException {
 		
-		FileOutputStream fos = new FileOutputStream("y:/temp/dl-script.sh");
+		FileOutputStream fos = new FileOutputStream("c:/temp/dl-script.sh");
 		
 		while(start.isBefore(end)) {
 			String url = String.format(urlPattern, df1.print(start));

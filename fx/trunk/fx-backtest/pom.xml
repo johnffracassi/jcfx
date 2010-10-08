@@ -3,14 +3,13 @@
 	<parent>
 		<artifactId>fx-pom</artifactId>
 		<groupId>com.jeff.fx</groupId>
-		<version>1.0</version>
+		<version>0.1-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jeff.fx</groupId>
 	<artifactId>fx-backtest</artifactId>
 	<name>FX Advisor - Back Tester</name>
-	<version>0.1-SNAPSHOT</version>
 	<description>FX Advisor - Back Tester</description>
 
 	<scm>
