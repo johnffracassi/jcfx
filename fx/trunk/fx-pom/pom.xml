@@ -92,13 +92,13 @@
 			<dependency>
 			    <groupId>log4j</groupId>
 			    <artifactId>log4j</artifactId>
-			    <version>1.2.14</version>
+			    <version>1.2.15</version>
 			</dependency>
 			 			
 			<dependency>
 			    <groupId>junit</groupId>
 			    <artifactId>junit</artifactId>
-			    <version>4.5</version>
+			    <version>4.8</version>
 			</dependency>
 	
 			<dependency>
@@ -109,13 +109,14 @@
 
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>spring</artifactId>
-				<version>2.5.6.SEC01</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
-				<version>2.5.6.SEC01</version>
+				<version>3.0.4.RELEASE</version>
+			</dependency>
+
+			<dependency>
+			    <groupId>org.springframework</groupId>
+			    <artifactId>spring-jms</artifactId>
+			    <version>3.0.4.RELEASE</version>
 			</dependency>
 
  		</dependencies>
@@ -140,10 +141,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring</artifactId>
 		</dependency>
 	</dependencies>
 	
