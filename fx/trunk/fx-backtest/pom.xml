@@ -30,33 +30,16 @@
 		</dependency> 
 
 		<dependency>
-		    <groupId>org.json</groupId>
-		    <artifactId>json</artifactId>
-		    <version>20090211</version>
-		</dependency>
-		
-		<dependency>
 		    <groupId>jgoodies</groupId>
 		    <artifactId>forms</artifactId>
 		    <version>1.0.5</version>
 		</dependency>
 		
 		<dependency>
-		    <groupId>jalopy</groupId>
-		    <artifactId>jalopy</artifactId>
-		    <version>1.5rc3</version>
-		</dependency>
-
-		<dependency>
 			<groupId>com.jeff.fx</groupId>
 			<artifactId>fx-datastore</artifactId>
 		</dependency>
 		
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring</artifactId>
-		</dependency>
-
 		<dependency>
 		    <groupId>org.swinglabs</groupId>
 		    <artifactId>swingx</artifactId>
@@ -88,12 +71,6 @@
 			<artifactId>commons-el</artifactId>
 			<version>1.0</version>
 		</dependency>	
-		
-		<dependency>
-		    <groupId>javax.servlet.jsp</groupId>
-		    <artifactId>jsp-api</artifactId>
-		    <version>2.1</version>
-		</dependency> 
 	</dependencies>
 
 
