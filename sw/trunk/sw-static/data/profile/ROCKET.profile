@@ -2,6 +2,7 @@ fullName 		= Rod "Rocket" Scotton
 dob 			= Long ago
 currentAge		= Oldish
 flag 			= au.gif
+picture			= rocket.jpg
 origin 			= Tassie
 teams	 		= Steamboat Willies, Antelopes
 role 			= Stalwart / Lottery czar
