@@ -58,6 +58,11 @@ public class CandleDataPoint extends AbstractFXDataPoint implements Serializable
 	}
 
 	public CandleDataPoint(double value) {
+		setPrice(value);
+	}
+	
+	public void setPrice(double value)
+	{
 		this.buyClose = value;
 		this.buyHigh = value;
 		this.buyLow = value;
