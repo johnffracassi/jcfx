@@ -33,7 +33,7 @@ public class IndicatorCache {
 		return classLookup.values();
 	}
 	
-	private Indicator createInstance(String key) throws InstantiationException, IllegalAccessException {
+	private Indicator createIndicatorInstance(String key) throws InstantiationException, IllegalAccessException {
 		log.debug("creating new instance of " + key);
 		Class<? extends Indicator> type = classLookup.get(key);
 		log.debug("found class for " + key + ": " + type.getName());
@@ -57,7 +57,7 @@ public class IndicatorCache {
 			
 		} else {
 			
-			Indicator indicator = createInstance(key);
+			Indicator indicator = createIndicatorInstance(key);
 			indicator.setParams(params);
 			log.debug("setup indicator with params. " + indicator.getDisplayName());
 			descriptorLookup.put(instanceKey, indicator);

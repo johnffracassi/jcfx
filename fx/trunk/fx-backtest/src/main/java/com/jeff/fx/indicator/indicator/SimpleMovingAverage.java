@@ -12,6 +12,11 @@ import com.jeff.fx.indicator.FixedSizeNumberQueue2;
 @ChartType(ChartTypes.PriceRelative)
 public class SimpleMovingAverage extends AbstractMovingAverage
 {
+    public SimpleMovingAverage()
+    {
+        this(14, CandleValueModel.BuyOpen);
+    }
+    
     public SimpleMovingAverage(int periods, CandleValueModel cvm)
     {
         super(periods, cvm);

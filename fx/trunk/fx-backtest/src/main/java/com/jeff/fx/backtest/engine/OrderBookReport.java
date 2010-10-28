@@ -12,6 +12,7 @@ public class OrderBookReport {
 	private int takes = 0;
 	private double high = Double.MIN_VALUE;
 	private double low = Double.MAX_VALUE;
+	private double fitness = Double.NaN;
 	
 	public OrderBookReport(OrderBook book) {
 		analyse(book);
@@ -39,6 +40,11 @@ public class OrderBookReport {
 			
 			if(balance < minBalance) minBalance = balance;
 			if(balance > maxBalance) maxBalance = balance;
+		}
+		
+		if(orderCount > 0)
+		{ 
+		    fitness = Math.pow((balance * balance) * (getWinPercentage() * getWinPercentage() / 10000.0 + 0.125) / orderCount, 1.0 / 3.0);
 		}
 	}
 
@@ -91,4 +97,14 @@ public class OrderBookReport {
 	public int getStopLosses() {
 		return stops;
 	}
+
+    public double getFitness()
+    {
+        return fitness;
+    }
+
+    public void setFitness(double fitness)
+    {
+        this.fitness = fitness;
+    }
 }

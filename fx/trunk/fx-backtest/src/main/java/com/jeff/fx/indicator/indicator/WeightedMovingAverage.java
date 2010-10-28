@@ -14,6 +14,11 @@ public class WeightedMovingAverage extends AbstractMovingAverage
 {
     private final float[] weights;
     
+    public WeightedMovingAverage()
+    {
+        this(14, CandleValueModel.BuyOpen);
+    }
+    
     public WeightedMovingAverage(int periods, CandleValueModel cvm)
     {
         super(periods, cvm);
