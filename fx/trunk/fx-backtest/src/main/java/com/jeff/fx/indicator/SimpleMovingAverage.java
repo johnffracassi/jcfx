@@ -14,10 +14,19 @@ public class SimpleMovingAverage extends AbstractMovingAverage
         super(periods, cvm);
     }
 
+    @Override
+    public String getKey()
+    {
+        return "sma";
+    }
+    
     public void calculate(CandleCollection candles)
     {
         synchronized (this)
         {
+            
+            // TODO - use the same averaging method implemented in ATR
+            
             FixedSizeNumberQueue2 q = new FixedSizeNumberQueue2(getPeriods());
             CandleValueModel model = getModel();
             float[] values = new float[candles.getCandleCount()];

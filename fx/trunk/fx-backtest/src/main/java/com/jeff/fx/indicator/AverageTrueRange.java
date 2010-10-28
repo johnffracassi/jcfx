@@ -3,50 +3,64 @@ package com.jeff.fx.indicator;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleValueModel;
 
-public abstract class AbstractMovingAverage implements Indicator
+public class AverageTrueRange implements Indicator
 {
     private float[] values;
     private boolean calculated;
 
-    @Property(key = "ma.periods")
+    @Property(key = "atr.periods")
     @ValidationRange(min = 0, max = 1000)
     @Label("Periods")
     private Integer periods;
 
-    @Property(key = "ma.cvm")
-    @Label("Price Model")
-    private CandleValueModel model;
-
-    public AbstractMovingAverage()
+    public AverageTrueRange()
     {
         this(14, CandleValueModel.Typical);
     }
 
-    public AbstractMovingAverage(int periods, CandleValueModel cvm)
+    public AverageTrueRange(int periods, CandleValueModel cvm)
     {
         this.periods = periods;
-        this.model = cvm;
         this.calculated = false;
     }
 
-    public abstract void calculate(CandleCollection candles);
-    public abstract String getKey();
+    public void calculate(CandleCollection candles)
+    {
+        synchronized (this)
+        {
+            float[] values = new float[candles.getCandleCount()];
+            values[0] = candles.getPrice(0, CandleValueModel.BuyHigh) - candles.getPrice(0, CandleValueModel.BuyLow);
+            
+            for (int i = 1, n = candles.getCandleCount(); i < n; i++)
+            {
+                float high = candles.getPrice(i, CandleValueModel.BuyHigh);
+                float low = candles.getPrice(i, CandleValueModel.BuyLow);
+                float closePrevious = candles.getPrice(i-1, CandleValueModel.BuyClose);
+                float trueRange = calculateTrueRange(high, low, closePrevious);
+                
+                values[i] = ((values[i-1] * (periods - 1)) + trueRange) / periods;
+            }
+
+            setValues(values);
+        }
+    }
+
+    private float calculateTrueRange(float high, float low, float closePrev)
+    {
+        float hl = high - low;
+        float hcp = Math.abs(high - closePrev);
+        float lcp = Math.abs(low - closePrev);
+        return Math.max(hl, Math.max(hcp, lcp));
+    }
+
+    public String getKey()
+    {
+        return "atr";
+    }
 
     public void setParams(Object... params)
     {
         periods = new Integer(String.valueOf(params[0]));
-        model = CandleValueModel.valueOf(String.valueOf(params[1]));
-    }
-
-    public final float getSlope(int idx, int countBack)
-    {
-        return getValue(idx) - getValue(idx - countBack);
-    }
-
-    public final int getDirection(int idx)
-    {
-        float diff = getSlope(idx, 5);
-        return diff > 0.00005 ? 1 : diff < 0.00005 ? -1 : 0;
     }
 
     public final float getValue(int idx)
@@ -78,7 +92,7 @@ public abstract class AbstractMovingAverage implements Indicator
 
     public String getDisplayName()
     {
-        return getKey() + "(" + periods + "," + model + ")";
+        return getKey() + "(" + periods + ")";
     }
 
     public final int hashCode()
@@ -88,10 +102,10 @@ public abstract class AbstractMovingAverage implements Indicator
 
     public boolean equals(Object obj)
     {
-        if (obj.getClass().equals(getClass()) && this instanceof AbstractMovingAverage)
+        if (obj.getClass().equals(getClass()) && this instanceof AverageTrueRange)
         {
-            AbstractMovingAverage ma = (AbstractMovingAverage) obj;
-            return (ma.periods == periods && ma.model == model);
+            AverageTrueRange ind = (AverageTrueRange) obj;
+            return (ind.periods == periods);
         }
         return false;
     }
@@ -104,16 +118,6 @@ public abstract class AbstractMovingAverage implements Indicator
     public void setPeriods(Integer periods)
     {
         this.periods = periods;
-    }
-
-    public CandleValueModel getModel()
-    {
-        return model;
-    }
-
-    public void setModel(CandleValueModel model)
-    {
-        this.model = model;
     }
 
     protected void setValues(float[] values)

@@ -9,18 +9,19 @@ import com.jeff.fx.common.CandleWeek;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.indicator.WeightedMovingAverage;
+import com.jeff.fx.indicator.AbstractMovingAverage;
+import com.jeff.fx.indicator.ExponentialMovingAverage;
 
-public class SimpleMovingAverageBenchmark 
+public class MovingAverageBenchmark 
 {
 	public static void main(String[] args)
     {
-	    int periods = 14;
-	    int weeks = 1000;
-	    int repetitions = 10;
+	    int periods = 100;
+	    int weeks = 2000;
+	    int repetitions = 20;
 	    
 		CandleCollection cc = createCandles(weeks, 0.00001f);
-	    WeightedMovingAverage ma = new WeightedMovingAverage(periods, CandleValueModel.BuyOpen);
+	    AbstractMovingAverage ma = new ExponentialMovingAverage(periods, CandleValueModel.BuyOpen);
         
 	    long startTime = System.nanoTime();
 	    for(int i=0; i<repetitions; i++)
@@ -30,7 +31,7 @@ public class SimpleMovingAverageBenchmark
 	    }
 		long time = System.nanoTime() - startTime;
 
-		System.out.printf("sma(%d) over %d weeks took %.4fs", periods, weeks, time / 1000000000.0 / repetitions); 
+		System.out.printf("%s over %d weeks took %.4fs", ma.getDisplayName(), weeks, time / 1000000000.0 / repetitions); 
 	}
 
 	public static CandleCollection createCandles(int weeks, float increment)

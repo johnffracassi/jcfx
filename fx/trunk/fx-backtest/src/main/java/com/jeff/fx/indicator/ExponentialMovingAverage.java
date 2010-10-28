@@ -7,33 +7,19 @@ import com.jeff.fx.common.CandleValueModel;
 
 @Component
 @ChartType(ChartTypes.PriceRelative)
-public class WeightedMovingAverage extends AbstractMovingAverage
+public class ExponentialMovingAverage extends AbstractMovingAverage
 {
-    private final float[] weights;
-    
-    public WeightedMovingAverage(int periods, CandleValueModel cvm)
+    public ExponentialMovingAverage(int periods, CandleValueModel cvm)
     {
         super(periods, cvm);
-        weights = buildWeights(periods);
     }
 
     @Override
     public String getKey()
     {
-        return "wma";
+        return "ema";
     }
 
-    public float[] buildWeights(int periods)
-    {
-    	float[] weights = new float[periods];
-        float step = (1.0f / periods);
-        for(int i=0; i<periods; i++)
-        {
-            weights[i] = 1.0f - (i * step);
-        }
-        return weights;
-    }
-    
     @Override
     public void calculate(CandleCollection candles)
     {
@@ -46,10 +32,11 @@ public class WeightedMovingAverage extends AbstractMovingAverage
             for (int i = 0, n = candles.getCandleCount(); i < n; i++)
             {
                 q.add(candles.getPrice(i, model));
-                values[i] = q.weightedAverage(weights);
+                values[i] = q.ema();
             }
 
             setValues(values);
         }
     }
+    
 }
