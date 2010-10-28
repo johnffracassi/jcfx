@@ -140,7 +140,8 @@ public class OptimiserView extends JPanel {
 		tblReport.setColumnControlVisible(true);
 		tblReport.getColumnModel().getColumn(2).setCellRenderer(new ProfitCellRenderer(0));
 		tblReport.getColumnModel().getColumn(4).setCellRenderer(new PriceCellRenderer(2));
-		tblReport.getColumnModel().getColumn(5).setCellRenderer(new PriceCellRenderer(2));
+        tblReport.getColumnModel().getColumn(5).setCellRenderer(new PriceCellRenderer(2));
+        tblReport.getColumnModel().getColumn(6).setCellRenderer(new PriceCellRenderer(2));
 		reportScrollPane.setViewportView(tblReport);
 	}
 

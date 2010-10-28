@@ -12,6 +12,11 @@ import com.jeff.fx.indicator.FixedSizeNumberQueue2;
 @ChartType(ChartTypes.PriceRelative)
 public class ExponentialMovingAverage extends AbstractMovingAverage
 {
+    public ExponentialMovingAverage()
+    {
+        this(14, CandleValueModel.BuyOpen);
+    }
+    
     public ExponentialMovingAverage(int periods, CandleValueModel cvm)
     {
         super(periods, cvm);
