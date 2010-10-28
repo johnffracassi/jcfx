@@ -6,18 +6,20 @@ public final class FixedSizeNumberQueue2
 
     private float[] values;
     private int headIdx = 0;
+    private float emaK = 0.0f;
+    private float emaValue = 0.0f;
     
     private int capacity = 0;
     private int size = 0;
     private float sum = 0.0f;
-    private float high = Float.MIN_VALUE;
-    private float low = Float.MAX_VALUE;
+    
 
     public FixedSizeNumberQueue2(int capacity)
     {
         this.capacity = capacity;
         values = new float[capacity];
         headIdx = 0;
+        emaK = 2.0f / (capacity + 1);
     }
 
     private boolean isFull()
@@ -58,18 +60,23 @@ public final class FixedSizeNumberQueue2
             values[size] = newValue;
             size++;
         }
-
-        if (newValue > high)
-        {
-            high = newValue;
-        }
         
-        if (newValue < low)
+        // calculate ema
+        if(!isFull())
         {
-            low = newValue;
+            emaValue = average();
+        }
+        else
+        {
+            emaValue = ((newValue - emaValue) * emaK) + emaK;
         }
     }
 
+    public float ema()
+    {
+        return emaValue;
+    }
+    
     public float weightedAverage(float[] weights)
     {
         assert(weights != null);
