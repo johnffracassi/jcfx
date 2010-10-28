@@ -28,7 +28,7 @@ import org.jfree.ui.TextAnchor;
 
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.indicator.IndicatorMarker;
-import com.jeff.fx.indicator.ZigZagIndicator;
+import com.jeff.fx.indicator.overlay.ZigZagIndicator;
 
 public class EnhancedCandleChart extends JXPanel {
 	

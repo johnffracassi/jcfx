@@ -1,9 +1,12 @@
-package com.jeff.fx.indicator;
+package com.jeff.fx.indicator.indicator;
 
 import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleValueModel;
+import com.jeff.fx.indicator.ChartType;
+import com.jeff.fx.indicator.ChartTypes;
+import com.jeff.fx.indicator.FixedSizeNumberQueue2;
 
 @Component
 @ChartType(ChartTypes.PriceRelative)

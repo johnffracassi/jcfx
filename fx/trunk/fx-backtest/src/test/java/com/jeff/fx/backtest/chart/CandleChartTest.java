@@ -25,7 +25,7 @@ import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.datastore.CandleDataStore;
 import com.jeff.fx.gui.GUIUtil;
-import com.jeff.fx.indicator.SimpleMovingAverage;
+import com.jeff.fx.indicator.indicator.SimpleMovingAverage;
 
 @Component
 public class CandleChartTest {

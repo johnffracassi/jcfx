@@ -1,54 +1,30 @@
-package com.jeff.fx.indicator;
+package com.jeff.fx.indicator.indicator;
 
 import com.jeff.fx.common.CandleCollection;
-import com.jeff.fx.common.CandleValueModel;
+import com.jeff.fx.indicator.Indicator;
+import com.jeff.fx.indicator.Label;
+import com.jeff.fx.indicator.Property;
+import com.jeff.fx.indicator.ValidationRange;
 
-public abstract class AbstractMovingAverage implements Indicator
+public abstract class AbstractIndicator implements Indicator
 {
     private float[] values;
     private boolean calculated;
 
-    @Property(key = "ma.periods")
+    @Property(key = "atr.periods")
     @ValidationRange(min = 0, max = 1000)
     @Label("Periods")
     private Integer periods;
 
-    @Property(key = "ma.cvm")
-    @Label("Price Model")
-    private CandleValueModel model;
+    public abstract String getKey();
+    public abstract void setParams(Object... params);
+    public abstract void calculate(CandleCollection candles);
 
-    public AbstractMovingAverage()
-    {
-        this(14, CandleValueModel.Typical);
-    }
-
-    public AbstractMovingAverage(int periods, CandleValueModel cvm)
+    public AbstractIndicator(int periods)
     {
         this.periods = periods;
-        this.model = cvm;
-        this.calculated = false;
     }
-
-    public abstract void calculate(CandleCollection candles);
-    public abstract String getKey();
-
-    public void setParams(Object... params)
-    {
-        periods = new Integer(String.valueOf(params[0]));
-        model = CandleValueModel.valueOf(String.valueOf(params[1]));
-    }
-
-    public final float getSlope(int idx, int countBack)
-    {
-        return getValue(idx) - getValue(idx - countBack);
-    }
-
-    public final int getDirection(int idx)
-    {
-        float diff = getSlope(idx, 5);
-        return diff > 0.00005 ? 1 : diff < 0.00005 ? -1 : 0;
-    }
-
+    
     public final float getValue(int idx)
     {
         if (calculated)
@@ -78,7 +54,7 @@ public abstract class AbstractMovingAverage implements Indicator
 
     public String getDisplayName()
     {
-        return getKey() + "(" + periods + "," + model + ")";
+        return getKey() + "(" + periods + ")";
     }
 
     public final int hashCode()
@@ -88,11 +64,12 @@ public abstract class AbstractMovingAverage implements Indicator
 
     public boolean equals(Object obj)
     {
-        if (obj.getClass().equals(getClass()) && this instanceof AbstractMovingAverage)
+        if (obj.getClass().equals(getClass()))
         {
-            AbstractMovingAverage ma = (AbstractMovingAverage) obj;
-            return (ma.periods == periods && ma.model == model);
+            AbstractIndicator ind = (AbstractIndicator) obj;
+            return (ind.periods == periods);
         }
+        
         return false;
     }
 
@@ -104,16 +81,6 @@ public abstract class AbstractMovingAverage implements Indicator
     public void setPeriods(Integer periods)
     {
         this.periods = periods;
-    }
-
-    public CandleValueModel getModel()
-    {
-        return model;
-    }
-
-    public void setModel(CandleValueModel model)
-    {
-        this.model = model;
     }
 
     protected void setValues(float[] values)

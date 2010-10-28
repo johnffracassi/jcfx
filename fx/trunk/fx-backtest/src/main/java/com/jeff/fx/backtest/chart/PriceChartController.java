@@ -15,8 +15,8 @@ import com.jeff.fx.gui.beanform.BeanForm;
 import com.jeff.fx.indicator.ChartType;
 import com.jeff.fx.indicator.ChartTypes;
 import com.jeff.fx.indicator.Indicator;
-import com.jeff.fx.indicator.SimpleMovingAverage;
-import com.jeff.fx.indicator.ZigZagIndicator;
+import com.jeff.fx.indicator.indicator.SimpleMovingAverage;
+import com.jeff.fx.indicator.overlay.ZigZagIndicator;
 
 public class PriceChartController
 {

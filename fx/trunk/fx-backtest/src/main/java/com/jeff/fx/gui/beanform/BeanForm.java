@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 import com.jeff.fx.common.CandleValueModel;
 import com.jeff.fx.indicator.Label;
 import com.jeff.fx.indicator.Property;
-import com.jeff.fx.indicator.SimpleMovingAverage;
 import com.jeff.fx.indicator.ValueListener;
+import com.jeff.fx.indicator.indicator.SimpleMovingAverage;
 
 import net.miginfocom.swing.MigLayout;
 
