@@ -1,4 +1,4 @@
-package com.jeff.fx.indicator;
+package com.jeff.fx.indicator.overlay;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +7,13 @@ import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleValueModel;
+import com.jeff.fx.indicator.ChartType;
+import com.jeff.fx.indicator.ChartTypes;
+import com.jeff.fx.indicator.Indicator;
+import com.jeff.fx.indicator.IndicatorMarker;
+import com.jeff.fx.indicator.Label;
+import com.jeff.fx.indicator.Property;
+import com.jeff.fx.indicator.ValidationRange;
 
 @Component
 @ChartType(ChartTypes.Annotated)

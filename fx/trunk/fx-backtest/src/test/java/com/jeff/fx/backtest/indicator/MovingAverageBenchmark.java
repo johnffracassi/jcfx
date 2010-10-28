@@ -9,8 +9,8 @@ import com.jeff.fx.common.CandleWeek;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.indicator.AbstractMovingAverage;
-import com.jeff.fx.indicator.ExponentialMovingAverage;
+import com.jeff.fx.indicator.indicator.AbstractMovingAverage;
+import com.jeff.fx.indicator.indicator.ExponentialMovingAverage;
 
 public class MovingAverageBenchmark 
 {

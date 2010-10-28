@@ -1,4 +1,4 @@
-package com.jeff.fx.indicator;
+package com.jeff.fx.backtest.indicator;
 
 import java.io.IOException;
 import java.util.List;
