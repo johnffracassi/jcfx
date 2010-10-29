@@ -10,22 +10,22 @@
 	
 	<property name="xsl.file" location="${xsl.dir}/steamboat.xsl" />	<!-- Root stylesheet 							-->
 
-	<property name="work.dir" value="c:/temp/steamboat" />	
+	<property name="work.dir" value="/tmp/steamboat" />	
 	<property name="app.dir" value="bin/app" />	<!-- Web application output directory 			-->
 	<property name="xml.file" value="data.xml" />			<!-- Output location for data model 			-->
 	<property name="out.file" value="steamboat.html" />	<!-- Output HTML file, pre-split 				-->
 	
-    <property name="sdk.dir" location="c:/dev/lib/appengine" />
+    <property name="sdk.dir" location="/opt/appengine" />
     <import file="${sdk.dir}/config/user/ant-macros.xml" />
 
 	  <target name="update" description="Uploads the application to App Engine.">
-	    <appcfg action="update" war="C:/dev/temp/steamboat/bin/app" />
+	    <appcfg action="update" war="/tmp/steamboat/bin/app" />
 	  </target>
 
 	<target name="init">
 		<available property="linux" file="/usr" />
 		
-		<condition property="tmp.dir" value="${work.dir}" else="c:/dev/temp/steamboat">
+		<condition property="tmp.dir" value="/tmp/steamboat" else="c:/dev/temp/steamboat">
 			<isset property="linux" />
 		</condition>
 		
@@ -37,13 +37,13 @@
 	<!-- ========================================================================== -->
 	<!-- Generate and deploy														-->
 	<!-- ========================================================================== -->
-	<target name="all" depends="init, clean, compile, data-model, generate, chart, deploy" />
+	<target name="all" depends="init, clean, compile, data-model, generate, chart" />
 
 	<!-- ========================================================================== -->
 	<!-- Deploy to SteamboatWillies.com												-->
 	<!-- ========================================================================== -->
 	<target name="deploy">
-		<copy todir="C:/Program Files (x86)/Apache Software Foundation/Tomcat 6.0/webapps/steamboat" overwrite="true">
+		<copy todir="/opt/glassfishv3/glassfish/domains/domain1/docroot/sw" overwrite="true">
 			<fileset dir="${work.dir}/bin/app" />
 		</copy>
 	</target>

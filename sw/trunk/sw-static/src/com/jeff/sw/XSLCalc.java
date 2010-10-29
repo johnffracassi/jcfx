@@ -11,11 +11,6 @@ public class XSLCalc
 		total = 0;
 	}
 	
-	public static String test()
-	{
-		return "hello";
-	}
-	
 	public void add(int score)
 	{
 		total += score;
