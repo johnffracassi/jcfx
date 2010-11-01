@@ -10,18 +10,21 @@ import com.jeff.fx.indicator.FixedSizeNumberQueue2;
 
 @Component
 @ChartType(ChartTypes.Oscillator)
-public class CommodityChannelIndex extends AbstractIndicator
+public class Stochastic extends AbstractIndicator
 {
-    private float scalingFactor = 0.015f;
+    private int lookbackPeriods = 14;
+    private int smoothingPeriods = 3;
     
-    public CommodityChannelIndex()
+    public Stochastic()
     {
-        this(14);
+        this(14, 3);
     }
     
-    public CommodityChannelIndex(int periods)
+    public Stochastic(int lookbackPeriods, int smoothingPeriods)
     {
-        super(periods);
+        super(lookbackPeriods);
+        this.lookbackPeriods = lookbackPeriods;
+        this.smoothingPeriods = smoothingPeriods;
     }
 
     @Override
@@ -34,7 +37,7 @@ public class CommodityChannelIndex extends AbstractIndicator
 
             for (int i = getPeriods(), n = candles.getCandleCount(); i < n; i++)
             {
-                values[i] = (float) ((candles.getPrice(i, CandleValueModel.Typical) - queue.average()) / (scalingFactor * queue.meanDeviation()));
+                values[i] = candles.getPrice(i, CandleValueModel.BuyHigh);
             }
 
             setValues(values);
@@ -50,5 +53,25 @@ public class CommodityChannelIndex extends AbstractIndicator
     @Override
     public void setParams(Object... params)
     {
+    }
+
+    public int getLookbackPeriods()
+    {
+        return lookbackPeriods;
+    }
+
+    public void setLookbackPeriods(int lookbackPeriods)
+    {
+        this.lookbackPeriods = lookbackPeriods;
+    }
+
+    public int getSmoothingPeriods()
+    {
+        return smoothingPeriods;
+    }
+
+    public void setSmoothingPeriods(int smoothingPeriods)
+    {
+        this.smoothingPeriods = smoothingPeriods;
     }
 }
