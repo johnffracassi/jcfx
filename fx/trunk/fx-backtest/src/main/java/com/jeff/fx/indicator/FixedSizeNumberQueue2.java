@@ -98,6 +98,18 @@ public final class FixedSizeNumberQueue2
         return sum / sumOfWeights;
     }
     
+    public float meanDeviation()
+    {
+        float lastPrice = average();
+        
+        float sum = 0.0f;
+        for(int i=0; i<values.length; i++)
+        {
+            sum += Math.abs(lastPrice - values[i]);
+        }
+        return sum / values.length;
+    }
+    
     public float average()
     {
         if (size == 0)
