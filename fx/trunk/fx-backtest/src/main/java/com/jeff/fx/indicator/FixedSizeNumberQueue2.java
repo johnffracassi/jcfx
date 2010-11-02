@@ -6,8 +6,6 @@ public final class FixedSizeNumberQueue2
 
     private float[] values;
     private int headIdx = 0;
-    private float emaK = 0.0f;
-    private float emaValue = 0.0f;
     
     private int capacity = 0;
     private int size = 0;
@@ -19,7 +17,6 @@ public final class FixedSizeNumberQueue2
         this.capacity = capacity;
         values = new float[capacity];
         headIdx = 0;
-        emaK = 2.0f / (capacity + 1);
     }
 
     private boolean isFull()
@@ -60,23 +57,8 @@ public final class FixedSizeNumberQueue2
             values[size] = newValue;
             size++;
         }
-        
-        // calculate ema
-        if(!isFull())
-        {
-            emaValue = average();
-        }
-        else
-        {
-            emaValue = ((newValue - emaValue) * emaK) + emaK;
-        }
     }
 
-    public float ema()
-    {
-        return emaValue;
-    }
-    
     public float weightedAverage(float[] weights)
     {
         assert(weights != null);
@@ -100,14 +82,14 @@ public final class FixedSizeNumberQueue2
     
     public float meanDeviation()
     {
-        float lastPrice = average();
+        float avg = average();
         
         float sum = 0.0f;
         for(int i=0; i<values.length; i++)
         {
-            sum += Math.abs(lastPrice - values[i]);
+            sum += Math.abs(avg - values[i]);
         }
-        return sum / values.length;
+        return sum / size;
     }
     
     public float average()

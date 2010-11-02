@@ -6,12 +6,13 @@ import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleValueModel;
 import com.jeff.fx.indicator.ChartType;
 import com.jeff.fx.indicator.ChartTypes;
-import com.jeff.fx.indicator.FixedSizeNumberQueue2;
 
 @Component
 @ChartType(ChartTypes.PriceRelative)
 public class ExponentialMovingAverage extends AbstractMovingAverage
 {
+    private float multiplier;
+    
     public ExponentialMovingAverage()
     {
         this(14, CandleValueModel.BuyOpen);
@@ -20,6 +21,8 @@ public class ExponentialMovingAverage extends AbstractMovingAverage
     public ExponentialMovingAverage(int periods, CandleValueModel cvm)
     {
         super(periods, cvm);
+        
+        multiplier = 2.0f / (periods + 1);
     }
 
     @Override
@@ -33,14 +36,14 @@ public class ExponentialMovingAverage extends AbstractMovingAverage
     {
         synchronized (this)
         {
-            FixedSizeNumberQueue2 q = new FixedSizeNumberQueue2(getPeriods());
             CandleValueModel model = getModel();
             float[] values = new float[candles.getCandleCount()];
-
-            for (int i = 0, n = candles.getCandleCount(); i < n; i++)
+            values[0] = candles.getPrice(0, model);
+            
+            for (int i = 1, n = candles.getCandleCount(); i < n; i++)
             {
-                q.add(candles.getPrice(i, model));
-                values[i] = q.ema();
+                float price = candles.getPrice(i, model);
+                values[i] = (price - values[i-1]) * multiplier + values[i-1];
             }
 
             setValues(values);
