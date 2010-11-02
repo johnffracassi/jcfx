@@ -34,7 +34,9 @@ public class CommodityChannelIndex extends AbstractIndicator
 
             for (int i = getPeriods(), n = candles.getCandleCount(); i < n; i++)
             {
-                values[i] = (float) ((candles.getPrice(i, CandleValueModel.Typical) - queue.average()) / (scalingFactor * queue.meanDeviation()));
+                float price = candles.getPrice(i, CandleValueModel.Typical);
+                queue.add(price);
+                values[i] = (float) ((price - queue.average()) / (scalingFactor * queue.meanDeviation()));
             }
 
             setValues(values);
