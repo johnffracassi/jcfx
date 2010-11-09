@@ -1,4 +1,6 @@
-package com.jeff.fx.rules;
+package com.jeff.fx.rules.logic;
+
+import com.jeff.fx.rules.Node;
 
 public abstract class LogicNode<M> implements Node<M>
 {

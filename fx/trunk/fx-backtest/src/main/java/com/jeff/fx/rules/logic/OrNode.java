@@ -1,8 +1,10 @@
-package com.jeff.fx.rules;
+package com.jeff.fx.rules.logic;
 
-public class AndNode<M> extends LogicNode<M>
+import com.jeff.fx.rules.Node;
+
+public class OrNode<M> extends LogicNode<M>
 {
-    public AndNode(Node<M> left, Node<M> right)
+    public OrNode(Node<M> left, Node<M> right)
     {
         super(left, right);
     }
@@ -12,9 +14,9 @@ public class AndNode<M> extends LogicNode<M>
     {
         boolean leftValue = left.evaluate(model);
         
-        if(!leftValue)
+        if(leftValue)
         {
-            return false;
+            return true;
         }
         
         boolean rightValue = right.evaluate(model);
