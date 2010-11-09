@@ -1,22 +1,18 @@
 package com.jeff.fx.rules.business;
 
-import com.jeff.fx.rules.MockModel;
 import com.jeff.fx.rules.Node;
+import com.jeff.fx.rules.Operand;
 
-public class ComparisonNode implements Node<MockModel>
+public abstract class ComparisonNode<T> implements Node<T>
 {
-    private Comparable value;
-    private Operand operand;
+    protected Comparable<?> value;
+    protected Operand operand;
     
-    public ComparisonNode(Operand operand, Comparable value)
+    public ComparisonNode(Operand operand, Comparable<?> value)
     {
         this.value = value;
         this.operand = operand;
     }
     
-    @Override
-    public boolean evaluate(MockModel model)
-    {
-        return operand.evaluate(model.getNumber(), value);
-    }
+    public abstract boolean evaluate(T model);
 }

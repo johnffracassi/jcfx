@@ -8,19 +8,19 @@ import com.jeff.fx.common.CandleWeek;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.indicator.indicator.AbstractIndicator;
-import com.jeff.fx.indicator.indicator.CommodityChannelIndex;
+import com.jeff.fx.indicator.Indicator;
+import com.jeff.fx.indicator.indicator.AverageTrueRange;
 
-public class MovingAverageBenchmark 
+public class IndicatorBenchmark 
 {
 	public static void main(String[] args)
     {
 	    int periods = 14;
-	    int weeks = 500;
+	    int weeks = 1000;
 	    int repetitions = 10;
 	    
 		CandleCollection cc = createCandles(weeks, 0.00001f);
-	    AbstractIndicator indicator = new CommodityChannelIndex(periods);
+	    Indicator indicator = new AverageTrueRange(periods);
         
 	    long startTime = System.nanoTime();
 	    for(int i=0; i<repetitions; i++)

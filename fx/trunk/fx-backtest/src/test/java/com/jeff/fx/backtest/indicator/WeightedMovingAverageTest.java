@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.jeff.fx.indicator.FixedSizeNumberQueue2;
-import com.jeff.fx.indicator.indicator.WeightedMovingAverage;
+import com.jeff.fx.indicator.overlay.WeightedMovingAverage;
 
 public class WeightedMovingAverageTest 
 {

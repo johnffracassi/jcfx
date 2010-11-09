@@ -6,45 +6,41 @@ import com.jeff.fx.indicator.ChartType;
 import com.jeff.fx.indicator.ChartTypes;
 import com.jeff.fx.indicator.TAWrapper;
 import com.tictactec.ta.lib.Core;
-import com.tictactec.ta.lib.MAType;
 import com.tictactec.ta.lib.MInteger;
 
 @Component
 @ChartType(ChartTypes.Oscillator)
-public final class Stochastic extends TAWrapper
+public class RelativeStrengthIndicator extends TAWrapper
 {
-    private int fastK;
-    private int slowK;
-    private MAType maType;
+    private int periods;
     
-    public Stochastic()
+    public RelativeStrengthIndicator()
     {
-        this(5, 2);
+        this(14);
     }
     
-    public Stochastic(int fastK, int slowK)
+    public RelativeStrengthIndicator(int periods)
     {
-        this.fastK = fastK;
-        this.slowK = slowK;
+        this.periods = periods;
     }
-    
+
     public void calculate(Core core, float[] open, float[] high, float[] low, float[] close, MInteger startIdx, double values[][])
     {
-        core.stoch(0, close.length-1, high, low, close, fastK, slowK, maType, 5, maType, startIdx, new MInteger(), values[0], values[1]);
+        core.rsi(0, close.length-1, close, periods, startIdx, new MInteger(), values[0]);
     }
-    
+
     @Override
     public String getKey()
     {
-        return "stoch";
+        return "rsi";
     }
-    
+
     @Override
     public String getDisplayName()
     {
-        return getKey() + "(" + fastK + "," + slowK + ")";
+        return "rsi(" + periods + ")";
     }
-    
+
     @Override
     public void setParams(Object... params)
     {

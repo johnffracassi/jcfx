@@ -6,47 +6,44 @@ import com.jeff.fx.indicator.ChartType;
 import com.jeff.fx.indicator.ChartTypes;
 import com.jeff.fx.indicator.TAWrapper;
 import com.tictactec.ta.lib.Core;
-import com.tictactec.ta.lib.MAType;
 import com.tictactec.ta.lib.MInteger;
 
 @Component
 @ChartType(ChartTypes.Oscillator)
-public final class Stochastic extends TAWrapper
+public final class AverageDirectionalMovementIndex extends TAWrapper
 {
-    private int fastK;
-    private int slowK;
-    private MAType maType;
+    private int periods;
     
-    public Stochastic()
+    public AverageDirectionalMovementIndex()
     {
-        this(5, 2);
+        this.periods = 14;
     }
     
-    public Stochastic(int fastK, int slowK)
+    public AverageDirectionalMovementIndex(int periods)
     {
-        this.fastK = fastK;
-        this.slowK = slowK;
+        this.periods = periods;
     }
     
     public void calculate(Core core, float[] open, float[] high, float[] low, float[] close, MInteger startIdx, double values[][])
     {
-        core.stoch(0, close.length-1, high, low, close, fastK, slowK, maType, 5, maType, startIdx, new MInteger(), values[0], values[1]);
+        core.adx(0, close.length-1, high, low, close, periods, startIdx, new MInteger(), values[0]);
     }
     
     @Override
     public String getKey()
     {
-        return "stoch";
+        return "adx";
     }
     
     @Override
     public String getDisplayName()
     {
-        return getKey() + "(" + fastK + "," + slowK + ")";
+        return getKey() + "(" + periods + ")";
     }
     
     @Override
     public void setParams(Object... params)
     {
     }
+
 }

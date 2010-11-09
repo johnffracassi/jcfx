@@ -1,4 +1,4 @@
-package com.jeff.fx.indicator.indicator;
+package com.jeff.fx.indicator.overlay;
 
 import org.springframework.stereotype.Component;
 
@@ -10,43 +10,31 @@ import com.jeff.fx.indicator.FixedSizeNumberQueue2;
 
 @Component
 @ChartType(ChartTypes.PriceRelative)
-public class WeightedMovingAverage extends AbstractMovingAverage
+public class SimpleMovingAverage extends AbstractMovingAverage
 {
-    private final float[] weights;
-    
-    public WeightedMovingAverage()
+    public SimpleMovingAverage()
     {
         this(14, CandleValueModel.BuyOpen);
     }
     
-    public WeightedMovingAverage(int periods, CandleValueModel cvm)
+    public SimpleMovingAverage(int periods, CandleValueModel cvm)
     {
         super(periods, cvm);
-        weights = buildWeights(periods);
     }
 
     @Override
     public String getKey()
     {
-        return "wma";
-    }
-
-    public float[] buildWeights(int periods)
-    {
-    	float[] weights = new float[periods];
-        float step = (1.0f / periods);
-        for(int i=0; i<periods; i++)
-        {
-            weights[i] = 1.0f - (i * step);
-        }
-        return weights;
+        return "sma";
     }
     
-    @Override
     public void calculate(CandleCollection candles)
     {
         synchronized (this)
         {
+            
+            // TODO - use the same averaging method implemented in ATR
+            
             FixedSizeNumberQueue2 q = new FixedSizeNumberQueue2(getPeriods());
             CandleValueModel model = getModel();
             float[] values = new float[candles.getCandleCount()];
@@ -54,7 +42,7 @@ public class WeightedMovingAverage extends AbstractMovingAverage
             for (int i = 0, n = candles.getCandleCount(); i < n; i++)
             {
                 q.add(candles.getPrice(i, model));
-                values[i] = q.weightedAverage(weights);
+                values[i] = q.average();
             }
 
             setValues(values);

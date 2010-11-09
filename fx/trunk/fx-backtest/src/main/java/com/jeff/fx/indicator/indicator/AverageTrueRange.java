@@ -1,53 +1,32 @@
 package com.jeff.fx.indicator.indicator;
 
-import com.jeff.fx.common.CandleCollection;
-import com.jeff.fx.common.CandleValueModel;
+import org.springframework.stereotype.Component;
 
-public class AverageTrueRange extends AbstractIndicator
+import com.jeff.fx.indicator.ChartType;
+import com.jeff.fx.indicator.ChartTypes;
+import com.jeff.fx.indicator.TAWrapper;
+import com.tictactec.ta.lib.Core;
+import com.tictactec.ta.lib.MInteger;
+
+@Component
+@ChartType(ChartTypes.Oscillator)
+public class AverageTrueRange extends TAWrapper
 {
+    private int periods;
+    
     public AverageTrueRange()
     {
-        this(14);
+        this.periods = 14;
     }
-
+    
     public AverageTrueRange(int periods)
     {
-        super(periods);
+        this.periods = periods;
     }
 
-    public void calculate(final CandleCollection candles)
+    public void calculate(Core core, float[] open, float[] high, float[] low, float[] close, MInteger startIdx, double values[][])
     {
-        synchronized (this)
-        {
-            final int periods = getPeriods();
-            final float[] values = new float[candles.getCandleCount()];
-            values[0] = candles.getPrice(0, CandleValueModel.BuyHigh) - candles.getPrice(0, CandleValueModel.BuyLow);
-            
-            for (int i = 1, n = candles.getCandleCount(); i < n; i++)
-            {
-                final float high = candles.getPrice(i, CandleValueModel.BuyHigh);
-                final float low = candles.getPrice(i, CandleValueModel.BuyLow);
-                final float closePrevious = candles.getPrice(i-1, CandleValueModel.BuyClose);
-                final float trueRange = calculateTrueRange(high, low, closePrevious);
-                
-                values[i] = ((values[i-1] * (periods - 1)) + trueRange) / periods;
-            }
-
-            setValues(values);
-        }
-    }
-
-    private float calculateTrueRange(final float high, final float low, final float closePrev)
-    {
-        float hl = high - low;
-        float hcp = Math.abs(high - closePrev);
-        float lcp = Math.abs(low - closePrev);
-        return Math.max(hl, Math.max(hcp, lcp));
-    }
-
-    public void setParams(Object... params)
-    {
-        setPeriods(new Integer(String.valueOf(params[0])));
+        core.atr(0, close.length-1, high, low, close, periods, startIdx, new MInteger(), values[0]);
     }
 
     @Override
@@ -56,4 +35,14 @@ public class AverageTrueRange extends AbstractIndicator
         return "atr";
     }
 
+    @Override
+    public String getDisplayName()
+    {
+        return "atr(" + periods + ")";
+    }
+
+    @Override
+    public void setParams(Object... params)
+    {
+    }
 }

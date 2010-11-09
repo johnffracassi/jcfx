@@ -15,11 +15,11 @@ public class IndicatorDataset extends DefaultXYDataset {
 	}
 
 	public double getYValue(int series, int item) {
-		double value = indicator.getValue(item);
+		double value = indicator.getValue(0, item);
 		if(value == 0.0) {
 			return Double.NaN;
 		} else {
-			return indicator.getValue(item);
+			return indicator.getValue(0, item);
 		}
 	}
 	

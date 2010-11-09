@@ -6,11 +6,11 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.jeff.fx.rules.business.ComparisonNode;
-import com.jeff.fx.rules.business.Operand;
 import com.jeff.fx.rules.logic.AndNode;
+import com.jeff.fx.rules.logic.FalseNode;
 import com.jeff.fx.rules.logic.NandNode;
 import com.jeff.fx.rules.logic.OrNode;
+import com.jeff.fx.rules.logic.TrueNode;
 import com.jeff.fx.rules.logic.XorNode;
 
 public class RuleTest
@@ -28,13 +28,6 @@ public class RuleTest
         falseNode = new FalseNode<MockModel>();
     }
 
-    @Test
-    public void testComparableNode()
-    {
-        ComparisonNode node = new ComparisonNode(Operand.eq, 42);
-        assertTrue(node.evaluate(model));
-    }
-    
     @Test
     public void testTrueNode()
     {

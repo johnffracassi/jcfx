@@ -1,4 +1,4 @@
-package com.jeff.fx.indicator.indicator;
+package com.jeff.fx.indicator.overlay;
 
 import org.springframework.stereotype.Component;
 

@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleValueModel;
+import com.jeff.fx.indicator.AbstractIndicator;
 import com.jeff.fx.indicator.ChartType;
 import com.jeff.fx.indicator.ChartTypes;
-import com.jeff.fx.indicator.Indicator;
 import com.jeff.fx.indicator.IndicatorMarker;
 import com.jeff.fx.indicator.Label;
 import com.jeff.fx.indicator.Property;
@@ -17,7 +17,7 @@ import com.jeff.fx.indicator.ValidationRange;
 
 @Component
 @ChartType(ChartTypes.Annotated)
-public class ZigZagIndicator implements Indicator {
+public class ZigZagIndicator extends AbstractIndicator {
 	
 	private Map<Integer,IndicatorMarker> idxs;
 	private boolean calculated = false;
@@ -33,6 +33,7 @@ public class ZigZagIndicator implements Indicator {
 	}
 	
 	public ZigZagIndicator(int windowSize) {
+	    super(windowSize);
 		this.windowSize = windowSize;
 	}
 	
@@ -121,10 +122,6 @@ public class ZigZagIndicator implements Indicator {
 		return "ZigZag";
 	}
 
-	public float getValue(int idx) {
-		return idxs.containsKey(idx) ? (float)idxs.get(idx).getValue() : Float.NaN;
-	}
-
 	public boolean requiresCalculation() {
 		return !calculated;
 	}
@@ -140,4 +137,10 @@ public class ZigZagIndicator implements Indicator {
 	public void setWindowSize(int windowSize) {
 		this.windowSize = windowSize;
 	}
+
+    @Override
+    public void invalidate()
+    {
+        calculated = false;
+    }
 }

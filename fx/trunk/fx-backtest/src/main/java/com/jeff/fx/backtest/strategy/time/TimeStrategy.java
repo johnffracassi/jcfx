@@ -18,7 +18,7 @@ import com.jeff.fx.common.CandleValueModel;
 import com.jeff.fx.common.CandleWeek;
 import com.jeff.fx.common.OfferSide;
 import com.jeff.fx.common.TimeOfWeek;
-import com.jeff.fx.indicator.indicator.SimpleMovingAverage;
+import com.jeff.fx.indicator.overlay.SimpleMovingAverage;
 
 public class TimeStrategy extends AbstractStrategy {
 	

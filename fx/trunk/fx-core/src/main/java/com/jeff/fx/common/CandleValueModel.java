@@ -16,7 +16,7 @@ public enum CandleValueModel {
 	
 	Typical(new Evaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
-			return (sh + sl + sc) / 3.0f;
+			return (bh + bl + bc) / 3.0f;
 		};
 	}),
 	

@@ -7,8 +7,16 @@ import org.joda.time.Minutes;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-public class TimeOfWeek {
-	
+public class TimeOfWeek implements Comparable<TimeOfWeek> 
+{
+    public static final int SUNDAY = 0;
+    public static final int MONDAY = 1;
+    public static final int TUESDAY = 2;
+    public static final int WEDNESDAY = 3;
+    public static final int THURSDAY = 4;
+    public static final int FRIDAY = 5;
+    public static final int SATURDAY = 6;
+
 	private static final String[] DAY = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 	private static final DateTimeFormatter dtf = DateTimeFormat.forPattern("HH:mm");
 	
@@ -112,4 +120,22 @@ public class TimeOfWeek {
 		
 		return time.equals(other.time);
 	}
+
+    @Override
+    public int compareTo(TimeOfWeek other)
+    {
+        if(dayOfWeek < other.dayOfWeek)
+            return -1;
+        
+        if(dayOfWeek > other.dayOfWeek)
+            return 1;
+        
+        if(time.isBefore(other.time))
+            return -1;
+        
+        if(time.isAfter(other.time))
+            return 1;
+        
+        return 0;
+    }
 }

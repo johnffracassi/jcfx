@@ -52,8 +52,8 @@ public class IndicatorCache {
 			Indicator indicator = descriptorLookup.get(instanceKey);
 			log.debug("found indicator in cache: " + indicator.getDisplayName());
 			indicator = calculate(indicator, candles);
-			log.debug(indicator.getDisplayName() + "[" + idx + "] = " + indicator.getValue(idx));
-			return indicator.getValue(idx);
+			log.debug(indicator.getDisplayName() + "[" + idx + "] = " + indicator.getValue(0, idx));
+			return indicator.getValue(0, idx);
 			
 		} else {
 			
@@ -62,8 +62,8 @@ public class IndicatorCache {
 			log.debug("setup indicator with params. " + indicator.getDisplayName());
 			descriptorLookup.put(instanceKey, indicator);
 			indicator = calculate(indicator, candles);
-			log.debug(indicator.getDisplayName() + "[" + idx + "] = " + indicator.getValue(idx));
-			return indicator.getValue(idx);
+			log.debug(indicator.getDisplayName() + "[" + idx + "] = " + indicator.getValue(0, idx));
+			return indicator.getValue(0, idx);
 		}
 	}
 	
