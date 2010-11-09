@@ -1,6 +1,7 @@
-package com.jeff.fx.indicator.indicator;
+package com.jeff.fx.indicator.overlay;
 
 import com.jeff.fx.common.CandleValueModel;
+import com.jeff.fx.indicator.AbstractIndicator;
 import com.jeff.fx.indicator.Label;
 import com.jeff.fx.indicator.Property;
 

@@ -11,38 +11,39 @@ import com.tictactec.ta.lib.MInteger;
 
 @Component
 @ChartType(ChartTypes.Oscillator)
-public final class Stochastic extends TAWrapper
+public final class BollingerBands extends TAWrapper
 {
-    private int fastK;
-    private int slowK;
-    private MAType maType;
+    private int periods;
+    private int devUp;
+    private int devDown;
     
-    public Stochastic()
+    public BollingerBands()
     {
-        this(5, 2);
+        this(5, 2, 2);
     }
     
-    public Stochastic(int fastK, int slowK)
+    public BollingerBands(int periods, int devUp, int devDown)
     {
-        this.fastK = fastK;
-        this.slowK = slowK;
+        this.periods = periods;
+        this.devUp = devUp;
+        this.devDown = devDown;
     }
     
     public void calculate(Core core, float[] open, float[] high, float[] low, float[] close, MInteger startIdx, double values[][])
     {
-        core.stoch(0, close.length-1, high, low, close, fastK, slowK, maType, 5, maType, startIdx, new MInteger(), values[0], values[1]);
+        core.bbands(0, close.length-1, close, periods, devUp, devDown, MAType.Sma, startIdx, new MInteger(), values[0], values[1], values[2]);
     }
     
     @Override
     public String getKey()
     {
-        return "stoch";
+        return "bb";
     }
     
     @Override
     public String getDisplayName()
     {
-        return getKey() + "(" + fastK + "," + slowK + ")";
+        return getKey() + "(" + periods + ")";
     }
     
     @Override

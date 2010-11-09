@@ -1,4 +1,4 @@
-package com.jeff.fx.rules.business;
+package com.jeff.fx.rules;
 
 
 public enum Operand

@@ -1,10 +1,6 @@
-package com.jeff.fx.indicator.indicator;
+package com.jeff.fx.indicator;
 
 import com.jeff.fx.common.CandleCollection;
-import com.jeff.fx.indicator.Indicator;
-import com.jeff.fx.indicator.Label;
-import com.jeff.fx.indicator.Property;
-import com.jeff.fx.indicator.ValidationRange;
 
 public abstract class AbstractIndicator implements Indicator
 {
@@ -27,20 +23,25 @@ public abstract class AbstractIndicator implements Indicator
     
     public final float getValue(int idx)
     {
+        return getValue(0, idx);
+    }
+    
+    public final float getValue(int result, int idx)
+    {
         if (calculated)
         {
-            return _getValue(idx);
+            return _getValue(result, idx);
         }
         else
         {
             synchronized (this)
             {
-                return _getValue(idx);
+                return _getValue(result, idx);
             }
         }
     }
 
-    private final float _getValue(int idx)
+    private final float _getValue(int result, int idx)
     {
         if (idx < 0 || idx > values.length)
         {

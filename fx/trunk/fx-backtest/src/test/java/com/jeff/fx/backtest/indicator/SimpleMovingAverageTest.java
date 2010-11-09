@@ -10,7 +10,7 @@ import com.jeff.fx.common.CandleWeek;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.indicator.indicator.SimpleMovingAverage;
+import com.jeff.fx.indicator.overlay.SimpleMovingAverage;
 
 import static org.junit.Assert.*;
 
