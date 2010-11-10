@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -23,7 +22,8 @@ import com.jeff.fx.indicator.Indicator;
 import com.jeff.fx.indicator.overlay.SimpleMovingAverage;
 import com.jeff.fx.lookforward.CandleFilter;
 import com.jeff.fx.lookforward.CandleFilterModel;
-import com.jeff.fx.rules.business.ComparisonNode;
+import com.jeff.fx.rules.business.AbstractFXNode;
+import com.jeff.fx.rules.business.TimeOfWeekNodeFactory;
 import com.jeff.fx.rules.logic.AndNode;
 
 @Component("candleFilterTest")
@@ -47,34 +47,27 @@ public class CandleFilterTest {
     public void run() throws IOException {
 
         final CandleCollection candles = loadTestData();
-        final SimpleMovingAverage sma = new SimpleMovingAverage();
+        
+        final SimpleMovingAverage sma = new SimpleMovingAverage(28, CandleValueModel.Typical);
         sma.calculate(candles);
         
-        Node<CandleFilterModel> smaAboveTp = new Node<CandleFilterModel>() {
+        AbstractFXNode smaAboveTp = new AbstractFXNode() {
             @Override
             public boolean evaluate(CandleFilterModel model)
             {
+                boolean result = false;
                 int idx = model.getIndex();
+                
                 float smaVal = sma.getValue(idx);
                 float tp = model.getCandles().getPrice(idx, CandleValueModel.Typical);
-                return smaVal > tp;
+                result = smaVal > (tp * 1.0010);
+                
+                return result;
             }
         };
         
-        Node<CandleFilterModel> timeOfWeekNodeFrom = new ComparisonNode<CandleFilterModel>(Operand.gt, new TimeOfWeek(TimeOfWeek.MONDAY, new LocalTime(02, 00, 00))) {
-            public boolean evaluate(CandleFilterModel model) {
-                return operand.evaluate(new TimeOfWeek(model.getCandles().getCandle(model.getIndex()).getDateTime()), value);
-            }
-        };
+        Node<CandleFilterModel> timeRangeNode = TimeOfWeekNodeFactory.timeOfWeekIsBetween(new TimeOfWeek(TimeOfWeek.MONDAY, 02, 00), new TimeOfWeek(TimeOfWeek.MONDAY, 06, 00));
 
-        Node<CandleFilterModel> timeOfWeekNodeTo = new ComparisonNode<CandleFilterModel>(Operand.lt, new TimeOfWeek(TimeOfWeek.MONDAY, new LocalTime(06, 00, 00))) {
-            public boolean evaluate(CandleFilterModel model) {
-                return operand.evaluate(new TimeOfWeek(model.getCandles().getCandle(model.getIndex()).getDateTime()), value);
-            }
-        };
-
-        Node<CandleFilterModel> timeRangeNode = new AndNode<CandleFilterModel>(timeOfWeekNodeFrom, timeOfWeekNodeTo);
-        
         Node<CandleFilterModel> rootNode = new AndNode<CandleFilterModel>(timeRangeNode, smaAboveTp);
         
         CandleFilter filter = new CandleFilter();
