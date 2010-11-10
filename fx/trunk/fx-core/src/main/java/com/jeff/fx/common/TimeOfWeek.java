@@ -40,7 +40,7 @@ public class TimeOfWeek implements Comparable<TimeOfWeek>
 	}
 
 	public TimeOfWeek(int dayOfWeek, int hour, int minute) {
-		this(dayOfWeek, new LocalTime(hour, minute));
+		this(dayOfWeek, new LocalTime(hour, minute, 00));
 	}
 	
 	public TimeOfWeek(LocalDateTime dateTime) {

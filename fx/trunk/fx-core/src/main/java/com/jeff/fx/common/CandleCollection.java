@@ -18,7 +18,7 @@ public class CandleCollection {
 	private LocalDateTime end;
 	private Period period;
 	private int periodsInWeek;
-	private float highPrice = Float.MIN_VALUE;
+	private float highPrice = -Float.MAX_VALUE;
 	private float lowPrice = Float.MAX_VALUE;
 	
 	public CandleCollection() {
