@@ -1,9 +1,9 @@
 package com.jeff.fx.rules.business;
 
 import com.jeff.fx.lookforward.CandleFilterModel;
-import com.jeff.fx.rules.Node;
+import com.jeff.fx.rules.AbstractLeafNode;
 
-public abstract class AbstractFXNode implements Node<CandleFilterModel>
+public abstract class AbstractFXNode extends AbstractLeafNode<CandleFilterModel>
 {
     private String label;
     private String description;

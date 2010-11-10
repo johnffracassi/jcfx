@@ -14,4 +14,25 @@ public abstract class LogicNode<M> implements Node<M>
     }
     
     public abstract boolean evaluate(M model); 
+    
+    @Override
+    public int getChildCount()
+    {
+        return 2;
+    }
+    
+    @Override
+    public Node<M> getChild(int idx)
+    {
+        if(idx == 0)
+        {
+            return left;
+        }
+        else if(idx == 1)
+        {
+            return right;
+        }
+        
+        throw new IndexOutOfBoundsException("Logic node only has 2 children");
+    }
 }
