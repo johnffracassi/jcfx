@@ -15,6 +15,10 @@ public class TimeOfWeekNodeFactory
             public boolean evaluate(CandleFilterModel model) {
                 return operand.evaluate(new TimeOfWeek(model.getCandles().getCandle(model.getIndex()).getDateTime()), timeOfWeek);
             }
+            
+            public String getLabel() {
+                return "Time " + operand.getLabel() + " " + timeOfWeek;
+            }
         };
         
         return node;

@@ -21,4 +21,10 @@ public class NandNode<M> extends LogicNode<M>
         
         return !right.evaluate(model);
     }
+
+    @Override
+    public String getLabel()
+    {
+        return "Nand";
+    }
 }

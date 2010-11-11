@@ -35,4 +35,11 @@ public abstract class LogicNode<M> implements Node<M>
         
         throw new IndexOutOfBoundsException("Logic node only has 2 children");
     }
+    
+    @Override
+    public String getDescription()
+    {
+        return getLabel();
+    }
+
 }
