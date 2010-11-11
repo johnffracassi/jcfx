@@ -23,4 +23,10 @@ public class AndNode<M> extends LogicNode<M>
         
         return rightValue;
     }
+
+    @Override
+    public String getLabel()
+    {
+        return "And";
+    }
 }

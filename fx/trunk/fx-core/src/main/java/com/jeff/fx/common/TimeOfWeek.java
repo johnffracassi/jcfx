@@ -17,8 +17,11 @@ public class TimeOfWeek implements Comparable<TimeOfWeek>
     public static final int FRIDAY = 5;
     public static final int SATURDAY = 6;
 
-	private static final String[] DAY = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-	private static final DateTimeFormatter dtf = DateTimeFormat.forPattern("HH:mm");
+    private static final String[] SHORT_DAY = {"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"};
+    private static final String[] DAY = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+    
+    private static final DateTimeFormatter dtf = DateTimeFormat.forPattern("HH:mm");
+    private static final DateTimeFormatter shortFormat = DateTimeFormat.forPattern("HHmm");
 	
 	private int dayOfWeek;
 	private LocalTime time;
@@ -77,7 +80,7 @@ public class TimeOfWeek implements Comparable<TimeOfWeek>
 	}
 	
 	public String toString() {
-		return DAY[dayOfWeek] + " " + dtf.print(time);
+		return SHORT_DAY[dayOfWeek] + shortFormat.print(time);
 	}
 	
 	public int getMinuteOfWeek() {
@@ -91,7 +94,7 @@ public class TimeOfWeek implements Comparable<TimeOfWeek>
 	public LocalTime getTime() {
 		return time;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

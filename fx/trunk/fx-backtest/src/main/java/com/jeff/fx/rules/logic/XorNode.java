@@ -17,4 +17,10 @@ public class XorNode<M> extends LogicNode<M>
         
         return (leftValue || rightValue) && !(leftValue && rightValue);
     }
+
+    @Override
+    public String getLabel()
+    {
+        return "Xor";
+    }
 }
