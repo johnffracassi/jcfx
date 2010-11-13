@@ -11,8 +11,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import com.jeff.fx.lookforward.CandleFilterModel;
 import com.jeff.fx.rules.logic.AndNode;
+import com.jeff.fx.rules.logic.FalseNode;
 import com.jeff.fx.rules.logic.NandNode;
 import com.jeff.fx.rules.logic.OrNode;
 import com.jeff.fx.rules.logic.TrueNode;
@@ -102,8 +102,8 @@ public class GraphVisualiser extends JFrame
                     mnuLogicType.add(buildLogicMenuItem("Nand", NandNode.class));
                     
                     JMenu mnuFixedType = new JMenu("Fixed Value");
-                    mnuFixedType.add(new JMenuItem("True"));
-                    mnuFixedType.add(new JMenuItem("False"));
+                    mnuFixedType.add(buildLogicMenuItem("True", TrueNode.class));
+                    mnuFixedType.add(buildLogicMenuItem("False", FalseNode.class));
                     
                     JMenu mnuType = new JMenu("Type");
                     mnuType.add(mnuLogicType);

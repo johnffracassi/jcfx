@@ -5,6 +5,11 @@ import com.jeff.fx.rules.Node;
 
 public class TrueNode extends AbstractLeafNode
 {
+    public TrueNode()
+    {
+        super();
+    }
+    
     public TrueNode(Node parent)
     {
         super(parent);

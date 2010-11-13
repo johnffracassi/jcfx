@@ -4,6 +4,11 @@ import com.jeff.fx.rules.Node;
 
 public class AndNode<M> extends LogicNode<M>
 {
+    public AndNode()
+    {
+        super();
+    }
+    
     public AndNode(Node<M> parent, Node<M> left, Node<M> right)
     {
         super(parent, left, right);
