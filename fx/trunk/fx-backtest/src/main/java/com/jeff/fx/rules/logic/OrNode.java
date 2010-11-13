@@ -4,9 +4,14 @@ import com.jeff.fx.rules.Node;
 
 public class OrNode<M> extends LogicNode<M>
 {
-    public OrNode(Node<M> left, Node<M> right)
+    public OrNode()
     {
-        super(left, right);
+        super();
+    }
+    
+    public OrNode(Node<M> parent, Node<M> left, Node<M> right)
+    {
+        super(parent, left, right);
     }
 
     @Override

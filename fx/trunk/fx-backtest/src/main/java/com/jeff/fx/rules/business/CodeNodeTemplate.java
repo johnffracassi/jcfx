@@ -1,11 +1,17 @@
 package com.jeff.fx.rules.business;
 
 import com.jeff.fx.lookforward.CandleFilterModel;
+import com.jeff.fx.rules.Node;
 
 public class CodeNodeTemplate extends AbstractFXNode
 {
     // fields //
     
+    public CodeNodeTemplate(Node<CandleFilterModel> parent)
+    {
+        super(parent);
+    }
+
     public void setup()
     {
         // init code //

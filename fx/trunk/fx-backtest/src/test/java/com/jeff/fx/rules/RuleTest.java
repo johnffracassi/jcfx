@@ -17,15 +17,15 @@ public class RuleTest
 {
     private MockModel model;
 
-    private Node<MockModel> trueNode;
-    private Node<MockModel> falseNode;
+    private Node trueNode;
+    private Node falseNode;
 
     @Before
     public void setupModel()
     {
         model = new MockModel();
-        trueNode = new TrueNode<MockModel>();
-        falseNode = new FalseNode<MockModel>();
+        trueNode = new TrueNode();
+        falseNode = new FalseNode();
     }
 
     @Test
