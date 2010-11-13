@@ -4,9 +4,9 @@ import com.jeff.fx.rules.Node;
 
 public class AndNode<M> extends LogicNode<M>
 {
-    public AndNode(Node<M> left, Node<M> right)
+    public AndNode(Node<M> parent, Node<M> left, Node<M> right)
     {
-        super(left, right);
+        super(parent, left, right);
     }
 
     @Override
