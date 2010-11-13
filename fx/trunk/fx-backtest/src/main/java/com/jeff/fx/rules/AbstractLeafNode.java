@@ -6,6 +6,10 @@ public abstract class AbstractLeafNode<M> implements Node<M>
 {
     private Node<M> parent;
     
+    public AbstractLeafNode()
+    {
+    }
+    
     public AbstractLeafNode(Node<M> parent)
     {
         this.parent = parent;

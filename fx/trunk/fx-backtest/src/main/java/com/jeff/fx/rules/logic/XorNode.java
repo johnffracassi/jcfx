@@ -4,6 +4,11 @@ import com.jeff.fx.rules.Node;
 
 public class XorNode<M> extends LogicNode<M>
 {
+    public XorNode()
+    {
+        super();
+    }
+
     public XorNode(Node<M> parent, Node<M> left, Node<M> right)
     {
         super(parent, left, right);

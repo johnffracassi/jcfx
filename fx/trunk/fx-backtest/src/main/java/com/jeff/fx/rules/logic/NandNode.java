@@ -4,6 +4,11 @@ import com.jeff.fx.rules.Node;
 
 public class NandNode<M> extends LogicNode<M>
 {
+    public NandNode()
+    {
+        super();
+    }
+    
     public NandNode(Node<M> parent, Node<M> left, Node<M> right)
     {
         super(parent, left, right);
