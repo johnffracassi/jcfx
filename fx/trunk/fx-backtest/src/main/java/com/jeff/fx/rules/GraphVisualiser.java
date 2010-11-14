@@ -11,6 +11,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import com.jeff.fx.gui.beanform.BeanForm;
+import com.jeff.fx.rules.business.TimeOfWeekNode;
+import com.jeff.fx.rules.business.TimeRangeNode;
 import com.jeff.fx.rules.logic.AndNode;
 import com.jeff.fx.rules.logic.FalseNode;
 import com.jeff.fx.rules.logic.NandNode;
@@ -36,6 +39,10 @@ public class GraphVisualiser extends JFrame
         GraphVisualiser frame = new GraphVisualiser();
         frame.setVisible(true);
         frame.init();
+        
+        BeanForm form = new BeanForm();
+        form.buildForm(new TimeOfWeekNode());
+        form.setVisible(true);
     }
     
     public GraphVisualiser()
@@ -95,20 +102,10 @@ public class GraphVisualiser extends JFrame
                 {
                     JPopupMenu popUp = new JPopupMenu();
                     
-                    JMenu mnuLogicType = new JMenu("Logic");
-                    mnuLogicType.add(buildLogicMenuItem("And", AndNode.class));
-                    mnuLogicType.add(buildLogicMenuItem("Or", OrNode.class));
-                    mnuLogicType.add(buildLogicMenuItem("Xor", XorNode.class));
-                    mnuLogicType.add(buildLogicMenuItem("Nand", NandNode.class));
-                    
-                    JMenu mnuFixedType = new JMenu("Fixed Value");
-                    mnuFixedType.add(buildLogicMenuItem("True", TrueNode.class));
-                    mnuFixedType.add(buildLogicMenuItem("False", FalseNode.class));
-                    
                     JMenu mnuType = new JMenu("Type");
-                    mnuType.add(mnuLogicType);
-                    mnuType.add(mnuFixedType);
-                    mnuType.add(new JMenuItem("Time Range"));
+                    mnuType.add(buildLogicNodeMenu());
+                    mnuType.add(buildFixedNodeMenu());
+                    mnuType.add(buildTimeMenu());
                     mnuType.add(new JMenuItem("Indicator"));
 
                     popUp.add(mnuType);
@@ -118,6 +115,49 @@ public class GraphVisualiser extends JFrame
                 }
             }
         });
+    }
+    
+    private JMenu buildLogicNodeMenu()
+    {
+        JMenu menu = new JMenu("Logic");
+        menu.add(buildMenuItem("And", AndNode.class));
+        menu.add(buildMenuItem("Or", OrNode.class));
+        menu.add(buildMenuItem("Xor", XorNode.class));
+        menu.add(buildMenuItem("Nand", NandNode.class));
+        return menu;
+    }
+    
+    private JMenu buildFixedNodeMenu()
+    {
+        JMenu menu = new JMenu("Fixed Value");
+        
+        menu.add(buildMenuItem("True", TrueNode.class));
+        menu.add(buildMenuItem("False", FalseNode.class));
+
+        return menu;
+    }
+    
+    private JMenuItem buildTimeMenu()
+    {
+        JMenuItem menu = new JMenu("Time");
+        
+        JMenuItem rangeItem = new JMenuItem("Time Range");
+        rangeItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                replaceSelectedNode(new TimeRangeNode());
+            }
+        });
+        menu.add(rangeItem);
+        
+        JMenuItem timeItem = new JMenuItem("Time");
+        timeItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                replaceSelectedNode(new TimeOfWeekNode());
+            }
+        });
+        menu.add(timeItem);
+        
+        return menu;
     }
     
     private void updateRootNode(Node<?> node)
@@ -160,23 +200,27 @@ public class GraphVisualiser extends JFrame
         validate();
     }
     
-    private void replaceSelectedNode(Class<? extends Node> nodeClass)
+    private void replaceSelectedNode(Node newNode)
     {
         Node parent = selected.getParent();
         
         if(parent != null)
         {
             int childIdx = parent.getChildIndex(selected);
-            Node newNode = makeNode(nodeClass);
             newNode.setParent(parent);
             parent.setChild(childIdx, newNode);
         }
         else
         {
-            root = makeNode(nodeClass);
+            root = newNode;
         }
         
         updateRootNode(root);
+    }
+    
+    private void replaceSelectedNode(Class<? extends Node> nodeClass)
+    {
+        replaceSelectedNode(makeNode(nodeClass));
     }
     
     private <T extends Node> T makeNode(Class<T> nodeClass)
@@ -198,7 +242,7 @@ public class GraphVisualiser extends JFrame
         this.selected = node;
     }
     
-    private JMenuItem buildLogicMenuItem(final String label, final Class<? extends Node> type)
+    private JMenuItem buildMenuItem(final String label, final Class<? extends Node> type)
     {
         JMenuItem item = new JMenuItem(label);
         item.addActionListener(new ActionListener() {

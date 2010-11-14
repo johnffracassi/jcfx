@@ -20,7 +20,6 @@ public class IntPropertyEditor extends BeanPropertyEditor {
 			public void keyReleased(KeyEvent e) {
 				if(field.isValidValue()) {
 					setValue(field.getValue());
-					valueChanged();
 				}
 			}
 		});

@@ -1,19 +1,17 @@
 package com.jeff.fx.gui.beanform;
 
-import java.awt.Dimension;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.jeff.fx.common.CandleValueModel;
+import net.miginfocom.swing.MigLayout;
+
+import com.jeff.fx.backtest.GenericDialog;
 import com.jeff.fx.indicator.Label;
 import com.jeff.fx.indicator.Property;
 import com.jeff.fx.indicator.ValueListener;
-import com.jeff.fx.indicator.overlay.SimpleMovingAverage;
-
-import net.miginfocom.swing.MigLayout;
+import com.jeff.fx.rules.business.TimeRangeNode;
 
 public class BeanForm extends JPanel
 {
@@ -24,14 +22,12 @@ public class BeanForm extends JPanel
 
     public static void main(String[] args)
     {
+        TimeRangeNode node = new TimeRangeNode();
         BeanForm bt = new BeanForm();
-        bt.buildForm(new SimpleMovingAverage(14, CandleValueModel.BuyOpen));
+        bt.buildForm(node);
 
-        JFrame jf = new JFrame();
-        jf.setContentPane(bt);
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jf.setSize(new Dimension(400, 250));
-        jf.setVisible(true);
+        GenericDialog gd = new GenericDialog(bt, "Edit Node");
+        gd.setVisible(true);
     }
 
     public Object getBean()

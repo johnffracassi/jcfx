@@ -48,6 +48,7 @@ public class BeanPropertyEditor {
 	
 	public void setValue(Object value) {
 		this.value = value;
+		valueChanged();
 	}
 	
 	public void setValueComponent(Component comp) {
