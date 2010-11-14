@@ -17,8 +17,9 @@ public class TimeOfWeek implements Comparable<TimeOfWeek>
     public static final int FRIDAY = 5;
     public static final int SATURDAY = 6;
 
-    private static final String[] SHORT_DAY = {"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"};
-    private static final String[] DAY = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+    public static final String[] SHORT_DAY = {"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"};
+    public static final String[] DAY = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+    public static final String[] FULL_DAY = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     
     private static final DateTimeFormatter dtf = DateTimeFormat.forPattern("HH:mm");
     private static final DateTimeFormatter shortFormat = DateTimeFormat.forPattern("HHmm");
@@ -93,6 +94,19 @@ public class TimeOfWeek implements Comparable<TimeOfWeek>
 	
 	public LocalTime getTime() {
 		return time;
+	}
+	
+	public static int toDayOfWeek(String str)
+	{
+	    for(int i=0; i<FULL_DAY.length; i++)
+	    {
+	        if(str.equalsIgnoreCase(FULL_DAY[i]))
+	        {
+	            return i;
+	        }
+	    }
+	    
+	    throw new RuntimeException("'" + str + "' not mapped to a day of week");
 	}
 	
 	@Override

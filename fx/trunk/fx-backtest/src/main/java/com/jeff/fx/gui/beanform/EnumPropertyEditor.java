@@ -23,7 +23,6 @@ public class EnumPropertyEditor extends BeanPropertyEditor {
 		ecb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				setValue(ecb.getSelectedItem());
-				valueChanged();
 			}
 		});
 		return ecb;
