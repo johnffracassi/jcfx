@@ -1,8 +1,8 @@
 package com.jeff.fx.rules.business;
 
 import com.jeff.fx.common.TimeOfWeek;
-import com.jeff.fx.indicator.Label;
-import com.jeff.fx.indicator.Property;
+import com.jeff.fx.gui.beanform.Label;
+import com.jeff.fx.gui.beanform.Property;
 import com.jeff.fx.lookforward.CandleFilterModel;
 import com.jeff.fx.rules.Node;
 import com.jeff.fx.rules.Operand;

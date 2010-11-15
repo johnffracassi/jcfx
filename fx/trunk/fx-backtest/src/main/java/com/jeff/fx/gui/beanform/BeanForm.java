@@ -8,8 +8,6 @@ import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
 import com.jeff.fx.backtest.GenericDialog;
-import com.jeff.fx.indicator.Label;
-import com.jeff.fx.indicator.Property;
 import com.jeff.fx.indicator.ValueListener;
 import com.jeff.fx.rules.business.TimeRangeNode;
 

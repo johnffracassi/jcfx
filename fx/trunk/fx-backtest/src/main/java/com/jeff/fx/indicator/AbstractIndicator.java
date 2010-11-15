@@ -1,6 +1,8 @@
 package com.jeff.fx.indicator;
 
 import com.jeff.fx.common.CandleCollection;
+import com.jeff.fx.gui.beanform.Label;
+import com.jeff.fx.gui.beanform.Property;
 
 public abstract class AbstractIndicator implements Indicator
 {

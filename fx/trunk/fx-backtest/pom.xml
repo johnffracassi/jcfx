@@ -70,9 +70,9 @@
 		</dependency>	
 		 
 		<dependency>
-			<groupId>commons-el</groupId>
-			<artifactId>commons-el</artifactId>
-		</dependency>	
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-jexl</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>javax</groupId>
