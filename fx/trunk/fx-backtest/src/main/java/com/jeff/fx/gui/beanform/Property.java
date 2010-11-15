@@ -1,9 +1,9 @@
-package com.jeff.fx.indicator;
+package com.jeff.fx.gui.beanform;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Label {
-	String value();
+public @interface Property {
+	String key();
 }

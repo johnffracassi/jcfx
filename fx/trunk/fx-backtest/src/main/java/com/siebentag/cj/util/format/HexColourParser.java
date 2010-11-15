@@ -2,7 +2,7 @@ package com.siebentag.cj.util.format;
 
 import java.awt.Color;
 
-public class Parser 
+public class HexColourParser 
 {
 	public Color hexColor(String hexString)
 	{

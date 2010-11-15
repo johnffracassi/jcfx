@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleValueModel;
+import com.jeff.fx.gui.beanform.Label;
+import com.jeff.fx.gui.beanform.Property;
 import com.jeff.fx.indicator.AbstractIndicator;
 import com.jeff.fx.indicator.ChartType;
 import com.jeff.fx.indicator.ChartTypes;
 import com.jeff.fx.indicator.IndicatorMarker;
-import com.jeff.fx.indicator.Label;
-import com.jeff.fx.indicator.Property;
 import com.jeff.fx.indicator.ValidationRange;
 
 @Component

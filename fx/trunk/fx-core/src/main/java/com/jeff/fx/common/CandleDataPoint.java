@@ -253,19 +253,19 @@ public class CandleDataPoint extends AbstractFXDataPoint implements Serializable
 	}
 
 	public double getHigh() {
-		return getBuyHigh() + getSellHigh() / 2.0;
+		return (getBuyHigh() + getSellHigh()) / 2.0;
 	}
 
 	public double getLow() {
-		return getBuyLow() + getSellLow() / 2.0;
+		return (getBuyLow() + getSellLow()) / 2.0;
 	}
 
 	public double getOpen() {
-		return getBuyOpen() + getSellOpen() / 2.0;
+		return (getBuyOpen() + getSellOpen()) / 2.0;
 	}
 
 	public double getClose() {
-		return getBuyClose() + getSellClose() / 2.0;
+		return (getBuyClose() + getSellClose()) / 2.0;
 	}
 
 	public int getRange() {

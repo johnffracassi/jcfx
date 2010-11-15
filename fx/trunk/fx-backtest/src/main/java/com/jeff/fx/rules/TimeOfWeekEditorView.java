@@ -20,7 +20,7 @@ public class TimeOfWeekEditorView extends JPanel
      */
     public TimeOfWeekEditorView()
     {
-        setLayout(new MigLayout("", "[][][]", "[]"));
+        setLayout(new MigLayout("", "[120px][40px][40px]", "[]"));
 
         spinDayOfWeek = new JSpinner();
         spinDayOfWeek.setModel(new SpinnerListModel(TimeOfWeek.FULL_DAY));

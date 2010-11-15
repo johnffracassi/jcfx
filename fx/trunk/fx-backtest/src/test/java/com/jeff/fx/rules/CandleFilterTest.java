@@ -1,17 +1,17 @@
 package com.jeff.fx.rules;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
+import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
-import com.jeff.fx.common.CandleValueModel;
 import com.jeff.fx.common.FXDataRequest;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
@@ -19,12 +19,9 @@ import com.jeff.fx.common.Period;
 import com.jeff.fx.common.TimeOfWeek;
 import com.jeff.fx.datastore.CandleDataStore;
 import com.jeff.fx.indicator.Indicator;
-import com.jeff.fx.indicator.overlay.SimpleMovingAverage;
-import com.jeff.fx.lookforward.CandleFilter;
 import com.jeff.fx.lookforward.CandleFilterModel;
-import com.jeff.fx.rules.business.AbstractFXNode;
-import com.jeff.fx.rules.business.TimeOfWeekNodeFactory;
-import com.jeff.fx.rules.logic.AndNode;
+import com.jeff.fx.lookforward.CandleFilterModelEvaluator;
+import com.jeff.fx.rules.business.TimeRangeNode;
 
 @Component("candleFilterTest")
 public class CandleFilterTest {
@@ -47,33 +44,19 @@ public class CandleFilterTest {
     public void run() throws IOException {
 
         final CandleCollection candles = loadTestData();
+        CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), 200);
         
-        final SimpleMovingAverage sma = new SimpleMovingAverage(28, CandleValueModel.Typical);
-        sma.calculate(candles);
+        TimeRangeNode trn = new TimeRangeNode();
+        trn.setTo(new TimeOfWeek(TimeOfWeek.MONDAY, 0, 0));
+        trn.update();
         
-        AbstractFXNode smaAboveTp = new AbstractFXNode() {
-            @Override
-            public boolean evaluate(CandleFilterModel model)
-            {
-                boolean result = false;
-                int idx = model.getIndex();
-                
-                float smaVal = sma.getValue(idx);
-                float tp = model.getCandles().getPrice(idx, CandleValueModel.Typical);
-                result = smaVal > (tp * 1.0010);
-                
-                return result;
-            }
-        };
+        System.out.println(CandleFilterModelEvaluator.evaluate(model, "candle.dateTime", LocalDateTime.class));
+        System.out.println(CandleFilterModelEvaluator.evaluate(model, "candle.open", Float.class));
         
-        Node<CandleFilterModel> timeRangeNode = TimeOfWeekNodeFactory.timeOfWeekIsBetween(new TimeOfWeek(TimeOfWeek.MONDAY, 02, 00), new TimeOfWeek(TimeOfWeek.MONDAY, 06, 00));
-
-        Node<CandleFilterModel> rootNode = new AndNode<CandleFilterModel>(timeRangeNode, smaAboveTp);
-        
-        CandleFilter filter = new CandleFilter();
-        List<CandleDataPoint> filtered = filter.apply(rootNode, candles);
-        
-        System.out.println("found " + filtered.size() + " candles");
+//        CandleFilter filter = new CandleFilter();
+//        List<CandleDataPoint> filtered = filter.apply(trn, candles);
+//        
+//        System.out.println("found " + filtered.size() + " candles");
     }
     
 	public void outputIndicatorData(CandleCollection candles, Indicator indicator)

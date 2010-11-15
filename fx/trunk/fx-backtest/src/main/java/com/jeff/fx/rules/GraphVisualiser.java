@@ -183,10 +183,7 @@ public class GraphVisualiser extends JFrame
     
     private void updateRootNode(Node<?> node)
     {
-        System.out.println("updating: root node is " + node.getClass().getSimpleName());
-        
         mxCell parent = (mxCell)graph.getDefaultParent();
-        System.out.println("parent value: " + parent.getValue());
         
         graph.getModel().beginUpdate();
         graph.setCellsLocked(false);
