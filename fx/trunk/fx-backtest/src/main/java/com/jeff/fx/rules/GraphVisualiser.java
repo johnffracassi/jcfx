@@ -11,6 +11,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import com.jeff.fx.backtest.GenericDialog;
 import com.jeff.fx.gui.beanform.BeanForm;
 import com.jeff.fx.rules.business.TimeOfWeekNode;
 import com.jeff.fx.rules.business.TimeRangeNode;
@@ -109,12 +110,32 @@ public class GraphVisualiser extends JFrame
                     mnuType.add(new JMenuItem("Indicator"));
 
                     popUp.add(mnuType);
-                    popUp.add(new JMenuItem("Delete"));
-                    popUp.add(new JMenuItem("Properties..."));
+                    popUp.add(buildEditMenuItem());
                     popUp.show(GraphVisualiser.this, e.getX(), e.getY() + 23);
                 }
             }
         });
+    }
+    
+    private JMenuItem buildEditMenuItem()
+    {
+        JMenuItem item = new JMenuItem("Edit...");
+        
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                BeanForm form = new BeanForm();
+                form.buildForm(selected);
+                
+                GenericDialog editor = new GenericDialog(form, "Edit Node");
+                editor.setVisible(true);
+                
+                updateRootNode(root);
+            }
+        });
+        
+        return item;
     }
     
     private JMenu buildLogicNodeMenu()
