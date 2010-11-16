@@ -16,12 +16,10 @@ import com.jeff.fx.common.FXDataRequest;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.common.TimeOfWeek;
 import com.jeff.fx.datastore.CandleDataStore;
 import com.jeff.fx.indicator.Indicator;
 import com.jeff.fx.lookforward.CandleFilterModel;
 import com.jeff.fx.lookforward.CandleFilterModelEvaluator;
-import com.jeff.fx.rules.business.TimeRangeNode;
 
 @Component("candleFilterTest")
 public class CandleFilterTest {
@@ -29,6 +27,9 @@ public class CandleFilterTest {
 	@Autowired
 	private CandleDataStore loader;
 
+	@Autowired
+	private CandleFilterModelEvaluator evaluator;
+	
 	private FXDataSource dataSource = FXDataSource.Forexite;
 	private Instrument instrument = Instrument.GBPUSD;
 	private Period period = Period.OneMin;
@@ -36,7 +37,7 @@ public class CandleFilterTest {
 
 	public static void main(String[] args) throws Exception 
 	{
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-datastore.xml");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("context-*.xml");
 		CandleFilterTest app = (CandleFilterTest) ctx.getBean("candleFilterTest");
 		app.run();
 	}
@@ -45,11 +46,14 @@ public class CandleFilterTest {
 
         final CandleCollection candles = loadTestData();
         
+        CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), evaluator);
+
         for(int i=0; i<10; i++)
         {
-            CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), i);
-            System.out.println(CandleFilterModelEvaluator.evaluate(model, "candles[0].dateTime", LocalDateTime.class));
-            System.out.println("==> " + CandleFilterModelEvaluator.evaluate(model, "candles[4].dateTime", LocalDateTime.class));
+            model.setIndex(i);
+            double close = evaluator.evaluate(model, "candle.close", double.class);
+            double sma14 = evaluator.evaluate(model, "ind['sma(1,Typical)'][0] + 0.0000", double.class);
+            System.out.println(close + " > " + sma14 + " = " + Operand.ge.evaluate(close, sma14));
         }
         
 //        TimeRangeNode trn = new TimeRangeNode();

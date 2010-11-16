@@ -24,7 +24,16 @@ public abstract class AbstractMovingAverage extends AbstractIndicator
 
     public void setParams(Object... params)
     {
-        model = CandleValueModel.valueOf(String.valueOf(params[1]));
+        if(params.length > 0)
+        {
+            int periods = (new Integer(String.valueOf(params[0])));
+            setPeriods(periods);
+        }
+        
+        if(params.length > 1)
+        {
+            model = CandleValueModel.valueOf(String.valueOf(params[1]));
+        }
     }
 
     public final float getSlope(int idx, int countBack)

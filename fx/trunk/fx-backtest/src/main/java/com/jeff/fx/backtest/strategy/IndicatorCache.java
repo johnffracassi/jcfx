@@ -40,31 +40,34 @@ public class IndicatorCache {
 		return type.newInstance();
 	}
 	
+	public Indicator getIndicator(String key, Object ... params) throws Exception
+	{
+        String instanceKey = key + "(" + Arrays.toString(params) + ")";
+        log.debug("instanceKey = " + instanceKey + " (" + (descriptorLookup.containsKey(instanceKey)?"exists":"does not exist") + ")");
+
+        if(descriptorLookup.containsKey(instanceKey)) {
+            
+            Indicator indicator = descriptorLookup.get(instanceKey);
+            log.debug("found indicator in cache: " + indicator.getDisplayName());
+            return indicator;
+            
+        } else {
+            
+            Indicator indicator = createIndicatorInstance(key);
+            indicator.setParams(params);
+            log.debug("setup indicator with params. " + indicator.getDisplayName());
+            descriptorLookup.put(instanceKey, indicator);
+            return indicator;
+        }
+	}
+	
 	public double get(String key, CandleCollection candles, int idx, Object ... params) throws Exception {
 
 		log.debug("looking up indicator value: " + key + ",cc," + idx + "," + Arrays.toString(params));
 		
-		String instanceKey = key + "(" + Arrays.toString(params) + ")";
-		log.debug("instanceKey = " + instanceKey + " (" + (descriptorLookup.containsKey(instanceKey)?"exists":"does not exits") + ")");
-		
-		if(descriptorLookup.containsKey(instanceKey)) {
-			
-			Indicator indicator = descriptorLookup.get(instanceKey);
-			log.debug("found indicator in cache: " + indicator.getDisplayName());
-			indicator = calculate(indicator, candles);
-			log.debug(indicator.getDisplayName() + "[" + idx + "] = " + indicator.getValue(0, idx));
-			return indicator.getValue(0, idx);
-			
-		} else {
-			
-			Indicator indicator = createIndicatorInstance(key);
-			indicator.setParams(params);
-			log.debug("setup indicator with params. " + indicator.getDisplayName());
-			descriptorLookup.put(instanceKey, indicator);
-			indicator = calculate(indicator, candles);
-			log.debug(indicator.getDisplayName() + "[" + idx + "] = " + indicator.getValue(0, idx));
-			return indicator.getValue(0, idx);
-		}
+		Indicator indicator = getIndicator(key, params);
+		indicator = calculate(indicator, candles);
+		return indicator.getValue(0, idx);
 	}
 	
 	public Indicator calculate(Indicator indicator, CandleCollection candles) {

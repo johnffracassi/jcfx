@@ -1,34 +1,39 @@
 package com.jeff.fx.rules.business;
 
+import com.jeff.fx.lookforward.CandleFilterModel;
 import com.jeff.fx.rules.AbstractLeafNode;
 import com.jeff.fx.rules.Operand;
 
-public class ELNode<T> extends AbstractLeafNode<T>
+public class ELNode extends AbstractLeafNode<CandleFilterModel>
 {
-    private String expression;
-    protected Comparable<?> value;
-    protected Operand operand;
+    private String leftExpr;
+    private Operand operand;
+    private String rightExpr;
     
-    public ELNode(String expression, Operand operand, Comparable<?> value)
+    public ELNode(String lexpr, Operand operand, String rexpr)
     {
-        this.expression = expression;
+        this.leftExpr = lexpr;
         this.operand = operand;
+        this.rightExpr = rexpr;
     }
 
-    public boolean evaluate(T model) 
+    public boolean evaluate(CandleFilterModel model) 
     {
-        return false;
+        float lVal = model.evaluate(leftExpr, float.class);
+        float rVal = model.evaluate(rightExpr, float.class);
+        
+        return operand.evaluate(lVal, rVal);
     }
 
     @Override
     public String getLabel()
     {
-        return expression;
+        return leftExpr + " " + operand.getLabel() + " " + rightExpr;
     }
 
     @Override
     public String getDescription()
     {
-        return expression;
+        return getLabel();
     }
 }
