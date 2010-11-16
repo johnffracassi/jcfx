@@ -7,14 +7,16 @@ public class CandleFilterModel
 {
     private CandleCollection candles;
     private IndicatorCache cache;
+    private CandleFilterModelEvaluator elEvaluator;
     private int index;
 
-    public CandleFilterModel(CandleCollection candles, IndicatorCache cache, int index)
+    public CandleFilterModel(CandleCollection candles, IndicatorCache cache, CandleFilterModelEvaluator evaluator)
     {
         super();
         this.candles = candles;
         this.cache = cache;
-        this.index = index;
+        this.index = 0;
+        this.elEvaluator = evaluator;
     }
 
     public CandleCollection getCandles()
@@ -30,5 +32,15 @@ public class CandleFilterModel
     public int getIndex()
     {
         return index;
+    }
+    
+    public void setIndex(int index)
+    {
+        this.index = index;
+    }
+    
+    public <T> T evaluate(String expr, Class<T> returnType)
+    {
+        return elEvaluator.evaluate(this, expr, returnType);
     }
 }

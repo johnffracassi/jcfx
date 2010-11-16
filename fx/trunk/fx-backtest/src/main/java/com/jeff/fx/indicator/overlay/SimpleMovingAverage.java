@@ -32,7 +32,6 @@ public class SimpleMovingAverage extends AbstractMovingAverage
     {
         synchronized (this)
         {
-            
             // TODO - use the same averaging method implemented in ATR
             
             FixedSizeNumberQueue2 q = new FixedSizeNumberQueue2(getPeriods());

@@ -86,6 +86,11 @@ public abstract class AbstractIndicator implements Indicator
         this.periods = periods;
     }
 
+    public float[] getValues()
+    {
+        return values;
+    }
+    
     protected void setValues(float[] values)
     {
         this.values = values;
