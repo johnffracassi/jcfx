@@ -1,6 +1,8 @@
 package com.jeff.fx.common;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -46,6 +48,16 @@ public class CandleWeek implements Serializable {
 		buy = new float[4][periodsInWeek];
 		sell = new float[4][periodsInWeek];
 		volumes = new int[2][periodsInWeek];
+	}
+	
+	public List<CandleDataPoint> toList()
+	{
+	    List<CandleDataPoint> list = new ArrayList<CandleDataPoint>(getCandleCount());
+	    for(int c=0, size=getCandleCount(); c<size; c++)
+	    {
+	        list.add(getCandle(c));
+	    }
+	    return list;
 	}
 	
 	public float[] getRawValues(int price) {

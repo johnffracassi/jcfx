@@ -44,16 +44,19 @@ public class CandleFilterTest {
     public void run() throws IOException {
 
         final CandleCollection candles = loadTestData();
-        CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), 200);
         
-        TimeRangeNode trn = new TimeRangeNode();
-        trn.setTo(new TimeOfWeek(TimeOfWeek.MONDAY, 0, 0));
-        trn.update();
+        for(int i=0; i<10; i++)
+        {
+            CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), i);
+            System.out.println(CandleFilterModelEvaluator.evaluate(model, "candles[0].dateTime", LocalDateTime.class));
+            System.out.println("==> " + CandleFilterModelEvaluator.evaluate(model, "candles[4].dateTime", LocalDateTime.class));
+        }
         
-        System.out.println(CandleFilterModelEvaluator.evaluate(model, "candle.dateTime", LocalDateTime.class));
-        System.out.println(CandleFilterModelEvaluator.evaluate(model, "candle.open", Float.class));
-        
-//        CandleFilter filter = new CandleFilter();
+//        TimeRangeNode trn = new TimeRangeNode();
+//        trn.setTo(new TimeOfWeek(TimeOfWeek.MONDAY, 0, 0));
+//        trn.update();
+//
+        //        CandleFilter filter = new CandleFilter();
 //        List<CandleDataPoint> filtered = filter.apply(trn, candles);
 //        
 //        System.out.println("found " + filtered.size() + " candles");
