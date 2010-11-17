@@ -13,6 +13,7 @@ import javax.swing.JPopupMenu;
 
 import com.jeff.fx.backtest.GenericDialog;
 import com.jeff.fx.gui.beanform.BeanForm;
+import com.jeff.fx.rules.business.ELNode;
 import com.jeff.fx.rules.business.TimeOfWeekNode;
 import com.jeff.fx.rules.business.TimeRangeNode;
 import com.jeff.fx.rules.logic.AndNode;
@@ -107,7 +108,7 @@ public class GraphVisualiser extends JFrame
                     mnuType.add(buildLogicNodeMenu());
                     mnuType.add(buildFixedNodeMenu());
                     mnuType.add(buildTimeMenu());
-                    mnuType.add(new JMenuItem("Indicator"));
+                    mnuType.add(buildExpressionNodeMenu());
 
                     popUp.add(mnuType);
                     popUp.add(buildEditMenuItem());
@@ -146,6 +147,19 @@ public class GraphVisualiser extends JFrame
         menu.add(buildMenuItem("Xor", XorNode.class));
         menu.add(buildMenuItem("Nand", NandNode.class));
         return menu;
+    }
+    
+    private JMenuItem buildExpressionNodeMenu()
+    {
+        JMenuItem item = new JMenuItem("Expression Node");
+        
+        item.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                replaceSelectedNode(new ELNode());
+            }
+        });
+
+        return item;
     }
     
     private JMenu buildFixedNodeMenu()

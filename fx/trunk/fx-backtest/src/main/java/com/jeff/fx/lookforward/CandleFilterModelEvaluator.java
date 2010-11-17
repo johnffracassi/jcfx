@@ -19,8 +19,8 @@ public class CandleFilterModelEvaluator
     public CandleFilterModelEvaluator()
     {
     }
-    
-    public <T> T evaluate(CandleFilterModel model, String expression, Class<T> returnType)
+
+    public Object evaluate(CandleFilterModel model, String expression)
     {
         // Create or retrieve a JexlEngine
         JexlEngine jexl = new JexlEngine();
@@ -40,10 +40,16 @@ public class CandleFilterModelEvaluator
         jc.set("date", candle.getDateTime().toLocalDate());
         jc.set("time", candle.getDateTime().toLocalTime());
         jc.set("price", candle.evaluate(CandleValueModel.Typical));
+        jc.set("idx", model.getIndex());
         jc.set("ind", indicatorEvaluator);
         
         // Now evaluate the expression, getting the result
-        return (T)e.evaluate(jc);
+        return e.evaluate(jc);
+    }
+    
+    public <T> T evaluate(CandleFilterModel model, String expression, Class<T> returnType)
+    {
+        return (T)evaluate(model, expression);
     }
 }
 

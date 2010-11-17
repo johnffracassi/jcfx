@@ -1,14 +1,29 @@
 package com.jeff.fx.rules.business;
 
+import com.jeff.fx.gui.beanform.Label;
+import com.jeff.fx.gui.beanform.Property;
 import com.jeff.fx.lookforward.CandleFilterModel;
 import com.jeff.fx.rules.AbstractLeafNode;
 import com.jeff.fx.rules.Operand;
 
 public class ELNode extends AbstractLeafNode<CandleFilterModel>
 {
+    @Property(key = "expr1")
+    @Label("Expression 1")
     private String leftExpr;
+
+    @Property(key = "op")
+    @Label("Comparator")
     private Operand operand;
+    
+    @Property(key = "expr2")
+    @Label("Expression 2")
     private String rightExpr;
+    
+    public ELNode()
+    {
+        this("1.0", Operand.eq, "1.0");
+    }
     
     public ELNode(String lexpr, Operand operand, String rexpr)
     {
@@ -19,10 +34,10 @@ public class ELNode extends AbstractLeafNode<CandleFilterModel>
 
     public boolean evaluate(CandleFilterModel model) 
     {
-        float lVal = model.evaluate(leftExpr, float.class);
-        float rVal = model.evaluate(rightExpr, float.class);
+        Object lVal = model.evaluate(leftExpr);
+        Object rVal = model.evaluate(rightExpr);
         
-        return operand.evaluate(lVal, rVal);
+        return operand.evaluate((Comparable)lVal, (Comparable)rVal);
     }
 
     @Override
@@ -35,5 +50,35 @@ public class ELNode extends AbstractLeafNode<CandleFilterModel>
     public String getDescription()
     {
         return getLabel();
+    }
+
+    public String getLeftExpr()
+    {
+        return leftExpr;
+    }
+
+    public void setLeftExpr(String leftExpr)
+    {
+        this.leftExpr = leftExpr;
+    }
+
+    public Operand getOperand()
+    {
+        return operand;
+    }
+
+    public void setOperand(Operand operand)
+    {
+        this.operand = operand;
+    }
+
+    public String getRightExpr()
+    {
+        return rightExpr;
+    }
+
+    public void setRightExpr(String rightExpr)
+    {
+        this.rightExpr = rightExpr;
     }
 }
