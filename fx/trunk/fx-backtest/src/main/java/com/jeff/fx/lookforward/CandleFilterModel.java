@@ -39,6 +39,11 @@ public class CandleFilterModel
         this.index = index;
     }
     
+    public Object evaluate(String expr)
+    {
+        return elEvaluator.evaluate(this, expr, null);
+    }
+    
     public <T> T evaluate(String expr, Class<T> returnType)
     {
         return elEvaluator.evaluate(this, expr, returnType);

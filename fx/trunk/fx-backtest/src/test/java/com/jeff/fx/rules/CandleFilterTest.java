@@ -1,9 +1,9 @@
 package com.jeff.fx.rules;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -16,10 +16,14 @@ import com.jeff.fx.common.FXDataRequest;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
+import com.jeff.fx.common.TimeOfWeek;
 import com.jeff.fx.datastore.CandleDataStore;
 import com.jeff.fx.indicator.Indicator;
+import com.jeff.fx.lookforward.CandleFilterProcessor;
 import com.jeff.fx.lookforward.CandleFilterModel;
 import com.jeff.fx.lookforward.CandleFilterModelEvaluator;
+import com.jeff.fx.rules.business.ELNode;
+import com.jeff.fx.rules.business.TimeRangeNode;
 
 @Component("candleFilterTest")
 public class CandleFilterTest {
@@ -28,7 +32,7 @@ public class CandleFilterTest {
 	private CandleDataStore loader;
 
 	@Autowired
-	private CandleFilterModelEvaluator evaluator;
+	private CandleFilterProcessor processor;
 	
 	private FXDataSource dataSource = FXDataSource.Forexite;
 	private Instrument instrument = Instrument.GBPUSD;
@@ -46,24 +50,20 @@ public class CandleFilterTest {
 
         final CandleCollection candles = loadTestData();
         
-        CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), evaluator);
-
-        for(int i=0; i<10; i++)
-        {
-            model.setIndex(i);
-            double close = evaluator.evaluate(model, "candle.close", double.class);
-            double sma14 = evaluator.evaluate(model, "ind['sma(1,Typical)'][0] + 0.0000", double.class);
-            System.out.println(close + " > " + sma14 + " = " + Operand.ge.evaluate(close, sma14));
-        }
+//        CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), evaluator);
+//        Operand op = Operand.ge;
+//        for(int i=0; i<10; i++)
+//        {
+//            model.setIndex(i);
+//            double price = evaluator.evaluate(model, "price", double.class);
+//            double sma = evaluator.evaluate(model, "ind['sma(1,Typical)'][0] + 0.0000", double.class);
+//            System.out.printf("%1.5f %s %1.5f = %s \n", price, op.getLabel(), sma, op.evaluate(price, sma));
+//        }
         
-//        TimeRangeNode trn = new TimeRangeNode();
-//        trn.setTo(new TimeOfWeek(TimeOfWeek.MONDAY, 0, 0));
-//        trn.update();
-//
-        //        CandleFilter filter = new CandleFilter();
-//        List<CandleDataPoint> filtered = filter.apply(trn, candles);
-//        
-//        System.out.println("found " + filtered.size() + " candles");
+        ELNode elNode = new ELNode("idx", Operand.lt, "25.0");
+        List<CandleDataPoint> filtered = processor.apply(elNode, candles);
+        
+        System.out.println("found " + filtered.size() + " candles");
     }
     
 	public void outputIndicatorData(CandleCollection candles, Indicator indicator)

@@ -12,13 +12,19 @@ import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.rules.Node;
 
 @Component
-public class CandleFilter
+public class CandleFilterProcessor
 {
     @Autowired
     private CandleFilterModelEvaluator evaluator;
     
     public List<CandleDataPoint> apply(Node<CandleFilterModel> root, CandleCollection candles)
     {
+        if(candles == null)
+            throw new RuntimeException("candles are null, not good");
+        
+        if(evaluator == null)
+            throw new RuntimeException("ELEvaluator is null, not good");
+        
         List<CandleDataPoint> filteredCandles = new LinkedList<CandleDataPoint>();
         IndicatorCache cache = new IndicatorCache();
         
