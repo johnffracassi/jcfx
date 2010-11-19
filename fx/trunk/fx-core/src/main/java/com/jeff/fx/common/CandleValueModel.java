@@ -20,12 +20,24 @@ public enum CandleValueModel {
 		};
 	}),
 	
-	High(new Evaluator() {
-		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
-			return (bh + sh) / 2.0f;
-		};
-	}),
-	
+    Open(new Evaluator() {
+        public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
+            return (bo + so) / 2.0f;
+        };
+    }),
+    
+    Close(new Evaluator() {
+        public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
+            return (bc + sc) / 2.0f;
+        };
+    }),
+    
+    High(new Evaluator() {
+        public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
+            return (bh + sh) / 2.0f;
+        };
+    }),
+    
 	Low(new Evaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
 			return (bl + sl) / 2.0f;
