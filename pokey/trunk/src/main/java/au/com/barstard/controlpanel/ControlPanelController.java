@@ -49,11 +49,11 @@ public class ControlPanelController
         }
     }
 
-    public void reserve()
+    public void help()
     {
         for(ControlPanelListener listener : listeners)
         {
-            listener.reserve();
+            listener.help();
         }
     }
 
@@ -73,11 +73,11 @@ public class ControlPanelController
         }
     }
 
-    public void collect()
+    public void reset()
     {
         for(ControlPanelListener listener : listeners)
         {
-            listener.collect();
+            listener.reset();
         }
     }
 }
