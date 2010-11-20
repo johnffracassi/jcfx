@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       		http://www.springframework.org/schema/beans 
+       		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       		http://www.springframework.org/schema/context
+       		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<import resource="common-symbols.xml" />
+	<import resource="common-win-actions.xml" />
+	<import resource="common-win-defs.xml" />
+
+	<context:component-scan base-package="au.com.barstard" />
+ 
+	<bean id="payLineProcessor" class="au.com.barstard.PayLineProcessor">
+		<property name="payLineDefinitions">
+			<list>
+				<value>BBBBB</value>
+		        <value>AAAAA</value>
+		        <value>CCCCC</value>
+		        <value>ABCBA</value>
+		        <value>CBABC</value>
+		        <value>BBBAB</value>
+		        <value>BBBCB</value>
+		        <value>AABCC</value>
+		        <value>CCBAA</value>
+		        <value>BACBA</value>
+		        <value>BCABC</value>
+		        <value>ABABA</value>
+		        <value>CBCBC</value>
+		        <value>BABAB</value>
+		        <value>BCBCB</value>
+		        <value>ABCBA</value>
+		        <value>CBABC</value>
+		        <value>ABCCC</value>
+		        <value>CBAAA</value>
+		        <value>AAABC</value>
+		        <value>CCCBA</value>
+		        <value>ACACA</value>
+		        <value>CACAC</value>
+		        <value>ABBBC</value>
+		        <value>CBBBA</value>
+  			</list>
+		</property>
+	</bean> 
+</beans>

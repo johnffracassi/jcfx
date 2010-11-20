@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       		http://www.springframework.org/schema/beans 
+       		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       		http://www.springframework.org/schema/context
+       		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+
+	<bean id="symbolBeer" class="au.com.barstard.SymbolModel">
+		<property name="name" value="beer" />
+		<property name="description" value="Mans best friend" />
+		<property name="label" value="B" />
+		<property name="imageLocation" value="/images/blokey/beer.png" />
+	</bean>
+ 
+	<bean id="symbolBoonie" class="au.com.barstard.SymbolModel">
+		<property name="name" value="boonie" />
+		<property name="description" value="The greatest!" />
+		<property name="label" value="X" />
+		<property name="imageLocation" value="/images/blokey/boonie.png" />
+	</bean>
+ 
+	<bean id="symbolCart" class="au.com.barstard.SymbolModel">
+		<property name="name" value="cart" />
+		<property name="description" value="Golf cart buggy madness" />
+		<property name="label" value="G" />
+		<property name="imageLocation" value="/images/blokey/cart.png" />
+	</bean>
+ 
+	<bean id="symbolChicken" class="au.com.barstard.SymbolModel">
+		<property name="name" value="chicken" />
+		<property name="description" value="Hot and spicy wings" />
+		<property name="label" value="C" />
+		<property name="imageLocation" value="/images/blokey/chicken.png" />
+	</bean>
+ 
+	<bean id="symbolTruck" class="au.com.barstard.SymbolModel">
+		<property name="name" value="truck" />
+		<property name="description" value="Truckin awesome" />
+		<property name="label" value="T" />
+		<property name="imageLocation" value="/images/blokey/truck.png" />
+	</bean>
+ 
+	<bean id="symbolWild" class="au.com.barstard.SymbolModel">
+		<property name="name" value="wild" />
+		<property name="description" value="Wild" />
+		<property name="label" value="#" />
+		<property name="imageLocation" value="/images/blokey/wild.png" />
+	</bean>
+ 
+ 	
+ 
+</beans>
