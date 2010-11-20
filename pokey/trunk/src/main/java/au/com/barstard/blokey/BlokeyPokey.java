@@ -161,5 +161,6 @@ public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelLis
     public void reset()
     {
         System.out.println("Reset");
+        model.increaseBalance(1000);
     }
 }
