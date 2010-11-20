@@ -24,6 +24,9 @@ public class ReelController extends JPanel implements SpinPanelListener
     @PostConstruct
     private void init()
     {
+        setPreferredSize(new Dimension(pnlSpin.length * SpinView.symbolTotalWidth, 3 * SpinView.symbolTotalWidth));
+        setOpaque(false);
+
         for(int i=0; i<pnlSpin.length; i++)
         {
             pnlSpin[i] = new SpinView(this, 7 + i*3, (int)(Math.random() * reels.get(i).size()), reels.get(i).getSymbols());
@@ -37,9 +40,6 @@ public class ReelController extends JPanel implements SpinPanelListener
             pnlSpin[i].setBounds(SpinView.symbolGap + i * SpinView.symbolTotalWidth, SpinView.symbolGap, SpinView.symbolTotalWidth, 3 * SpinView.symbolTotalWidth);
             add(pnlSpin[i]);
         }
-        
-        setPreferredSize(new Dimension(pnlSpin.length * SpinView.symbolTotalWidth, 3 * SpinView.symbolTotalWidth));
-        setVisible(true);
     }
 
     public void startSpinning()

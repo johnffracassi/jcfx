@@ -30,12 +30,12 @@ public class ControlPanelView extends JPanel
 
         setLayout(new MigLayout("", layoutStr, "[50%,fill][50%,fill]"));
 
-        JButton btnCollect = new JButton("Collect");
-        add(btnCollect, "cell 0 0");
-        btnCollect.addActionListener(new ActionListener() {
+        JButton btnReset = new JButton("Reset");
+        add(btnReset, "cell 0 0");
+        btnReset.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
-                controller.collect();
+                controller.reset();
             }
         });
 
@@ -48,12 +48,12 @@ public class ControlPanelView extends JPanel
             }
         });
 
-        JButton btnReserve = new JButton("Reserve");
-        add(btnReserve, "cell 0 1");
-        btnReserve.addActionListener(new ActionListener() {
+        JButton btnHelp = new JButton("Help");
+        add(btnHelp, "cell 0 1");
+        btnHelp.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
-                controller.reserve();
+                controller.help();
             }
         });
 

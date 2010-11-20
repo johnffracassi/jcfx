@@ -19,7 +19,7 @@ public class GameStateView extends JPanel
 
     public GameStateView()
     {
-        setBackground(new Color(46, 139, 87));
+        setOpaque(false);
         setLayout(new MigLayout("", "[33%,fill][33%,fill][33%,fill]", "[][][][][]"));
 
         JLabel label = new JLabel("CREDIT");

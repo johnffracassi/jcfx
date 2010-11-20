@@ -19,6 +19,8 @@ public class HistoryPanel extends JPanel
     
     public HistoryPanel()
     {
+        setOpaque(false);
+        
         prePopulate();
         
         String layoutStr = "";

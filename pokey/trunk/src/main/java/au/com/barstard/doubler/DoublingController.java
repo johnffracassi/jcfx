@@ -70,6 +70,11 @@ public class DoublingController
     
     public void hitButton(DoubleButton button)
     {
+        if(balance == 0)
+        {
+            return;
+        }
+        
         Suit actualSuit = Suit.random();
         view.getPnlHistory().addSuit(actualSuit);
 
@@ -83,15 +88,21 @@ public class DoublingController
 
         boolean doubleWon = multiplier > 0.0;
         
-        model.setGambleMultiplier((int)multiplier);
-
-        if(doubleWon)
+        if(model != null)
         {
-            recordKeeper.doubleResult(true, cumulativeMultiplier, balance);
+            model.setGambleMultiplier((int)multiplier);
         }
-        else
+        
+        if(recordKeeper != null)
         {
-            recordKeeper.doubleResult(false, currentMultiplier, creditsGambled);
+            if(doubleWon)
+            {
+                recordKeeper.doubleResult(true, cumulativeMultiplier, balance);
+            }
+            else
+            {
+                recordKeeper.doubleResult(false, currentMultiplier, creditsGambled);
+            }
         }
     }
 

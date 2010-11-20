@@ -25,7 +25,7 @@ import au.com.barstard.gamestate.GameStateModel;
 import au.com.barstard.gamestate.GameStateModelListener;
 
 @Component
-public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelListener, GameStateModelListener
+public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelListener
 {
     @Autowired
     private GameStateModel model;
@@ -70,6 +70,7 @@ public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelLis
     {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        pnlCards.setOpaque(false);
         pnlCards.add(reelController, "reels");
         pnlCards.add(doubler.getView(), "gamble");
         
@@ -77,6 +78,7 @@ public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelLis
 //        pnlPaylines.setPreferredSize(new Dimension(60, 500));
 //        add(pnlPaylines, BorderLayout.WEST);
         
+        getContentPane().setBackground(new Color(46, 139, 87));
         getContentPane().add(gameStatus.getView(), BorderLayout.NORTH);
         getContentPane().add(pnlCards, BorderLayout.CENTER);
         getContentPane().add(controlPanel.getView(), BorderLayout.SOUTH);
@@ -136,9 +138,9 @@ public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelLis
     }
 
     @Override
-    public void reserve()
+    public void help()
     {
-        System.out.println("Reserve");
+        System.out.println("Help");
     }
 
     @Override
@@ -156,13 +158,8 @@ public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelLis
     }
 
     @Override
-    public void collect()
+    public void reset()
     {
-        System.out.println("Collect");
-    }
-
-    @Override
-    public void gameStateChange(GameStateModel model)
-    {
+        System.out.println("Reset");
     }
 }
