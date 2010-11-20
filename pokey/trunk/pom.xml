@@ -1,0 +1,118 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.jeff.barstard</groupId>
+	<artifactId>pokey</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>Bar Stard Pokey Machine</name>
+
+	<properties>
+		<scm.root>scm:svn:https://jcfx.googlecode.com/svn/pokey/trunk</scm.root>
+		<svn.user>jeffcann</svn.user>
+		<svn.password>NH4DZ3Zz2au6</svn.password>
+		<svn.host>jcfx.googlecode.com/svn/pokey/trunk/</svn.host>
+		<svn.connection.browse>scm:svn:http://${svn.host}</svn.connection.browse>
+		<svn.connection.dev>scm:svn:https://${svn.user}:${svn.password}@${svn.host}</svn.connection.dev>
+		<svn.url>http://code.google.com/p/jcfx/source/browse/#svn/fx/trunk</svn.url>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<scm>
+		<connection>${svn.connection.browse}/${project.artifactId}</connection>
+		<developerConnection>${svn.connection.dev}/${project.artifactId}</developerConnection>
+		<url>${svn.url}/${project.artifactId}</url>
+	</scm>
+
+	<organization>
+		<name>Siebentag Pokey Machines Ltd.</name>
+		<url>http://www.siebentag.com/</url>
+	</organization>
+	
+	<issueManagement>
+		<system>Google Code</system>
+		<url>http://code.google.com/p/jcfx/issues/list</url>
+	</issueManagement>
+	
+	<ciManagement>
+		<system>Hudson</system>
+		<url>http://terrance:9999/job/FX/</url>
+	</ciManagement>
+	
+	<inceptionYear>2001</inceptionYear>
+
+	<developers>
+		<developer>
+			<id>jeff</id>
+			<name>Jeffrey Cann</name>
+			<email>jeffcann@gmail.com</email>
+			<url>http://www.siebentag.com</url>
+			<organization>Siebentag Ltd</organization>
+			<organizationUrl>http://www.siebentag.com/pokey</organizationUrl>
+			<roles>
+				<role>developer</role>
+				<role>CEO</role>
+			</roles>
+			<timezone>AEST</timezone>
+		</developer>
+	</developers>
+ 
+	<dependencies>
+	<dependency>
+	    <groupId>com.miglayout</groupId>
+	    <artifactId>miglayout</artifactId>
+	    <version>3.7.3.1</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>jgoodies</groupId>
+	    <artifactId>forms</artifactId>
+	    <version>1.0.5</version>
+	</dependency>
+			
+	<dependency>
+	    <groupId>org.swinglabs</groupId>
+	    <artifactId>swingx</artifactId>
+	    <version>1.6.1</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>log4j</groupId>
+	    <artifactId>log4j</artifactId>
+	    <version>1.2.16</version>
+	</dependency>
+	 			
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-core</artifactId>
+		<version>3.0.4.RELEASE</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-context</artifactId>
+	    <version>3.0.4.RELEASE</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-beans</artifactId>
+	    <version>3.0.4.RELEASE</version>
+	</dependency>
+
+	</dependencies>
+	
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<plugins>
+			<plugin>
+				<inherited>true</inherited>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

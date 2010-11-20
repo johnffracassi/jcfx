@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       		http://www.springframework.org/schema/beans 
+       		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       		http://www.springframework.org/schema/context
+       		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<import resource="common.xml" />
+	<import resource="blokey-symbols.xml" />
+	<import resource="blokey-win-defs.xml" />
+	<import resource="blokey-win-actions.xml" />
+
+	<bean id="reelController" class="au.com.barstard.ReelController">
+		<property name="reels">
+			<list>
+				<ref bean="reelModel" />
+				<ref bean="reelModel" />
+				<ref bean="middleReel" />
+				<ref bean="reelModel" />
+				<ref bean="reelModel" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="reelModel" class="au.com.barstard.ReelModel">
+		<property name="symbols">
+			<list>
+				<ref bean="symbolJack" />
+				<ref bean="symbolChicken" />
+				<ref bean="symbolNine" />
+				<ref bean="symbolQueen" />
+				<ref bean="symbolKing" />
+			<ref bean="symbolWild" />
+				<ref bean="symbolTen" />
+				<ref bean="symbolBeer" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolAce" />
+				<ref bean="symbolTen" />
+				<ref bean="symbolQueen" />
+				<ref bean="symbolKing" />
+				<ref bean="symbolJack" />
+			<ref bean="symbolBoonie" />
+				<ref bean="symbolBeer" />
+				<ref bean="symbolNine" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolBeer" />
+			<ref bean="symbolTruck" />
+				<ref bean="symbolTen" />
+				<ref bean="symbolCart" />
+				<ref bean="symbolAce" />
+				<ref bean="symbolChicken" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolKing" />
+				<ref bean="symbolQueen" />
+				<ref bean="symbolKing" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolCart" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolTen" />
+				<ref bean="symbolChicken" />
+			<ref bean="symbolWild" />
+				<ref bean="symbolNine" />
+				<ref bean="symbolBeer" />
+				<ref bean="symbolQueen" />
+				<ref bean="symbolKing" />
+				<ref bean="symbolTen" />
+			<ref bean="symbolTruck" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolCart" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolTen" />
+				<ref bean="symbolChicken" />
+				<ref bean="symbolNine" />
+				<ref bean="symbolBeer" />
+				<ref bean="symbolQueen" />
+				<ref bean="symbolKing" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolTen" />
+				<ref bean="symbolChicken" />
+				<ref bean="symbolNine" />
+				<ref bean="symbolBeer" />
+				<ref bean="symbolQueen" />
+				<ref bean="symbolKing" />
+				<ref bean="symbolTen" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="middleReel" class="au.com.barstard.ReelModel">
+		<property name="symbols">
+			<list>
+				<ref bean="symbolNine" />
+				<ref bean="symbolTen" />
+				<ref bean="symbolBeer" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolQueen" />
+				<ref bean="symbolKing" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolAce" />
+				<ref bean="symbolTen" />
+				<ref bean="symbolBeer" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolQueen" />
+				<ref bean="symbolKing" />
+				<ref bean="symbolBeer" />
+				<ref bean="symbolJack" />
+			<ref bean="symbolWild" />
+			<ref bean="symbolWild" />
+			<ref bean="symbolWild" />
+			<ref bean="symbolWild" />
+			<ref bean="symbolWild" />
+				<ref bean="symbolQueen" />
+				<ref bean="symbolKing" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolAce" />
+				<ref bean="symbolTen" />
+				<ref bean="symbolNine" />
+				<ref bean="symbolBeer" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolQueen" />
+				<ref bean="symbolKing" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolAce" />
+				<ref bean="symbolTen" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolBeer" />
+				<ref bean="symbolBoonie" />
+				<ref bean="symbolCart" />
+				<ref bean="symbolAce" />
+				<ref bean="symbolChicken" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolTen" />
+			<ref bean="symbolTruck" />
+				<ref bean="symbolBeer" />
+				<ref bean="symbolJack" />
+				<ref bean="symbolQueen" />
+				<ref bean="symbolKing" />
+			<ref bean="symbolBoonie" />
+				<ref bean="symbolTen" />
+				<ref bean="symbolJack" />
+			</list>
+		</property>
+	</bean>
+	
+</beans>
