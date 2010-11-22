@@ -2,11 +2,11 @@ package com.jeff.fx.rules.logic;
 
 import com.jeff.fx.rules.Node;
 
-public abstract class LogicNode<M> implements Node<M>
+public abstract class LogicNode implements Node
 {
-    protected Node<M> parent;
-    protected Node<M> left;
-    protected Node<M> right;
+    protected Node parent;
+    protected Node left;
+    protected Node right;
     
     public LogicNode()
     {
@@ -14,7 +14,7 @@ public abstract class LogicNode<M> implements Node<M>
         right = new TrueNode(this);
     }
     
-    public LogicNode(Node<M> parent, Node<M> left, Node<M> right)
+    public LogicNode(Node parent, Node left, Node right)
     {
         this.parent = parent;
         this.left = left;
@@ -23,7 +23,7 @@ public abstract class LogicNode<M> implements Node<M>
         right.setParent(this);
     }
     
-    public abstract boolean evaluate(M model); 
+    public abstract boolean evaluate(Object model); 
     
     @Override
     public int getChildCount()
@@ -32,7 +32,7 @@ public abstract class LogicNode<M> implements Node<M>
     }
     
     @Override
-    public void setChild(int idx, Node<M> node)
+    public void setChild(int idx, Node node)
     {
         if(idx == 0)
         {
@@ -49,7 +49,7 @@ public abstract class LogicNode<M> implements Node<M>
     }
     
     @Override
-    public Node<M> getChild(int idx)
+    public Node getChild(int idx)
     {
         if(idx == 0)
         {
@@ -64,7 +64,7 @@ public abstract class LogicNode<M> implements Node<M>
     }
     
     @Override
-    public int getChildIndex(Node<M> node)
+    public int getChildIndex(Node node)
     {
         if(node == left)
         {
@@ -91,13 +91,13 @@ public abstract class LogicNode<M> implements Node<M>
     }
 
     @Override
-    public Node<M> getParent()
+    public Node getParent()
     {
         return parent;
     }
     
     @Override
-    public void setParent(Node<M> parent)
+    public void setParent(Node parent)
     {
         this.parent = parent;
     }

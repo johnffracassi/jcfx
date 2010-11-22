@@ -30,7 +30,7 @@ public class TimeOfWeekNode extends AbstractFXNode
         return "Time " + operand.getLabel() + " " + time;
     }
 
-    public TimeOfWeekNode(Node<CandleFilterModel> parent)
+    public TimeOfWeekNode(Node parent)
     {
         super(parent);
     }

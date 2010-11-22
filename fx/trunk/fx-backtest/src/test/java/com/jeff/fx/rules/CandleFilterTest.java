@@ -49,6 +49,8 @@ public class CandleFilterTest {
     public void run() throws IOException {
 
         final CandleCollection candles = loadTestData();
+        ELNode elNode = new ELNode("idx", Operand.lt, "25.0");
+        List<CandleDataPoint> filtered = processor.apply(elNode, candles);
         
 //        CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), evaluator);
 //        Operand op = Operand.ge;
@@ -59,9 +61,6 @@ public class CandleFilterTest {
 //            double sma = evaluator.evaluate(model, "ind['sma(1,Typical)'][0] + 0.0000", double.class);
 //            System.out.printf("%1.5f %s %1.5f = %s \n", price, op.getLabel(), sma, op.evaluate(price, sma));
 //        }
-        
-        ELNode elNode = new ELNode("idx", Operand.lt, "25.0");
-        List<CandleDataPoint> filtered = processor.apply(elNode, candles);
         
         System.out.println("found " + filtered.size() + " candles");
     }

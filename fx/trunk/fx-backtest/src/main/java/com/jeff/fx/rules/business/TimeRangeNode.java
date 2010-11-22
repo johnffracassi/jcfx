@@ -7,7 +7,7 @@ import com.jeff.fx.lookforward.CandleFilterModel;
 import com.jeff.fx.rules.Operand;
 import com.jeff.fx.rules.logic.AndNode;
 
-public class TimeRangeNode extends AndNode<CandleFilterModel>
+public class TimeRangeNode extends AndNode
 {
     @Property(key="from")
     @Label("From")

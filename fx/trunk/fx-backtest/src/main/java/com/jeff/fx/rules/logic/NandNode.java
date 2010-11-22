@@ -2,20 +2,20 @@ package com.jeff.fx.rules.logic;
 
 import com.jeff.fx.rules.Node;
 
-public class NandNode<M> extends LogicNode<M>
+public class NandNode extends LogicNode
 {
     public NandNode()
     {
         super();
     }
     
-    public NandNode(Node<M> parent, Node<M> left, Node<M> right)
+    public NandNode(Node parent, Node left, Node right)
     {
         super(parent, left, right);
     }
 
     @Override
-    public boolean evaluate(M model)
+    public boolean evaluate(Object model)
     {
         boolean leftValue = left.evaluate(model);
         

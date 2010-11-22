@@ -2,20 +2,20 @@ package com.jeff.fx.rules.logic;
 
 import com.jeff.fx.rules.Node;
 
-public class XorNode<M> extends LogicNode<M>
+public class XorNode extends LogicNode
 {
     public XorNode()
     {
         super();
     }
 
-    public XorNode(Node<M> parent, Node<M> left, Node<M> right)
+    public XorNode(Node parent, Node left, Node right)
     {
         super(parent, left, right);
     }
 
     @Override
-    public boolean evaluate(M model)
+    public boolean evaluate(Object model)
     {
         boolean leftValue = left.evaluate(model);
         boolean rightValue = right.evaluate(model);
