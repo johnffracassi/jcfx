@@ -29,7 +29,7 @@ public class ReelController extends JPanel implements SpinPanelListener
 
         for(int i=0; i<pnlSpin.length; i++)
         {
-            pnlSpin[i] = new SpinView(this, 7 + i*3, (int)(Math.random() * reels.get(i).size()), reels.get(i).getSymbols());
+            pnlSpin[i] = new SpinView(this, 13 + i*7, (int)(Math.random() * reels.get(i).size()), reels.get(i).getSymbols());
         }
 
         setLayout(null);
