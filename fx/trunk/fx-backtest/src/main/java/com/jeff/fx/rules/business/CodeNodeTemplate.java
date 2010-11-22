@@ -7,7 +7,7 @@ public class CodeNodeTemplate extends AbstractFXNode
 {
     // fields //
     
-    public CodeNodeTemplate(Node<CandleFilterModel> parent)
+    public CodeNodeTemplate(Node parent)
     {
         super(parent);
     }

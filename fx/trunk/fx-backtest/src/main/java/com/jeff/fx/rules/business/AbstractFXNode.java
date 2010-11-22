@@ -4,16 +4,24 @@ import com.jeff.fx.lookforward.CandleFilterModel;
 import com.jeff.fx.rules.AbstractLeafNode;
 import com.jeff.fx.rules.Node;
 
-public abstract class AbstractFXNode extends AbstractLeafNode<CandleFilterModel>
+public abstract class AbstractFXNode extends AbstractLeafNode
 {
     private String label;
     private String description;
 
-    public AbstractFXNode(Node<CandleFilterModel> parent)
+    public AbstractFXNode(Node parent)
     {
         super(parent);
         label = getClass().getSimpleName();
         description = "This is a description for " + label;
+    }
+    
+    public abstract boolean evaluate(CandleFilterModel model);
+    
+    @Override
+    public final boolean evaluate(Object model)
+    {
+        return evaluate((CandleFilterModel)model);
     }
     
     public String getLabel()

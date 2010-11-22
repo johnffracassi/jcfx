@@ -17,7 +17,7 @@ public class CandleFilterProcessor
     @Autowired
     private CandleFilterModelEvaluator evaluator;
     
-    public List<CandleDataPoint> apply(Node<CandleFilterModel> root, CandleCollection candles)
+    public List<CandleDataPoint> apply(Node root, CandleCollection candles)
     {
         if(candles == null)
             throw new RuntimeException("candles are null, not good");

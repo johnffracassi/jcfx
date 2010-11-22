@@ -3,10 +3,10 @@ package com.jeff.fx.rules.business;
 import com.jeff.fx.gui.beanform.Label;
 import com.jeff.fx.gui.beanform.Property;
 import com.jeff.fx.lookforward.CandleFilterModel;
-import com.jeff.fx.rules.AbstractLeafNode;
+import com.jeff.fx.rules.Node;
 import com.jeff.fx.rules.Operand;
 
-public class ELNode extends AbstractLeafNode<CandleFilterModel>
+public class ELNode extends AbstractFXNode
 {
     @Property(key = "expr1")
     @Label("Expression 1")
@@ -22,11 +22,12 @@ public class ELNode extends AbstractLeafNode<CandleFilterModel>
     
     public ELNode()
     {
-        this("1.0", Operand.eq, "1.0");
+        this(null, "1.0", Operand.eq, "1.0");
     }
     
-    public ELNode(String lexpr, Operand operand, String rexpr)
+    public ELNode(Node parent, String lexpr, Operand operand, String rexpr)
     {
+        super(parent);
         this.leftExpr = lexpr;
         this.operand = operand;
         this.rightExpr = rexpr;

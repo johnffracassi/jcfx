@@ -1,14 +1,14 @@
 package com.jeff.fx.rules;
 
-public interface Node<M>
+public interface Node
 {
-    boolean evaluate(M model);
+    boolean evaluate(Object model);
     int getChildCount();
-    Node<M> getChild(int idx);
-    int getChildIndex(Node<M> node);
-    void setChild(int idx, Node<M> node);
-    Node<M> getParent();
-    void setParent(Node<M> parent);
+    Node getParent();
+    Node getChild(int idx);
+    int getChildIndex(Node node);
+    void setChild(int idx, Node node);
+    void setParent(Node parent);
     String getLabel();
     String getDescription();
 }

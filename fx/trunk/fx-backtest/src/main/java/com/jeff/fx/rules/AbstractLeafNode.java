@@ -2,15 +2,15 @@ package com.jeff.fx.rules;
 
 import com.jeff.fx.rules.Node;
 
-public abstract class AbstractLeafNode<M> implements Node<M>
+public abstract class AbstractLeafNode implements Node
 {
-    private Node<M> parent;
+    private Node parent;
     
     public AbstractLeafNode()
     {
     }
     
-    public AbstractLeafNode(Node<M> parent)
+    public AbstractLeafNode(Node parent)
     {
         this.parent = parent;
     }
@@ -22,19 +22,19 @@ public abstract class AbstractLeafNode<M> implements Node<M>
     }
     
     @Override
-    public void setChild(int idx, Node<M> node)
+    public void setChild(int idx, Node node)
     {
         throw new IndexOutOfBoundsException("I'm a leaf node, don't set child nodes on me");
     }
 
     @Override
-    public Node<M> getChild(int idx)
+    public Node getChild(int idx)
     {
         throw new IndexOutOfBoundsException("I'm a leaf node, I have no children");
     }
     
     @Override
-    public int getChildIndex(Node<M> node)
+    public int getChildIndex(Node node)
     {
         throw new RuntimeException("Leaf node has no children!");
     }
@@ -45,12 +45,12 @@ public abstract class AbstractLeafNode<M> implements Node<M>
         return getLabel();
     }
 
-    public Node<M> getParent()
+    public Node getParent()
     {
         return parent;
     }
 
-    public void setParent(Node<M> parent)
+    public void setParent(Node parent)
     {
         this.parent = parent;
     }
