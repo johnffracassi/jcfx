@@ -31,7 +31,7 @@
 		<property name="pattern" value="9999." />
 		<property name="action">
 			<bean class="au.com.barstard.winaction.BasicWinAction">
-				<constructor-arg value="15" />
+				<constructor-arg value="40" />
 			</bean>
 		</property>
 	</bean>
@@ -40,7 +40,7 @@
 		<property name="pattern" value="99999" />
 		<property name="action">
 			<bean class="au.com.barstard.winaction.BasicWinAction">
-				<constructor-arg value="75" />
+				<constructor-arg value="200" />
 			</bean>
 		</property>
 	</bean>
@@ -89,7 +89,7 @@
 		<property name="pattern" value="JJJJ." />
 		<property name="action">
 			<bean class="au.com.barstard.winaction.BasicWinAction">
-				<constructor-arg value="40" />
+				<constructor-arg value="50" />
 			</bean>
 		</property>
 	</bean>
@@ -98,7 +98,7 @@
 		<property name="pattern" value="JJJJJ" />
 		<property name="action">
 			<bean class="au.com.barstard.winaction.BasicWinAction">
-				<constructor-arg value="150" />
+				<constructor-arg value="275" />
 			</bean>
 		</property>
 	</bean>
@@ -117,7 +117,7 @@
 		<property name="pattern" value="QQQQ." />
 		<property name="action">
 			<bean class="au.com.barstard.winaction.BasicWinAction">
-				<constructor-arg value="40" />
+				<constructor-arg value="75" />
 			</bean>
 		</property>
 	</bean>
@@ -126,7 +126,7 @@
 		<property name="pattern" value="QQQQQ" />
 		<property name="action">
 			<bean class="au.com.barstard.winaction.BasicWinAction">
-				<constructor-arg value="150" />
+				<constructor-arg value="450" />
 			</bean>
 		</property>
 	</bean>
@@ -146,7 +146,7 @@
 		<property name="pattern" value="KKKK." />
 		<property name="action">
 			<bean class="au.com.barstard.winaction.BasicWinAction">
-				<constructor-arg value="75" />
+				<constructor-arg value="125" />
 			</bean>
 		</property>
 	</bean>
@@ -155,7 +155,7 @@
 		<property name="pattern" value="KKKKK" />
 		<property name="action">
 			<bean class="au.com.barstard.winaction.BasicWinAction">
-				<constructor-arg value="200" />
+				<constructor-arg value="850" />
 			</bean>
 		</property>
 	</bean>
@@ -174,7 +174,7 @@
 		<property name="pattern" value="AAAA." />
 		<property name="action">
 			<bean class="au.com.barstard.winaction.BasicWinAction">
-				<constructor-arg value="100" />
+				<constructor-arg value="200" />
 			</bean>
 		</property>
 	</bean>
@@ -183,7 +183,7 @@
 		<property name="pattern" value="AAAAA" />
 		<property name="action">
 			<bean class="au.com.barstard.winaction.BasicWinAction">
-				<constructor-arg value="250" />
+				<constructor-arg value="1750" />
 			</bean>
 		</property>
 	</bean>
