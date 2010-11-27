@@ -63,12 +63,23 @@ public class ReelController extends JPanel implements SpinPanelListener
         return -1;
     }
 
-    public void spinComplete(Object reel)
+    public void spinComplete(SpinView reel)
     {
         isSpinning[getIndexOf(reel)] = false;
 
         boolean stillGoing = false;
 
+        for(int i=0; i<3; i++)
+        {
+            
+            System.out.println(i + ": " + reel.getActiveSymbols()[i].getName());
+            
+            if(reel.getActiveSymbols()[i].getName().equalsIgnoreCase("Boonie"))
+            {
+                SoundPlayer.play("boonie");
+            }
+        }
+        
         for (int i = 0; i < 5; i++)
         {
             if (isSpinning[i])

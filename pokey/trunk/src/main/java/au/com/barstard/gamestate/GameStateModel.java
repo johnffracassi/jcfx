@@ -30,6 +30,11 @@ public class GameStateModel
         }
     }
     
+    public int getTotalBet()
+    {
+        return getCreditsPerLine() * getLinesPlayed();
+    }
+    
     public String getPlayerName()
     {
         return playerName;
