@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import au.com.barstard.SoundPlayer;
 import au.com.barstard.blokey.RecordKeeper;
 import au.com.barstard.gamestate.GameStateModel;
 
@@ -91,6 +92,19 @@ public class DoublingController
         if(model != null)
         {
             model.setGambleMultiplier((int)multiplier);
+        }
+
+        System.out.println(balance + " / " + multiplier + " / " + creditsGambled + " / " + model.getTotalBet());
+        
+        if(balance >= 5000)
+        {
+            System.out.println("plus pineapple!");
+            SoundPlayer.play("pluspineapple");
+        }
+        else if(multiplier >= 4.0 && creditsGambled > 1.0 * (model.getTotalBet()))
+        {
+            System.out.println("take that!!");
+            SoundPlayer.play("takethat");
         }
         
         if(recordKeeper != null)

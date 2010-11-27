@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Color;
 
@@ -16,12 +18,14 @@ public class GameStateView extends JPanel
     private JLabel lblWinAmount;
     private JLabel lblWin;
     private JLabel lblCreditPer;
+    private JPanel panel;
 
     public GameStateView()
     {
         setOpaque(false);
-        setLayout(new MigLayout("", "[33%,fill][33%,fill][33%,fill]", "[][][][][]"));
-
+        setLayout(new MigLayout("", "[33%,fill][33%,grow,fill][33%,fill]", "[17px][17px][17px][17px][17px]"));
+        setPreferredSize(new Dimension(600, 140));
+        
         JLabel label = new JLabel("CREDIT");
         label.setFont(new Font("Arial Black", Font.BOLD, 14));
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -58,14 +62,18 @@ public class GameStateView extends JPanel
         lblWinAmount = new JLabel("$0.00");
         lblWinAmount.setHorizontalAlignment(SwingConstants.CENTER);
         add(lblWinAmount, "cell 2 2");
+        
+        panel = new JPanel();
+        panel.setBackground(Color.RED);
+        add(panel, "cell 0 3 3 1,grow");
 
         JLabel label_6 = new JLabel("$1 = 100 Credits");
         label_6.setHorizontalAlignment(SwingConstants.CENTER);
-        add(label_6, "cell 0 3 3 1");
+        add(label_6, "cell 0 4 3 1");
 
         lblCreditPer = new JLabel("1 credit per line");
         lblCreditPer.setHorizontalAlignment(SwingConstants.CENTER);
-        add(lblCreditPer, "cell 0 4 3 1");
+        add(lblCreditPer, "cell 0 5 3 1");
 
     }
 
