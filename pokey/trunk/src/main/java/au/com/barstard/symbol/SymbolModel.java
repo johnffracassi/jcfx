@@ -1,4 +1,4 @@
-package au.com.barstard;
+package au.com.barstard.symbol;
 
 import java.awt.Color;
 import java.awt.Font;

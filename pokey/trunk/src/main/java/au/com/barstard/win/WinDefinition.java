@@ -1,8 +1,7 @@
-package au.com.barstard;
+package au.com.barstard.win;
 
 import java.util.regex.Pattern;
 
-import au.com.barstard.winaction.WinAction;
 
 public class WinDefinition
 {

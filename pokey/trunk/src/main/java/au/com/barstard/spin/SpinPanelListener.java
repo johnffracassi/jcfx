@@ -1,4 +1,4 @@
-package au.com.barstard;
+package au.com.barstard.spin;
 
 public interface SpinPanelListener
 {

@@ -14,7 +14,7 @@
 	<import resource="blokey-win-defs.xml" />
 	<import resource="blokey-win-actions.xml" />
 
-	<bean id="reelController" class="au.com.barstard.ReelController">
+	<bean id="reelController" class="au.com.barstard.reel.ReelController">
 		<property name="reels">
 			<list>
 				<ref bean="reelModel1" />
@@ -26,7 +26,7 @@
 		</property>
 	</bean>
 
-	<bean id="reelModel1" class="au.com.barstard.ReelModel">
+	<bean id="reelModel1" class="au.com.barstard.reel.ReelModel">
 		<property name="symbols">
 			<list>
 				<ref bean="symbolTen" />
@@ -92,7 +92,7 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="reelModel2" class="au.com.barstard.ReelModel">
+	<bean id="reelModel2" class="au.com.barstard.reel.ReelModel">
 		<property name="symbols">
 			<list>
 				<ref bean="symbolTen" />
@@ -162,7 +162,7 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="reelModel3" class="au.com.barstard.ReelModel">
+	<bean id="reelModel3" class="au.com.barstard.reel.ReelModel">
 		<property name="symbols">
 			<list>
 				<ref bean="symbolTen" />

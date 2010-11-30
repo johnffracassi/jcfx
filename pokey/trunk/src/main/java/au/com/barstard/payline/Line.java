@@ -1,13 +1,6 @@
-package au.com.barstard;
+package au.com.barstard.payline;
 
-/**
- * Title:        Pokey Simulator
- * Description:
- * Copyright:    Copyright (c) 2001
- * Company:      MBlue Pty Ltd
- * @author Jeffrey Cann
- * @version 1.0
- */
+import au.com.barstard.symbol.SymbolModel;
 
 public class Line
 {

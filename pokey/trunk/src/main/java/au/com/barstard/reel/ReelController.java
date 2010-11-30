@@ -1,4 +1,4 @@
-package au.com.barstard;
+package au.com.barstard.reel;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,6 +9,12 @@ import javax.swing.JPanel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import au.com.barstard.blokey.SoundPlayer;
+import au.com.barstard.spin.SpinListener;
+import au.com.barstard.spin.SpinPanelListener;
+import au.com.barstard.spin.SpinView;
+import au.com.barstard.symbol.SymbolModel;
 
 @Component
 public class ReelController extends JPanel implements SpinPanelListener
@@ -71,9 +77,6 @@ public class ReelController extends JPanel implements SpinPanelListener
 
         for(int i=0; i<3; i++)
         {
-            
-            System.out.println(i + ": " + reel.getActiveSymbols()[i].getName());
-            
             if(reel.getActiveSymbols()[i].getName().equalsIgnoreCase("Boonie"))
             {
                 SoundPlayer.play("boonie");

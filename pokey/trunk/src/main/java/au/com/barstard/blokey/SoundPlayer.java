@@ -1,4 +1,4 @@
-package au.com.barstard;
+package au.com.barstard.blokey;
 
 import java.io.IOException;
 import java.net.URL;

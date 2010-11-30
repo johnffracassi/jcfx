@@ -50,6 +50,6 @@ public class DoubleTest
         frame.add(controller.getView(), BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        controller.setBalance(25);
+        controller.startDouble(25);
     }
 }

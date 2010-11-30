@@ -1,4 +1,4 @@
-package au.com.barstard.winaction;
+package au.com.barstard.win;
 
 import java.util.List;
 

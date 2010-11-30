@@ -1,6 +1,8 @@
-package au.com.barstard;
+package au.com.barstard.reel;
 
 import java.util.*;
+
+import au.com.barstard.symbol.SymbolModel;
 
 
 public class ReelModel

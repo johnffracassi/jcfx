@@ -1,4 +1,4 @@
-package au.com.barstard;
+package au.com.barstard.payline;
 
 import java.awt.*;
 import java.awt.image.*;

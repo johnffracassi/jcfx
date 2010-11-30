@@ -1,4 +1,4 @@
-package au.com.barstard;
+package au.com.barstard.payline;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,9 +11,11 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import au.com.barstard.gamestate.GameStateModel;
-import au.com.barstard.winaction.ChainedWinAction;
-import au.com.barstard.winaction.IncreaseBalanceWinAction;
-import au.com.barstard.winaction.WinAction;
+import au.com.barstard.symbol.SymbolModel;
+import au.com.barstard.win.ChainedWinAction;
+import au.com.barstard.win.IncreaseBalanceWinAction;
+import au.com.barstard.win.WinAction;
+import au.com.barstard.win.WinDefinition;
 
 public class PayLineProcessor
 {
@@ -79,7 +81,6 @@ public class PayLineProcessor
             SymbolModel[] symbols = getLine(activeSymbols, l);
             String symbolsStr = toString(symbols);
             wins[l] = calculateWin(symbolsStr);
-//            System.out.println("Line " + (l+1) + " (" + symbolsStr + ") pays " + wins[l]);
         }
 
         return wins;

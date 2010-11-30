@@ -1,4 +1,4 @@
-package au.com.barstard.blokey;
+package au.com.barstard;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
-import au.com.barstard.PayLineProcessor;
-import au.com.barstard.ReelController;
-import au.com.barstard.ReelModel;
-import au.com.barstard.SymbolModel;
 import au.com.barstard.gamestate.GameStateModel;
+import au.com.barstard.payline.PayLineProcessor;
+import au.com.barstard.reel.ReelController;
+import au.com.barstard.reel.ReelModel;
+import au.com.barstard.symbol.SymbolModel;
 
 @Component
 public class PayoutTester
