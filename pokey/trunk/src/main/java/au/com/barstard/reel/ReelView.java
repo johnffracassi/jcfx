@@ -1,4 +1,4 @@
-package au.com.barstard;
+package au.com.barstard.reel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -6,6 +6,10 @@ import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+
+import au.com.barstard.VerticalFlowLayout;
+import au.com.barstard.symbol.SymbolModel;
+import au.com.barstard.symbol.SymbolView;
 
 public class ReelView extends JPanel
 {

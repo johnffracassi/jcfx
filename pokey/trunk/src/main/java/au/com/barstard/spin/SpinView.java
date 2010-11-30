@@ -1,15 +1,15 @@
-package au.com.barstard;
+package au.com.barstard.spin;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JPanel;
+
+import au.com.barstard.symbol.SymbolModel;
 
 public class SpinView extends JPanel implements ImageObserver
 {

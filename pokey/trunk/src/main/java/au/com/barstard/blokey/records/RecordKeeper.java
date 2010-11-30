@@ -1,4 +1,4 @@
-package au.com.barstard.blokey;
+package au.com.barstard.blokey.records;
 
 import org.springframework.stereotype.Component;
 

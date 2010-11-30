@@ -1,4 +1,6 @@
-package au.com.barstard;
+package au.com.barstard.spin;
+
+import au.com.barstard.symbol.SymbolModel;
 
 public interface SpinListener
 {

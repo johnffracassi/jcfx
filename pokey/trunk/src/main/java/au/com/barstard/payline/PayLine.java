@@ -1,4 +1,6 @@
-package au.com.barstard;
+package au.com.barstard.payline;
+
+import au.com.barstard.symbol.SymbolModel;
 
 /**
  * Title:        Pokey Simulator

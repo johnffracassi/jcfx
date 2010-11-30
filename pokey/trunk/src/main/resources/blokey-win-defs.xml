@@ -13,26 +13,26 @@
 	<!-- =================================================================================== -->
 	<!-- TRUCK																				 -->
 	<!-- =================================================================================== -->
-	<bean class="au.com.barstard.WinDefinition">
+	<bean class="au.com.barstard.win.WinDefinition">
 		<property name="pattern" value="TTT.." />
 		<property name="action">
-			<bean class="au.com.barstard.winaction.BasicWinAction">
+			<bean class="au.com.barstard.win.BasicWinAction">
 				<constructor-arg value="100" />
 			</bean>
 		</property>
 	</bean>
-	<bean class="au.com.barstard.WinDefinition">
+	<bean class="au.com.barstard.win.WinDefinition">
 		<property name="pattern" value="TTTT." />
 		<property name="action">
-			<bean class="au.com.barstard.winaction.BasicWinAction">
+			<bean class="au.com.barstard.win.BasicWinAction">
 				<constructor-arg value="2000" />
 			</bean>
 		</property>
 	</bean>
-	<bean class="au.com.barstard.WinDefinition">
+	<bean class="au.com.barstard.win.WinDefinition">
 		<property name="pattern" value="TTTTT" />
 		<property name="action">
-			<bean class="au.com.barstard.winaction.BasicWinAction">
+			<bean class="au.com.barstard.win.BasicWinAction">
 				<constructor-arg value="40000" />
 			</bean>
 		</property>
@@ -42,26 +42,26 @@
 	<!-- =================================================================================== -->
 	<!-- BOONIE																				 -->
 	<!-- =================================================================================== -->
-	<bean class="au.com.barstard.WinDefinition">
+	<bean class="au.com.barstard.win.WinDefinition">
 		<property name="pattern" value="XXX.." />
 		<property name="action">
-			<bean class="au.com.barstard.winaction.BasicWinAction">
+			<bean class="au.com.barstard.win.BasicWinAction">
 				<constructor-arg value="275" />
 			</bean>
 		</property>
 	</bean>
-	<bean class="au.com.barstard.WinDefinition">
+	<bean class="au.com.barstard.win.WinDefinition">
 		<property name="pattern" value="XXXX." />
 		<property name="action">
-			<bean class="au.com.barstard.winaction.BasicWinAction">
+			<bean class="au.com.barstard.win.BasicWinAction">
 				<constructor-arg value="8000" />
 			</bean>
 		</property>
 	</bean>
-	<bean class="au.com.barstard.WinDefinition">
+	<bean class="au.com.barstard.win.WinDefinition">
 		<property name="pattern" value="XXXXX" />
 		<property name="action">
-			<bean class="au.com.barstard.winaction.BasicWinAction">
+			<bean class="au.com.barstard.win.BasicWinAction">
 				<constructor-arg value="250000" />
 			</bean>
 		</property>
@@ -71,26 +71,26 @@
 	<!-- =================================================================================== -->
 	<!-- CHICKEN																			 -->
 	<!-- =================================================================================== -->
-	<bean class="au.com.barstard.WinDefinition">
+	<bean class="au.com.barstard.win.WinDefinition">
 		<property name="pattern" value="CCC.." />
 		<property name="action">
-			<bean class="au.com.barstard.winaction.BasicWinAction">
+			<bean class="au.com.barstard.win.BasicWinAction">
 				<constructor-arg value="20" />
 			</bean>
 		</property>
 	</bean>
-	<bean class="au.com.barstard.WinDefinition">
+	<bean class="au.com.barstard.win.WinDefinition">
 		<property name="pattern" value="CCCC." />
 		<property name="action">
-			<bean class="au.com.barstard.winaction.BasicWinAction">
+			<bean class="au.com.barstard.win.BasicWinAction">
 				<constructor-arg value="200" />
 			</bean>
 		</property>
 	</bean>
-	<bean class="au.com.barstard.WinDefinition">
+	<bean class="au.com.barstard.win.WinDefinition">
 		<property name="pattern" value="CCCCC" />
 		<property name="action">
-			<bean class="au.com.barstard.winaction.BasicWinAction">
+			<bean class="au.com.barstard.win.BasicWinAction">
 				<constructor-arg value="1750" />
 			</bean>
 		</property>
@@ -100,26 +100,26 @@
 	<!-- =================================================================================== -->
 	<!-- BEER																				 -->
 	<!-- =================================================================================== -->
-	<bean class="au.com.barstard.WinDefinition">
+	<bean class="au.com.barstard.win.WinDefinition">
 		<property name="pattern" value="BBB.." />
 		<property name="action">
-			<bean class="au.com.barstard.winaction.BasicWinAction">
+			<bean class="au.com.barstard.win.BasicWinAction">
 				<constructor-arg value="50" />
 			</bean>
 		</property>
 	</bean>
-	<bean class="au.com.barstard.WinDefinition">
+	<bean class="au.com.barstard.win.WinDefinition">
 		<property name="pattern" value="BBBB." />
 		<property name="action">
-			<bean class="au.com.barstard.winaction.BasicWinAction">
+			<bean class="au.com.barstard.win.BasicWinAction">
 				<constructor-arg value="800" />
 			</bean>
 		</property>
 	</bean>
-	<bean class="au.com.barstard.WinDefinition">
+	<bean class="au.com.barstard.win.WinDefinition">
 		<property name="pattern" value="BBBBB" />
 		<property name="action">
-			<bean class="au.com.barstard.winaction.BasicWinAction">
+			<bean class="au.com.barstard.win.BasicWinAction">
 				<constructor-arg value="11000" />
 			</bean>
 		</property>
@@ -129,26 +129,26 @@
 	<!-- =================================================================================== -->
 	<!-- CART BUGGIE MADNESS																 -->
 	<!-- =================================================================================== -->
-	<bean class="au.com.barstard.WinDefinition">
+	<bean class="au.com.barstard.win.WinDefinition">
 		<property name="pattern" value="GGG.." />
 		<property name="action">
-			<bean class="au.com.barstard.winaction.BasicWinAction">
+			<bean class="au.com.barstard.win.BasicWinAction">
 				<constructor-arg value="30" />
 			</bean>
 		</property>
 	</bean>
-	<bean class="au.com.barstard.WinDefinition">
+	<bean class="au.com.barstard.win.WinDefinition">
 		<property name="pattern" value="GGGG." />
 		<property name="action">
-			<bean class="au.com.barstard.winaction.BasicWinAction">
+			<bean class="au.com.barstard.win.BasicWinAction">
 				<constructor-arg value="350" />
 			</bean>
 		</property>
 	</bean>
-	<bean class="au.com.barstard.WinDefinition">
+	<bean class="au.com.barstard.win.WinDefinition">
 		<property name="pattern" value="GGGGG" />
 		<property name="action">
-			<bean class="au.com.barstard.winaction.BasicWinAction">
+			<bean class="au.com.barstard.win.BasicWinAction">
 				<constructor-arg value="4000" />
 			</bean>
 		</property>

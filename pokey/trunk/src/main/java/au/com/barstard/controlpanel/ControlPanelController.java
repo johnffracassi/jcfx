@@ -6,9 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import au.com.barstard.GameEventListener;
+
 @Component
 public class ControlPanelController
 {
+    @Autowired
+    private List<GameEventListener> eventListeners;
+    
     private ControlPanelView view;
     
     private int creditsPerLine = 1;
@@ -22,11 +27,6 @@ public class ControlPanelController
         view = new ControlPanelView(this);
     }
     
-    public void addListener(ControlPanelListener listener)
-    {
-        listeners.add(listener);
-    }
-    
     public ControlPanelView getView()
     {
         return view;
@@ -35,6 +35,11 @@ public class ControlPanelController
     public void setCreditsPerLine(int credits)
     {
         this.creditsPerLine = credits;
+        
+        for(GameEventListener listener : eventListeners)
+        {
+            listener.betChanged(creditsPerLine, lines);
+        }
     }
     
     public void setLinesPlaying(int lines)
@@ -42,10 +47,15 @@ public class ControlPanelController
         takeWin();
         
         this.lines = lines;
+
+        for(GameEventListener listener : eventListeners)
+        {
+            listener.betChanged(creditsPerLine, lines);
+        }
         
         for(ControlPanelListener listener : listeners)
         {
-            listener.spin(lines, creditsPerLine);
+            listener.spinPressed(lines, creditsPerLine);
         }
     }
 
@@ -53,7 +63,7 @@ public class ControlPanelController
     {
         for(ControlPanelListener listener : listeners)
         {
-            listener.help();
+            listener.helpPressed();
         }
     }
 
@@ -61,7 +71,7 @@ public class ControlPanelController
     {
         for(ControlPanelListener listener : listeners)
         {
-            listener.gamble();
+            listener.gamblePressed();
         }
     }
 
@@ -69,7 +79,7 @@ public class ControlPanelController
     {
         for(ControlPanelListener listener : listeners)
         {
-            listener.takeWin();
+            listener.takeWinPressed();
         }
     }
 
@@ -77,7 +87,7 @@ public class ControlPanelController
     {
         for(ControlPanelListener listener : listeners)
         {
-            listener.reset();
+            listener.resetPressed();
         }
     }
 }

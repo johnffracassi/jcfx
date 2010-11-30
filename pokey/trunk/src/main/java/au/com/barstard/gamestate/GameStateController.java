@@ -3,15 +3,15 @@ package au.com.barstard.gamestate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import au.com.barstard.GameEventAdapter;
+
 @Component
-public class GameStateController implements GameStateModelListener
+public class GameStateController extends GameEventAdapter
 {
     @Autowired
-    private GameStateModel model;
+    private GameStateModel gameState;
     
     private GameStateView view;
-    
-    private int win;
     
     public GameStateController()
     {
@@ -23,26 +23,32 @@ public class GameStateController implements GameStateModelListener
         return view;
     }
 
-    private void update()
+    @Override
+    public void spinStarted(int credits, int lines)
     {
-        view.getLblCreditPerLine().setText(String.format("%d credit(s) per line", model.getCreditsPerLine()));
-        view.getLblBet().setText(String.valueOf(model.getLinesPlayed() * model.getCreditsPerLine()));
-        view.getLblBetAmount().setText(String.format("$%1.2f", model.getLinesPlayed() * model.getCreditsPerLine() / 100.0));
-        view.getLblCredits().setText(String.valueOf(model.getBalance()));
-        view.getLblCreditsAmount().setText(String.format("$%1.2f", model.getBalance() / 100.0));
+        view.getLblCredits().setText(String.valueOf(gameState.getBalance()));
+        view.getLblCreditsAmount().setText(String.format("$%1.2f", gameState.getBalance() / 100.0));
+    }
+    
+    @Override
+    public void spinComplete(int win)
+    {
         view.getLblWin().setText(String.valueOf(win));
         view.getLblWinAmount().setText(String.format("$%1.2f", win / 100.0));
     }
     
-    public void setWin(int win)
-    {
-        this.win = win;
-        update();
-    }
-
     @Override
-    public void gameStateChange(GameStateModel model)
+    public void takeWin(int amount)
     {
-        update();
+        view.getLblCredits().setText(String.valueOf(gameState.getBalance()));
+        view.getLblCreditsAmount().setText(String.format("$%1.2f", gameState.getBalance() / 100.0));
+    }
+    
+    @Override
+    public void betChanged(int creditsPerLine, int lines)
+    {
+        view.getLblCreditPerLine().setText(String.format("%d credit(s) per line", creditsPerLine));
+        view.getLblBet().setText(String.valueOf(lines * creditsPerLine));
+        view.getLblBetAmount().setText(String.format("$%1.2f", lines * creditsPerLine / 100.0));
     }
 }

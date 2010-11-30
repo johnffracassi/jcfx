@@ -3,6 +3,7 @@ package au.com.barstard.blokey;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.swing.JFrame;
@@ -13,21 +14,24 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
-import au.com.barstard.PayLineProcessor;
-import au.com.barstard.ReelController;
-import au.com.barstard.SpinListener;
-import au.com.barstard.SymbolModel;
+import au.com.barstard.GameEventListener;
+import au.com.barstard.cashbox.CashBoxController;
 import au.com.barstard.controlpanel.ControlPanelController;
 import au.com.barstard.controlpanel.ControlPanelListener;
 import au.com.barstard.doubler.DoublingController;
 import au.com.barstard.gamestate.GameStateController;
 import au.com.barstard.gamestate.GameStateModel;
-import au.com.barstard.gamestate.GameStateModelListener;
-import au.com.barstard.gamestate.GameSummaryController;
+import au.com.barstard.payline.PayLineProcessor;
+import au.com.barstard.reel.ReelController;
+import au.com.barstard.spin.SpinListener;
+import au.com.barstard.symbol.SymbolModel;
 
 @Component
-public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelListener
+public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelListener, GameEventListener
 {
+    @Autowired
+    private List<GameEventListener> listeners;
+    
     @Autowired
     private GameStateModel model;
     
@@ -41,7 +45,7 @@ public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelLis
     private ControlPanelController controlPanel;
     
     @Autowired
-    private GameSummaryController gameSummary;
+    private CashBoxController gameSummary;
     
     @Autowired
     private DoublingController doubler;
@@ -49,10 +53,12 @@ public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelLis
     @Autowired
     private GameStateController gameStatus;
     
-//    private PayLinePanel pnlPaylines = new PayLinePanel();
-
     private CardLayout cards = new CardLayout();
-    JPanel pnlCards = new JPanel(cards);
+    private JPanel pnlCards = new JPanel(cards);
+    
+    private int winAmount = 0;
+    private boolean doubling = false;
+    private boolean spinning = false;
     
     public static void main(String[] args)
     {
@@ -94,32 +100,25 @@ public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelLis
         
         setSize(600, 1000);
         
-        model.setBalance(1000);
+        resetPressed();
     }
 
     public void spinComplete(SymbolModel[][] activeSymbols)
     {
         int[] wins = paylineProcessor.calculateWin(activeSymbols);
 
-        int win = 0;
         for (int i = 0; i < wins.length; i++)
         {
-            win += wins[i];
+            winAmount += wins[i];
         }
 
-        win *= model.getCreditsPerLine();
-//        pnlPaylines.setPays(wins);
-
-        model.setWinAmount(win);
+        winAmount *= model.getCreditsPerLine();
+        for(GameEventListener listener : listeners)
+        {
+            listener.spinComplete(winAmount);
+        }
         
-        gameStatus.setWin(win);
-        doubler.setBalance(win);
-    }
-    
-    private void showDoublingPanel()
-    {
-        cards.show(pnlCards, "gamble");
-        doubler.startDouble();
+        spinning = false;
     }
     
     private void hideDoublingPanel()
@@ -128,58 +127,127 @@ public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelLis
     }
     
     @Override
-    public void spin(int lines, int credits)
+    public void spinPressed(int lines, int credits)
     {
-        model.setLinesPlayed(lines);
-        model.setCreditsPerLine(credits);
-        
-        gameSummary.paidIn(model.getTotalBet());
-        
-        if(model.getTotalBet() <= model.getBalance())
+        if(!spinning)
         {
-            model.decreaseBalance(model.getTotalBet());
+            spinning = true;
             
-            model.setCreditsPerLine(credits);
+            takeWinPressed();
+            
             model.setLinesPlayed(lines);
+            model.setCreditsPerLine(credits);
             
-            hideDoublingPanel();
-            reelController.startSpinning();
+            if(model.getTotalBet() <= model.getBalance())
+            {
+                model.decreaseBalance(model.getTotalBet());
+                hideDoublingPanel();
+                reelController.startSpinning();
+                
+                for(GameEventListener listener : listeners)
+                {
+                    listener.spinStarted(credits, lines);
+                }
+            }
         }
     }
 
     @Override
-    public void help()
+    public void helpPressed()
     {
-        System.out.println("Help");
     }
 
     @Override
-    public void gamble()
+    public void gamblePressed()
     {
-        if(model.getWinAmount() > 0)
+        if(winAmount > 0)
         {
-            showDoublingPanel();
+            doubling = true;
+            cards.show(pnlCards, "gamble");
+            doubler.startDouble(winAmount);
         }
     }
 
     @Override
-    public void takeWin()
+    public void takeWinPressed()
     {
-        int winAmount = doubler.getBalance();
-        
         hideDoublingPanel();
-        
-        model.increaseBalance(winAmount);
-        
-        gameSummary.paidOut(winAmount);
-        
-        doubler.setBalance(0);
+
+        // call on this object first, so model is updated
+        takeWin(winAmount);
     }
 
     @Override
-    public void reset()
+    public void resetPressed()
     {
-        System.out.println("Reset");
         model.increaseBalance(1000);
+        gameSummary.cashIn(1000);
+    }
+
+    @Override
+    public void machineStarted()
+    {
+    }
+
+    @Override
+    public void cashIn(int amount)
+    {
+    }
+
+    @Override
+    public void cashOut(int amount)
+    {
+    }
+
+    @Override
+    public void spinStarted(int credits, int lines)
+    {
+    }
+
+    @Override
+    public void spinComplete(int winAmount)
+    {
+        // do nothing here
+    }
+
+    @Override
+    public void takeWin(int amount)
+    {
+        if(!doubling)
+        {
+            model.increaseBalance(amount);
+            winAmount = 0;
+            doubling = false;
+
+            for(GameEventListener listener : listeners)
+            {
+                if(listener != this)
+                {
+                    listener.takeWin(winAmount);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void gambleWon(int multiplier)
+    {
+    }
+
+    @Override
+    public void gambleLost(int multiplier)
+    {
+    }
+
+    @Override
+    public void gambleComplete(int amount, int multiplier, boolean win)
+    {
+        doubling = false;
+        takeWin(win ? amount : 0);
+    }
+
+    @Override
+    public void betChanged(int creditsPerLine, int lines)
+    {
     }
 }

@@ -2,30 +2,31 @@ package au.com.barstard.doubler;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import au.com.barstard.SoundPlayer;
-import au.com.barstard.blokey.RecordKeeper;
-import au.com.barstard.gamestate.GameStateModel;
+import au.com.barstard.GameEventListener;
+import au.com.barstard.controlpanel.ControlPanelAdapter;
 
 @Component
-public class DoublingController
+public class DoublingController extends ControlPanelAdapter
 {
     @Autowired
-    private GameStateModel model;
-    
-    @Autowired
-    private RecordKeeper recordKeeper;
+    private List<GameEventListener> listeners;
     
     private DoublingView view;
+
     private int balance;
-    private int cumulativeMultiplier = 1;
+    private int cumulativeMultiplier;
     
     public DoublingController()
     {
         view = new DoublingView();
+        
+        balance = 0;
+        cumulativeMultiplier = 1;
         
         view.getBtnBlack().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -60,66 +61,91 @@ public class DoublingController
         
     }
 
-    public void startDouble()
+    public void startDouble(int balance)
     {
+        if(getBalance() > 0 || getMultiplier() > 1)
+        {
+            throw new RuntimeException("Double already in progress, can't start another one");
+        }
+        
+        setBalance(balance);
         cumulativeMultiplier = 1;
     }
     
-    public void finishDouble(int finalBalance)
+    private void finishDouble(int amount, int multiplier, boolean win)
     {
+        for(GameEventListener listener : listeners)
+        {
+            listener.gambleComplete(amount, multiplier, win);
+        }
+        
+        setBalance(0);
+        cumulativeMultiplier = 1;
     }
     
-    public void hitButton(DoubleButton button)
+    public void takeWinPressed()
     {
+        if(balance > 0)
+        {
+            finishDouble(balance, cumulativeMultiplier, true);
+        }
+    }
+    
+    private void hitButton(DoubleButton button)
+    {
+        // no balance to gamble? do nuffin...
         if(balance == 0)
         {
             return;
         }
         
+        // pick a suit
         Suit actualSuit = Suit.random();
+        
+        // add to history panel
         view.getPnlHistory().addSuit(actualSuit);
 
+        // how much we are gambling
         int creditsGambled = balance;
+        
+        // the gambling multiplier that we are up to
         int currentMultiplier = cumulativeMultiplier;
         
+        // work out how much we won
         double multiplier = multiplier(button, actualSuit);
         cumulativeMultiplier = (int)(multiplier * cumulativeMultiplier);
         balance *= multiplier;
         setBalance(balance);
 
+        // notify all listeners of what just happened
         boolean doubleWon = multiplier > 0.0;
-        
-        if(model != null)
+        if(doubleWon)
         {
-            model.setGambleMultiplier((int)multiplier);
+            notifyListenersOfGambleWin((int)multiplier);
         }
-
-        System.out.println(balance + " / " + multiplier + " / " + creditsGambled + " / " + model.getTotalBet());
-        
-        if(balance >= 5000)
+        else
         {
-            System.out.println("plus pineapple!");
-            SoundPlayer.play("pluspineapple");
-        }
-        else if(multiplier >= 4.0 && creditsGambled > 1.0 * (model.getTotalBet()))
-        {
-            System.out.println("take that!!");
-            SoundPlayer.play("takethat");
-        }
-        
-        if(recordKeeper != null)
-        {
-            if(doubleWon)
-            {
-                recordKeeper.doubleResult(true, cumulativeMultiplier, balance);
-            }
-            else
-            {
-                recordKeeper.doubleResult(false, currentMultiplier, creditsGambled);
-            }
+            nofityListenersOfGambleLoss((int)currentMultiplier);
+            finishDouble(creditsGambled, currentMultiplier, false);
         }
     }
 
+    private void notifyListenersOfGambleWin(int multiplier)
+    {
+        for(GameEventListener listener : listeners)
+        {
+            listener.gambleWon((int)multiplier);
+        }
+    }
+    
+    private void nofityListenersOfGambleLoss(int multiplier)
+    {
+        for(GameEventListener listener : listeners)
+        {
+            listener.gambleLost(multiplier);
+        }
+    }
+    
     private double multiplier(DoubleButton btn, Suit suit)
     {
         switch(btn)
@@ -134,7 +160,7 @@ public class DoublingController
         }
     }
     
-    public void setBalance(int balance)
+    private void setBalance(int balance)
     {
         this.balance = balance;
         view.getLblRiskPayout().setText(String.format("$%1.2f (%dx)", balance / 100.0, cumulativeMultiplier));
@@ -145,9 +171,14 @@ public class DoublingController
         return view;
     }
 
-    public int getBalance()
+    private int getBalance()
     {
         return balance;
+    }
+    
+    private int getMultiplier()
+    {
+        return cumulativeMultiplier;
     }
 }
 

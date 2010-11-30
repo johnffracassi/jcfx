@@ -9,42 +9,42 @@
        		http://www.springframework.org/schema/context
        		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
- 	<bean id="symbolNine" class="au.com.barstard.SymbolModel">
+ 	<bean id="symbolNine" class="au.com.barstard.symbol.SymbolModel">
 		<property name="name" value="nine" />
 		<property name="description" value="Nine" />
 		<property name="label" value="9" />
 		<property name="imageLocation" value="/images/9.png" />
 	</bean>
  
- 	<bean id="symbolTen" class="au.com.barstard.SymbolModel">
+ 	<bean id="symbolTen" class="au.com.barstard.symbol.SymbolModel">
 		<property name="name" value="ten" />
 		<property name="description" value="Ten" />
 		<property name="label" value="1" />
 		<property name="imageLocation" value="/images/10.png" />
 	</bean>
  
- 	<bean id="symbolJack" class="au.com.barstard.SymbolModel">
+ 	<bean id="symbolJack" class="au.com.barstard.symbol.SymbolModel">
 		<property name="name" value="jack" />
 		<property name="description" value="Jack" />
 		<property name="label" value="J" />
 		<property name="imageLocation" value="/images/J.png" />
 	</bean>
  
- 	<bean id="symbolQueen" class="au.com.barstard.SymbolModel">
+ 	<bean id="symbolQueen" class="au.com.barstard.symbol.SymbolModel">
 		<property name="name" value="queen" />
 		<property name="description" value="Queen" />
 		<property name="label" value="Q" />
 		<property name="imageLocation" value="/images/Q.png" />
 	</bean>
  
- 	<bean id="symbolKing" class="au.com.barstard.SymbolModel">
+ 	<bean id="symbolKing" class="au.com.barstard.symbol.SymbolModel">
 		<property name="name" value="king" />
 		<property name="description" value="King" />
 		<property name="label" value="K" />
 		<property name="imageLocation" value="/images/K.png" />
 	</bean>
  
- 	<bean id="symbolAce" class="au.com.barstard.SymbolModel">
+ 	<bean id="symbolAce" class="au.com.barstard.symbol.SymbolModel">
 		<property name="name" value="ace" />
 		<property name="description" value="Ace" />
 		<property name="label" value="A" />
