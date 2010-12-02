@@ -11,9 +11,6 @@ import java.awt.Color;
 
 public class CashBoxView extends JPanel
 {
-    private JLabel lblRecordName;
-    private JLabel lblRecordValue;
-    private JLabel lblTime;
     private JLabel lblCashIn;
     private JLabel lblCashOut;
     private JLabel lblPaidIn;
@@ -34,135 +31,121 @@ public class CashBoxView extends JPanel
      */
     public CashBoxView()
     {
-        setLayout(new MigLayout("",
-                "[8%,fill][][8%,fill][8%,fill][8%,fill][4%,fill][6%,fill][8%,fill][4%,fill][6%,fill][8%,fill][grow,fill]",
-                "[20%][40%][grow][15px][15px]"));
+        setLayout(new MigLayout("", "[10%,fill][10%,fill][10%,fill][10%,fill][10%,fill][4%,fill][6%,fill][8%,fill][4%,fill][6%,fill][8%,fill]", "[15px][15px]"));
         setOpaque(false);
-        setPreferredSize(new Dimension(600, 149));
+        setPreferredSize(new Dimension(593, 50));
 
-        lblRecordName = new JLabel("Record Name");
-        lblRecordName.setHorizontalAlignment(SwingConstants.CENTER);
-        add(lblRecordName, "cell 0 0 13 1,growx");
-
-        lblRecordValue = new JLabel("Record Value");
-        lblRecordValue.setFont(new Font("Dialog", Font.BOLD, 18));
-        lblRecordValue.setHorizontalAlignment(SwingConstants.CENTER);
-        add(lblRecordValue, "cell 0 1 13 1,growx");
-
-        JPanel panel = new JPanel();
-        panel.setBackground(Color.RED);
-        add(panel, "cell 0 2 12 1,grow");
-
-        lblSpinsLabel = new JLabel("Spins");
+        lblSpinsLabel = new JLabel("#");
+        lblSpinsLabel.setForeground(new Color(95, 158, 160));
+        lblSpinsLabel.setOpaque(true);
+        lblSpinsLabel.setBackground(new Color(47, 79, 79));
         lblSpinsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblSpinsLabel.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 11));
-        add(lblSpinsLabel, "flowx,cell 0 3");
+        lblSpinsLabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 10));
+        add(lblSpinsLabel, "flowx,cell 0 0");
 
-        JLabel lblCashInLabel = new JLabel("Cash In");
+        JLabel lblCashInLabel = new JLabel("CI");
+        lblCashInLabel.setForeground(new Color(95, 158, 160));
+        lblCashInLabel.setOpaque(true);
+        lblCashInLabel.setBackground(new Color(47, 79, 79));
         lblCashInLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblCashInLabel.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 11));
-        add(lblCashInLabel, "cell 1 3");
+        lblCashInLabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 10));
+        add(lblCashInLabel, "cell 1 0,growx");
 
-        JLabel lblCashOutLabel = new JLabel("Cash Out");
+        JLabel lblCashOutLabel = new JLabel("CO");
+        lblCashOutLabel.setForeground(new Color(95, 158, 160));
+        lblCashOutLabel.setOpaque(true);
+        lblCashOutLabel.setBackground(new Color(47, 79, 79));
         lblCashOutLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblCashOutLabel.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 11));
-        add(lblCashOutLabel, "cell 2 3");
+        lblCashOutLabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 10));
+        add(lblCashOutLabel, "cell 2 0");
 
-        JLabel lblPaidInLabel = new JLabel("Paid In");
+        JLabel lblPaidInLabel = new JLabel("PI");
+        lblPaidInLabel.setForeground(new Color(95, 158, 160));
+        lblPaidInLabel.setOpaque(true);
+        lblPaidInLabel.setBackground(new Color(47, 79, 79));
         lblPaidInLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblPaidInLabel.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 11));
-        add(lblPaidInLabel, "cell 3 3");
+        lblPaidInLabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 10));
+        add(lblPaidInLabel, "cell 3 0");
 
-        JLabel lblPaidOutLabel = new JLabel("Paid Out");
+        JLabel lblPaidOutLabel = new JLabel("PO");
+        lblPaidOutLabel.setForeground(new Color(95, 158, 160));
+        lblPaidOutLabel.setOpaque(true);
+        lblPaidOutLabel.setBackground(new Color(47, 79, 79));
         lblPaidOutLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblPaidOutLabel.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 11));
-        add(lblPaidOutLabel, "cell 4 3");
+        lblPaidOutLabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 10));
+        add(lblPaidOutLabel, "cell 4 0");
 
-        lblGambleWinsLabel = new JLabel("Gamble Wins");
+        lblGambleWinsLabel = new JLabel("Gambling Wins");
+        lblGambleWinsLabel.setForeground(new Color(95, 158, 160));
+        lblGambleWinsLabel.setOpaque(true);
+        lblGambleWinsLabel.setBackground(new Color(47, 79, 79));
         lblGambleWinsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblGambleWinsLabel.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 11));
-        add(lblGambleWinsLabel, "cell 5 3 3 1");
+        lblGambleWinsLabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 10));
+        add(lblGambleWinsLabel, "cell 5 0 3 1,alignx center");
 
         lblGambleLossesLabel = new JLabel("Gamble Losses");
+        lblGambleLossesLabel.setForeground(new Color(95, 158, 160));
+        lblGambleLossesLabel.setOpaque(true);
+        lblGambleLossesLabel.setBackground(new Color(47, 79, 79));
         lblGambleLossesLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblGambleLossesLabel.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 11));
-        add(lblGambleLossesLabel, "cell 8 3 3 1");
-
-        lblTime = new JLabel("7:02pm");
-        lblTime.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 14));
-        lblTime.setHorizontalAlignment(SwingConstants.RIGHT);
-        add(lblTime, "cell 11 3 1 2,grow");
+        lblGambleLossesLabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 10));
+        add(lblGambleLossesLabel, "cell 8 0 3 1");
 
         lblSpins = new JLabel("0");
         lblSpins.setHorizontalAlignment(SwingConstants.CENTER);
-        lblSpins.setFont(new Font("DejaVu Sans", Font.PLAIN, 10));
-        add(lblSpins, "flowx,cell 0 4");
+        lblSpins.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 10));
+        add(lblSpins, "flowx,cell 0 1");
 
         lblCashIn = new JLabel("$0.00");
         lblCashIn.setHorizontalAlignment(SwingConstants.CENTER);
-        lblCashIn.setFont(new Font("DejaVu Sans", Font.PLAIN, 10));
-        add(lblCashIn, "cell 1 4");
+        lblCashIn.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 10));
+        add(lblCashIn, "cell 1 1,alignx center");
 
         lblCashOut = new JLabel("$0.00");
         lblCashOut.setHorizontalAlignment(SwingConstants.CENTER);
-        lblCashOut.setFont(new Font("DejaVu Sans", Font.PLAIN, 10));
-        add(lblCashOut, "cell 2 4");
+        lblCashOut.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 10));
+        add(lblCashOut, "cell 2 1");
 
         lblPaidIn = new JLabel("$0.00");
         lblPaidIn.setHorizontalAlignment(SwingConstants.CENTER);
-        lblPaidIn.setFont(new Font("DejaVu Sans", Font.PLAIN, 10));
-        add(lblPaidIn, "cell 3 4");
+        lblPaidIn.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 10));
+        add(lblPaidIn, "cell 3 1");
 
         lblPaidOut = new JLabel("$0.00");
         lblPaidOut.setHorizontalAlignment(SwingConstants.CENTER);
-        lblPaidOut.setFont(new Font("DejaVu Sans", Font.PLAIN, 10));
-        add(lblPaidOut, "cell 4 4");
+        lblPaidOut.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 10));
+        add(lblPaidOut, "cell 4 1");
 
         lblGambleWins = new JLabel("0");
         lblGambleWins.setHorizontalAlignment(SwingConstants.CENTER);
-        lblGambleWins.setFont(new Font("DejaVu Sans", Font.PLAIN, 10));
-        add(lblGambleWins, "cell 5 4");
+        lblGambleWins.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 10));
+        add(lblGambleWins, "cell 5 1,growx");
 
         lblGambleWinMult = new JLabel("0x");
         lblGambleWinMult.setHorizontalAlignment(SwingConstants.CENTER);
-        lblGambleWinMult.setFont(new Font("DejaVu Sans", Font.PLAIN, 10));
-        add(lblGambleWinMult, "cell 6 4");
+        lblGambleWinMult.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 10));
+        add(lblGambleWinMult, "cell 6 1,alignx center");
 
         lblGambleWinAmount = new JLabel("$0.00");
         lblGambleWinAmount.setHorizontalAlignment(SwingConstants.CENTER);
-        lblGambleWinAmount.setFont(new Font("DejaVu Sans", Font.PLAIN, 10));
-        add(lblGambleWinAmount, "cell 7 4");
+        lblGambleWinAmount.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 10));
+        add(lblGambleWinAmount, "cell 7 1,alignx center");
 
         lblGambleLosses = new JLabel("0");
         lblGambleLosses.setHorizontalAlignment(SwingConstants.CENTER);
-        lblGambleLosses.setFont(new Font("DejaVu Sans", Font.PLAIN, 10));
-        add(lblGambleLosses, "cell 8 4");
+        lblGambleLosses.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 10));
+        add(lblGambleLosses, "cell 8 1");
 
         lblGambleLossMult = new JLabel("0x");
         lblGambleLossMult.setHorizontalAlignment(SwingConstants.CENTER);
-        lblGambleLossMult.setFont(new Font("DejaVu Sans", Font.PLAIN, 10));
-        add(lblGambleLossMult, "cell 9 4");
+        lblGambleLossMult.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 10));
+        add(lblGambleLossMult, "cell 9 1");
 
         lblGambleLossAmount = new JLabel("$0.00");
         lblGambleLossAmount.setHorizontalAlignment(SwingConstants.CENTER);
-        lblGambleLossAmount.setFont(new Font("DejaVu Sans", Font.PLAIN, 10));
-        add(lblGambleLossAmount, "cell 10 4");
+        lblGambleLossAmount.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 10));
+        add(lblGambleLossAmount, "cell 10 1");
 
-    }
-
-    public JLabel getLblRecordName()
-    {
-        return lblRecordName;
-    }
-
-    public JLabel getLblRecordValue()
-    {
-        return lblRecordValue;
-    }
-
-    public JLabel getLblTime()
-    {
-        return lblTime;
     }
 
     public JLabel getLblCashIn()

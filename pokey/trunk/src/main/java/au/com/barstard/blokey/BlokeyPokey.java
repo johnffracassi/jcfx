@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -15,13 +16,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import au.com.barstard.GameEventListener;
+import au.com.barstard.VerticalFlowLayout;
 import au.com.barstard.cashbox.CashBoxController;
+import au.com.barstard.cashbox.FooterLineController;
 import au.com.barstard.controlpanel.ControlPanelController;
 import au.com.barstard.controlpanel.ControlPanelListener;
 import au.com.barstard.doubler.DoublingController;
 import au.com.barstard.gamestate.GameStateController;
 import au.com.barstard.gamestate.GameStateModel;
 import au.com.barstard.payline.PayLineProcessor;
+import au.com.barstard.records.RecordsController;
 import au.com.barstard.reel.ReelController;
 import au.com.barstard.spin.SpinListener;
 import au.com.barstard.symbol.SymbolModel;
@@ -45,7 +49,13 @@ public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelLis
     private ControlPanelController controlPanel;
     
     @Autowired
-    private CashBoxController gameSummary;
+    private RecordsController recordsController;
+    
+    @Autowired
+    private CashBoxController cashboxController;
+    
+    @Autowired 
+    private FooterLineController footerLineController; 
     
     @Autowired
     private DoublingController doubler;
@@ -74,12 +84,12 @@ public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelLis
     {
         setVisible(true);
     }
-    
+
     @PostConstruct
-    public void init()
+    private void init()
     {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(new Color(46, 139, 87));
+        setSize(600, 800);
 
         pnlCards.setOpaque(false);
         pnlCards.add(reelController, "reels");
@@ -91,14 +101,16 @@ public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelLis
         
         JPanel pnlGame = new JPanel();
         pnlGame.setLayout(new BorderLayout());
-        pnlGame.add(gameStatus.getView(), BorderLayout.NORTH);
-        pnlGame.add(pnlCards, BorderLayout.CENTER);
-        pnlGame.add(gameSummary.getView(), BorderLayout.SOUTH);
         
-        getContentPane().add(pnlGame, BorderLayout.NORTH);
-        getContentPane().add(controlPanel.getView(), BorderLayout.SOUTH);
+        getContentPane().setBackground(new Color(46, 139, 87));
+        getContentPane().setLayout(new VerticalFlowLayout(0));
+        getContentPane().add(gameStatus.getView());
+        getContentPane().add(pnlCards);
+        getContentPane().add(recordsController.getView());
+        getContentPane().add(footerLineController.getView());
+        getContentPane().add(cashboxController.getView());
         
-        setSize(600, 1000);
+        controlPanel.show(this);
         
         resetPressed();
     }
@@ -131,8 +143,6 @@ public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelLis
     {
         if(!spinning)
         {
-            spinning = true;
-            
             takeWinPressed();
             
             model.setLinesPlayed(lines);
@@ -140,6 +150,8 @@ public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelLis
             
             if(model.getTotalBet() <= model.getBalance())
             {
+                spinning = true;
+                
                 model.decreaseBalance(model.getTotalBet());
                 hideDoublingPanel();
                 reelController.startSpinning();
@@ -181,7 +193,7 @@ public class BlokeyPokey extends JFrame implements SpinListener, ControlPanelLis
     public void resetPressed()
     {
         model.increaseBalance(1000);
-        gameSummary.cashIn(1000);
+        cashboxController.cashIn(1000);
     }
 
     @Override
