@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import au.com.barstard.blokey.SoundPlayer;
 import au.com.barstard.spin.SpinListener;
 import au.com.barstard.spin.SpinPanelListener;
 import au.com.barstard.spin.SpinView;
@@ -75,14 +74,6 @@ public class ReelController extends JPanel implements SpinPanelListener
 
         boolean stillGoing = false;
 
-        for(int i=0; i<3; i++)
-        {
-            if(reel.getActiveSymbols()[i].getName().equalsIgnoreCase("Boonie"))
-            {
-                SoundPlayer.play("boonie");
-            }
-        }
-        
         for (int i = 0; i < 5; i++)
         {
             if (isSpinning[i])

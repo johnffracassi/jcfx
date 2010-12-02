@@ -1,7 +1,11 @@
 package au.com.barstard.controlpanel;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFrame;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,9 +31,14 @@ public class ControlPanelController
         view = new ControlPanelView(this);
     }
     
-    public ControlPanelView getView()
+    public void show(java.awt.Component parent)
     {
-        return view;
+        JFrame frame = new JFrame("Controller");
+        frame.setSize(new Dimension(600, 200));
+        frame.setLayout(new BorderLayout());
+        frame.add(view, BorderLayout.CENTER);
+        frame.setLocationRelativeTo(parent);
+        frame.setVisible(true);
     }
     
     public void setCreditsPerLine(int credits)

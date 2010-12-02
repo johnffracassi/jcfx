@@ -1,10 +1,10 @@
 package au.com.barstard.controlpanel;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
+import javax.swing.JLabel;
 
 public class ControlPanelTest
 {
@@ -51,7 +51,8 @@ public class ControlPanelTest
         
         ControlPanelController controller = new ControlPanelController();
         
-        frame.getContentPane().add(controller.getView(), BorderLayout.CENTER);
+        frame.getContentPane().add(new JLabel("hello!"), BorderLayout.CENTER);
+        controller.show(frame);
     }
 
 }
