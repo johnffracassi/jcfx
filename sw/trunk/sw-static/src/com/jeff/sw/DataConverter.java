@@ -29,8 +29,8 @@ public class DataConverter extends Task
 	int batBallId = 1;
 	int bowlBallId = 1;
 	int inningsId = 1;
-	int partnershipId = 1;
-	int overId = 1;
+	int partnershipId = 1; 
+	int overId = 1; 
 	int batOverId = 1;
 	int matchId = 1;
 	int currentSeason = 14;

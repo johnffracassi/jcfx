@@ -14,8 +14,10 @@
 	<property name="app.dir" value="bin/app" />	<!-- Web application output directory 			-->
 	<property name="xml.file" value="data.xml" />			<!-- Output location for data model 			-->
 	<property name="out.file" value="steamboat.html" />	<!-- Output HTML file, pre-split 				-->
+	<!-- property name="tmp.dir" value="/tmp/steamboat" / -->
+	<property name="tmp.dir" value="c:/dev/temp/steamboat" />
 	
-    <property name="sdk.dir" location="/opt/appengine" />
+    <property name="sdk.dir" location="c:/dev/lib/appengine" />
     <import file="${sdk.dir}/config/user/ant-macros.xml" />
 
 	  <target name="update" description="Uploads the application to App Engine.">
@@ -23,17 +25,11 @@
 	  </target>
 
 	<target name="init">
-		<available property="linux" file="/usr" />
-		
-		<condition property="tmp.dir" value="/tmp/steamboat" else="c:/dev/temp/steamboat">
-			<isset property="linux" />
-		</condition>
-		
 		<echo message="Output directory: ${tmp.dir}" />
 		<mkdir dir="${tmp.dir}" />
 		<mkdir dir="${tmp.dir}/bin" />
 	</target>
-
+	
 	<!-- ========================================================================== -->
 	<!-- Generate and deploy														-->
 	<!-- ========================================================================== -->
@@ -57,7 +53,7 @@
 	</path>
 	
 	<target name="compile" depends="init">
-		<javac srcdir="${src}" includes="**/*.java" destdir="${tmp.dir}/${classes}" classpathref="cp" />
+		<javac srcdir="${src}" includes="**/*.java" destdir="bin" classpathref="cp" />
 	</target>
 	
 
@@ -91,7 +87,6 @@
 	<!-- ========================================================================== -->
 	<target name="chart">
 		<xslt style="${xsl.dir}/bat-charts.xsl" in="${tmp.dir}/${xml.file}" out="${tmp.dir}/tmp.svg" force="true" />
-
 		<taskdef name="rasterise" classname="org.apache.tools.ant.taskdefs.optional.RasterizerTask" />
 		<rasterise result="image/png" destdir="${tmp.dir}/${app.dir}/charts/png" width="700" height="300">
 			<fileset dir="${tmp.dir}/${app.dir}/charts/svg" includes="*.svg" />
