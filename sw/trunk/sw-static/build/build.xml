@@ -11,9 +11,9 @@
 	<property name="xsl.file" location="${xsl.dir}/steamboat.xsl" />	<!-- Root stylesheet 							-->
 
 	<property name="work.dir" value="/tmp/steamboat" />	
-	<property name="app.dir" value="bin/app" />	<!-- Web application output directory 			-->
+	<property name="app.dir" value="bin/app" />				<!-- Web application output directory 			-->
 	<property name="xml.file" value="data.xml" />			<!-- Output location for data model 			-->
-	<property name="out.file" value="steamboat.html" />	<!-- Output HTML file, pre-split 				-->
+	<property name="out.file" value="steamboat.html" />		<!-- Output HTML file, pre-split 				-->
 	<!-- property name="tmp.dir" value="/tmp/steamboat" / -->
 	<property name="tmp.dir" value="c:/dev/temp/steamboat" />
 	

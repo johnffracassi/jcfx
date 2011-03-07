@@ -11,8 +11,9 @@
 
 		<h1>Steamboat Willies News</h1>
 
-		<h3>29-Oct-2010 - New Season</h3>
-		New season. Looks like we're playing shit teams again.
+		<h3>1-Mar-2011</h3>
+		First update in a while...<br/>
+		Toot toot!
 		
 		<br/>
 

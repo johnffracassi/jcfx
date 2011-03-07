@@ -1,0 +1,15 @@
+fullName 		= Gareth
+dob 			= 
+currentAge		= 
+flag 			= england.gif
+origin 			= 
+teams	 		= Fill in
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 7/2/2011
+lastGame		= 
+nicknames		= Gareth the fill-in
+profile			= 
+specialMove		= 

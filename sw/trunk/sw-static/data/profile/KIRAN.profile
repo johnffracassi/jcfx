@@ -1,8 +1,8 @@
 fullName 		= Kiran
 dob 			= 
 currentAge		= 
-flag 			= nz.gif
-origin 			= New Zealand
+flag 			= za.gif
+origin 			= South Africa
 teams	 		= Steamboat Willies
 role 			= 
 battingStyle 	= 
