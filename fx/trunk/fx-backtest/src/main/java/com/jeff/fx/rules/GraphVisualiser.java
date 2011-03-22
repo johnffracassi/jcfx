@@ -1,6 +1,7 @@
 package com.jeff.fx.rules;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -8,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -59,16 +59,11 @@ public class GraphVisualiser extends JFrame
     @Autowired
     private CandleFilterProcessor processor;
     
-    private FXDataSource dataSource = FXDataSource.Forexite;
-    private Instrument instrument = Instrument.GBPUSD;
-    private Period period = Period.OneMin;
-    private LocalDate startDate = new LocalDate(2010, 10, 20);
-    
     private mxGraphComponent graphComponent;
     private mxGraph graph;
     private Node selected = null;
-    private Node root = new TrueNode(null);
-    private JButton btnTest;
+    private Node rootNode = new TrueNode(null);
+    
     private JLabel lblResult;
     
     public static void main(String[] args)
@@ -93,7 +88,7 @@ public class GraphVisualiser extends JFrame
         JToolBar toolBar = new JToolBar();
         getContentPane().add(toolBar, BorderLayout.NORTH);
         
-        btnTest = new JButton("Apply");
+        JButton btnTest = new JButton("Apply");
         btnTest.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 apply();
@@ -109,7 +104,7 @@ public class GraphVisualiser extends JFrame
 
         initGraph();
         
-        updateRootNode(root);
+        updateRootNode(rootNode);
     }
 
     private void apply()
@@ -120,7 +115,7 @@ public class GraphVisualiser extends JFrame
             CandleCollection candles = loadTestData();
 
             lblResult.setText("Applying filter");
-            List<CandleDataPoint> filtered = processor.apply(root, candles);
+            List<CandleDataPoint> filtered = processor.apply(rootNode, candles);
 
             lblResult.setText("Found " + filtered.size() + " candle(s)");
         }
@@ -132,6 +127,11 @@ public class GraphVisualiser extends JFrame
     
     public CandleCollection loadTestData() throws IOException
     {
+        FXDataSource dataSource = FXDataSource.Forexite;
+        Instrument instrument = Instrument.GBPUSD;
+        Period period = Period.OneMin;
+        LocalDate startDate = new LocalDate(2010, 10, 20);
+
         FXDataRequest request = new FXDataRequest();
         request.setDataSource(dataSource);
         request.setDate(startDate);
@@ -143,23 +143,7 @@ public class GraphVisualiser extends JFrame
     
     public Node getRootNode()
     {
-        return root;
-    }
-    
-    private Object insertNode(Object parent, mxGraph graph, Node node)
-    {
-        String fillColour = node.getChildCount() > 0 ? "#ddddff" : "#ffffdd";
-        String lineColour = node.getChildCount() > 0 ? "#aaaacc" : "#ccccaa";
-        
-        Object vertex = graph.insertVertex(parent, null, node, 0, 0, 120, 50, "strokeColor=" + lineColour + ";fillColor=" + fillColour);
-        
-        for(int i=0; i<node.getChildCount(); i++)
-        {
-            Object child = insertNode(parent, graph, node.getChild(i));
-            graph.insertEdge(parent, null, null, vertex, child);
-        }
-        
-        return vertex;
+        return rootNode;
     }
     
     private void initGraph()
@@ -173,6 +157,8 @@ public class GraphVisualiser extends JFrame
         graph.setCellsEditable(false);
 
         graphComponent = new mxGraphComponent(graph);
+        graphComponent.getGraphControl().setPreferredSize(new Dimension(800, 600));
+        
         getContentPane().add(graphComponent, BorderLayout.CENTER);
 
         // attach mouse listeners
@@ -203,81 +189,21 @@ public class GraphVisualiser extends JFrame
         });
     }
     
-    private JMenuItem buildEditMenuItem()
-    {
-        JMenuItem item = new JMenuItem("Edit...");
-        
-        item.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                BeanForm form = new BeanForm();
-                form.buildForm(selected);
-                
-                GenericDialog editor = new GenericDialog(form, "Edit Node");
-                editor.setVisible(true);
-                
-                updateRootNode(root);
-            }
-        });
-        
-        return item;
-    }
-    
-    private JMenu buildLogicNodeMenu()
-    {
-        JMenu menu = new JMenu("Logic");
-        menu.add(buildMenuItem("And", AndNode.class));
-        menu.add(buildMenuItem("Or", OrNode.class));
-        menu.add(buildMenuItem("Xor", XorNode.class));
-        menu.add(buildMenuItem("Nand", NandNode.class));
-        return menu;
-    }
-    
-    private JMenuItem buildExpressionNodeMenu()
-    {
-        JMenuItem item = new JMenuItem("Expression Node");
-        
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                replaceSelectedNode(new ELNode());
-            }
-        });
 
-        return item;
-    }
-    
-    private JMenu buildFixedNodeMenu()
+    private Object insertNode(Object parent, mxGraph graph, Node node)
     {
-        JMenu menu = new JMenu("Fixed Value");
-        
-        menu.add(buildMenuItem("True", TrueNode.class));
-        menu.add(buildMenuItem("False", FalseNode.class));
-
-        return menu;
-    }
-    
-    private JMenuItem buildTimeMenu()
-    {
-        JMenuItem menu = new JMenu("Time");
-        
-        JMenuItem rangeItem = new JMenuItem("Time Range");
-        rangeItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                replaceSelectedNode(new TimeRangeNode());
-            }
-        });
-        menu.add(rangeItem);
-        
-        JMenuItem timeItem = new JMenuItem("Time");
-        timeItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                replaceSelectedNode(new TimeOfWeekNode());
-            }
-        });
-        menu.add(timeItem);
-        
-        return menu;
+    	String fillColour = node.getChildCount() > 0 ? "#ddddff" : "#ffffdd";
+    	String lineColour = node.getChildCount() > 0 ? "#aaaacc" : "#ccccaa";
+    	
+    	Object vertex = graph.insertVertex(parent, null, node, 1, 1, 150, 35, "strokeColor=" + lineColour + ";fillColor=" + fillColour);
+    	
+    	for(int i=0; i<node.getChildCount(); i++)
+    	{
+    		Object child = insertNode(parent, graph, node.getChild(i));
+    		graph.insertEdge(parent, null, null, vertex, child);
+    	}
+    	
+    	return vertex;
     }
     
     private void updateRootNode(Node node)
@@ -288,15 +214,17 @@ public class GraphVisualiser extends JFrame
         graph.setCellsLocked(false);
         try
         {
-            for(int c=parent.getChildCount(); c>0; c--)
+            while(parent.getChildCount() > 0)
             {
-                parent.remove(c-1);
+            	parent.remove(0);
             }
             
-            insertNode(parent, graph, node);
+            insertNode(null, graph, node);
             
             new mxLayoutManager(graph) {
+            	
                 mxCompactTreeLayout layout = new mxCompactTreeLayout(graph, false);
+                
                 public mxIGraphLayout getLayout(Object parent)
                 {
                     if (graph.getModel().getChildCount(parent) > 0)
@@ -331,10 +259,10 @@ public class GraphVisualiser extends JFrame
         else
         {
             System.out.println("replacing root node");
-            root = newNode;
+            rootNode = newNode;
         }
         
-        updateRootNode(root);
+        updateRootNode(rootNode);
     }
     
     private void replaceSelectedNode(Class<? extends Node> nodeClass)
@@ -358,6 +286,7 @@ public class GraphVisualiser extends JFrame
     
     private void setSelectedNode(Node node)
     {
+        System.out.println(node);
         this.selected = node;
     }
     
@@ -372,11 +301,84 @@ public class GraphVisualiser extends JFrame
         return item;
     }
     
-    public JButton getBtnTest() {
-        return btnTest;
-    }
-    
     public JLabel getLblResult() {
         return lblResult;
+    }
+
+    private JMenuItem buildEditMenuItem()
+    {
+        JMenuItem item = new JMenuItem("Edit...");
+
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                BeanForm form = new BeanForm();
+                form.buildForm(selected);
+
+                GenericDialog editor = new GenericDialog(form, "Edit Node");
+                editor.setVisible(true);
+
+                updateRootNode(rootNode);
+            }
+        });
+
+        return item;
+    }
+
+    private JMenu buildLogicNodeMenu()
+    {
+        JMenu menu = new JMenu("Logic");
+        menu.add(buildMenuItem("And", AndNode.class));
+        menu.add(buildMenuItem("Or", OrNode.class));
+        menu.add(buildMenuItem("Xor", XorNode.class));
+        menu.add(buildMenuItem("Nand", NandNode.class));
+        return menu;
+    }
+
+    private JMenuItem buildExpressionNodeMenu()
+    {
+        JMenuItem item = new JMenuItem("Expression Node");
+
+        item.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                replaceSelectedNode(new ELNode());
+            }
+        });
+
+        return item;
+    }
+
+    private JMenu buildFixedNodeMenu()
+    {
+        JMenu menu = new JMenu("Fixed Value");
+
+        menu.add(buildMenuItem("True", TrueNode.class));
+        menu.add(buildMenuItem("False", FalseNode.class));
+
+        return menu;
+    }
+
+    private JMenuItem buildTimeMenu()
+    {
+        JMenuItem menu = new JMenu("Time");
+
+        JMenuItem rangeItem = new JMenuItem("Time Range");
+        rangeItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                replaceSelectedNode(new TimeRangeNode());
+            }
+        });
+        menu.add(rangeItem);
+
+        JMenuItem timeItem = new JMenuItem("Time");
+        timeItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                replaceSelectedNode(new TimeOfWeekNode());
+            }
+        });
+        menu.add(timeItem);
+
+        return menu;
     }
 }

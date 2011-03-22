@@ -40,7 +40,7 @@ public class BTOrderTest {
 	public void stopLossesSell() {
 		
 		BTOrder order = generateOpenOrder();
-		order.setOfferSide(OfferSide.Bid);
+		order.setOfferSide(OfferSide.Sell);
 		
 		// assert that there are no stops set
 		assertTrue(order.getStopLoss() == 0);
@@ -97,7 +97,7 @@ public class BTOrderTest {
 	public void takeProfitsSell() {
 		
 		BTOrder order = generateOpenOrder();
-		order.setOfferSide(OfferSide.Bid);
+		order.setOfferSide(OfferSide.Sell);
 		
 		// assert that there are no stops set
 		assertTrue(order.getTakeProfit() == 0);
@@ -126,7 +126,7 @@ public class BTOrderTest {
 		BTOrder order = new BTOrder();
 		order.setId(1);
 		order.setInstrument(Instrument.AUDUSD);
-		order.setOfferSide(OfferSide.Ask);
+		order.setOfferSide(OfferSide.Buy);
 		order.setOpenPrice(0.9);
 		order.setOpenTime(new LocalDateTime(2010, 8, 23, 13, 0, 0));
 		order.setUnits(1);

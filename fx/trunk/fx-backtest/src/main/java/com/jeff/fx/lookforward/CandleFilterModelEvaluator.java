@@ -43,8 +43,12 @@ public class CandleFilterModelEvaluator
         jc.set("idx", model.getIndex());
         jc.set("ind", indicatorEvaluator);
         
+        Object result = e.evaluate(jc);
+        
+        System.out.println(expression + " = " + result);
+        
         // Now evaluate the expression, getting the result
-        return e.evaluate(jc);
+        return result;
     }
     
     public <T> T evaluate(CandleFilterModel model, String expression, Class<T> returnType)

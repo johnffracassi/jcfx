@@ -52,7 +52,7 @@ public abstract class AbstractStrategy {
 	protected void openOrder(BTOrder order, CandleDataPoint candle) {
 		order.setInstrument(candle.getInstrument());
 		order.setOpenTime(candle.getDateTime());
-		order.setOpenPrice(order.getOfferSide() == OfferSide.Ask ? candle.getBuyOpen() : candle.getSellOpen());
+		order.setOpenPrice(order.getOfferSide() == OfferSide.Buy ? candle.getBuyOpen() : candle.getSellOpen());
 		orderBook.post(order);
 	}
 
@@ -79,13 +79,13 @@ public abstract class AbstractStrategy {
 		OrderCloseType type = OrderCloseType.Close;
 		
 		// check for a stop loss or take profit
-		if(order.getOfferSide() == OfferSide.Ask) {
+		if(order.getOfferSide() == OfferSide.Buy) {
 			if(order.hasStopLoss() && candle.getSellLow() < order.getStopLossPrice()) {
 				type = (OrderCloseType.StopLoss);
 			} else if(order.hasTakeProfit() && candle.getBuyHigh() > order.getTakeProfitPrice()) {
 				type = (OrderCloseType.TakeProfit);
 			}
-		} else if(order.getOfferSide() == OfferSide.Bid) {
+		} else if(order.getOfferSide() == OfferSide.Sell) {
 			if(order.hasTakeProfit() && candle.getBuyHigh() > order.getTakeProfitPrice()) {
 				type = (OrderCloseType.TakeProfit);
 			} else if(order.hasStopLoss() && candle.getSellLow() < order.getStopLossPrice()) {
@@ -98,16 +98,16 @@ public abstract class AbstractStrategy {
 
 	protected final double getClosePrice(BTOrder order, CandleDataPoint candle) {
 
-		double closePrice = order.getOfferSide() == OfferSide.Ask ? candle.getSellOpen() : candle.getBuyOpen();
+		double closePrice = order.getOfferSide() == OfferSide.Buy ? candle.getSellOpen() : candle.getBuyOpen();
 		
 		// check for a stop loss or take profit
-		if(order.getOfferSide() == OfferSide.Ask) {
+		if(order.getOfferSide() == OfferSide.Buy) {
 			if(order.hasStopLoss() && candle.getSellLow() < order.getStopLossPrice()) {
 				closePrice = order.getStopLossPrice();
 			} else if(order.hasTakeProfit() && candle.getBuyHigh() > order.getTakeProfitPrice()) {
 				closePrice = order.getTakeProfitPrice();
 			}
-		} else if(order.getOfferSide() == OfferSide.Bid) {
+		} else if(order.getOfferSide() == OfferSide.Sell) {
 			if(order.hasTakeProfit() && candle.getBuyHigh() > order.getTakeProfitPrice()) {
 				closePrice = order.getTakeProfitPrice();
 			} else if(order.hasStopLoss() && candle.getSellLow() < order.getStopLossPrice()) {
