@@ -12,13 +12,13 @@ public class OptimiserParameterTableModel extends DefaultTableModel {
 	private List<OptimiserParameter<?,?>> params = new ArrayList<OptimiserParameter<?,?>>();
 	
 	public OptimiserParameterTableModel() {
-		addParameter(new OPInteger("open", 1320, 8460, 60));
-		addParameter(new OPInteger("close", 1320, 8460, 60));
-		addParameter(new OPInteger("shortSma", 5, 5, 5));
-		addParameter(new OPInteger("longSma", 50, 50, 25));
+		addParameter(new OPInteger("open", 1320, 8460, 240));
+		addParameter(new OPInteger("close", 1320, 8460, 240));
+		addParameter(new OPInteger("shortSma", 5, 55, 10));
+		addParameter(new OPInteger("longSma", 55, 500, 75));
 		addParameter(new OPOfferSide("offerSide"));
-		addParameter(new OPInteger("stopLoss", 0, 300, 75));
-		addParameter(new OPInteger("takeProfit", 0, 300, 75));
+		addParameter(new OPInteger("stopLoss", 0, 300, 150));
+		addParameter(new OPInteger("takeProfit", 0, 300, 150));
 	}
 	
 	public void addParameter(OptimiserParameter<?,?> param) {

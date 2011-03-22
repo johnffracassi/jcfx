@@ -45,64 +45,64 @@ public class RuleTest
     @Test 
     public void testAndNode()
     {
-        Node<MockModel> node = new AndNode<MockModel>(null, trueNode, trueNode);
+        Node node = new AndNode(null, trueNode, trueNode);
         assertTrue(node.evaluate(model));
         
-        node = new AndNode<MockModel>(null, falseNode, trueNode);
+        node = new AndNode(null, falseNode, trueNode);
         assertFalse(node.evaluate(model));
         
-        node = new AndNode<MockModel>(null, trueNode, falseNode);
+        node = new AndNode(null, trueNode, falseNode);
         assertFalse(node.evaluate(model));
         
-        node = new AndNode<MockModel>(null, falseNode, falseNode);
+        node = new AndNode(null, falseNode, falseNode);
         assertFalse(node.evaluate(model));
     }
     
     @Test 
     public void testOrNode()
     {
-        Node<MockModel> node = new OrNode<MockModel>(null, trueNode, trueNode);
+        Node node = new OrNode(null, trueNode, trueNode);
         assertTrue(node.evaluate(model));
         
-        node = new OrNode<MockModel>(null, falseNode, trueNode);
+        node = new OrNode(null, falseNode, trueNode);
         assertTrue(node.evaluate(model));
         
-        node = new OrNode<MockModel>(null, trueNode, falseNode);
+        node = new OrNode(null, trueNode, falseNode);
         assertTrue(node.evaluate(model));
         
-        node = new OrNode<MockModel>(null, falseNode, falseNode);
+        node = new OrNode(null, falseNode, falseNode);
         assertFalse(node.evaluate(model));
     }    
     
     @Test 
     public void testNandNode()
     {
-        Node<MockModel> node = new NandNode<MockModel>(null, trueNode, trueNode);
+        Node node = new NandNode(null, trueNode, trueNode);
         assertFalse(node.evaluate(model));
         
-        node = new NandNode<MockModel>(null, falseNode, trueNode);
+        node = new NandNode(null, falseNode, trueNode);
         assertTrue(node.evaluate(model));
         
-        node = new NandNode<MockModel>(null, trueNode, falseNode);
+        node = new NandNode(null, trueNode, falseNode);
         assertTrue(node.evaluate(model));
         
-        node = new NandNode<MockModel>(null, falseNode, falseNode);
+        node = new NandNode(null, falseNode, falseNode);
         assertTrue(node.evaluate(model));
     }    
     
     @Test 
     public void testXorNode()
     {
-        Node<MockModel> node = new XorNode<MockModel>(null, trueNode, trueNode);
+        Node node = new XorNode(null, trueNode, trueNode);
         assertFalse(node.evaluate(model));
         
-        node = new XorNode<MockModel>(null, falseNode, trueNode);
+        node = new XorNode(null, falseNode, trueNode);
         assertTrue(node.evaluate(model));
         
-        node = new XorNode<MockModel>(null, trueNode, falseNode);
+        node = new XorNode(null, trueNode, falseNode);
         assertTrue(node.evaluate(model));
         
-        node = new XorNode<MockModel>(null, falseNode, falseNode);
+        node = new XorNode(null, falseNode, falseNode);
         assertFalse(node.evaluate(model));
     }
 }

@@ -5,7 +5,7 @@ import com.jeff.fx.common.OfferSide;
 public class OPOfferSide extends OptimiserParameter<OfferSide,Integer> {
 
 	public OPOfferSide(String key) {
-		super(key, OfferSide.Ask, OfferSide.Bid, 1);
+		super(key, OfferSide.Buy, OfferSide.Sell, 1);
 	}
 
 	public OfferSide fromString(String val) {

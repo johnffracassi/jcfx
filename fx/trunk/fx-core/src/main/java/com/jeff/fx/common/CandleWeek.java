@@ -135,7 +135,7 @@ public class CandleWeek implements Serializable {
 		
 		for(int idx=startIdx; idx<endIdx; idx++) {
 			if(!isEmptyCandle(idx)) {
-				float price = (offerSide == OfferSide.Ask) ? sell[LOW][idx] : buy[LOW][idx];
+				float price = (offerSide == OfferSide.Buy) ? sell[LOW][idx] : buy[LOW][idx];
 				if(price <= targetPrice) {
 					return getCandle(idx);
 				}
@@ -151,7 +151,7 @@ public class CandleWeek implements Serializable {
 		int endIdx = (to == null ? buy[LOW].length : (to.periodOfWeek(this.period) - this.startIdx));
 		
 		for(int idx=startIdx; idx<endIdx; idx++) {
-			float price = (offerSide == OfferSide.Ask) ? sell[HIGH][idx] : buy[HIGH][idx];
+			float price = (offerSide == OfferSide.Buy) ? sell[HIGH][idx] : buy[HIGH][idx];
 			if(price >= targetPrice) {
 				return getCandle(idx);
 			}

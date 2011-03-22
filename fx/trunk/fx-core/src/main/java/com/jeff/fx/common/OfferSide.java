@@ -3,10 +3,10 @@ package com.jeff.fx.common;
 public enum OfferSide 
 {
 	/** Bid = sell */
-    Bid("Sell"), 
+    Sell("Sell"), 
     
     /** Ask = buy */
-    Ask("Buy");  
+    Buy("Buy");  
     
     String description;
     

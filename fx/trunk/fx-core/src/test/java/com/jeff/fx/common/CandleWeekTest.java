@@ -63,11 +63,11 @@ public class CandleWeekTest {
 	public void highsAndLows() {
 		CandleWeek cw30 = new CandleWeek(buildData(), Period.ThirtyMin);
 		
-		CandleDataPoint candle = cw30.findNextHighAbovePrice(new TimeOfWeek(0, 22, 00), new TimeOfWeek(5, 21, 00), 0.8100f, OfferSide.Ask);
+		CandleDataPoint candle = cw30.findNextHighAbovePrice(new TimeOfWeek(0, 22, 00), new TimeOfWeek(5, 21, 00), 0.8100f, OfferSide.Buy);
 		assertTrue(candle != null);
 		assertTrue(0.8100 + " < " + candle.getBuyHigh(), 0.8100 < candle.getBuyHigh());
 		
-		candle = cw30.findNextLowBelowPrice(new TimeOfWeek(0, 22, 00), new TimeOfWeek(5, 21, 00), 0.7999f, OfferSide.Ask);
+		candle = cw30.findNextLowBelowPrice(new TimeOfWeek(0, 22, 00), new TimeOfWeek(5, 21, 00), 0.7999f, OfferSide.Buy);
 		assertTrue(candle == null);
 		
 		cw30.getRawValues(0)[2] = 0.8003f;
@@ -76,7 +76,7 @@ public class CandleWeekTest {
 		cw30.getRawValues(3)[2] = 0.8003f;
 		assertEquals(0.8050, cw30.getCandle(2).getBuyHigh(), TOLERANCE);
 
-		candle = cw30.findNextLowBelowPrice(new TimeOfWeek(0, 22, 00), new TimeOfWeek(5, 21, 00), 0.7995f, OfferSide.Bid);
+		candle = cw30.findNextLowBelowPrice(new TimeOfWeek(0, 22, 00), new TimeOfWeek(5, 21, 00), 0.7995f, OfferSide.Sell);
 		assertTrue(candle != null);
 		assertTrue(0.7995 + " > " + candle.getBuyHigh(), candle.getBuyLow() < 0.7995);
 	}

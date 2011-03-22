@@ -50,7 +50,7 @@ public class TimeStrategy extends AbstractStrategy {
 	
 	@Parameter("Offer Side")
 	@Description("Type of order to open")
-	private OfferSide offerSide = OfferSide.Ask;
+	private OfferSide offerSide = OfferSide.Buy;
 
 	public TimeStrategy(int id, Map<String,Object> parameters, IndicatorCache indicators) {
 		
@@ -96,8 +96,12 @@ public class TimeStrategy extends AbstractStrategy {
 						int dir1 = sma1.getDirection(absOpenIdx);
 						int dir2 = sma2.getDirection(absOpenIdx);
 						
-						if((offerSide == OfferSide.Ask && (dir1 == 1 && dir2 == 1)) || (offerSide == OfferSide.Bid && (dir1 == -1 && dir2 == -1))){
+						if((offerSide == OfferSide.Buy && (dir1 == 1 && dir2 == 1)) || (offerSide == OfferSide.Sell && (dir1 == -1 && dir2 == -1)))
+						
+//						if((offerSide == OfferSide.Buy && (dir1 == 1 && dir2 == 1) && (sma1.getValue(absOpenIdx) > sma2.getValue(absOpenIdx)) ) || 
+//						   (offerSide == OfferSide.Sell && (dir1 == -1 && dir2 == -1) && (sma1.getValue(absOpenIdx) < sma2.getValue(absOpenIdx))))
 
+						{
 							// create and lodge the order
 							BTOrder order = new BTOrder();
 							order.setOfferSide(offerSide);
@@ -111,22 +115,22 @@ public class TimeStrategy extends AbstractStrategy {
 							CandleDataPoint tp = null;
 			
 							// find a stop loss
-							if(stopLoss > 0 && offerSide == OfferSide.Ask) { // find a SL on buy
+							if(stopLoss > 0 && offerSide == OfferSide.Buy) { // find a SL on buy
 								sl = cw.findNextLowBelowPrice(open, close, (float)order.getStopLossPrice(), offerSide);
-							} else if(stopLoss > 0 && offerSide == OfferSide.Bid) { // find a SL on sell
+							} else if(stopLoss > 0 && offerSide == OfferSide.Sell) { // find a SL on sell
 								sl = cw.findNextHighAbovePrice(open, close, (float)order.getStopLossPrice(), offerSide);
 							}
 							
 							// find a take profit
-							if(takeProfit > 0 && offerSide == OfferSide.Ask) { // find a TP on buy
+							if(takeProfit > 0 && offerSide == OfferSide.Buy) { // find a TP on buy
 								tp = cw.findNextHighAbovePrice(open, close, (float)order.getTakeProfitPrice(), offerSide);
-							} else if(takeProfit > 0 && offerSide == OfferSide.Bid) { // find a TP on sell
+							} else if(takeProfit > 0 && offerSide == OfferSide.Sell) { // find a TP on sell
 								tp = cw.findNextLowBelowPrice(open, close, (float)order.getTakeProfitPrice(), offerSide);
 							}
 			
 							// find which comes first (sl, tp or close)
 							if(sl == null && tp == null) {
-								order.setClosePrice(offerSide == OfferSide.Ask ? closeCandle.getSellClose() : closeCandle.getBuyClose());
+								order.setClosePrice(offerSide == OfferSide.Buy ? closeCandle.getSellClose() : closeCandle.getBuyClose());
 								order.setCloseType(OrderCloseType.Close);
 								order.setCloseTime(closeCandle.getDateTime());
 							} else if(sl != null && tp != null) {
@@ -167,7 +171,7 @@ public class TimeStrategy extends AbstractStrategy {
 	}
 	
 	public OfferSide getOfferSide() {
-		return offerSide == null ? OfferSide.Ask : offerSide;
+		return offerSide == null ? OfferSide.Buy : offerSide;
 	}
 	
 	public int getStopLoss() {

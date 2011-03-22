@@ -22,7 +22,7 @@ public class BTOrder {
 
 	public int getProfit() {
 		
-		if(offerSide == OfferSide.Ask) {
+		if(offerSide == OfferSide.Buy) {
 			return (int)StrictMath.round((10000.0 * (getClosePrice() - getOpenPrice())));
 		} else {
 			return (int)StrictMath.round((10000.0 * (getOpenPrice() - getClosePrice())));
@@ -35,7 +35,7 @@ public class BTOrder {
 			return 0.0;
 		}
 		
-		if(offerSide == OfferSide.Ask) {
+		if(offerSide == OfferSide.Buy) {
 			return getOpenPrice() - (stopLoss * instrument.getPipValue());
 		} else {
 			return getOpenPrice() + (stopLoss * instrument.getPipValue());
@@ -48,7 +48,7 @@ public class BTOrder {
 			stopLoss = 0;
 		}
 		
-		if(offerSide == OfferSide.Ask) {
+		if(offerSide == OfferSide.Buy) {
 			setStopLoss((int)StrictMath.round(((getOpenPrice() - newPrice) / instrument.getPipValue())));
 		} else {
 			setStopLoss((int)StrictMath.round(((newPrice - getOpenPrice()) / instrument.getPipValue())));
@@ -61,7 +61,7 @@ public class BTOrder {
 			return 0.0;
 		}
 		
-		if(offerSide == OfferSide.Ask) {
+		if(offerSide == OfferSide.Buy) {
 			return getOpenPrice() + (takeProfit * instrument.getPipValue());
 		} else {
 			return getOpenPrice() - (takeProfit * instrument.getPipValue());
@@ -74,7 +74,7 @@ public class BTOrder {
 			takeProfit = 0;
 		}
 		
-		if(offerSide == OfferSide.Ask) {
+		if(offerSide == OfferSide.Buy) {
 			setTakeProfit((int)StrictMath.round(((newPrice - getOpenPrice()) / instrument.getPipValue())));
 		} else {
 			setTakeProfit((int)StrictMath.round(((getOpenPrice() - newPrice) / instrument.getPipValue())));

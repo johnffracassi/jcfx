@@ -24,7 +24,15 @@ public class ELNode extends AbstractFXNode
     {
         this(null, "1.0", Operand.eq, "1.0");
     }
-    
+
+    public ELNode(String lexpr, Operand operand, String rexpr)
+    {
+        this();
+        this.leftExpr = lexpr;
+        this.operand = operand;
+        this.rightExpr = rexpr;
+    }
+
     public ELNode(Node parent, String lexpr, Operand operand, String rexpr)
     {
         super(parent);

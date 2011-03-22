@@ -271,4 +271,9 @@ public class CandleDataPoint extends AbstractFXDataPoint implements Serializable
 	public int getRange() {
 		return (int)((buyHigh - buyLow) / getInstrument().pipValue);
 	}
+	
+	public int getSize()
+	{
+		return (int)((buyClose - buyOpen) / getInstrument().pipValue);
+	}
 }
