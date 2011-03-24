@@ -1,6 +1,7 @@
 package com.jeff.fx.graph;
 
 import com.jeff.fx.graph.editor.*;
+import com.jeff.fx.graph.node.*;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
@@ -21,17 +22,17 @@ import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.List;
 
-public class MyGraphEditor extends BasicGraphEditor
+public class FXGraphEditor extends BasicGraphEditor
 {
 	public static final NumberFormat numberFormat = NumberFormat.getInstance();
 	public static URL url = null;
 
-	public MyGraphEditor()
+	public FXGraphEditor()
 	{
-		this("mxGraph Editor", new CustomGraphComponent(new CustomGraph()));
+		this("Graph Editor", new CustomGraphComponent(new CustomGraph()));
 	}
 
-	public MyGraphEditor(String appTitle, mxGraphComponent component)
+	public FXGraphEditor(String appTitle, mxGraphComponent component)
 	{
 		super(appTitle, component);
 		final mxGraph graph = graphComponent.getGraph();
@@ -62,13 +63,12 @@ public class MyGraphEditor extends BasicGraphEditor
 		});
 
 		// Adds some template cells for dropping into the graph
-		shapesPalette.addTemplate("Entry",new ImageIcon(MyGraphEditor.class.getResource("/images/doubleellipse.png")),"ellipse;shape=doubleEllipse;", 60, 60, new EntryNode());
-        shapesPalette.addTemplate("Proceed",new ImageIcon(MyGraphEditor.class.getResource("/images/doubleellipse.png")),"ellipse;shape=doubleEllipse;", 60, 60, new ProceedNode());
-        shapesPalette.addTemplate("Terminate",new ImageIcon(MyGraphEditor.class.getResource("/images/doubleellipse.png")),"ellipse;shape=doubleEllipse;", 60, 60, new TerminateNode());
-        shapesPalette.addTemplate("Time Range",new ImageIcon(MyGraphEditor.class.getResource("/images/rhombus.png")),"rhombus", 140, 60, new BaseNode("TimeRangeNode"));
-        shapesPalette.addTemplate("Expression",new ImageIcon(MyGraphEditor.class.getResource("/images/rhombus.png")),"rhombus", 140, 60, new BaseNode("ExprNode"));
-		shapesPalette.addTemplate("Action",new ImageIcon(MyGraphEditor.class.getResource("/images/rounded.png")),"rounded=1", 140, 60, new BaseNode("ActionNode"));
-        shapesPalette.addEdgeTemplate("Straight",new ImageIcon(MyGraphEditor.class.getResource("/images/straight.png")),"straight", 120, 120, "");
+		shapesPalette.addTemplate("Entry",new ImageIcon(FXGraphEditor.class.getResource("/images/doubleellipse.png")),"ellipse;shape=doubleEllipse;", 60, 60, new EntryNode());
+        shapesPalette.addTemplate("Proceed",new ImageIcon(FXGraphEditor.class.getResource("/images/doubleellipse.png")),"ellipse;shape=doubleEllipse;", 60, 60, new ProceedNode());
+        shapesPalette.addTemplate("Terminate",new ImageIcon(FXGraphEditor.class.getResource("/images/doubleellipse.png")),"ellipse;shape=doubleEllipse;", 60, 60, new TerminateNode());
+        shapesPalette.addTemplate("Time Range",new ImageIcon(FXGraphEditor.class.getResource("/images/rhombus.png")),"rhombus", 140, 60, new TimeRangeNode());
+        shapesPalette.addTemplate("Expression",new ImageIcon(FXGraphEditor.class.getResource("/images/rhombus.png")),"rhombus", 140, 60, new ExpressionNode());
+		shapesPalette.addTemplate("Action", new ImageIcon(FXGraphEditor.class.getResource("/images/rounded.png")), "rounded=1", 140, 60, new ActionNode());
 	}
 
     @Override
@@ -91,7 +91,7 @@ public class MyGraphEditor extends BasicGraphEditor
 
 			// Loads the defalt stylesheet from an external file
 			mxCodec codec = new mxCodec();
-			Document doc = mxUtils.loadDocument(MyGraphEditor.class.getResource("/resources/default-style.xml").toString());
+			Document doc = mxUtils.loadDocument(FXGraphEditor.class.getResource("/resources/default-style.xml").toString());
 			codec.decode(doc.getDocumentElement(), graph.getStylesheet());
 
 			// Sets the background to white
@@ -290,7 +290,7 @@ public class MyGraphEditor extends BasicGraphEditor
 		mxConstants.SHADOW_COLOR = Color.LIGHT_GRAY;
 		mxConstants.W3C_SHADOWCOLOR = "#D3D3D3";
 		
-		MyGraphEditor editor = new MyGraphEditor();
+		FXGraphEditor editor = new FXGraphEditor();
 		editor.createFrame(new EditorMenuBar(editor)).setVisible(true);
 	}
 }

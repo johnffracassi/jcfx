@@ -1,4 +1,6 @@
-package com.jeff.fx.graph;
+package com.jeff.fx.graph.node;
+
+import com.jeff.fx.lookforward.CandleFilterModel;
 
 import java.io.Serializable;
 
@@ -13,6 +15,11 @@ public class BaseNode implements Serializable
     public BaseNode(String label)
     {
         this.label = label;
+    }
+
+    public void visit(CandleFilterModel model)
+    {
+        System.out.println("Visiting node: " + getClass().getSimpleName());
     }
 
     @Override
