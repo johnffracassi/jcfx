@@ -1,4 +1,4 @@
-package com.jeff.fx.graph;
+package com.jeff.fx.graph.node;
 
 public class TerminateNode extends BaseNode
 {

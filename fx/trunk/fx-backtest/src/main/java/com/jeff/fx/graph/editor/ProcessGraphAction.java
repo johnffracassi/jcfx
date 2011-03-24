@@ -1,6 +1,6 @@
 package com.jeff.fx.graph.editor;
 
-import com.jeff.fx.graph.EntryNode;
+import com.jeff.fx.graph.node.EntryNode;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
