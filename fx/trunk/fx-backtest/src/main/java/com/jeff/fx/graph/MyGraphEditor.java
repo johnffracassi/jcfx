@@ -62,12 +62,12 @@ public class MyGraphEditor extends BasicGraphEditor
 		});
 
 		// Adds some template cells for dropping into the graph
-		shapesPalette.addTemplate("Entry",new ImageIcon(MyGraphEditor.class.getResource("/images/doubleellipse.png")),"ellipse;shape=doubleEllipse", 60, 60, "Enter");
-        shapesPalette.addTemplate("Proceed",new ImageIcon(MyGraphEditor.class.getResource("/images/doubleellipse.png")),"ellipse;shape=doubleEllipse", 60, 60, "Proceed");
-        shapesPalette.addTemplate("Terminate",new ImageIcon(MyGraphEditor.class.getResource("/images/doubleellipse.png")),"ellipse;shape=doubleEllipse", 60, 60, "Terminate");
-        shapesPalette.addTemplate("Time Range",new ImageIcon(MyGraphEditor.class.getResource("/images/rhombus.png")),"rhombus", 140, 60, "Time Range");
-        shapesPalette.addTemplate("Expression",new ImageIcon(MyGraphEditor.class.getResource("/images/rhombus.png")),"rhombus", 140, 60, "Expr");
-		shapesPalette.addTemplate("Action",new ImageIcon(MyGraphEditor.class.getResource("/images/rounded.png")),"rounded=1", 140, 60, "Action...");
+		shapesPalette.addTemplate("Entry",new ImageIcon(MyGraphEditor.class.getResource("/images/doubleellipse.png")),"ellipse;shape=doubleEllipse;", 60, 60, new EntryNode());
+        shapesPalette.addTemplate("Proceed",new ImageIcon(MyGraphEditor.class.getResource("/images/doubleellipse.png")),"ellipse;shape=doubleEllipse;", 60, 60, new ProceedNode());
+        shapesPalette.addTemplate("Terminate",new ImageIcon(MyGraphEditor.class.getResource("/images/doubleellipse.png")),"ellipse;shape=doubleEllipse;", 60, 60, new TerminateNode());
+        shapesPalette.addTemplate("Time Range",new ImageIcon(MyGraphEditor.class.getResource("/images/rhombus.png")),"rhombus", 140, 60, new BaseNode("TimeRangeNode"));
+        shapesPalette.addTemplate("Expression",new ImageIcon(MyGraphEditor.class.getResource("/images/rhombus.png")),"rhombus", 140, 60, new BaseNode("ExprNode"));
+		shapesPalette.addTemplate("Action",new ImageIcon(MyGraphEditor.class.getResource("/images/rounded.png")),"rounded=1", 140, 60, new BaseNode("ActionNode"));
         shapesPalette.addEdgeTemplate("Straight",new ImageIcon(MyGraphEditor.class.getResource("/images/straight.png")),"straight", 120, 120, "");
 	}
 
