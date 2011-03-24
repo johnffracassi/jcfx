@@ -1,5 +1,6 @@
 package com.jeff.fx.graph.editor;
 
+import com.jeff.fx.graph.EntryNode;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
@@ -45,7 +46,7 @@ public class ProcessGraphAction extends AbstractAction
         {
             mxCell child = (mxCell)root.getChildAt(c);
 
-            if(child.getValue() != null && child.getValue().equals("Enter"))
+            if(child.getValue() != null && child.getValue() instanceof EntryNode)
             {
                 return child;
             }
