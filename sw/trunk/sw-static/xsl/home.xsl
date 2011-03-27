@@ -11,11 +11,20 @@
 
 		<h1>Steamboat Willies News</h1>
 
-		<h3>1-Mar-2011</h3>
-		First update in a while...<br/>
-		Toot toot!
+		<h3>27-Mar-2011</h3>
+		Congratulations Steamboat Willies on winning yet another premiership. It's not official yet, but I've
+		heard rumours that the Steamboat Willies are now the most successful indoor cricket team in the Commonwealth.
 		
-		<br/>
+		<h3>Sri-Lanka Tour</h3>
+		Tentative dates for the Australian tour of Sri-Lanka are floating around (see <a href="http://www.wavingtheflag.com/tour.asp?TourID=54">here</a>).
+		There's talk of an epic Steamboat Willies Adventure (an SWA is the equivalent of a multi-week AGM), if you're keen, 
+		email me (jeffcann@gmail.com) with the matches you're interested in.<br/>
+		<b>Registered thusfar</b>: Jeff (ODI 4&amp;5, Test 1&amp;2), Nightbus (Test 2&amp;3 OR ODI 4&amp;5,Test 1)
+		
+		<h3>26-Mar-2011</h3>
+		RIP, one of the original Steamboats. Dickie got married today...
+		
+		<br/><br/>
 
 	</xsl:template>
 </xsl:stylesheet>
