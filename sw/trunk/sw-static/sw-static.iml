@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="jar://$MODULE_DIR$/lib/ant.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/commons-net-1.4.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-awt-util.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-bridge.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-css.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-dom.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-ext.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-extension.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-gui-util.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-gvt.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-parser.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-rasterizer-ext.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-rasterizer.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-script.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-slideshow.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-squiggle-ext.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-squiggle.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-svg-dom.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-svggen.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-svgpp.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-swing.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-transcoder.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-ttf2svg.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-util.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik-xml.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/batik.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/js.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/pdf-transcoder.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/saxon8-dom.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/saxon8-dom4j.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/saxon8-jdom.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/saxon8-sql.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/saxon8-xom.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/saxon8-xpath.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/saxon8-xqj.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/saxon8.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/saxon8sa-jaxp.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/saxon8sa.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/xerces_2_5_0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/xml-apis.jar!/" />
+    <varelement var="file://$M2_REPO$" value="M2_REPO" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/src" expected_position="0" />
+    </src_description>
+  </component>
+  <component name="FacetManager">
+    <facet type="web" name="Web">
+      <configuration>
+        <descriptors>
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web/WEB-INF/web.xml" />
+        </descriptors>
+        <webroots>
+          <root url="file://$MODULE_DIR$/web" relative="/" />
+        </webroots>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/bin" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="module-library">
+      <library name="ant.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/ant.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-net-1.4.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/commons-net-1.4.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module" module-name="cj-core" />
+    <orderEntry type="module-library">
+      <library name="M2_REPO">
+        <CLASSES>
+          <root url="file://$M2_REPO$" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-awt-util.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-awt-util.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-bridge.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-bridge.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-css.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-css.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-dom.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-dom.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-ext.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-ext.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-extension.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-extension.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-gui-util.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-gui-util.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-gvt.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-gvt.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-parser.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-parser.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-rasterizer-ext.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-rasterizer-ext.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-rasterizer.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-rasterizer.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-script.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-script.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-slideshow.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-slideshow.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-squiggle-ext.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-squiggle-ext.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-squiggle.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-squiggle.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-svg-dom.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-svg-dom.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-svggen.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-svggen.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-svgpp.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-svgpp.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-swing.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-swing.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-transcoder.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-transcoder.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-ttf2svg.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-ttf2svg.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-util.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-util.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-xml.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik-xml.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/batik.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="js.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/js.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="pdf-transcoder.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/pdf-transcoder.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="saxon8-dom.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/saxon8-dom.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="saxon8-dom4j.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/saxon8-dom4j.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="saxon8-jdom.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/saxon8-jdom.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="saxon8-sql.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/saxon8-sql.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="saxon8-xom.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/saxon8-xom.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="saxon8-xpath.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/saxon8-xpath.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="saxon8-xqj.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/saxon8-xqj.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="saxon8.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/saxon8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="saxon8sa-jaxp.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/saxon8sa-jaxp.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="saxon8sa.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/saxon8sa.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xerces_2_5_0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/xerces_2_5_0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xml-apis.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/xml-apis.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+
