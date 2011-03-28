@@ -2,6 +2,7 @@ package com.jeff.fx.graph;
 
 import com.jeff.fx.graph.editor.*;
 import com.jeff.fx.graph.node.*;
+import com.jeff.fx.rules.Node;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
@@ -9,6 +10,8 @@ import com.mxgraph.model.mxICell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.util.mxGraphTransferable;
+import com.mxgraph.swing.view.mxCellEditor;
+import com.mxgraph.swing.view.mxICellEditor;
 import com.mxgraph.util.*;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.view.mxCellState;
@@ -17,6 +20,8 @@ import org.w3c.dom.Document;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Iterator;
@@ -59,7 +64,6 @@ public class FXGraphEditor extends BasicGraphEditor
 					}
 				}
 			}
-
 		});
 
 		// Adds some template cells for dropping into the graph
@@ -69,6 +73,8 @@ public class FXGraphEditor extends BasicGraphEditor
         shapesPalette.addTemplate("Time Range",new ImageIcon(FXGraphEditor.class.getResource("/images/rhombus.png")),"rhombus", 140, 60, new TimeRangeNode());
         shapesPalette.addTemplate("Expression",new ImageIcon(FXGraphEditor.class.getResource("/images/rhombus.png")),"rhombus", 140, 60, new ExpressionNode());
 		shapesPalette.addTemplate("Action", new ImageIcon(FXGraphEditor.class.getResource("/images/rounded.png")), "rounded=1", 140, 60, new ActionNode());
+
+
 	}
 
     @Override
@@ -99,7 +105,17 @@ public class FXGraphEditor extends BasicGraphEditor
 			getViewport().setBackground(Color.WHITE);
 		}
 
-		/**
+        @Override
+        protected mxICellEditor createCellEditor()
+        {
+            mxCellEditor editor = (mxCellEditor)super.createCellEditor();
+
+            
+
+            return editor;
+        }
+
+        /**
 		 * Overrides drop behaviour to set the cell style if the target
 		 * is not a valid drop target and the cells are of the same
 		 * type (eg. both vertices or both edges). 
@@ -257,6 +273,8 @@ public class FXGraphEditor extends BasicGraphEditor
 
 			return super.createEdge(parent, id, value, source, target, style);
 		}
+
+
 
         private mxCell getFirstTarget(mxCell source)
         {

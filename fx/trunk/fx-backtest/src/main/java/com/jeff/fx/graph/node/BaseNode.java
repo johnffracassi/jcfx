@@ -1,5 +1,6 @@
 package com.jeff.fx.graph.node;
 
+import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.lookforward.CandleFilterModel;
 
 import java.io.Serializable;
@@ -17,9 +18,10 @@ public class BaseNode implements Serializable
         this.label = label;
     }
 
-    public void visit(CandleFilterModel model)
+    public boolean evaluate(CandleDataPoint candle, CandleFilterModel model)
     {
-        System.out.println("Visiting node: " + getClass().getSimpleName());
+        System.out.println("Evaluating node: " + getClass().getSimpleName());
+        return true;
     }
 
     @Override

@@ -1,6 +1,9 @@
 package com.jeff.fx.graph.editor;
 
+import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.graph.node.BaseNode;
 import com.jeff.fx.graph.node.EntryNode;
+import com.jeff.fx.lookforward.CandleFilterModel;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
@@ -38,6 +41,7 @@ public class ProcessGraphAction extends AbstractAction
         mxCell enterNode = findEnterNode(root);
 
         traverseVertex(enterNode, "");
+        doGraph(enterNode, null, null);
     }
 
     private mxCell findEnterNode(mxICell root)
@@ -53,6 +57,56 @@ public class ProcessGraphAction extends AbstractAction
             else
             {
                 return findEnterNode(child);
+            }
+        }
+
+        return null;
+    }
+
+    private void doGraph(mxCell cell, CandleDataPoint candle, CandleFilterModel model)
+    {
+        BaseNode node = (BaseNode)cell.getValue();
+        boolean result = node.evaluate(candle, model);
+
+        if(countExits(cell) > 0)
+        {
+            mxCell target = getTarget(cell, result ? 0 : 1);
+            doGraph(target, candle, model);
+        }
+        else
+        {
+            System.out.println("Terminating at " + cell.getValue());
+        }
+    }
+
+    private int countExits(mxCell vertex)
+    {
+        int exits = 0;
+        for(int i=0; i<vertex.getEdgeCount(); i++)
+        {
+            mxCell edge = (mxCell)vertex.getEdgeAt(i);
+            if(edge.getTarget() != vertex)
+            {
+                exits ++;
+            }
+        }
+        return exits;
+    }
+
+    private mxCell getTarget(mxCell vertex, int idx)
+    {
+        int exits = 0;
+
+        for(int i=0; i<vertex.getEdgeCount(); i++)
+        {
+            mxCell edge = (mxCell)vertex.getEdgeAt(i);
+            if(edge.getTarget() != vertex)
+            {
+                if(exits == idx)
+                {
+                    return (mxCell)edge.getTarget();
+                }
+                exits ++;
             }
         }
 
