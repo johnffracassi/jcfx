@@ -19,13 +19,14 @@ public class BTOrder {
 	private int stopLoss;
 	private int takeProfit;
 
+    private double pipMult = 1.0;
 
 	public int getProfit() {
 		
 		if(offerSide == OfferSide.Buy) {
-			return (int)StrictMath.round((10000.0 * (getClosePrice() - getOpenPrice())));
+			return (int)StrictMath.round((pipMult * (getClosePrice() - getOpenPrice())));
 		} else {
-			return (int)StrictMath.round((10000.0 * (getOpenPrice() - getClosePrice())));
+			return (int)StrictMath.round((pipMult * (getOpenPrice() - getClosePrice())));
 		}
 	}
 
@@ -143,6 +144,7 @@ public class BTOrder {
 
 	public void setInstrument(Instrument instrument) {
 		this.instrument = instrument;
+        this.pipMult = 1.0 / instrument.getPipValue();
 	}
 
 	public boolean hasTakeProfit() {

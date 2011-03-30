@@ -2,6 +2,7 @@ package com.jeff.fx.backtest.strategy.time;
 
 import java.util.Map;
 
+import com.jeff.fx.backtest.strategy.coder.Optimiser;
 import org.apache.log4j.Logger;
 import org.joda.time.LocalDateTime;
 
@@ -26,26 +27,32 @@ public class TimeStrategy extends AbstractStrategy {
 	
 	@Parameter("Open Time")
 	@Description("Open a trade at this time")
+    @Optimiser(min=1320, max=8460, step=15)
 	private TimeOfWeek open = null;
 	
 	@Parameter("Close Time")
 	@Description("Close the open trade at this time")
+    @Optimiser(min=1320, max=8460, step=15)
 	private TimeOfWeek close = null;
 
 	@Parameter("Stop Loss")
 	@Description("Close order if it loses this amount")
-	private int stopLoss = 0;
+	@Optimiser(min=0, max=500, step=10)
+    private int stopLoss = 0;
 
 	@Parameter("Take Profit")
 	@Description("Close order if it reaches this amount of profit")
+    @Optimiser(min=0, max=500, step=10)
 	private int takeProfit = 0;
 
 	@Parameter("Short SMA")
 	@Description("Only open the trade if SMA(x) is heading in direction of the offer side")
+    @Optimiser(min=3, max=50, step=1)
 	private int shortSma = 14;
 	
 	@Parameter("Long SMA")
 	@Description("Only open the trade if SMA(y) is heading in direction of the offer side")
+    @Optimiser(min=50, max=500, step=5)
 	private int longSma = 140;
 	
 	@Parameter("Offer Side")
@@ -70,7 +77,7 @@ public class TimeStrategy extends AbstractStrategy {
 	public boolean isTestValid() {
 		return (!open.equals(close));
 	}
-	
+
 	public OrderBook execute(CandleCollection candles) {
 
 		SimpleMovingAverage sma1 = (SimpleMovingAverage)indicators.calculate(new SimpleMovingAverage(shortSma, CandleValueModel.Typical), candles);

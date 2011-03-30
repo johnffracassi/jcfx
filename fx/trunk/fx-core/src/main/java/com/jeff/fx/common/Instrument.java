@@ -10,7 +10,7 @@ public enum Instrument
     EURNOK, EURSEK, USDDKK, USDHKD, USDMXN, 
     USDNOK, USDSEK, USDSGD, USDTRY, NZDJPY(0.01),
     
-    XAUUSD, XAGUSD;
+    XAUUSD(0.1), XAGUSD(0.01);
     
     
     double pipValue = 0.0001;
