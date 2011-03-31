@@ -18,6 +18,6 @@ public class TimeRangeNode extends BaseNode
     public boolean evaluate(CandleDataPoint candle, CandleFilterModel model)
     {
         System.out.println("Checking time range?");
-        return true;
+        return (true);
     }
 }

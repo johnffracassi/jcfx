@@ -31,20 +31,20 @@ public class MyEditorToolBar extends JToolBar
 
 		add(editor.bind("Process", new ProcessGraphAction()));
         addSeparator();
-        add(editor.bind("New", new NewAction(),"/images/new.gif"));
-        add(editor.bind("Open", new OpenAction(),"/images/open.gif"));
-        add(editor.bind("Save", new SaveAction(false),"/images/save.gif"));
+        add(editor.bind("New", new NewAction(),"/images/page_add.png"));
+        add(editor.bind("Open", new OpenAction(),"/images/folder.png"));
+        add(editor.bind("Save", new SaveAction(false),"/images/disk.png"));
         addSeparator();
 		add(editor.bind("Print", new PrintAction(),"/images/print.gif"));
 		addSeparator();
-		add(editor.bind("Cut", TransferHandler.getCutAction(),"/images/cut.gif"));
-		add(editor.bind("Copy", TransferHandler.getCopyAction(),"/images/copy.gif"));
-		add(editor.bind("Paste", TransferHandler.getPasteAction(),"/images/paste.gif"));
+		add(editor.bind("Cut", TransferHandler.getCutAction(),"/images/cut.png"));
+		add(editor.bind("Copy", TransferHandler.getCopyAction(),"/images/page_white_copy.png"));
+		add(editor.bind("Paste", TransferHandler.getPasteAction(),"/images/page_paste.png"));
 		addSeparator();
-		add(editor.bind("Delete", mxGraphActions.getDeleteAction(),"/images/delete.gif"));
+		add(editor.bind("Delete", mxGraphActions.getDeleteAction(),"/images/bin.png"));
 		addSeparator();
-		add(editor.bind("Undo", new HistoryAction(true),"/images/undo.gif"));
-		add(editor.bind("Redo", new HistoryAction(false),"/images/redo.gif"));
+		add(editor.bind("Undo", new HistoryAction(true),"/images/arrow_undo.png"));
+		add(editor.bind("Redo", new HistoryAction(false),"/images/arrow_redo.png"));
 		addSeparator();
 
 		// Gets the list of available fonts from the local graphics environment
@@ -93,20 +93,20 @@ public class MyEditorToolBar extends JToolBar
 
 		addSeparator();
 
-		add(editor.bind("Bold", new FontStyleAction(true),"/images/bold.gif"));
-		add(editor.bind("Italic", new FontStyleAction(false),"/images/italic.gif"));
+		add(editor.bind("Bold", new FontStyleAction(true),"/images/text_bold.png"));
+		add(editor.bind("Italic", new FontStyleAction(false),"/images/text_italic.png"));
 
 		addSeparator();
 
-		add(editor.bind("Left", new KeyValueAction(mxConstants.STYLE_ALIGN,mxConstants.ALIGN_LEFT),"/images/left.gif"));
-		add(editor.bind("Center", new KeyValueAction(mxConstants.STYLE_ALIGN,mxConstants.ALIGN_CENTER),"/images/center.gif"));
-		add(editor.bind("Right", new KeyValueAction(mxConstants.STYLE_ALIGN,mxConstants.ALIGN_RIGHT),"/images/right.gif"));
+		add(editor.bind("Left", new KeyValueAction(mxConstants.STYLE_ALIGN,mxConstants.ALIGN_LEFT),"/images/text_align_left.png"));
+		add(editor.bind("Center", new KeyValueAction(mxConstants.STYLE_ALIGN,mxConstants.ALIGN_CENTER),"/images/text_align_center.png"));
+		add(editor.bind("Right", new KeyValueAction(mxConstants.STYLE_ALIGN,mxConstants.ALIGN_RIGHT),"/images/text_align_right.png"));
 
 		addSeparator();
 
-		add(editor.bind("Font", new ColorAction("Font",mxConstants.STYLE_FONTCOLOR),"/images/fontcolor.gif"));
-		add(editor.bind("Stroke", new ColorAction("Stroke",mxConstants.STYLE_STROKECOLOR),"/images/linecolor.gif"));
-		add(editor.bind("Fill", new ColorAction("Fill",mxConstants.STYLE_FILLCOLOR),"/images/fillcolor.gif"));
+		add(editor.bind("Font", new ColorAction("Font",mxConstants.STYLE_FONTCOLOR),"/images/text_uppercase.png"));
+		add(editor.bind("Stroke", new ColorAction("Stroke",mxConstants.STYLE_STROKECOLOR),"/images/color_wheel.png"));
+		add(editor.bind("Fill", new ColorAction("Fill",mxConstants.STYLE_FILLCOLOR),"/images/color_wheel.png"));
 
 		addSeparator();
 

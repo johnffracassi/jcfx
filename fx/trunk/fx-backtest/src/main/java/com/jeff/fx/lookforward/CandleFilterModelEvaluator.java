@@ -47,7 +47,7 @@ public class CandleFilterModelEvaluator
         
         System.out.println(expression + " = " + result);
         
-        // Now evaluate the expression, getting the result
+        // Now visit the expression, getting the result
         return result;
     }
     

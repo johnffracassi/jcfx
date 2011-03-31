@@ -40,8 +40,10 @@ public class ProcessGraphAction extends AbstractAction
         mxCell root = (mxCell)graph.getModel().getRoot();
         mxCell enterNode = findEnterNode(root);
 
+        // link up the decision tree nodes
         traverseVertex(enterNode, "");
-        doGraph(enterNode, null, null);
+
+        decide((EntryNode) enterNode.getValue(), null, null);
     }
 
     private mxCell findEnterNode(mxICell root)
@@ -63,20 +65,17 @@ public class ProcessGraphAction extends AbstractAction
         return null;
     }
 
-    private void doGraph(mxCell cell, CandleDataPoint candle, CandleFilterModel model)
+    private boolean decide(BaseNode node, CandleDataPoint candle, CandleFilterModel model)
     {
-        BaseNode node = (BaseNode)cell.getValue();
         boolean result = node.evaluate(candle, model);
+        System.out.println(node + " evaluates to " + result);
 
-        if(countExits(cell) > 0)
+        if(!node.isTerminal())
         {
-            mxCell target = getTarget(cell, result ? 0 : 1);
-            doGraph(target, candle, model);
+            result = decide(node.getChild(result), candle, model);
         }
-        else
-        {
-            System.out.println("Terminating at " + cell.getValue());
-        }
+
+        return result;
     }
 
     private int countExits(mxCell vertex)
@@ -129,6 +128,10 @@ public class ProcessGraphAction extends AbstractAction
         // make sure the target is not the source vertex
         if(edge.getTarget() != source)
         {
+            BaseNode src = (BaseNode)source.getValue();
+            BaseNode dest = (BaseNode)edge.getTarget().getValue();
+            src.setChildNode((Boolean)edge.getValue(), dest);
+
             System.out.printf("%s> Target:%s Source:%s%n", indent, edge.getTarget().getValue(), edge.getSource().getValue());
             traverseVertex((mxCell)edge.getTarget(), indent);
         }

@@ -8,20 +8,40 @@ import java.io.Serializable;
 public class BaseNode implements Serializable
 {
     private String label;
-    private int maximumIncoming = Integer.MAX_VALUE;
-    private int maximumOutgoing = 2;
-    private int minimumIncoming = 0;
-    private int minimumOutgoing = 0;
+    private BaseNode leftChild;
+    private BaseNode rightChild;
 
     public BaseNode(String label)
     {
         this.label = label;
     }
 
+    public void setChildNode(boolean value, BaseNode node)
+    {
+        if(value)
+        {
+            this.leftChild = node;
+        }
+        else
+        {
+            this.rightChild = node;
+        }
+    }
+
+    public BaseNode getChild(boolean result)
+    {
+        return result ? leftChild : rightChild;
+    }
+
     public boolean evaluate(CandleDataPoint candle, CandleFilterModel model)
     {
         System.out.println("Evaluating node: " + getClass().getSimpleName());
-        return true;
+        return (true);
+    }
+
+    public void visit()
+    {
+        System.out.println("Visiting node: " + getClass().getSimpleName());
     }
 
     @Override
@@ -35,48 +55,7 @@ public class BaseNode implements Serializable
         return label;
     }
 
-    public void setLabel(String label)
-    {
-        this.label = label;
-    }
-
-    public int getMaximumIncoming()
-    {
-        return maximumIncoming;
-    }
-
-    public void setMaximumIncoming(int maximumIncoming)
-    {
-        this.maximumIncoming = maximumIncoming;
-    }
-
-    public int getMaximumOutgoing()
-    {
-        return maximumOutgoing;
-    }
-
-    public void setMaximumOutgoing(int maximumOutgoing)
-    {
-        this.maximumOutgoing = maximumOutgoing;
-    }
-
-    public int getMinimumIncoming()
-    {
-        return minimumIncoming;
-    }
-
-    public void setMinimumIncoming(int minimumIncoming)
-    {
-        this.minimumIncoming = minimumIncoming;
-    }
-
-    public int getMinimumOutgoing()
-    {
-        return minimumOutgoing;
-    }
-
-    public void setMinimumOutgoing(int minimumOutgoing)
-    {
-        this.minimumOutgoing = minimumOutgoing;
+    public boolean isTerminal() {
+        return leftChild == null && rightChild == null;
     }
 }

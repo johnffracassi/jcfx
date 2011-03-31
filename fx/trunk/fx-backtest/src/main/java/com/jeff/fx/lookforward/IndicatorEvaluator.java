@@ -9,7 +9,7 @@ import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.indicator.AbstractIndicator;
 
 /**
- * evaluate any indicator value
+ * visit any indicator value
  */
 @Component
 public class IndicatorEvaluator extends HashMap<String,IndicatorResultList>
