@@ -57,9 +57,9 @@ public class CandleFilterTest {
 //        for(int i=0; i<10; i++)
 //        {
 //            model.setIndex(i);
-//            double price = evaluator.evaluate(model, "price", double.class);
-//            double sma = evaluator.evaluate(model, "ind['sma(1,Typical)'][0] + 0.0000", double.class);
-//            System.out.printf("%1.5f %s %1.5f = %s \n", price, op.getLabel(), sma, op.evaluate(price, sma));
+//            double price = evaluator.visit(model, "price", double.class);
+//            double sma = evaluator.visit(model, "ind['sma(1,Typical)'][0] + 0.0000", double.class);
+//            System.out.printf("%1.5f %s %1.5f = %s \n", price, op.getLabel(), sma, op.visit(price, sma));
 //        }
         
         System.out.println("found " + filtered.size() + " candles");

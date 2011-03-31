@@ -183,7 +183,6 @@ public class BasicGraphEditor extends JPanel
 
 	protected void installToolBar()
 	{
-		add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
 	}
 
 	protected JLabel createStatusBar()
@@ -201,10 +200,8 @@ public class BasicGraphEditor extends JPanel
 				{
 					public void invoke(Object source, mxEventObject evt)
 					{
-						String buffer = (graphComponent.getTripleBuffer() != null) ? ""
-								: " (unbuffered)";
-						mxRectangle dirty = (mxRectangle) evt
-								.getProperty("region");
+						String buffer = (graphComponent.getTripleBuffer() != null) ? "": " (unbuffered)";
+						mxRectangle dirty = (mxRectangle) evt.getProperty("region");
 
 						if (dirty == null)
 						{

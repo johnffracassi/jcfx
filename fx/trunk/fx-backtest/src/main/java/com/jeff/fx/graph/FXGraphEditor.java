@@ -1,7 +1,9 @@
 package com.jeff.fx.graph;
 
+import com.jeff.fx.datastore.CandleDataStore;
 import com.jeff.fx.graph.editor.*;
 import com.jeff.fx.graph.node.*;
+import com.jeff.fx.lookforward.CandleFilterProcessor;
 import com.jeff.fx.rules.Node;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
@@ -16,6 +18,11 @@ import com.mxgraph.util.*;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.*;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
 import javax.swing.*;
@@ -24,11 +31,20 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.text.NumberFormat;
+import java.util.EventObject;
 import java.util.Iterator;
 import java.util.List;
 
+@Component("decisionGraph")
 public class FXGraphEditor extends BasicGraphEditor
 {
+    @Autowired
+    private CandleDataStore loader;
+
+    @Autowired
+    private CandleFilterProcessor processor;
+
+
 	public static final NumberFormat numberFormat = NumberFormat.getInstance();
 	public static URL url = null;
 
@@ -67,15 +83,27 @@ public class FXGraphEditor extends BasicGraphEditor
 		});
 
 		// Adds some template cells for dropping into the graph
-		shapesPalette.addTemplate("Entry",new ImageIcon(FXGraphEditor.class.getResource("/images/doubleellipse.png")),"ellipse;shape=doubleEllipse;", 60, 60, new EntryNode());
-        shapesPalette.addTemplate("Proceed",new ImageIcon(FXGraphEditor.class.getResource("/images/doubleellipse.png")),"ellipse;shape=doubleEllipse;", 60, 60, new ProceedNode());
-        shapesPalette.addTemplate("Terminate",new ImageIcon(FXGraphEditor.class.getResource("/images/doubleellipse.png")),"ellipse;shape=doubleEllipse;", 60, 60, new TerminateNode());
-        shapesPalette.addTemplate("Time Range",new ImageIcon(FXGraphEditor.class.getResource("/images/rhombus.png")),"rhombus", 140, 60, new TimeRangeNode());
-        shapesPalette.addTemplate("Expression",new ImageIcon(FXGraphEditor.class.getResource("/images/rhombus.png")),"rhombus", 140, 60, new ExpressionNode());
-		shapesPalette.addTemplate("Action", new ImageIcon(FXGraphEditor.class.getResource("/images/rounded.png")), "rounded=1", 140, 60, new ActionNode());
+		shapesPalette.addTemplate("Entry", getIcon("/images/doubleellipse.png"),"ellipse;shape=doubleEllipse;", 60, 60, new EntryNode());
+        shapesPalette.addTemplate("Proceed", getIcon("/images/doubleellipse.png"),"ellipse;shape=doubleEllipse;", 60, 60, new ProceedNode());
+        shapesPalette.addTemplate("Terminate", getIcon("/images/doubleellipse.png"),"ellipse;shape=doubleEllipse;", 60, 60, new TerminateNode());
+        shapesPalette.addTemplate("Time Range",getIcon("/images/rhombus.png"),"rhombus", 140, 60, new TimeRangeNode());
+        shapesPalette.addTemplate("Expression",getIcon("/images/rhombus.png"),"rhombus", 140, 60, new ExpressionNode());
+		shapesPalette.addTemplate("Action", getIcon("/images/rounded.png"), "rounded=1", 140, 60, new ActionNode());
 
 
 	}
+
+    private ImageIcon getIcon(String icon)
+    {
+        try
+        {
+        return new ImageIcon(FXGraphEditor.class.getResource(icon));
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
 
     @Override
     protected void installToolBar()
@@ -108,11 +136,7 @@ public class FXGraphEditor extends BasicGraphEditor
         @Override
         protected mxICellEditor createCellEditor()
         {
-            mxCellEditor editor = (mxCellEditor)super.createCellEditor();
-
-            
-
-            return editor;
+            return new MyCellEditor(this);
         }
 
         /**
@@ -146,6 +170,31 @@ public class FXGraphEditor extends BasicGraphEditor
 		}
 
 	}
+
+    public static class MyCellEditor extends mxCellEditor
+    {
+        public MyCellEditor(mxGraphComponent mxGraphComponent)
+        {
+            super(mxGraphComponent);
+            System.out.println("Creating cell editor");
+        }
+
+        @Override
+        public void startEditing(Object o, EventObject eventObject) {
+
+            mxCell cell = (mxCell)o;
+
+            System.out.println("startEditing => " + cell.getValue().getClass());
+
+//            super.startEditing(o, eventObject);
+        }
+
+        @Override
+        public void stopEditing(boolean b) {
+            System.out.println("stopEditing => " + b);
+            super.stopEditing(b);
+        }
+    }
 
 	public static class CustomGraph extends mxGraph
 	{
@@ -308,7 +357,9 @@ public class FXGraphEditor extends BasicGraphEditor
 		mxConstants.SHADOW_COLOR = Color.LIGHT_GRAY;
 		mxConstants.W3C_SHADOWCOLOR = "#D3D3D3";
 		
-		FXGraphEditor editor = new FXGraphEditor();
-		editor.createFrame(new EditorMenuBar(editor)).setVisible(true);
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("context-*.xml");
+        FXGraphEditor app = (FXGraphEditor) ctx.getBean("decisionGraph");
+        app.setVisible(true);
+		app.createFrame(new EditorMenuBar(app)).setVisible(true);
 	}
 }
