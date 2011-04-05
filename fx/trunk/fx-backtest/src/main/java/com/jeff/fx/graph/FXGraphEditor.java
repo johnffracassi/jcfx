@@ -25,6 +25,7 @@ import org.springframework.stereotype.*;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
+import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -44,18 +45,28 @@ public class FXGraphEditor extends BasicGraphEditor
     @Autowired
     private CandleFilterProcessor processor;
 
+    @Autowired
+    private MyEditorToolBar toolBar;
 
 	public static final NumberFormat numberFormat = NumberFormat.getInstance();
 	public static URL url = null;
 
-	public FXGraphEditor()
+
+	public static void main(String[] args)
 	{
-		this("Graph Editor", new CustomGraphComponent(new CustomGraph()));
+		mxConstants.SHADOW_COLOR = Color.LIGHT_GRAY;
+		mxConstants.W3C_SHADOWCOLOR = "#D3D3D3";
+
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("context-*.xml");
+        FXGraphEditor app = (FXGraphEditor) ctx.getBean("decisionGraph");
+        app.setVisible(true);
+		app.createFrame(new EditorMenuBar(app)).setVisible(true);
 	}
 
-	public FXGraphEditor(String appTitle, mxGraphComponent component)
+    public FXGraphEditor()
 	{
-		super(appTitle, component);
+        super(new CustomGraphComponent(new CustomGraph()));
+
 		final mxGraph graph = graphComponent.getGraph();
 
 		// Creates the shapes palette
@@ -97,7 +108,7 @@ public class FXGraphEditor extends BasicGraphEditor
     {
         try
         {
-        return new ImageIcon(FXGraphEditor.class.getResource(icon));
+            return new ImageIcon(FXGraphEditor.class.getResource(icon));
         }
         catch (Exception ex)
         {
@@ -105,10 +116,9 @@ public class FXGraphEditor extends BasicGraphEditor
         }
     }
 
-    @Override
     protected void installToolBar()
     {
-        add(new MyEditorToolBar(this, JToolBar.HORIZONTAL),BorderLayout.NORTH);
+        add(toolBar, BorderLayout.NORTH);
     }
 
     public static class CustomGraphComponent extends mxGraphComponent
@@ -210,91 +220,10 @@ public class FXGraphEditor extends BasicGraphEditor
 			edgeTemplate = template;
 		}
 
-		/**
-		 * Prints out some useful information about the cell in the tooltip.
-		 */
 		public String getToolTipForCell(Object cell)
 		{
-			String tip = "<html>";
-			mxGeometry geo = getModel().getGeometry(cell);
-			mxCellState state = getView().getState(cell);
-
-			if (getModel().isEdge(cell))
-			{
-				tip += "points={";
-
-				if (geo != null)
-				{
-					List<mxPoint> points = geo.getPoints();
-
-					if (points != null)
-					{
-						Iterator<mxPoint> it = points.iterator();
-
-						while (it.hasNext())
-						{
-							mxPoint point = it.next();
-							tip += "[x=" + numberFormat.format(point.getX())
-									+ ",y=" + numberFormat.format(point.getY())
-									+ "],";
-						}
-
-						tip = tip.substring(0, tip.length() - 1);
-					}
-				}
-
-				tip += "}<br>";
-				tip += "absPoints={";
-
-				if (state != null)
-				{
-
-					for (int i = 0; i < state.getAbsolutePointCount(); i++)
-					{
-						mxPoint point = state.getAbsolutePoint(i);
-						tip += "[x=" + numberFormat.format(point.getX())
-								+ ",y=" + numberFormat.format(point.getY())
-								+ "],";
-					}
-
-					tip = tip.substring(0, tip.length() - 1);
-				}
-
-				tip += "}";
-			}
-			else
-			{
-				tip += "geo=[";
-
-				if (geo != null)
-				{
-					tip += "x=" + numberFormat.format(geo.getX()) + ",y="
-							+ numberFormat.format(geo.getY()) + ",width="
-							+ numberFormat.format(geo.getWidth()) + ",height="
-							+ numberFormat.format(geo.getHeight());
-				}
-
-				tip += "]<br>";
-				tip += "state=[";
-
-				if (state != null)
-				{
-					tip += "x=" + numberFormat.format(state.getX()) + ",y="
-							+ numberFormat.format(state.getY()) + ",width="
-							+ numberFormat.format(state.getWidth())
-							+ ",height="
-							+ numberFormat.format(state.getHeight());
-				}
-
-				tip += "]";
-			}
-
-			mxPoint trans = getView().getTranslate();
-
-			tip += "<br>scale=" + numberFormat.format(getView().getScale()) + ", translate=[x=" + numberFormat.format(trans.getX()) + ",y=" + numberFormat.format(trans.getY()) + "]";
-			tip += "</html>";
-
-			return tip;
+			String tip = "<html><b>Type:</b>%s<br/><b>Value:</b>%s</html>";
+			return String.format(tip, getModel().isEdge(cell) ? "Edge":"Vertex", ((mxCell)cell).getValue());
 		}
 
 		public Object createEdge(Object parent, String id, Object value, Object source, Object target, String style)
@@ -342,24 +271,4 @@ public class FXGraphEditor extends BasicGraphEditor
             return null;
         }
     }
-
-	public static void main(String[] args)
-	{
-		try
-		{
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		}
-		catch (Exception e1)
-		{
-			e1.printStackTrace();
-		}
-
-		mxConstants.SHADOW_COLOR = Color.LIGHT_GRAY;
-		mxConstants.W3C_SHADOWCOLOR = "#D3D3D3";
-		
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("context-*.xml");
-        FXGraphEditor app = (FXGraphEditor) ctx.getBean("decisionGraph");
-        app.setVisible(true);
-		app.createFrame(new EditorMenuBar(app)).setVisible(true);
-	}
 }

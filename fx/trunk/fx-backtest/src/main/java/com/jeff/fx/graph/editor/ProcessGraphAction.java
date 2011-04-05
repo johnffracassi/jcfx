@@ -1,6 +1,7 @@
 package com.jeff.fx.graph.editor;
 
-import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.*;
+import com.jeff.fx.datastore.CandleDataStore;
 import com.jeff.fx.graph.node.BaseNode;
 import com.jeff.fx.graph.node.EntryNode;
 import com.jeff.fx.lookforward.CandleFilterModel;
@@ -8,13 +9,24 @@ import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
+import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.util.*;
+import java.util.List;
 
+@org.springframework.stereotype.Component
 public class ProcessGraphAction extends AbstractAction
 {
+    @Autowired
+    private CandleDataStore loader;
+
 	public static final BasicGraphEditor getEditor(ActionEvent e)
 	{
 		if (e.getSource() instanceof Component)
@@ -32,6 +44,41 @@ public class ProcessGraphAction extends AbstractAction
 		return null;
 	}
 
+    private void apply(EntryNode node)
+    {
+        try
+        {
+            CandleCollection candles = loadTestData();
+
+            for(int c=0; c<candles.getCandleCount(); c++)
+            {
+                CandleDataPoint candle = candles.getCandle(c);
+                boolean result = decide(node, candle, null);
+                System.out.println(candle + " = " + result);
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private CandleCollection loadTestData() throws IOException
+    {
+        FXDataSource dataSource = FXDataSource.Forexite;
+        Instrument instrument = Instrument.GBPUSD;
+        Period period = Period.FifteenMin;
+        LocalDate startDate = new LocalDate(2010, 10, 20);
+
+        FXDataRequest request = new FXDataRequest();
+        request.setDataSource(dataSource);
+        request.setDate(startDate);
+        request.setEndDate(startDate);
+        request.setInstrument(instrument);
+        request.setPeriod(period);
+        return new CandleCollection(loader.loadCandlesForWeek(request));
+    }
+
     public void actionPerformed(ActionEvent e)
     {
         mxGraphComponent graphComponent = getEditor(e).getGraphComponent();
@@ -43,7 +90,7 @@ public class ProcessGraphAction extends AbstractAction
         // link up the decision tree nodes
         traverseVertex(enterNode, "");
 
-        decide((EntryNode) enterNode.getValue(), null, null);
+        apply((EntryNode) enterNode.getValue());
     }
 
     private mxCell findEnterNode(mxICell root)

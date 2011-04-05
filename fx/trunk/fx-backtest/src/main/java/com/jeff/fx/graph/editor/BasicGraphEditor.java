@@ -14,6 +14,7 @@ import java.awt.event.MouseWheelListener;
 import java.io.File;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -71,7 +72,7 @@ public class BasicGraphEditor extends JPanel
 
 	protected mxGraphComponent graphComponent;
 	protected mxGraphOutline graphOutline;
-	protected JTabbedPane libraryPane;
+	protected JTabbedPane libraryPane  = new JTabbedPane();
 	protected mxUndoManager undoManager;
 	protected String appTitle;
 	protected JLabel statusBar;
@@ -96,13 +97,15 @@ public class BasicGraphEditor extends JPanel
 		}
 	};
 
-	public BasicGraphEditor(String appTitle, mxGraphComponent component)
+	public BasicGraphEditor(mxGraphComponent component)
 	{
-		// Stores and updates the frame title
-		this.appTitle = appTitle;
+        this.graphComponent = component;
+    }
 
+    @PostConstruct
+    private void init()
+    {
 		// Stores a reference to the graph and creates the command history
-		graphComponent = component;
 		final mxGraph graph = graphComponent.getGraph();
 		undoManager = createUndoManager();
 
@@ -131,9 +134,6 @@ public class BasicGraphEditor extends JPanel
 
 		// Creates the graph outline component
 		graphOutline = new mxGraphOutline(graphComponent);
-
-		// Creates the library pane that contains the tabs with the palettes
-		libraryPane = new JTabbedPane();
 
 		// Creates the inner split pane that contains the library with the
 		// palettes and the graph outline on the left side of the window
@@ -445,13 +445,11 @@ public class BasicGraphEditor extends JPanel
 	@SuppressWarnings("serial")
 	public Action bind(String name, final Action action, String iconUrl)
 	{
-		return new AbstractAction(name, (iconUrl != null) ? new ImageIcon(
-				BasicGraphEditor.class.getResource(iconUrl)) : null)
+		return new AbstractAction(name, (iconUrl != null) ? new ImageIcon(BasicGraphEditor.class.getResource(iconUrl)) : null)
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				action.actionPerformed(new ActionEvent(getGraphComponent(), e
-						.getID(), e.getActionCommand()));
+				action.actionPerformed(new ActionEvent(getGraphComponent(), e.getID(), e.getActionCommand()));
 			}
 		};
 	}
