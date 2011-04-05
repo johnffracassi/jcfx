@@ -54,7 +54,9 @@ public class ProcessGraphAction extends AbstractAction
             {
                 CandleDataPoint candle = candles.getCandle(c);
                 boolean result = decide(node, candle, null);
-                System.out.println(candle + " = " + result);
+
+                if(result)
+                    System.out.println(candle + " = " + result);
             }
         }
         catch (IOException e)
@@ -115,7 +117,7 @@ public class ProcessGraphAction extends AbstractAction
     private boolean decide(BaseNode node, CandleDataPoint candle, CandleFilterModel model)
     {
         boolean result = node.evaluate(candle, model);
-        System.out.println(node + " evaluates to " + result);
+//        System.out.println(node + " evaluates to " + result);
 
         if(!node.isTerminal())
         {

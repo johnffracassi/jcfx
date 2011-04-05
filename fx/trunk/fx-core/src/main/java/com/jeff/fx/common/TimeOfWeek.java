@@ -7,7 +7,9 @@ import org.joda.time.Minutes;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-public class TimeOfWeek implements Comparable<TimeOfWeek> 
+import java.io.Serializable;
+
+public class TimeOfWeek implements Comparable<TimeOfWeek>, Serializable
 {
     public static final int SUNDAY = 0;
     public static final int MONDAY = 1;
@@ -71,7 +73,15 @@ public class TimeOfWeek implements Comparable<TimeOfWeek>
 		if(dayOfWeek > other.dayOfWeek) return false;
 		return time.isBefore(other.time);
 	}
-	
+
+    public boolean isAfterOrEqualTo(TimeOfWeek start) {
+        return (isAfter(start) || equals(start));
+    }
+
+    public boolean isBeforeOrEqualTo(TimeOfWeek start) {
+        return (isBefore(start) || equals(start));
+    }
+
 	public LocalDateTime forWeekContaining(LocalDate date) {
 		return forWeekContaining(date.toLocalDateTime(LocalTime.MIDNIGHT));
 	}
