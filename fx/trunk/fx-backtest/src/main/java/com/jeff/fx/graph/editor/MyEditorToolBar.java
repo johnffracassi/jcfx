@@ -10,7 +10,10 @@ import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.util.mxResources;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.*;
 
+import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,17 +22,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@org.springframework.stereotype.Component
 public class MyEditorToolBar extends JToolBar
 {
+    @Autowired
+    private ProcessGraphAction processGraphAction;
+
+    @Autowired
+    private BasicGraphEditor editor;
+
 	private boolean ignoreZoomChange = false;
 
-	public MyEditorToolBar(final BasicGraphEditor editor, int orientation)
+	public MyEditorToolBar()
 	{
-		super(orientation);
+		super(JToolBar.HORIZONTAL);
+    }
+
+    @PostConstruct
+    private void init()
+    {
 		setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3), getBorder()));
 		setFloatable(false);
 
-		add(editor.bind("Process", new ProcessGraphAction()));
+		add(editor.bind("Process", processGraphAction));
         addSeparator();
         add(editor.bind("New", new NewAction(),"/images/page_add.png"));
         add(editor.bind("Open", new OpenAction(),"/images/folder.png"));
