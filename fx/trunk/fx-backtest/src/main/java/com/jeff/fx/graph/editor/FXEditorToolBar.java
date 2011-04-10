@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @org.springframework.stereotype.Component
-public class MyEditorToolBar extends JToolBar
+public class FXEditorToolBar extends JToolBar
 {
     @Autowired
     private ProcessGraphAction processGraphAction;
@@ -33,7 +33,7 @@ public class MyEditorToolBar extends JToolBar
 
 	private boolean ignoreZoomChange = false;
 
-	public MyEditorToolBar()
+	public FXEditorToolBar()
 	{
 		super(JToolBar.HORIZONTAL);
     }

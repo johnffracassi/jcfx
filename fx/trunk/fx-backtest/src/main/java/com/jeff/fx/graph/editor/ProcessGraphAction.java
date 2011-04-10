@@ -46,6 +46,8 @@ public class ProcessGraphAction extends AbstractAction
 
     private void apply(EntryNode node)
     {
+        long stime = System.nanoTime();
+
         try
         {
             CandleCollection candles = loadTestData();
@@ -63,6 +65,8 @@ public class ProcessGraphAction extends AbstractAction
         {
             e.printStackTrace();
         }
+
+        System.out.printf("Completed in %.3fs", (System.nanoTime() - stime) / 1000000000.0);
     }
 
     private CandleCollection loadTestData() throws IOException
@@ -70,7 +74,7 @@ public class ProcessGraphAction extends AbstractAction
         FXDataSource dataSource = FXDataSource.Forexite;
         Instrument instrument = Instrument.GBPUSD;
         Period period = Period.FifteenMin;
-        LocalDate startDate = new LocalDate(2010, 10, 20);
+        LocalDate startDate = new LocalDate(2010, 10, 13);
 
         FXDataRequest request = new FXDataRequest();
         request.setDataSource(dataSource);
@@ -117,7 +121,6 @@ public class ProcessGraphAction extends AbstractAction
     private boolean decide(BaseNode node, CandleDataPoint candle, CandleFilterModel model)
     {
         boolean result = node.evaluate(candle, model);
-//        System.out.println(node + " evaluates to " + result);
 
         if(!node.isTerminal())
         {
@@ -125,40 +128,6 @@ public class ProcessGraphAction extends AbstractAction
         }
 
         return result;
-    }
-
-    private int countExits(mxCell vertex)
-    {
-        int exits = 0;
-        for(int i=0; i<vertex.getEdgeCount(); i++)
-        {
-            mxCell edge = (mxCell)vertex.getEdgeAt(i);
-            if(edge.getTarget() != vertex)
-            {
-                exits ++;
-            }
-        }
-        return exits;
-    }
-
-    private mxCell getTarget(mxCell vertex, int idx)
-    {
-        int exits = 0;
-
-        for(int i=0; i<vertex.getEdgeCount(); i++)
-        {
-            mxCell edge = (mxCell)vertex.getEdgeAt(i);
-            if(edge.getTarget() != vertex)
-            {
-                if(exits == idx)
-                {
-                    return (mxCell)edge.getTarget();
-                }
-                exits ++;
-            }
-        }
-
-        return null;
     }
 
     private void traverseVertex(mxCell node, String indent)

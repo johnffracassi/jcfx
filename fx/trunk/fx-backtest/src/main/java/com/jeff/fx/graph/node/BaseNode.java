@@ -35,7 +35,6 @@ public class BaseNode implements Serializable
 
     public boolean evaluate(CandleDataPoint candle, CandleFilterModel model)
     {
-        System.out.println("Evaluating node: " + getClass().getSimpleName());
         return (true);
     }
 
@@ -55,7 +54,8 @@ public class BaseNode implements Serializable
         return label;
     }
 
-    public boolean isTerminal() {
+    public boolean isTerminal()
+    {
         return leftChild == null && rightChild == null;
     }
 }
