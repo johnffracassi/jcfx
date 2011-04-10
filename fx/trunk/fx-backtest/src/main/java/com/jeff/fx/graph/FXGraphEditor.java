@@ -4,10 +4,8 @@ import com.jeff.fx.datastore.CandleDataStore;
 import com.jeff.fx.graph.editor.*;
 import com.jeff.fx.graph.node.*;
 import com.jeff.fx.lookforward.CandleFilterProcessor;
-import com.jeff.fx.rules.Node;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
@@ -16,25 +14,18 @@ import com.mxgraph.swing.view.mxCellEditor;
 import com.mxgraph.swing.view.mxICellEditor;
 import com.mxgraph.util.*;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.*;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
-import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.EventObject;
-import java.util.Iterator;
-import java.util.List;
 
 @Component("decisionGraph")
 public class FXGraphEditor extends BasicGraphEditor
@@ -46,11 +37,10 @@ public class FXGraphEditor extends BasicGraphEditor
     private CandleFilterProcessor processor;
 
     @Autowired
-    private MyEditorToolBar toolBar;
+    private FXEditorToolBar toolBar;
 
 	public static final NumberFormat numberFormat = NumberFormat.getInstance();
 	public static URL url = null;
-
 
 	public static void main(String[] args)
 	{
@@ -146,7 +136,7 @@ public class FXGraphEditor extends BasicGraphEditor
         @Override
         protected mxICellEditor createCellEditor()
         {
-            return new MyCellEditor(this);
+            return new TimeRangeCellEditor(this);
         }
 
         /**
@@ -178,33 +168,7 @@ public class FXGraphEditor extends BasicGraphEditor
 
 			return super.importCells(cells, dx, dy, target, location);
 		}
-
 	}
-
-    public static class MyCellEditor extends mxCellEditor
-    {
-        public MyCellEditor(mxGraphComponent mxGraphComponent)
-        {
-            super(mxGraphComponent);
-            System.out.println("Creating cell editor");
-        }
-
-        @Override
-        public void startEditing(Object o, EventObject eventObject) {
-
-            mxCell cell = (mxCell)o;
-
-            System.out.println("startEditing => " + cell.getValue().getClass());
-
-//            super.startEditing(o, eventObject);
-        }
-
-        @Override
-        public void stopEditing(boolean b) {
-            System.out.println("stopEditing => " + b);
-            super.stopEditing(b);
-        }
-    }
 
 	public static class CustomGraph extends mxGraph
 	{
