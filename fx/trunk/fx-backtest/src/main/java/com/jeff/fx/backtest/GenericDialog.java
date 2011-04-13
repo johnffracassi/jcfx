@@ -55,7 +55,7 @@ public class GenericDialog extends JDialog {
 		btnDone = new JButton("Done");
 		pnlActions.add(btnDone);
 		
-		btnCancel = new JButton("Canel");
+		btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				close(CANCEL);

@@ -19,7 +19,10 @@ public class EnumPropertyEditor extends BeanPropertyEditor {
 	}
 
 	public Component buildValueComponent(Object initialValue) {
-		final EnumComboBox ecb = new EnumComboBox(enumClass);
+
+        final EnumComboBox ecb = new EnumComboBox(enumClass);
+        ecb.setSelectedItem(initialValue);
+
 		ecb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				setValue(ecb.getSelectedItem());

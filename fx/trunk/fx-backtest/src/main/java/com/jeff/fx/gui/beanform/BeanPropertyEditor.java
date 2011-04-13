@@ -70,14 +70,14 @@ public class BeanPropertyEditor {
 	}
 	
 	public Component buildValueComponent(Object initialValue) {
-		final JTextField field = new JTextField(String.valueOf(getValue()));
+		final JTextField field = new JTextField(String.valueOf(initialValue));
 		field.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 				setValue(field.getText());
 				valueChanged();
 			}
 		});
-		field.setColumns(10);
+		field.setColumns(20);
 		return field;
 	}
 }

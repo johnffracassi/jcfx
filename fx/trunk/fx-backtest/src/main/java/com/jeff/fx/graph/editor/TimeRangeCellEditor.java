@@ -1,6 +1,7 @@
 package com.jeff.fx.graph.editor;
 
 import com.jeff.fx.backtest.GenericDialog;
+import com.jeff.fx.graph.node.ExpressionNode;
 import com.jeff.fx.graph.node.TimeRangeNode;
 import com.jeff.fx.gui.beanform.BeanForm;
 import com.mxgraph.model.mxCell;
@@ -56,6 +57,15 @@ public class TimeRangeCellEditor implements mxICellEditor
                 if(cell.getValue() instanceof TimeRangeNode)
                 {
                     TimeRangeNode node = (TimeRangeNode)cell.getValue();
+                    BeanForm bt = new BeanForm();
+                    bt.buildForm(node);
+
+                    GenericDialog gd = new GenericDialog(bt, "Edit Node");
+                    gd.setVisible(true);
+                }
+                else if(cell.getValue() instanceof ExpressionNode)
+                {
+                    ExpressionNode node = (ExpressionNode)cell.getValue();
                     BeanForm bt = new BeanForm();
                     bt.buildForm(node);
 
