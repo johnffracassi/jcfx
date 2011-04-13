@@ -5,22 +5,21 @@ import java.lang.reflect.Method;
 
 import javax.swing.JPanel;
 
+import com.jeff.fx.graph.node.ExpressionNode;
 import net.miginfocom.swing.MigLayout;
 
 import com.jeff.fx.backtest.GenericDialog;
 import com.jeff.fx.indicator.ValueListener;
-import com.jeff.fx.rules.business.TimeRangeNode;
 
 public class BeanForm extends JPanel
 {
-
     private static final long serialVersionUID = 770458164263389928L;
 
     private Object bean;
 
     public static void main(String[] args)
     {
-        TimeRangeNode node = new TimeRangeNode();
+        ExpressionNode node = new ExpressionNode();
         BeanForm bt = new BeanForm();
         bt.buildForm(node);
 
@@ -35,7 +34,6 @@ public class BeanForm extends JPanel
 
     public void buildForm(final Object bean)
     {
-
         this.bean = bean;
 
         Field[] fields = bean.getClass().getDeclaredFields();
@@ -74,7 +72,6 @@ public class BeanForm extends JPanel
                             try
                             {
                                 setterMethod.invoke(BeanForm.this.bean, newValue);
-                                System.out.println("new value = " + BeanForm.this.bean + " / " + newValue);
                             }
                             catch (Exception e)
                             {
