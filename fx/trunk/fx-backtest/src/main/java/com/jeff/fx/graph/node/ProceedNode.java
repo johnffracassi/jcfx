@@ -11,7 +11,7 @@ public class ProceedNode extends BaseNode
     }
 
     @Override
-    public boolean evaluate(CandleDataPoint candle, CandleFilterModel model) {
+    public boolean evaluate(CandleFilterModel model, int idx) {
         return true;
     }
 

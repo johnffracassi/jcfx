@@ -33,7 +33,7 @@ public class BaseNode implements Serializable
         return result ? leftChild : rightChild;
     }
 
-    public boolean evaluate(CandleDataPoint candle, CandleFilterModel model)
+    public boolean evaluate(CandleFilterModel model, int idx)
     {
         return (true);
     }
