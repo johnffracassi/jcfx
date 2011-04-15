@@ -27,7 +27,7 @@ public class ExpressionNode extends BaseNode
     }
 
     @Override
-    public boolean evaluate(CandleDataPoint candle, CandleFilterModel model)
+    public boolean evaluate(CandleFilterModel model, int idx)
     {
         Object lVal = model.evaluate(leftExpr);
         Object rVal = model.evaluate(rightExpr);

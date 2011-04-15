@@ -36,8 +36,9 @@ public class TimeRangeNode extends BaseNode
     }
 
     @Override
-    public boolean evaluate(CandleDataPoint candle, CandleFilterModel model)
+    public boolean evaluate(CandleFilterModel model, int idx)
     {
+        CandleDataPoint candle = model.getCandles().getCandle(idx);
         TimeOfWeek time = new TimeOfWeek(candle.getDateTime());
         return time.isAfterOrEqualTo(from) && time.isBefore(to);
     }

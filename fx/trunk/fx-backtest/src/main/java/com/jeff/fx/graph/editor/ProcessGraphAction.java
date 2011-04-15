@@ -1,10 +1,12 @@
 package com.jeff.fx.graph.editor;
 
+import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.common.*;
 import com.jeff.fx.datastore.CandleDataStore;
 import com.jeff.fx.graph.node.BaseNode;
 import com.jeff.fx.graph.node.EntryNode;
 import com.jeff.fx.lookforward.CandleFilterModel;
+import com.jeff.fx.lookforward.CandleFilterModelEvaluator;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
@@ -26,6 +28,9 @@ public class ProcessGraphAction extends AbstractAction
 {
     @Autowired
     private CandleDataStore loader;
+
+    @Autowired
+    private CandleFilterModelEvaluator evaluator;
 
 	public static final BasicGraphEditor getEditor(ActionEvent e)
 	{
@@ -51,11 +56,13 @@ public class ProcessGraphAction extends AbstractAction
         try
         {
             CandleCollection candles = loadTestData();
+            CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), evaluator);
 
             for(int c=0; c<candles.getCandleCount(); c++)
             {
-                CandleDataPoint candle = candles.getCandle(c);
-                boolean result = decide(node, candle, null);
+                model.setIndex(c);
+                CandleDataPoint candle = model.getCandles().getCandle(c);
+                boolean result = decide(node, model, c);
 
                 if(result)
                     System.out.println(candle + " = " + result);
@@ -118,13 +125,13 @@ public class ProcessGraphAction extends AbstractAction
         return null;
     }
 
-    private boolean decide(BaseNode node, CandleDataPoint candle, CandleFilterModel model)
+    private boolean decide(BaseNode node, CandleFilterModel model, int idx)
     {
-        boolean result = node.evaluate(candle, model);
+        boolean result = node.evaluate(model, idx);
 
         if(!node.isTerminal())
         {
-            result = decide(node.getChild(result), candle, model);
+            result = decide(node.getChild(result), model, idx);
         }
 
         return result;

@@ -4,7 +4,6 @@ import com.jeff.fx.common.TimeOfWeek;
 
 public class BeanPropertyEditorFactory
 {
-
     @SuppressWarnings("unchecked")
     public static BeanPropertyEditor build(Class<?> forClass, String label, Object value)
     {
