@@ -5,23 +5,19 @@ import com.jeff.fx.common.*;
 import com.jeff.fx.datastore.CandleDataStore;
 import com.jeff.fx.graph.node.BaseNode;
 import com.jeff.fx.graph.node.EntryNode;
-import com.jeff.fx.lookforward.CandleFilterModel;
-import com.jeff.fx.lookforward.CandleFilterModelEvaluator;
+import com.jeff.fx.filter.CandleFilterModel;
+import com.jeff.fx.filter.CandleFilterModelEvaluator;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.util.*;
-import java.util.List;
 
 @org.springframework.stereotype.Component
 public class ProcessGraphAction extends AbstractAction

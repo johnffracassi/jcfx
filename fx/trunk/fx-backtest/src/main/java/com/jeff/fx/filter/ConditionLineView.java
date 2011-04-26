@@ -1,11 +1,10 @@
-package com.jeff.fx.lookforward;
+package com.jeff.fx.filter;
 
 import org.jdesktop.swingx.JXPanel;
 
 import com.jeff.fx.rules.Operand;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;

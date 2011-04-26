@@ -1,9 +1,8 @@
 package com.jeff.fx.graph.node;
 
-import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.gui.beanform.Label;
 import com.jeff.fx.gui.beanform.Property;
-import com.jeff.fx.lookforward.CandleFilterModel;
+import com.jeff.fx.filter.CandleFilterModel;
 import com.jeff.fx.rules.Operand;
 
 @Label("Expression Node")

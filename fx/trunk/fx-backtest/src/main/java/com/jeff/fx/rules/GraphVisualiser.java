@@ -33,7 +33,7 @@ import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.datastore.CandleDataStore;
 import com.jeff.fx.gui.beanform.BeanForm;
-import com.jeff.fx.lookforward.CandleFilterProcessor;
+import com.jeff.fx.filter.CandleFilterProcessor;
 import com.jeff.fx.rules.business.ELNode;
 import com.jeff.fx.rules.business.TimeOfWeekNode;
 import com.jeff.fx.rules.business.TimeRangeNode;

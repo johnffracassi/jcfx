@@ -1,4 +1,4 @@
-package com.jeff.fx.lookforward;
+package com.jeff.fx.filter;
 
 import org.apache.commons.jexl2.Expression;
 import org.apache.commons.jexl2.JexlContext;
@@ -22,6 +22,8 @@ public class CandleFilterModelEvaluator
 
     public Object evaluate(CandleFilterModel model, String expression)
     {
+        expression = resolveShorthand(expression);
+
         // Create or retrieve a JexlEngine
         JexlEngine jexl = new JexlEngine();
         
@@ -41,11 +43,14 @@ public class CandleFilterModelEvaluator
         jc.set("time", candle.getDateTime().toLocalTime());
         jc.set("price", candle.evaluate(CandleValueModel.Typical));
         jc.set("idx", model.getIndex());
+
+        // examples of indicator
+        // - ind['sma(14)'][0]
         jc.set("ind", indicatorEvaluator);
         
         Object result = e.evaluate(jc);
         
-        System.out.println(expression + " = " + result);
+//        System.out.println(expression + " = " + result);
         
         // Now visit the expression, getting the result
         return result;
@@ -54,6 +59,28 @@ public class CandleFilterModelEvaluator
     public <T> T evaluate(CandleFilterModel model, String expression, Class<T> returnType)
     {
         return (T)evaluate(model, expression);
+    }
+
+    /**
+     * resolve indicator shorthand
+     * - #sma(14) => ind['sma(14)'][0]
+     * - #sma(14)[3] => ind['sma(14)'][3]
+     */
+    public String resolveShorthand(String expr)
+    {
+        String basicPattern = "#([a-z]*\\(.*\\))";
+        String extendedPattern = basicPattern + "\\[([0-9]+)\\]";
+
+        if(expr.matches(".*" + extendedPattern + ".*"))
+        {
+            return expr.replaceAll(extendedPattern, "ind['$1'][$2]");
+        }
+        else if(expr.matches(".*" + basicPattern + ".*"))
+        {
+            return expr.replaceAll(basicPattern, "ind['$1'][0]");
+        }
+
+        return expr;
     }
 }
 

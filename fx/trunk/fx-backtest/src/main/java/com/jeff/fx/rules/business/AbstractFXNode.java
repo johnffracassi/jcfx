@@ -1,6 +1,6 @@
 package com.jeff.fx.rules.business;
 
-import com.jeff.fx.lookforward.CandleFilterModel;
+import com.jeff.fx.filter.CandleFilterModel;
 import com.jeff.fx.rules.AbstractLeafNode;
 import com.jeff.fx.rules.Node;
 

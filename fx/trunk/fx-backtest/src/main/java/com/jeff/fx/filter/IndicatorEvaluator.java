@@ -1,4 +1,4 @@
-package com.jeff.fx.lookforward;
+package com.jeff.fx.filter;
 
 import java.util.HashMap;
 

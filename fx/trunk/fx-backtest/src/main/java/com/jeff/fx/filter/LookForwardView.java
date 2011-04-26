@@ -1,15 +1,13 @@
-package com.jeff.fx.lookforward;
+package com.jeff.fx.filter;
 
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JLabel;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;

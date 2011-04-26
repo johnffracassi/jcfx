@@ -1,4 +1,4 @@
-package com.jeff.fx.lookforward;
+package com.jeff.fx.filter;
 
 import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.common.CandleCollection;
