@@ -3,14 +3,13 @@ package com.jeff.fx.graph;
 import com.jeff.fx.datastore.CandleDataStore;
 import com.jeff.fx.graph.editor.*;
 import com.jeff.fx.graph.node.*;
-import com.jeff.fx.lookforward.CandleFilterProcessor;
+import com.jeff.fx.filter.CandleFilterProcessor;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.util.mxGraphTransferable;
-import com.mxgraph.swing.view.mxCellEditor;
 import com.mxgraph.swing.view.mxICellEditor;
 import com.mxgraph.util.*;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
@@ -25,7 +24,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 import java.text.NumberFormat;
-import java.util.EventObject;
 
 @Component("decisionGraph")
 public class FXGraphEditor extends BasicGraphEditor

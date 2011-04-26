@@ -1,7 +1,6 @@
 package com.jeff.fx.graph.node;
 
-import com.jeff.fx.common.CandleDataPoint;
-import com.jeff.fx.lookforward.CandleFilterModel;
+import com.jeff.fx.filter.CandleFilterModel;
 
 import java.io.Serializable;
 

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.datastore.CandleDataStore;
-import com.jeff.fx.lookforward.CandleFilterProcessor;
+import com.jeff.fx.filter.CandleFilterProcessor;
 
 public class NonContiguousCandleController
 {

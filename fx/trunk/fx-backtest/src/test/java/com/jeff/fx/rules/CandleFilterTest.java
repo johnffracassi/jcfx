@@ -9,21 +9,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.FXDataRequest;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
-import com.jeff.fx.common.TimeOfWeek;
 import com.jeff.fx.datastore.CandleDataStore;
 import com.jeff.fx.indicator.Indicator;
-import com.jeff.fx.lookforward.CandleFilterProcessor;
-import com.jeff.fx.lookforward.CandleFilterModel;
-import com.jeff.fx.lookforward.CandleFilterModelEvaluator;
+import com.jeff.fx.filter.CandleFilterProcessor;
 import com.jeff.fx.rules.business.ELNode;
-import com.jeff.fx.rules.business.TimeRangeNode;
 
 @Component("candleFilterTest")
 public class CandleFilterTest {
