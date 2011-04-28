@@ -17,6 +17,14 @@ public class TimeOfWeekTest {
 	TimeOfWeek t4 = new TimeOfWeek(DateTimeConstants.FRIDAY, 12, 00);
 	TimeOfWeek t5 = new TimeOfWeek(DateTimeConstants.SATURDAY, 12, 00);
 
+    @Test
+    public void shouldCreateATimeOfWeekFromAString()
+    {
+        String str = t3.toString();
+        TimeOfWeek timeOfWeek = new TimeOfWeek(str);
+        Assert.assertTrue(t3.equals(timeOfWeek));
+    }
+
 	@Test
 	public void testPeriodOfWeek() {
 		
@@ -47,25 +55,25 @@ public class TimeOfWeekTest {
 	public void testConstructors() {
 		
 		TimeOfWeek t1 = new TimeOfWeek(DateTimeConstants.SUNDAY, 15, 30);
-		Assert.assertTrue(String.valueOf(t1), String.valueOf(t1).equalsIgnoreCase("Sun 15:30"));
+		Assert.assertTrue(String.valueOf(t1), String.valueOf(t1).equalsIgnoreCase("Su1530"));
 		
 		TimeOfWeek t2 = new TimeOfWeek(DateTimeConstants.SATURDAY, 15, 30);
-		Assert.assertTrue(String.valueOf(t2), String.valueOf(t2).equalsIgnoreCase("Sat 15:30"));
+		Assert.assertTrue(String.valueOf(t2), String.valueOf(t2).equalsIgnoreCase("Sa1530"));
 		
 		TimeOfWeek t3 = new TimeOfWeek(DateTimeConstants.MONDAY, new LocalTime(10,45,00));
-		Assert.assertTrue(String.valueOf(t3), String.valueOf(t3).equalsIgnoreCase("Mon 10:45"));
+		Assert.assertTrue(String.valueOf(t3), String.valueOf(t3).equalsIgnoreCase("Mo1045"));
 		
 		TimeOfWeek t4 = new TimeOfWeek(DateTimeConstants.SUNDAY, new LocalTime(0,0,1));
-		Assert.assertTrue(String.valueOf(t4), String.valueOf(t4).equalsIgnoreCase("Sun 00:00"));
+		Assert.assertTrue(String.valueOf(t4), String.valueOf(t4).equalsIgnoreCase("Su0000"));
 		
 		TimeOfWeek t5 = new TimeOfWeek(0);
-		Assert.assertTrue(String.valueOf(t5), String.valueOf(t5).equalsIgnoreCase("Sun 00:00"));
+		Assert.assertTrue(String.valueOf(t5), String.valueOf(t5).equalsIgnoreCase("Su0000"));
 		
 		TimeOfWeek t6 = new TimeOfWeek(1439);
-		Assert.assertTrue(String.valueOf(t6), String.valueOf(t6).equalsIgnoreCase("Sun 23:59"));
+		Assert.assertTrue(String.valueOf(t6), String.valueOf(t6).equalsIgnoreCase("Su2359"));
 		
 		TimeOfWeek t7 = new TimeOfWeek(9365);
-		Assert.assertTrue(String.valueOf(t7), String.valueOf(t7).equalsIgnoreCase("Sat 12:05"));
+		Assert.assertTrue(String.valueOf(t7), String.valueOf(t7).equalsIgnoreCase("Sa1205"));
 	}
 	
 	@Test

@@ -53,8 +53,35 @@ public class TimeOfWeek implements Comparable<TimeOfWeek>, Serializable
 		this.dayOfWeek = dateTime.getDayOfWeek() % 7;
 		this.time = dateTime.toLocalTime();
 	}
-	
-	public int periodOfWeek(Period period) {
+
+    public TimeOfWeek(String str)
+    {
+        this(toDayOfWeek(str.substring(0, 2)), new Integer(str.substring(2, 4)), new Integer(str.substring(4)));
+    }
+
+    public static int toDayOfWeek(String str)
+    {
+        String[] dayArray;
+
+        if(str.length() == 2)
+            dayArray = SHORT_DAY;
+        else if(str.length() == 3)
+            dayArray = DAY;
+        else
+            dayArray = FULL_DAY;
+
+        for(int i=0; i<dayArray.length; i++)
+        {
+            if(dayArray[i].equals(str))
+            {
+                return i;
+            }
+        }
+
+        throw new RuntimeException("Could not map day '" + str + "' to index");
+	}
+
+    public int periodOfWeek(Period period) {
 		long periodInMillis = period.getInterval();
 		if(periodInMillis < 60000) {
 			periodInMillis = 60000;
@@ -105,20 +132,7 @@ public class TimeOfWeek implements Comparable<TimeOfWeek>, Serializable
 	public LocalTime getTime() {
 		return time;
 	}
-	
-	public static int toDayOfWeek(String str)
-	{
-	    for(int i=0; i<FULL_DAY.length; i++)
-	    {
-	        if(str.equalsIgnoreCase(FULL_DAY[i]))
-	        {
-	            return i;
-	        }
-	    }
-	    
-	    throw new RuntimeException("'" + str + "' not mapped to a day of week");
-	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -136,8 +150,12 @@ public class TimeOfWeek implements Comparable<TimeOfWeek>, Serializable
 		
 		if (obj == null)
 			return false;
-		
-		TimeOfWeek other = (TimeOfWeek) obj;
+
+        TimeOfWeek other;
+        if(obj instanceof String)
+            other = new TimeOfWeek((String)obj);
+        else
+            other = (TimeOfWeek) obj;
 
 		if (dayOfWeek != other.dayOfWeek)
 			return false;
