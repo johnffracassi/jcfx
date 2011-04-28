@@ -151,10 +151,39 @@ public class ProcessGraphAction extends AbstractAction
         {
             BaseNode src = (BaseNode)source.getValue();
             BaseNode dest = (BaseNode)edge.getTarget().getValue();
-            src.setChildNode((Boolean)edge.getValue(), dest);
+            boolean value = getEdgeValue(edge);
+            src.setChildNode(value, dest);
 
-            System.out.printf("%s> Target:%s Source:%s%n", indent, edge.getTarget().getValue(), edge.getSource().getValue());
+            System.out.printf("%s> %s Target:%s Source:%s%n", indent, value, edge.getTarget().getValue().getClass().getSimpleName(), edge.getSource().getValue().getClass().getSimpleName());
             traverseVertex((mxCell)edge.getTarget(), indent);
         }
+    }
+
+    private boolean getEdgeValue(mxCell edge)
+    {
+        if(edge.getValue() instanceof Boolean)
+            return (Boolean)edge.getValue();
+
+        if(edge.getValue() instanceof Integer)
+        {
+            if(((Integer)edge.getValue()) == 0)
+                return false;
+            else if(((Integer)edge.getValue()) == 1)
+                return true;
+            else
+                throw new RuntimeException(String.format("Don't know how to handle edge value integer '%s'", edge.getValue()));
+        }
+
+        if(edge.getValue() instanceof String)
+        {
+            if((edge.getValue().equals("false") || edge.getValue().equals("0")))
+                return false;
+            else if((edge.getValue().equals("true") || edge.getValue().equals("1")))
+                return true;
+            else
+                throw new RuntimeException(String.format("Don't know how to handle edge value string '%s'", edge.getValue()));
+        }
+
+        throw new RuntimeException(String.format("Don't know how to handle edge value of class '%s'", edge.getValue().getClass()));
     }
 }
