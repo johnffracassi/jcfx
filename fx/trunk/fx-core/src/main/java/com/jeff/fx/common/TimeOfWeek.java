@@ -11,6 +11,9 @@ import java.io.Serializable;
 
 public class TimeOfWeek implements Comparable<TimeOfWeek>, Serializable
 {
+    public static final TimeOfWeek START = new TimeOfWeek(0);
+    public static final TimeOfWeek END = new TimeOfWeek(10079);
+
     public static final int SUNDAY = 0;
     public static final int MONDAY = 1;
     public static final int TUESDAY = 2;

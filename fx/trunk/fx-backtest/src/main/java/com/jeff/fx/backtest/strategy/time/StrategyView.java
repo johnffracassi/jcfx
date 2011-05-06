@@ -1,15 +1,5 @@
 package com.jeff.fx.backtest.strategy.time;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.util.Map;
-
-import javax.swing.JTabbedPane;
-import javax.swing.SwingWorker;
-
-import org.apache.log4j.Logger;
-import org.jdesktop.swingx.JXPanel;
-
 import com.jeff.fx.backtest.AppCtx;
 import com.jeff.fx.backtest.engine.OrderBook;
 import com.jeff.fx.backtest.orderbook.OrderBookController;
@@ -18,6 +8,12 @@ import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.backtest.strategy.StrategyPropertyChangeListener;
 import com.jeff.fx.backtest.strategy.optimiser.OptimiserController;
 import com.jeff.fx.common.CandleCollection;
+import org.apache.log4j.Logger;
+import org.jdesktop.swingx.JXPanel;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Map;
 
 @SuppressWarnings("serial")
 public class StrategyView extends JXPanel implements StrategyPropertyChangeListener {
@@ -45,6 +41,7 @@ public class StrategyView extends JXPanel implements StrategyPropertyChangeListe
 
 		// add the tabs
 		tabbedPane.add(optimiser.getView(), "Optimiser");
+        optimiser.setStrategyClass(TimeStrategy.class);
 		tabbedPane.add(orderBook.getView(), "Order Book");
 
 		// add the config panel at the bottom of the screen

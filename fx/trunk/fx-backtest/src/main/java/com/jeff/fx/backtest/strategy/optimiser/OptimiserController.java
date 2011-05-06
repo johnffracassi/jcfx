@@ -1,24 +1,17 @@
 package com.jeff.fx.backtest.strategy.optimiser;
 
+import com.jeff.fx.backtest.AppCtx;
+import com.jeff.fx.backtest.strategy.*;
+import com.jeff.fx.backtest.strategy.time.StrategyView;
+import com.jeff.fx.common.CandleCollection;
+
+import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-
-import com.jeff.fx.backtest.AppCtx;
-import com.jeff.fx.backtest.strategy.ExecutorJobListener;
-import com.jeff.fx.backtest.strategy.ExecutorJobResult;
-import com.jeff.fx.backtest.strategy.ExecutorStatus;
-import com.jeff.fx.backtest.strategy.ExecutorStatusListener;
-import com.jeff.fx.backtest.strategy.ExecutorTaskResult;
-import com.jeff.fx.backtest.strategy.MultiThreadedExecutor;
-import com.jeff.fx.backtest.strategy.time.StrategyView;
-import com.jeff.fx.common.CandleCollection;
 
 public class OptimiserController implements ExecutorJobListener, ExecutorStatusListener {
 
@@ -118,5 +111,10 @@ public class OptimiserController implements ExecutorJobListener, ExecutorStatusL
 		};
 		worker.execute();
 	}
+
+    public void setStrategyClass(Class<?> strategyClass)
+    {
+        view.setStrategyClass(strategyClass);
+    }
 }
 

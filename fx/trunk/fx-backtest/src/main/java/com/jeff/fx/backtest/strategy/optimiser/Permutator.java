@@ -1,7 +1,7 @@
 package com.jeff.fx.backtest.strategy.optimiser;
 
 public class Permutator {
-	
+
 	private int[] perms;
 	private int[] repetitions;
 	
@@ -18,7 +18,7 @@ public class Permutator {
 			repetitions[i+1] = repetitions[i] * perms[i];
 		}
 	}
-	
+
 	public int getPermutationCount() {
 		int count = 1;
 		for(int i=0; i<perms.length; i++) {

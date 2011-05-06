@@ -1,25 +1,19 @@
 package com.jeff.fx.backtest.strategy;
 
-import static java.lang.Math.min;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.log4j.Logger;
-
 import com.jeff.fx.backtest.AppCtx;
 import com.jeff.fx.backtest.Param;
 import com.jeff.fx.backtest.engine.OrderBook;
 import com.jeff.fx.backtest.engine.OrderBookReport;
 import com.jeff.fx.backtest.strategy.optimiser.OptimiserExecutor;
-import com.jeff.fx.backtest.strategy.optimiser.OptimiserParameter;
 import com.jeff.fx.backtest.strategy.optimiser.Permutator;
+import com.jeff.fx.backtest.strategy.optimiser.param.OptimiserParameter;
 import com.jeff.fx.backtest.strategy.time.TimeStrategy;
 import com.jeff.fx.common.CandleCollection;
-import com.jeff.fx.common.TimeOfWeek;
+import org.apache.log4j.Logger;
+
+import java.util.*;
+
+import static java.lang.Math.min;
 
 public class MultiThreadedExecutor implements OptimiserExecutor {
 
@@ -33,7 +27,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 	private volatile boolean running = false;
 
 	// shared
-	private List<OptimiserParameter<?,?>> params;
+	private List<OptimiserParameter<?>> params;
 	private Permutator permutator;
 	
 	// used by manager
@@ -43,7 +37,7 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 	/**
 	 * Create and start the executor threads
 	 */
-	public void run(CandleCollection candles, List<OptimiserParameter<?,?>> params, ExecutorJobListener jobListener, ExecutorStatusListener statusListener) {
+	public void run(CandleCollection candles, List<OptimiserParameter<?>> params, ExecutorJobListener jobListener, ExecutorStatusListener statusListener) {
 		
 		this.jobListener = jobListener;
 		this.statusListener = statusListener;
@@ -226,14 +220,10 @@ public class MultiThreadedExecutor implements OptimiserExecutor {
 
 				// create a map of the parameters for this run
 				final Map<String,Object> map = new HashMap<String,Object>();
-				map.put("open", new TimeOfWeek((Integer)values[0]));
-				map.put("close", new TimeOfWeek((Integer)values[1]));
-				map.put("shortSma", values[2]);
-				map.put("longSma", values[3]);
-				map.put("offerSide", values[4]);
-				map.put("stopLoss", values[5]);
-				map.put("takeProfit", values[6]);
-				
+                for(int i=0; i<values.length; i++) {
+                    map.put(params.get(i).getKey(), values[i]);
+                }
+
 				return map;
 			}
 			
