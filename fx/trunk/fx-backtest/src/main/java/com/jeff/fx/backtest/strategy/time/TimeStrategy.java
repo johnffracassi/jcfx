@@ -1,25 +1,19 @@
 package com.jeff.fx.backtest.strategy.time;
 
-import java.util.Map;
-
-import com.jeff.fx.backtest.strategy.coder.Optimiser;
-import org.apache.log4j.Logger;
-import org.joda.time.LocalDateTime;
-
 import com.jeff.fx.backtest.engine.AbstractStrategy;
 import com.jeff.fx.backtest.engine.BTOrder;
 import com.jeff.fx.backtest.engine.OrderBook;
 import com.jeff.fx.backtest.engine.OrderCloseType;
 import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.backtest.strategy.coder.Description;
+import com.jeff.fx.backtest.strategy.coder.Optimiser;
 import com.jeff.fx.backtest.strategy.coder.Parameter;
-import com.jeff.fx.common.CandleCollection;
-import com.jeff.fx.common.CandleDataPoint;
-import com.jeff.fx.common.CandleValueModel;
-import com.jeff.fx.common.CandleWeek;
-import com.jeff.fx.common.OfferSide;
-import com.jeff.fx.common.TimeOfWeek;
+import com.jeff.fx.common.*;
 import com.jeff.fx.indicator.overlay.SimpleMovingAverage;
+import org.apache.log4j.Logger;
+import org.joda.time.LocalDateTime;
+
+import java.util.Map;
 
 public class TimeStrategy extends AbstractStrategy {
 	
@@ -27,32 +21,32 @@ public class TimeStrategy extends AbstractStrategy {
 	
 	@Parameter("Open Time")
 	@Description("Open a trade at this time")
-    @Optimiser(min=1320, max=8460, step=15)
+    @Optimiser(min=1320, max=8460, step=60)
 	private TimeOfWeek open = null;
 	
 	@Parameter("Close Time")
 	@Description("Close the open trade at this time")
-    @Optimiser(min=1320, max=8460, step=15)
+    @Optimiser(min=1320, max=8460, step=60)
 	private TimeOfWeek close = null;
 
 	@Parameter("Stop Loss")
 	@Description("Close order if it loses this amount")
-	@Optimiser(min=0, max=500, step=10)
+	@Optimiser(min=0, max=500, step=75)
     private int stopLoss = 0;
 
 	@Parameter("Take Profit")
 	@Description("Close order if it reaches this amount of profit")
-    @Optimiser(min=0, max=500, step=10)
+    @Optimiser(min=0, max=500, step=75)
 	private int takeProfit = 0;
 
 	@Parameter("Short SMA")
 	@Description("Only open the trade if SMA(x) is heading in direction of the offer side")
-    @Optimiser(min=3, max=50, step=1)
+    @Optimiser(min=3, max=50, step=5)
 	private int shortSma = 14;
 	
 	@Parameter("Long SMA")
 	@Description("Only open the trade if SMA(y) is heading in direction of the offer side")
-    @Optimiser(min=50, max=500, step=5)
+    @Optimiser(min=50, max=500, step=50)
 	private int longSma = 140;
 	
 	@Parameter("Offer Side")

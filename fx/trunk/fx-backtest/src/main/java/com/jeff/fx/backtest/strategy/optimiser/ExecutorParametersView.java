@@ -1,23 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * ExecutorParametersView.java
- *
- * Created on 12/08/2010, 7:42:42 PM
- */
-
 package com.jeff.fx.backtest.strategy.optimiser;
 
-import javax.swing.JComboBox;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-
+import com.jeff.fx.gui.field.PIntComboBox;
 import org.jdesktop.swingx.JXLabel;
 
-import com.jeff.fx.gui.field.PIntComboBox;
+import javax.swing.*;
 
 /**
  *

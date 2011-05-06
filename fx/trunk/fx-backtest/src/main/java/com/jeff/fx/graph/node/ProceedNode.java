@@ -6,7 +6,7 @@ public class ProceedNode extends BaseNode
 {
     public ProceedNode()
     {
-        super("Process");
+        super("Proceed");
     }
 
     @Override

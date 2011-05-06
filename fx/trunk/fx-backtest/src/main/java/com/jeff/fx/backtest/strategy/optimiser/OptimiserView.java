@@ -1,31 +1,21 @@
 package com.jeff.fx.backtest.strategy.optimiser;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.border.EmptyBorder;
-
-import net.miginfocom.swing.MigLayout;
-
-import org.jdesktop.swingx.JXTable;
-
+import com.jeff.fx.backtest.strategy.optimiser.param.OptimiserParameter;
 import com.jeff.fx.gui.GUIUtil;
 import com.jeff.fx.gui.renderer.PriceCellRenderer;
 import com.jeff.fx.gui.renderer.ProfitCellRenderer;
+import net.miginfocom.swing.MigLayout;
+import org.jdesktop.swingx.JXTable;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class OptimiserView extends JPanel {
 
-	private OptimiserParameterTableModel paramModel;
+	private OptimiserParametersTableModel paramModel;
 	private OptimiserReportTableModel reportModel;
 	private ExecutorParametersView pnlExecutorParameters;
 	private JXTable tblParams;
@@ -48,7 +38,7 @@ public class OptimiserView extends JPanel {
 		add(GUIUtil.frame("Parameters", pnlParameters), "cell 0 0,grow");
 		pnlParameters.setLayout(new BorderLayout(0, 0));
 
-		paramModel = new OptimiserParameterTableModel();
+		paramModel = new OptimiserParametersTableModel();
 		tblParams = new JXTable(paramModel);
 		tblParams.setFillsViewportHeight(true);
 		tblParams.setRowSelectionAllowed(false);
@@ -145,7 +135,7 @@ public class OptimiserView extends JPanel {
 		reportScrollPane.setViewportView(tblReport);
 	}
 
-	public List<OptimiserParameter<?,?>> getParameters() {
+	public List<OptimiserParameter<?>> getParameters() {
 		return paramModel.getParameters();
 	}
 	
@@ -196,4 +186,9 @@ public class OptimiserView extends JPanel {
 	public JXTable getTblResults() {
 		return tblResults;
 	}
+
+    public void setStrategyClass(Class<?> strategyClass)
+    {
+        paramModel.setStrategyClass(strategyClass);
+    }
 }

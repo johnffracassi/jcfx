@@ -1,18 +1,17 @@
 package com.jeff.fx.backtest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.prefs.Preferences;
-
-import javax.swing.JOptionPane;
-
 import org.apache.log4j.Logger;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.joda.time.format.ISODateTimeFormat;
 import org.springframework.context.ApplicationContext;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.prefs.Preferences;
 
 public class AppCtx {
 
@@ -57,10 +56,16 @@ public class AppCtx {
 		dataManager = (BackTestDataManager)springCtx.getBean("backTestDataManager");
 	}
 	
-	public static Object getBean(String name) {
+	public static Object getBean(String name)
+    {
 		return springCtx.getBean(name);
 	}
 	
+	public static <T> T getBean(Class<T> beanClass)
+    {
+		return springCtx.getBean(beanClass);
+	}
+
 	///////////////////////////////////////////////////////////////////////////
 
 	@SuppressWarnings("unchecked")
