@@ -21,32 +21,32 @@ public class TimeStrategy extends AbstractStrategy {
 	
 	@Parameter("Open Time")
 	@Description("Open a trade at this time")
-    @Optimiser(min=1320, max=8460, step=60)
+    @Optimiser(min=1320, max=8460, step=60, start=1320, end=1320+2880)
 	private TimeOfWeek open = null;
 	
 	@Parameter("Close Time")
 	@Description("Close the open trade at this time")
-    @Optimiser(min=1320, max=8460, step=60)
+    @Optimiser(min=1320, max=8460, step=60, start=1320+2880, end=8460)
 	private TimeOfWeek close = null;
 
 	@Parameter("Stop Loss")
 	@Description("Close order if it loses this amount")
-	@Optimiser(min=0, max=500, step=75)
+	@Optimiser(min=0, max=500, step=100, start=0, end=300)
     private int stopLoss = 0;
 
 	@Parameter("Take Profit")
 	@Description("Close order if it reaches this amount of profit")
-    @Optimiser(min=0, max=500, step=75)
+    @Optimiser(min=0, max=500, step=100, start=0, end=300)
 	private int takeProfit = 0;
 
 	@Parameter("Short SMA")
 	@Description("Only open the trade if SMA(x) is heading in direction of the offer side")
-    @Optimiser(min=3, max=50, step=5)
+    @Optimiser(min=3, max=50, step=7, start=5, end=47)
 	private int shortSma = 14;
 	
 	@Parameter("Long SMA")
 	@Description("Only open the trade if SMA(y) is heading in direction of the offer side")
-    @Optimiser(min=50, max=500, step=50)
+    @Optimiser(min=50, max=500, step=66, start=50, end=350)
 	private int longSma = 140;
 	
 	@Parameter("Offer Side")
@@ -74,17 +74,17 @@ public class TimeStrategy extends AbstractStrategy {
 
 	public OrderBook execute(CandleCollection candles) {
 
-		SimpleMovingAverage sma1 = (SimpleMovingAverage)indicators.calculate(new SimpleMovingAverage(shortSma, CandleValueModel.Typical), candles);
-		SimpleMovingAverage sma2 = (SimpleMovingAverage)indicators.calculate(new SimpleMovingAverage(longSma, CandleValueModel.Typical), candles);
-		
-		if(candles != null && candles.getStart() != null) {
-			
-			LocalDateTime date = candles.getStart();
-			
-			int weekIdx = 0;
-			while(date.isBefore(candles.getEnd())) {
-			
-				CandleWeek cw = candles.getCandleWeek(date);
+        SimpleMovingAverage sma1 = (SimpleMovingAverage)indicators.calculate(new SimpleMovingAverage(shortSma, CandleValueModel.Typical), candles);
+        SimpleMovingAverage sma2 = (SimpleMovingAverage)indicators.calculate(new SimpleMovingAverage(longSma, CandleValueModel.Typical), candles);
+
+        if(candles != null && candles.getStart() != null) {
+
+            LocalDateTime date = candles.getStart();
+
+            int weekIdx = 0;
+            while(date.isBefore(candles.getEnd())) {
+
+                CandleWeek cw = candles.getCandleWeek(date);
 				
 				if(close.isAfter(open)) {
 				
@@ -94,14 +94,16 @@ public class TimeStrategy extends AbstractStrategy {
 					if(openCandle != null && closeCandle != null) {
 						
 						int absOpenIdx = weekIdx * cw.getCandleCount() + cw.getCandleIndex(open);
-						int dir1 = sma1.getDirection(absOpenIdx);
-						int dir2 = sma2.getDirection(absOpenIdx);
-						
-						if((offerSide == OfferSide.Buy && (dir1 == 1 && dir2 == 1)) || (offerSide == OfferSide.Sell && (dir1 == -1 && dir2 == -1)))
-						
-//						if((offerSide == OfferSide.Buy && (dir1 == 1 && dir2 == 1) && (sma1.getValue(absOpenIdx) > sma2.getValue(absOpenIdx)) ) || 
-//						   (offerSide == OfferSide.Sell && (dir1 == -1 && dir2 == -1) && (sma1.getValue(absOpenIdx) < sma2.getValue(absOpenIdx))))
+                        boolean buying = (offerSide == OfferSide.Buy);
+                        boolean selling = (offerSide == OfferSide.Sell);
+                        boolean shortAboveLong = (sma1.getValue(absOpenIdx) - sma2.getValue(absOpenIdx)) > 0;
+                        int dir1 = sma1.getDirection(absOpenIdx);
+                        int dir2 = sma2.getDirection(absOpenIdx);
+                        boolean bothUp = (dir1 == 1 && dir2 == 1);
+                        boolean bothDown = (dir1 == -1 && dir2 == -1);
+                        boolean openAboveShort = openCandle.getOpen() > sma1.getValue(absOpenIdx);
 
+						if((buying && bothUp && shortAboveLong && openAboveShort) || (selling && bothDown && !shortAboveLong && !openAboveShort))
 						{
 							// create and lodge the order
 							BTOrder order = new BTOrder();
@@ -116,22 +118,22 @@ public class TimeStrategy extends AbstractStrategy {
 							CandleDataPoint tp = null;
 			
 							// find a stop loss
-							if(stopLoss > 0 && offerSide == OfferSide.Buy) { // find a SL on buy
+							if(stopLoss > 0 && buying) { // find a SL on buy
 								sl = cw.findNextLowBelowPrice(open, close, (float)order.getStopLossPrice(), offerSide);
-							} else if(stopLoss > 0 && offerSide == OfferSide.Sell) { // find a SL on sell
+							} else if(stopLoss > 0 && selling) { // find a SL on sell
 								sl = cw.findNextHighAbovePrice(open, close, (float)order.getStopLossPrice(), offerSide);
 							}
 							
 							// find a take profit
-							if(takeProfit > 0 && offerSide == OfferSide.Buy) { // find a TP on buy
+							if(takeProfit > 0 && buying) { // find a TP on buy
 								tp = cw.findNextHighAbovePrice(open, close, (float)order.getTakeProfitPrice(), offerSide);
-							} else if(takeProfit > 0 && offerSide == OfferSide.Sell) { // find a TP on sell
+							} else if(takeProfit > 0 && selling) { // find a TP on sell
 								tp = cw.findNextLowBelowPrice(open, close, (float)order.getTakeProfitPrice(), offerSide);
 							}
 			
 							// find which comes first (sl, tp or close)
 							if(sl == null && tp == null) {
-								order.setClosePrice(offerSide == OfferSide.Buy ? closeCandle.getSellClose() : closeCandle.getBuyClose());
+								order.setClosePrice(buying ? closeCandle.getSellClose() : closeCandle.getBuyClose());
 								order.setCloseType(OrderCloseType.Close);
 								order.setCloseTime(closeCandle.getDateTime());
 							} else if(sl != null && tp != null) {

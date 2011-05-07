@@ -154,9 +154,9 @@ public class OptimiserParametersTableModel extends DefaultTableModel
         if(field.getAnnotation(Optimiser.class) != null)
         {
             Optimiser optimiser = field.getAnnotation(Optimiser.class);
-            param.setStart(optimiser.min());
+            param.setStart(optimiser.start());
             param.setMin(optimiser.min());
-            param.setEnd(optimiser.max());
+            param.setEnd(optimiser.end());
             param.setMax(optimiser.max());
             param.setStep(optimiser.step());
         }
