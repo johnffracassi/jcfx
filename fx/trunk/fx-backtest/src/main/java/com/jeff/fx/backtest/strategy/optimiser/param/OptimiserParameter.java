@@ -19,20 +19,15 @@ public abstract class OptimiserParameter<ValueType> {
 
     public OptimiserParameter() {}
 
-    public ValueType getValue(int step)
+    public ValueType getValue(int stepIdx)
     {
-        double value = start + (getStepSize() * step);
+        double value = start + (step * stepIdx);
         return fromDouble(value);
-    }
-
-    private final double getStepSize()
-    {
-        return (end - start) / getStepCount();
     }
 
     public int getStepCount()
     {
-        return (int)((getEnd() - getStart()) / getStep()) + 1;
+        return (int)((getEnd() - getStart()) / step) + 1;
     }
 
     public String getLabel()
