@@ -9,7 +9,9 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE,ElementType.FIELD})
 public @interface Optimiser
 {
-	double min() default 0;
-    double max() default 250;
+    double start();
+    double end();
+	double min();
+    double max();
     double step() default 1;
 }
