@@ -1,5 +1,11 @@
 package com.jeff.fx.backtest.orderbook.report;
 
+import com.jeff.fx.backtest.AppCtx;
+import com.jeff.fx.backtest.engine.BTOrder;
+import com.jeff.fx.backtest.engine.OrderBook;
+import com.jeff.fx.backtest.orderbook.OrderSelectionListener;
+import com.jeff.fx.backtest.orderbook.export.OrderBookExportManager;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -8,12 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.jeff.fx.backtest.AppCtx;
-import com.jeff.fx.backtest.engine.BTOrder;
-import com.jeff.fx.backtest.engine.OrderBook;
-import com.jeff.fx.backtest.orderbook.OrderSelectionListener;
-import com.jeff.fx.backtest.orderbook.export.OrderBookExportManager;
 
 public class OrderBookReportController {
 
@@ -43,6 +43,7 @@ public class OrderBookReportController {
 				try {
 					OrderBook book = model.getOrderBook();
 					exportManager.export("csv", book, new File("orderBook.csv"));
+                    System.out.println("Order book exported to " + new File("orderBook.csv").getAbsolutePath());
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
