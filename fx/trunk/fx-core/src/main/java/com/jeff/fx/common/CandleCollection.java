@@ -1,15 +1,13 @@
 package com.jeff.fx.common;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.Weeks;
 
-import com.jeff.fx.util.DateUtil;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class CandleCollection {
 
@@ -171,4 +169,14 @@ public class CandleCollection {
 		int candleIdx = getCandleWeek(weekIdx).getCandleIndex(ldt);
 		return weekIdx * periodsInWeek + candleIdx;
 	}
+
+    public List<CandleDataPoint> getCandles(int idx, int lookAheadDistance)
+    {
+        List<CandleDataPoint> candles = new ArrayList<CandleDataPoint>(lookAheadDistance);
+        for(int i=0; i<lookAheadDistance; i++)
+        {
+            candles.add(getCandle(idx + i));
+        }
+        return candles;
+    }
 }

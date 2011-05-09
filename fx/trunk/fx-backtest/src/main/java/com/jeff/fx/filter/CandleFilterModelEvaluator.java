@@ -1,14 +1,14 @@
 package com.jeff.fx.filter;
 
+import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.CandleValueModel;
+import com.jeff.fx.common.TimeOfWeek;
 import org.apache.commons.jexl2.Expression;
 import org.apache.commons.jexl2.JexlContext;
 import org.apache.commons.jexl2.JexlEngine;
 import org.apache.commons.jexl2.MapContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.jeff.fx.common.CandleDataPoint;
-import com.jeff.fx.common.CandleValueModel;
 
 @Component("evaluator")
 public class CandleFilterModelEvaluator
@@ -41,6 +41,7 @@ public class CandleFilterModelEvaluator
         jc.set("candle", candle);
         jc.set("date", candle.getDateTime().toLocalDate());
         jc.set("time", candle.getDateTime().toLocalTime());
+        jc.set("tow", new TimeOfWeek(candle.getDateTime()).toString());
         jc.set("price", candle.evaluate(CandleValueModel.Typical));
         jc.set("idx", model.getIndex());
 
