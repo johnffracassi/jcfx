@@ -12,8 +12,11 @@ import java.awt.*;
 public class LookForwardFrame extends JFrame
 {
     @Autowired
-    private LookForwardChartController controller;
-    
+    private LookForwardChartController chartController;
+
+    @Autowired
+    private LookForwardDatasetController datasetController;
+
     @Autowired
     private CreateChartAction createChartAction;
     
@@ -30,7 +33,7 @@ public class LookForwardFrame extends JFrame
         setSize(new Dimension(1024, 768));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout());
-        getContentPane().add(controller.getView(), BorderLayout.CENTER);
+        getContentPane().add(datasetController.getView(), BorderLayout.CENTER);
 
         JToolBar toolBar = new JToolBar();
         getContentPane().add(toolBar, BorderLayout.NORTH);
