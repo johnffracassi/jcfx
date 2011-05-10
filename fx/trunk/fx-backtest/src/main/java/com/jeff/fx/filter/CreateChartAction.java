@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 public class CreateChartAction extends AbstractAction
 {
     @Autowired
-    private LookForwardChartController controller;
+    private LookForwardController controller;
     
     public CreateChartAction()
     {
@@ -22,6 +22,6 @@ public class CreateChartAction extends AbstractAction
     @Override
     public void actionPerformed(ActionEvent ev)
     {
-        controller.createChart();
+        controller.run();
     }
 }
