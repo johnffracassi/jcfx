@@ -33,7 +33,11 @@ public class LookForwardFrame extends JFrame
         setSize(new Dimension(1024, 768));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout());
-        getContentPane().add(datasetController.getView(), BorderLayout.CENTER);
+
+        JTabbedPane tabbedPane = new JTabbedPane();
+        getContentPane().add(tabbedPane, BorderLayout.CENTER);
+        tabbedPane.add(datasetController.getView(), "Data");
+        tabbedPane.add(chartController.getView(), "Chart");
 
         JToolBar toolBar = new JToolBar();
         getContentPane().add(toolBar, BorderLayout.NORTH);

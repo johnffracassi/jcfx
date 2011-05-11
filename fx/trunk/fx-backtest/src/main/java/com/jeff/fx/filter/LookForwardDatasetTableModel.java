@@ -47,10 +47,10 @@ public class LookForwardDatasetTableModel extends DefaultTableModel
         switch(column) {
             case 0: return candles.get(0).getDateTime();
             case 1: return candles.get(0).getOpen();
-            case 2: return (candles.get(2).getOpen() - candles.get(0).getOpen()) * 10000.0;
-            case 3: return (candles.get(4).getOpen() - candles.get(0).getOpen()) * 10000.0;
-            case 4: return (candles.get(8).getOpen() - candles.get(0).getOpen()) * 10000.0;
-            case 5: return (candles.get(16).getOpen() - candles.get(0).getOpen()) * 10000.0;
+            case 2: return (int)((candles.get(2).getOpen() - candles.get(0).getOpen()) * 10000);
+            case 3: return (int)((candles.get(4).getOpen() - candles.get(0).getOpen()) * 10000);
+            case 4: return (int)((candles.get(8).getOpen() - candles.get(0).getOpen()) * 10000);
+            case 5: return (int)((candles.get(16).getOpen() - candles.get(0).getOpen()) * 10000);
             default: return "XXX";
         }
     }
@@ -59,7 +59,7 @@ public class LookForwardDatasetTableModel extends DefaultTableModel
     public Class<?> getColumnClass(int columnIndex) {
         switch(columnIndex) {
             case 0: return LocalDateTime.class;
-            default: return Double.class;
+            default: return Integer.class;
         }
     }
 
