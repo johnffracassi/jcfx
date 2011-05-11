@@ -18,8 +18,8 @@ public class LookForwardFrame extends JFrame
     private LookForwardDatasetController datasetController;
 
     @Autowired
-    private CreateChartAction createChartAction;
-    
+    private FilterController filterController;
+
     @Autowired
     private ExitAction exitAction;
     
@@ -36,12 +36,13 @@ public class LookForwardFrame extends JFrame
 
         JTabbedPane tabbedPane = new JTabbedPane();
         getContentPane().add(tabbedPane, BorderLayout.CENTER);
-        tabbedPane.add(datasetController.getView(), "Data");
+        tabbedPane.add(datasetController.getView(), "Data Points");
         tabbedPane.add(chartController.getView(), "Chart");
 
         JToolBar toolBar = new JToolBar();
         getContentPane().add(toolBar, BorderLayout.NORTH);
         toolBar.add(exitAction);
-        toolBar.add(createChartAction);
+
+        getContentPane().add(filterController.getView(), BorderLayout.WEST);
     }
 }
