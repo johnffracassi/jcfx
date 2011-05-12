@@ -11,19 +11,19 @@ public class PercentileBuilder
 {
     private static CandleValueModel cvm = CandleValueModel.Close;
 
-    public static double[][] buildTable(List<List<CandleDataPoint>> collections)
+    public static double[][] buildTable(List<List<CandleDataPoint>> collections, int bands)
     {
         int size = findLargestListSize(collections);
 
-        double[][] table = new double[11][size];
+        double[][] table = new double[bands + 1][size];
 
         for(int i=0; i<size; i++)
         {
             List<Double> prices = getPrices(i, collections);
 
-            for(int p=0; p<=10; p++)
+            for(int p=0; p<=bands; p++)
             {
-                table[p][i] = findPercentile(prices, p*10);
+                table[p][i] = findPercentile(prices, p*(100/bands));
             }
         }
 

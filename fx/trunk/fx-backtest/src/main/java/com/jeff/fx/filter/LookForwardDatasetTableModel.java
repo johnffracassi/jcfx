@@ -30,10 +30,10 @@ public class LookForwardDatasetTableModel extends DefaultTableModel
         switch(column) {
             case 0: return "Open Time";
             case 1: return "Price[0]";
-            case 2: return "Price[2]";
-            case 3: return "Price[4]";
-            case 4: return "Price[8]";
-            case 5: return "Price[16]";
+            case 2: return "Price[5]";
+            case 3: return "Price[10]";
+            case 4: return "Price[15]";
+            case 5: return "Price[30]";
             default: return "XXX";
         }
     }
@@ -49,10 +49,10 @@ public class LookForwardDatasetTableModel extends DefaultTableModel
         switch(column) {
             case 0: return candles.get(0).getDateTime();
             case 1: return cvm.evaluate(candles.get(0));
-            case 2: return (int)(cvm.evaluate(candles.get(2)) - cvm.evaluate(candles.get(0)) * 10000);
-            case 3: return (int)(cvm.evaluate(candles.get(4)) - cvm.evaluate(candles.get(0)) * 10000);
-            case 4: return (int)(cvm.evaluate(candles.get(8)) - cvm.evaluate(candles.get(0)) * 10000);
-            case 5: return (int)(cvm.evaluate(candles.get(16)) - cvm.evaluate(candles.get(0)) * 10000);
+            case 2: return (int)((cvm.evaluate(candles.get(5)) - cvm.evaluate(candles.get(0)))  * 10000);
+            case 3: return (int)((cvm.evaluate(candles.get(10)) - cvm.evaluate(candles.get(0))) * 10000);
+            case 4: return (int)((cvm.evaluate(candles.get(15)) - cvm.evaluate(candles.get(0))) * 10000);
+            case 5: return (int)((cvm.evaluate(candles.get(30)) - cvm.evaluate(candles.get(0))) * 10000);
             default: return "XXX";
         }
     }
