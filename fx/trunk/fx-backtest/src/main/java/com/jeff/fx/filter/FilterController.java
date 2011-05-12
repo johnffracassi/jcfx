@@ -6,7 +6,9 @@ import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.CandleValueModel;
 import com.jeff.fx.common.TimeOfWeek;
 import com.jeff.fx.indicator.Indicator;
+import com.jeff.fx.indicator.overlay.AbstractMovingAverage;
 import com.jeff.fx.indicator.overlay.ExponentialMovingAverage;
+import com.jeff.fx.indicator.overlay.SimpleMovingAverage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,17 +32,11 @@ public class FilterController
 
     private FilterView view;
     private IndicatorCache indicatorCache;
+    private CandleValueModel cvm = CandleValueModel.Close;
 
     public FilterController()
     {
         view = new FilterView();
-        view.getSlider().addChangeListener(new ChangeListener()
-        {
-            @Override
-            public void stateChanged(ChangeEvent e)
-            {
-            }
-        });
 
         view.getBtnUpdate().addActionListener(new ActionListener()
         {
@@ -62,31 +59,23 @@ public class FilterController
     {
         try
         {
+            String expression = view.getExpression().trim();
             TimeOfWeek time = view.getSlider().getTimeOfWeek();
 
             CandleCollection candles = lookForwardController.getCandles();
-            List<CandleDataPoint> startPoints = findStartPoints(candles, time);
-            List<List<CandleDataPoint>> collections = findIndividualPriceLines(candles, startPoints, 32);
-            lookForwardController.updateDataset(collections);
+            List<CandleDataPoint> startPoints;
+
+            if(expression.length() > 3)
+                startPoints = findStartPoints(candles, expression);
+            else
+                startPoints = findStartPoints(candles, time);
+
+            lookForwardController.updateStartPoints(startPoints);
         }
         catch(Exception ex)
         {
             ex.printStackTrace();
         }
-    }
-
-    private List<List<CandleDataPoint>> findIndividualPriceLines(CandleCollection candles, List<CandleDataPoint> startPoints, int lookAheadDistance)
-    {
-        List<List<CandleDataPoint>> collections = new ArrayList<List<CandleDataPoint>>(startPoints.size());
-
-        for(CandleDataPoint startPoint : startPoints)
-        {
-            int idx = candles.getCandleIndex(startPoint.getDateTime());
-            List<CandleDataPoint> collection = candles.getCandles(idx, lookAheadDistance);
-            collections.add(collection);
-        }
-
-        return collections;
     }
 
     private List<CandleDataPoint> findStartPoints(CandleCollection candles, String expression)
@@ -95,27 +84,16 @@ public class FilterController
 
         long stime = System.nanoTime();
 
-        Indicator ema8 = indicatorCache.calculate(new ExponentialMovingAverage(14, CandleValueModel.Open), candles);
-        Indicator ema32 = indicatorCache.calculate(new ExponentialMovingAverage(32, CandleValueModel.Open), candles);
-        Indicator ema128 = indicatorCache.calculate(new ExponentialMovingAverage(128, CandleValueModel.Open), candles);
-
         CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), evaluator);
 
         for(int c=0; c<candles.getCandleCount(); c++)
         {
             model.setIndex(c);
             CandleDataPoint candle = model.getCandles().getCandle(c);
-            boolean result = evaluator.evaluate(model, expression, boolean.class);
 
-            if(result)
+            if(evaluator.evaluate(model, expression, boolean.class))
             {
-                if(ema8.getValue(0, c) > ema32.getValue(0, c))
-                {
-                    if(ema32.getValue(0, c) > ema128.getValue(0, c))
-                    {
-                        list.add(candle);
-                    }
-                }
+                list.add(candle);
             }
         }
 
@@ -130,17 +108,43 @@ public class FilterController
 
         long stime = System.nanoTime();
 
-        CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), evaluator);
+        AbstractMovingAverage[] ema = new AbstractMovingAverage[4];
+        for(int i=0; i<ema.length; i++)
+        {
+            ema[i] = (AbstractMovingAverage)indicatorCache.calculate(new SimpleMovingAverage((int)Math.pow(2, i+3), CandleValueModel.Close), candles);
+        }
 
+        CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), evaluator);
         for(int c=0; c<candles.getCandleCount(); c++)
         {
             model.setIndex(c);
             CandleDataPoint candle = model.getCandles().getCandle(c);
-            boolean result = new TimeOfWeek(candle.getDateTime()).equals(time);
 
-            if(result)
+            if(cvm.evaluate(candle) > 0)
             {
-                list.add(candle);
+                boolean result = new TimeOfWeek(candle.getDateTime()).equals(time);
+
+                if(result)
+                {
+                    boolean ok = true;
+                    for(int i=0; i<ema.length-1; i++)
+                    {
+                        if(ema[i].getValue(c) < ema[i+1].getValue(c))
+                        {
+                            ok = false;
+                        }
+                        if(ema[i].getDirection(c) != 1)
+                        {
+                            ok = false;
+                        }
+                    }
+
+                    if(ok)
+                    {
+                        list.add(candle);
+                    }
+                }
+
             }
         }
 
