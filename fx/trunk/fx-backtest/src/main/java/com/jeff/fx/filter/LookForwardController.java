@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -22,6 +23,8 @@ public class LookForwardController {
     private CandleDataStore loader;
 
     private CandleCollection candles;
+    private List<CandleDataPoint> startPoints;
+    private int lookAheadDistance = 300;
 
     public LookForwardController()
     {
@@ -33,12 +36,27 @@ public class LookForwardController {
         chartController.setCollections(collections);
     }
 
+    public void updateStartPoints(List<CandleDataPoint> startPoints)
+    {
+        this.startPoints = startPoints;
+
+        List<List<CandleDataPoint>> collections = new ArrayList<List<CandleDataPoint>>(startPoints.size());
+        for(CandleDataPoint startPoint : startPoints)
+        {
+            int idx = candles.getCandleIndex(startPoint.getDateTime());
+            List<CandleDataPoint> collection = candles.getCandles(idx, lookAheadDistance);
+            collections.add(collection);
+        }
+
+        updateDataset(collections);
+    }
+
     private CandleCollection loadTestData() throws IOException
     {
         FXDataSource dataSource = FXDataSource.Forexite;
         Instrument instrument = Instrument.GBPUSD;
-        Period period = Period.FifteenMin;
-        LocalDate startDate = new LocalDate(2008, 1, 1);
+        Period period = Period.OneMin;
+        LocalDate startDate = new LocalDate(2009, 1, 1);
         LocalDate endDate = new LocalDate(2011, 4, 29);
 
         FXDataRequest request = new FXDataRequest();

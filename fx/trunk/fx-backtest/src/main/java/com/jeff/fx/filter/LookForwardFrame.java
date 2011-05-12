@@ -30,7 +30,7 @@ public class LookForwardFrame extends JFrame
     @PostConstruct
     private void init()
     {
-        setSize(new Dimension(1024, 768));
+        setSize(new Dimension(1280, 800));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout());
 

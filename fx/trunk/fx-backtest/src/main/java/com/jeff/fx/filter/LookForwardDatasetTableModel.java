@@ -1,6 +1,7 @@
 package com.jeff.fx.filter;
 
 import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.CandleValueModel;
 import org.joda.time.LocalDateTime;
 
 import javax.swing.table.DefaultTableModel;
@@ -9,6 +10,7 @@ import java.util.List;
 public class LookForwardDatasetTableModel extends DefaultTableModel
 {
     public List<List<CandleDataPoint>> dataset;
+    private CandleValueModel cvm = CandleValueModel.Close;
 
     @Override
     public int getRowCount() {
@@ -46,11 +48,11 @@ public class LookForwardDatasetTableModel extends DefaultTableModel
         List<CandleDataPoint> candles = dataset.get(row);
         switch(column) {
             case 0: return candles.get(0).getDateTime();
-            case 1: return candles.get(0).getOpen();
-            case 2: return (int)((candles.get(2).getOpen() - candles.get(0).getOpen()) * 10000);
-            case 3: return (int)((candles.get(4).getOpen() - candles.get(0).getOpen()) * 10000);
-            case 4: return (int)((candles.get(8).getOpen() - candles.get(0).getOpen()) * 10000);
-            case 5: return (int)((candles.get(16).getOpen() - candles.get(0).getOpen()) * 10000);
+            case 1: return cvm.evaluate(candles.get(0));
+            case 2: return (int)(cvm.evaluate(candles.get(2)) - cvm.evaluate(candles.get(0)) * 10000);
+            case 3: return (int)(cvm.evaluate(candles.get(4)) - cvm.evaluate(candles.get(0)) * 10000);
+            case 4: return (int)(cvm.evaluate(candles.get(8)) - cvm.evaluate(candles.get(0)) * 10000);
+            case 5: return (int)(cvm.evaluate(candles.get(16)) - cvm.evaluate(candles.get(0)) * 10000);
             default: return "XXX";
         }
     }
