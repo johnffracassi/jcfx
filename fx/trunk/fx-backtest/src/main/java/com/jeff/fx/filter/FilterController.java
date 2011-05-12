@@ -4,20 +4,11 @@ import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.CandleValueModel;
-import com.jeff.fx.common.TimeOfWeek;
-import com.jeff.fx.indicator.Indicator;
-import com.jeff.fx.indicator.overlay.AbstractMovingAverage;
-import com.jeff.fx.indicator.overlay.ExponentialMovingAverage;
-import com.jeff.fx.indicator.overlay.SimpleMovingAverage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -59,16 +50,14 @@ public class FilterController
     {
         try
         {
-            String expression = view.getExpression().trim();
-            TimeOfWeek time = view.getSlider().getTimeOfWeek();
-
             CandleCollection candles = lookForwardController.getCandles();
             List<CandleDataPoint> startPoints;
 
-            if(expression.length() > 3)
-                startPoints = findStartPoints(candles, expression);
-            else
-                startPoints = findStartPoints(candles, time);
+            SimpleCandleFilter[] filters = new SimpleCandleFilter[] {
+                    new CandlePatternFilter(CandlePattern.FullBull)
+            };
+
+            startPoints = findStartPoints(candles, filters);
 
             lookForwardController.updateStartPoints(startPoints);
         }
@@ -78,41 +67,11 @@ public class FilterController
         }
     }
 
-    private List<CandleDataPoint> findStartPoints(CandleCollection candles, String expression)
+    private List<CandleDataPoint> findStartPoints(CandleCollection candles, SimpleCandleFilter[] filters)
     {
         List<CandleDataPoint> list = new LinkedList<CandleDataPoint>();
 
         long stime = System.nanoTime();
-
-        CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), evaluator);
-
-        for(int c=0; c<candles.getCandleCount(); c++)
-        {
-            model.setIndex(c);
-            CandleDataPoint candle = model.getCandles().getCandle(c);
-
-            if(evaluator.evaluate(model, expression, boolean.class))
-            {
-                list.add(candle);
-            }
-        }
-
-        System.out.printf("Completed in %.3fs (selected %d of %d candles)", (System.nanoTime() - stime) / 1000000000.0, list.size(), candles.getCandleCount());
-
-        return list;
-    }
-
-    private List<CandleDataPoint> findStartPoints(CandleCollection candles, TimeOfWeek time)
-    {
-        List<CandleDataPoint> list = new LinkedList<CandleDataPoint>();
-
-        long stime = System.nanoTime();
-
-        AbstractMovingAverage[] ema = new AbstractMovingAverage[4];
-        for(int i=0; i<ema.length; i++)
-        {
-            ema[i] = (AbstractMovingAverage)indicatorCache.calculate(new SimpleMovingAverage((int)Math.pow(2, i+3), CandleValueModel.Close), candles);
-        }
 
         CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), evaluator);
         for(int c=0; c<candles.getCandleCount(); c++)
@@ -122,29 +81,19 @@ public class FilterController
 
             if(cvm.evaluate(candle) > 0)
             {
-                boolean result = new TimeOfWeek(candle.getDateTime()).equals(time);
+                boolean include = true;
 
-                if(result)
-                {
-                    boolean ok = true;
-                    for(int i=0; i<ema.length-1; i++)
+                for (SimpleCandleFilter filter : filters) {
+                    if(filter.filter(model, c))
                     {
-                        if(ema[i].getValue(c) < ema[i+1].getValue(c))
-                        {
-                            ok = false;
-                        }
-                        if(ema[i].getDirection(c) != 1)
-                        {
-                            ok = false;
-                        }
-                    }
-
-                    if(ok)
-                    {
-                        list.add(candle);
+                        include = false;
                     }
                 }
 
+                if(include)
+                {
+                    list.add(candle);
+                }
             }
         }
 

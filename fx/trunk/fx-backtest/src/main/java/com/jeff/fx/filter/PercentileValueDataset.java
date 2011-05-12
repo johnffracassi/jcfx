@@ -1,11 +1,7 @@
 package com.jeff.fx.filter;
 
-import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.Period;
 import org.jfree.data.xy.DefaultXYDataset;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class PercentileValueDataset extends DefaultXYDataset
 {

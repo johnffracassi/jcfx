@@ -5,11 +5,8 @@ import com.jeff.fx.common.Period;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.StrokeList;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 import java.util.List;
 
 @Component
@@ -55,13 +52,13 @@ public class LookForwardChartController
 
     private void buildPercentileChart(List<List<CandleDataPoint>> collections, XYPlot plot)
     {
-        double[][] data = PercentileBuilder.buildTable(collections);
+        int bands = 6;
+        double[][] data = PercentileBuilder.buildTable(collections, bands);
 
-        for (int p=0; p<=10; p++)
+        for (int p=0; p<=bands; p++)
         {
-            XYDataset dataset = new PercentileValueDataset(p*10, data[p], Period.OneMin);
+            XYDataset dataset = new PercentileValueDataset(p*(100/bands), data[p], Period.OneMin);
             plot.setDataset(p, dataset);
-            plot.getRendererForDataset(dataset).setPaint(new Color(255, p * 22, p * 22));
         }
     }
 

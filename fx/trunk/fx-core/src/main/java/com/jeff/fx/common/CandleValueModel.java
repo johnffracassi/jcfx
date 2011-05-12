@@ -2,99 +2,99 @@ package com.jeff.fx.common;
 
 public enum CandleValueModel {
 
-	AverageOfHL(new Evaluator() {
+	AverageOfHL(new CandleValueModelEvaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
 			return (bh + bl + sh + sl) / 4.0f;
 		};
 	}),
 
-	AverageOfOHLC(new Evaluator() {
+	AverageOfOHLC(new CandleValueModelEvaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
 			return (bh + bl + bo + bc + so + sh + sl + sc) / 8.0f;
 		};
 	}),
 	
-	Typical(new Evaluator() {
+	Typical(new CandleValueModelEvaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
 			return (bh + bl + bc) / 3.0f;
 		};
 	}),
 	
-    Open(new Evaluator() {
+    Open(new CandleValueModelEvaluator() {
         public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
             return (bo + so) / 2.0f;
         };
     }),
     
-    Close(new Evaluator() {
+    Close(new CandleValueModelEvaluator() {
         public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
             return (bc + sc) / 2.0f;
         };
     }),
     
-    High(new Evaluator() {
+    High(new CandleValueModelEvaluator() {
         public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
             return (bh + sh) / 2.0f;
         };
     }),
     
-	Low(new Evaluator() {
+	Low(new CandleValueModelEvaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
 			return (bl + sl) / 2.0f;
 		};
 	}),
 	
-	SellOpen(new Evaluator() {
+	SellOpen(new CandleValueModelEvaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
 			return (so);
 		};
 	}),
 	
-	SellClose(new Evaluator() {
+	SellClose(new CandleValueModelEvaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
 			return (sc);
 		};
 	}),
 	
-	SellHigh(new Evaluator() {
+	SellHigh(new CandleValueModelEvaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
 			return (sh);
 		};
 	}),
 	
-	SellLow(new Evaluator() {
+	SellLow(new CandleValueModelEvaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
 			return (sl);
 		};
 	}),
 	
-	BuyOpen(new Evaluator() {
+	BuyOpen(new CandleValueModelEvaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
 			return (bo);
 		};
 	}),
 	
-	BuyClose(new Evaluator() {
+	BuyClose(new CandleValueModelEvaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
 			return (bc);
 		};
 	}),
 	
-	BuyHigh(new Evaluator() {
+	BuyHigh(new CandleValueModelEvaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
 			return (bh);
 		};
 	}),
 	
-	BuyLow(new Evaluator() {
+	BuyLow(new CandleValueModelEvaluator() {
 		public float evaluate(float bo, float bh, float bl, float bc, float so, float sh, float sl, float sc) {
 			return (bl);
 		};
 	});
 	
-	private Evaluator evaluator;
+	private CandleValueModelEvaluator evaluator;
 
-	private CandleValueModel(Evaluator evaluator) {
+	private CandleValueModel(CandleValueModelEvaluator evaluator) {
 		this.evaluator = evaluator;
 	}
 
@@ -107,8 +107,8 @@ public enum CandleValueModel {
 	}
 }
 
-abstract class Evaluator {
-	
+abstract class CandleValueModelEvaluator
+{
 	float evaluate(CandleDataPoint dp) {
 		return evaluate((float)dp.getBuyOpen(), (float)dp.getBuyHigh(), (float)dp.getBuyLow(), (float)dp.getBuyClose(), (float)dp.getSellOpen(), (float)dp.getSellHigh(), (float)dp.getSellLow(), (float)dp.getSellClose());
 	}
