@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -53,9 +54,16 @@ public class FilterController
             CandleCollection candles = lookForwardController.getCandles();
             List<CandleDataPoint> startPoints;
 
-            SimpleCandleFilter[] filters = new SimpleCandleFilter[] {
-                    new CandlePatternFilter(view.getPattern())
-            };
+            List<SimpleCandleFilter> filters = new ArrayList<SimpleCandleFilter>();
+
+            if(view.getPattern() != null)
+                filters.add(new CandlePatternFilter(view.getPattern(), 0));
+            if(view.getPreviousPattern() != null)
+                filters.add(new CandlePatternFilter(view.getPreviousPattern(), 1));
+            if(view.getPrePreviousPattern() != null)
+                filters.add(new CandlePatternFilter(view.getPrePreviousPattern(), 2));
+            if(view.isTimeEnabled())
+                filters.add(new CandleTimeFilter(view.getSlider().getTimeOfWeek()));
 
             startPoints = findStartPoints(candles, filters);
 
@@ -67,7 +75,7 @@ public class FilterController
         }
     }
 
-    private List<CandleDataPoint> findStartPoints(CandleCollection candles, SimpleCandleFilter[] filters)
+    private List<CandleDataPoint> findStartPoints(CandleCollection candles, List<SimpleCandleFilter> filters)
     {
         List<CandleDataPoint> list = new LinkedList<CandleDataPoint>();
 

@@ -9,7 +9,7 @@ public enum CandlePattern
     Doji(new CandlePatternEvaluator() {public boolean evaluate(CandleDataPoint dp) {return CandlePatternType.isDoji(dp);}}),
     FullBull(new CandlePatternEvaluator() {public boolean evaluate(CandleDataPoint dp) {return CandlePatternType.isFullBull(dp);}}),
     FullBear(new CandlePatternEvaluator() {public boolean evaluate(CandleDataPoint dp) {return CandlePatternType.isFullBear(dp);}}),
-    HangingMan(new CandlePatternEvaluator() {public boolean evaluate(CandleDataPoint dp) {return CandlePatternType.isHangingMan(dp);}});
+    HangingMan(new CandlePatternEvaluator() {public boolean evaluate(CandleDataPoint dp) {return CandlePatternType.isShootingStar(dp);}});
 
     private CandlePatternEvaluator evaluator;
 

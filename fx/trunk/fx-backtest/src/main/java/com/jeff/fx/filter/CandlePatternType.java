@@ -44,7 +44,6 @@ public class CandlePatternType
     public static boolean isHammer(CandleDataPoint candle)
     {
         int head = candle.getHeadSize();
-        int body = Math.abs(candle.getSize());
         int tail = candle.getTailSize();
         int range = candle.getRange();
 
@@ -52,10 +51,9 @@ public class CandlePatternType
             return false;
 
         double headPerc = ((double)head / range);
-        double bodyPerc = ((double)body / range);
         double tailPerc = ((double)tail / range);
 
-        return ((headPerc < 0.10 || head < 2) && (tailPerc > 0.825 || tail >= 7));
+        return (candle.getSize() > 0 && (headPerc < 0.20 || head < 4) && (tailPerc > 0.80 || tail >= 7));
     }
 
     /**
@@ -66,10 +64,9 @@ public class CandlePatternType
      * a Hanging Man requires bearish confirmation before action. Such confirmation can come as a gap down or long
      * black candlestick on heavy volume
      */
-    public static boolean isHangingMan(CandleDataPoint candle)
+    public static boolean isShootingStar(CandleDataPoint candle)
     {
         int head = candle.getHeadSize();
-        int body = Math.abs(candle.getSize());
         int tail = candle.getTailSize();
         int range = candle.getRange();
 
@@ -77,10 +74,9 @@ public class CandlePatternType
             return false;
 
         double headPerc = ((double)head / range);
-        double bodyPerc = ((double)body / range);
         double tailPerc = ((double)tail / range);
 
-        return ((headPerc > 0.825 || head >= 7) && (tailPerc < 0.10 || tail < 2));
+        return (candle.getSize() < 0 && (headPerc > 0.80 || head >= 7) && (tailPerc < 0.20 || tail < 4));
     }
 
     public static boolean isFullBull(CandleDataPoint candle)

@@ -5,11 +5,10 @@ import org.jfree.data.xy.DefaultXYDataset;
 
 public class PercentileValueDataset extends DefaultXYDataset
 {
-    int percentile;
     Period period;
     double values[];
 
-	public PercentileValueDataset(int percentile, double[] values, Period period)
+	public PercentileValueDataset(double[] values, Period period)
     {
 		super();
         this.period = period;
@@ -41,7 +40,7 @@ public class PercentileValueDataset extends DefaultXYDataset
 
 	public Comparable<?> getSeriesKey(int series)
     {
-		return "Percentile " + percentile;
+		return "Percentile" + series;
 	}
 }
 
