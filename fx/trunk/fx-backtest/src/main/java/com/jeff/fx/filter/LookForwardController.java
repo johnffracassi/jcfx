@@ -55,8 +55,8 @@ public class LookForwardController {
     {
         FXDataSource dataSource = FXDataSource.Forexite;
         Instrument instrument = Instrument.GBPUSD;
-        Period period = Period.OneMin;
-        LocalDate startDate = new LocalDate(2009, 1, 1);
+        Period period = Period.FifteenMin;
+        LocalDate startDate = new LocalDate(2008, 1, 1);
         LocalDate endDate = new LocalDate(2011, 4, 29);
 
         FXDataRequest request = new FXDataRequest();

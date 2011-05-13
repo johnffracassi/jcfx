@@ -175,7 +175,10 @@ public class CandleCollection {
         List<CandleDataPoint> candles = new ArrayList<CandleDataPoint>(lookAheadDistance);
         for(int i=0; i<lookAheadDistance; i++)
         {
-            candles.add(getCandle(idx + i));
+            if(idx + i < getCandleCount())
+            {
+                candles.add(getCandle(idx + i));
+            }
         }
         return candles;
     }
