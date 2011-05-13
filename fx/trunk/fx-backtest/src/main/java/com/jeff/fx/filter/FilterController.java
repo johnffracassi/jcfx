@@ -54,7 +54,7 @@ public class FilterController
             List<CandleDataPoint> startPoints;
 
             SimpleCandleFilter[] filters = new SimpleCandleFilter[] {
-                    new CandlePatternFilter(CandlePattern.FullBull)
+                    new CandlePatternFilter(view.getPattern())
             };
 
             startPoints = findStartPoints(candles, filters);

@@ -21,14 +21,14 @@ public class CandlePatternType
         int tail = candle.getTailSize();
         int range = candle.getRange();
 
-        if(range < 10)
+        if(range < 8)
             return false;
 
         double headPerc = ((double)head / range);
         double bodyPerc = ((double)body / range);
         double tailPerc = ((double)tail / range);
 
-        return (headPerc > 0.40 && tailPerc > 0.40 && body < 3);
+        return (headPerc > 0.38 && tailPerc > 0.38 && (bodyPerc <= 0.07 || body < 3));
     }
 
     /**
@@ -55,7 +55,7 @@ public class CandlePatternType
         double bodyPerc = ((double)body / range);
         double tailPerc = ((double)tail / range);
 
-        return (headPerc < 0.10 && tailPerc > 0.85);
+        return ((headPerc < 0.10 || head < 2) && (tailPerc > 0.825 || tail >= 7));
     }
 
     /**
@@ -73,14 +73,14 @@ public class CandlePatternType
         int tail = candle.getTailSize();
         int range = candle.getRange();
 
-        if(range < 7)
+        if(range < 10)
             return false;
 
         double headPerc = ((double)head / range);
         double bodyPerc = ((double)body / range);
         double tailPerc = ((double)tail / range);
 
-        return (headPerc > 0.85 && tailPerc < 0.10);
+        return ((headPerc > 0.825 || head >= 7) && (tailPerc < 0.10 || tail < 2));
     }
 
     public static boolean isFullBull(CandleDataPoint candle)
