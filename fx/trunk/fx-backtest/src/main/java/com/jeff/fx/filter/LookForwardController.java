@@ -24,31 +24,35 @@ public class LookForwardController {
 
     private CandleCollection candles;
     private List<CandleDataPoint> startPoints;
-    private int lookAheadDistance = 300;
+    private int lookAheadDistance = 64;
 
     public LookForwardController()
     {
     }
 
-    public void updateDataset(List<List<CandleDataPoint>> collections)
+    public void updateDataset(List<List<CandleDataPoint>> collections, Period period)
     {
         datasetController.setCollections(collections);
-        chartController.setCollections(collections);
+        chartController.setCollections(collections, period);
     }
 
     public void updateStartPoints(List<CandleDataPoint> startPoints)
     {
         this.startPoints = startPoints;
+        Period period = null;
 
         List<List<CandleDataPoint>> collections = new ArrayList<List<CandleDataPoint>>(startPoints.size());
         for(CandleDataPoint startPoint : startPoints)
         {
+            if(period == null && startPoint != null && startPoint.getPeriod() != null)
+                period = startPoint.getPeriod();
+
             int idx = candles.getCandleIndex(startPoint.getDateTime());
             List<CandleDataPoint> collection = candles.getCandles(idx, lookAheadDistance);
             collections.add(collection);
         }
 
-        updateDataset(collections);
+        updateDataset(collections, period);
     }
 
     private CandleCollection loadTestData() throws IOException
@@ -56,7 +60,7 @@ public class LookForwardController {
         FXDataSource dataSource = FXDataSource.Forexite;
         Instrument instrument = Instrument.GBPUSD;
         Period period = Period.FifteenMin;
-        LocalDate startDate = new LocalDate(2008, 1, 1);
+        LocalDate startDate = new LocalDate(2002, 1, 5);
         LocalDate endDate = new LocalDate(2011, 4, 29);
 
         FXDataRequest request = new FXDataRequest();

@@ -22,7 +22,7 @@ public class LookForwardDatasetTableModel extends DefaultTableModel
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return 8;
     }
 
     @Override
@@ -30,11 +30,7 @@ public class LookForwardDatasetTableModel extends DefaultTableModel
         switch(column) {
             case 0: return "Open Time";
             case 1: return "Price[0]";
-            case 2: return "Price[5]";
-            case 3: return "Price[10]";
-            case 4: return "Price[15]";
-            case 5: return "Price[30]";
-            default: return "XXX";
+            default: return String.format("Price[%d]", (int)Math.pow(2, column - 2));
         }
     }
 
@@ -49,11 +45,7 @@ public class LookForwardDatasetTableModel extends DefaultTableModel
         switch(column) {
             case 0: return candles.get(0).getDateTime();
             case 1: return cvm.evaluate(candles.get(0));
-            case 2: return (int)((cvm.evaluate(candles.get(5)) - cvm.evaluate(candles.get(0)))  * 10000);
-            case 3: return (int)((cvm.evaluate(candles.get(10)) - cvm.evaluate(candles.get(0))) * 10000);
-            case 4: return (int)((cvm.evaluate(candles.get(15)) - cvm.evaluate(candles.get(0))) * 10000);
-            case 5: return (int)((cvm.evaluate(candles.get(30)) - cvm.evaluate(candles.get(0))) * 10000);
-            default: return "XXX";
+            default: return (int)((cvm.evaluate(candles.get((int)Math.pow(2, column - 2))) - cvm.evaluate(candles.get(0)))  * 10000);
         }
     }
 
