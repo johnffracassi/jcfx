@@ -53,7 +53,7 @@ public class LookForwardChartController
 
     private void buildPercentileChart(List<List<CandleDataPoint>> collections, Period period, XYPlot plot)
     {
-        int bands = 10;
+        int bands = 8;
 
         double[][] data = PercentileBuilder.buildTable(collections, bands);
 
@@ -61,10 +61,13 @@ public class LookForwardChartController
         {
             XYDataset dataset = new PercentileValueDataset(data[p], period);
             plot.setDataset(p, dataset);
+//            XYSplineRenderer renderer = new XYSplineRenderer();
             XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, false);
 
-            int level = bands - (Math.abs(bands / 2 - p) * 2);
-            Color colour = new Color(255/bands*level,0,0);
+            double percentile = 100.0 * p / bands;
+            int levels = bands / 2;
+            int level = bands - Math.abs(bands / 2 - p) - bands/2;
+            Color colour = new Color(192, (int)((192.0/levels)*(levels-level)), (int)((192.0/levels)*(levels-level)));
 
             if(p == bands / 2)
                 colour = Color.BLUE;

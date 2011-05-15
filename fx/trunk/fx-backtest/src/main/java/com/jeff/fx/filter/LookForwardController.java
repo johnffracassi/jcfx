@@ -1,8 +1,10 @@
 package com.jeff.fx.filter;
 
-import com.jeff.fx.common.*;
+import com.jeff.fx.common.CandleCollection;
+import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.common.FXDataRequest;
+import com.jeff.fx.common.Period;
 import com.jeff.fx.datastore.CandleDataStore;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,9 @@ public class LookForwardController {
 
     @Autowired
     private LookForwardDatasetController datasetController;
+
+    @Autowired
+    private FilterController filterController;
 
     @Autowired
     private CandleDataStore loader;
@@ -57,18 +62,7 @@ public class LookForwardController {
 
     private CandleCollection loadTestData() throws IOException
     {
-        FXDataSource dataSource = FXDataSource.Forexite;
-        Instrument instrument = Instrument.GBPUSD;
-        Period period = Period.FifteenMin;
-        LocalDate startDate = new LocalDate(2002, 1, 5);
-        LocalDate endDate = new LocalDate(2011, 4, 29);
-
-        FXDataRequest request = new FXDataRequest();
-        request.setDataSource(dataSource);
-        request.setDate(startDate);
-        request.setEndDate(endDate);
-        request.setInstrument(instrument);
-        request.setPeriod(period);
+        FXDataRequest request = filterController.getView().getDatasetDefinitionPanel().getRequest();
         return loader.loadCandles(request).getCandles();
     }
 
@@ -87,6 +81,7 @@ public class LookForwardController {
 
     public CandleCollection getCandles()
     {
-        return (candles == null) ? loadCandles() : candles;
+        return loadCandles();
+//        return (candles == null) ? loadCandles() : candles;
     }
 }

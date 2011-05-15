@@ -4,6 +4,10 @@ import com.jeff.fx.common.CandleDataPoint;
 
 public class CandlePatternType
 {
+    private static final double smallestHammerRange = 10;
+    private static final double hammerHeadSize = 0.3333;
+    private static final double hammerTailSize = 1 - hammerHeadSize;
+
     /**
      * Candlesticks with a long upper shadow, long lower shadow and small real body are called spinning tops. One long
      * shadow represents a reversal of sorts; spinning tops represent indecision. The small real body (whether hollow
@@ -47,13 +51,13 @@ public class CandlePatternType
         int tail = candle.getTailSize();
         int range = candle.getRange();
 
-        if(range < 10)
+        if(range < smallestHammerRange)
             return false;
 
         double headPerc = ((double)head / range);
         double tailPerc = ((double)tail / range);
 
-        return (candle.getSize() > 0 && (headPerc < 0.20 || head < 4) && (tailPerc > 0.80 || tail >= 7));
+        return (candle.getSize() > 0 && (headPerc < hammerHeadSize) && (tailPerc > hammerTailSize));
     }
 
     /**
@@ -70,13 +74,13 @@ public class CandlePatternType
         int tail = candle.getTailSize();
         int range = candle.getRange();
 
-        if(range < 10)
+        if(range < smallestHammerRange)
             return false;
 
         double headPerc = ((double)head / range);
         double tailPerc = ((double)tail / range);
 
-        return (candle.getSize() < 0 && (headPerc > 0.80 || head >= 7) && (tailPerc < 0.20 || tail < 4));
+        return (candle.getSize() < 0 && (headPerc > hammerTailSize) && (tailPerc < hammerHeadSize));
     }
 
     public static boolean isFullBull(CandleDataPoint candle)
@@ -84,7 +88,7 @@ public class CandlePatternType
         if(candle.getRange() < 12)
             return false;
 
-        return ((double)candle.getSize() / candle.getRange()) > 0.97;
+        return ((double)candle.getSize() / candle.getRange()) > 0.95;
     }
 
     public static boolean isFullBear(CandleDataPoint candle)
@@ -92,7 +96,7 @@ public class CandlePatternType
         if(candle.getRange() < 12)
             return false;
 
-        return ((double)candle.getSize() / candle.getRange()) < -0.97;
+        return ((double)candle.getSize() / candle.getRange()) < -0.95;
     }
 
     public static boolean isDoji(CandleDataPoint candle)

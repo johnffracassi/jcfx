@@ -12,16 +12,12 @@ public class CandlePatternFilter implements SimpleCandleFilter
     }
 
     @Override
-    public boolean filter(CandleFilterModel model, int idx)
+    public boolean filter(CandleFilterModel model)
     {
+        int idx = model.getIndex();
         if(idx - offset > 0)
             return !pattern.evaluate(model.getCandles().getCandle(idx - offset));
         else
             return false;
-    }
-
-    public void setOffset(int offset)
-    {
-        this.offset = offset;
     }
 }
