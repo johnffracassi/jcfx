@@ -1,38 +1,35 @@
 package com.jeff.fx.backtest;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JPanel;
-
+import com.jeff.fx.backtest.chart.NewCandleChartAction;
+import com.jeff.fx.backtest.chart.NewPriceChartAction;
+import com.jeff.fx.common.FXDataRequest;
+import com.jeff.fx.common.FXDataSource;
+import com.jeff.fx.common.Instrument;
+import com.jeff.fx.common.Period;
+import com.jeff.fx.gui.field.PEnumComboBox;
+import com.siebentag.gui.VerticalFlowLayout;
 import org.jdesktop.swingx.JXButton;
 import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.JXLabel;
 import org.jdesktop.swingx.JXPanel;
 import org.joda.time.LocalDate;
 
-import com.jeff.fx.backtest.chart.NewCandleChartAction;
-import com.jeff.fx.backtest.chart.NewPriceChartAction;
-import com.jeff.fx.common.FXDataSource;
-import com.jeff.fx.common.Instrument;
-import com.jeff.fx.common.Period;
-import com.jeff.fx.gui.field.PEnumComboBox;
-import com.siebentag.gui.VerticalFlowLayout;
-import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
 public class DatasetDefinitionPanel extends JPanel {
 	
 	private String prefix;
-	
+
 	public DatasetDefinitionPanel(String prefix) {
 		
 		this.prefix = prefix;
 		
 		setLayout(new VerticalFlowLayout(0));
-		
+
 		add(createLine("Data Source", 130, new PEnumComboBox<FXDataSource>(prefix + ".dataSource", FXDataSource.class)));
 		add(createLine("Instrument", 130, new PEnumComboBox<Instrument>(prefix + ".instrument", Instrument.class)));
 		add(createLine("Period", 130, new PEnumComboBox<Period>(prefix + ".period", Period.class)));
@@ -48,7 +45,16 @@ public class DatasetDefinitionPanel extends JPanel {
 		pnlActions.add(button_1);
 		add(pnlActions);
 	}
-	
+
+    public FXDataRequest getRequest()
+    {
+        FXDataSource dataSource = FXDataSource.valueOf(AppCtx.getPersistent(prefix + ".dataSource"));
+        Instrument instrument = Instrument.valueOf(AppCtx.getPersistent(prefix + ".instrument"));
+        Period period = Period.valueOf(AppCtx.getPersistent(prefix + ".period"));
+        FXDataRequest request = new FXDataRequest(dataSource, instrument, AppCtx.getPersistentDate(prefix + ".startDate"), AppCtx.getPersistentDate(prefix + ".endDate"), period);
+        return request;
+    }
+
 	private JXPanel createDateLine(final String label, final String key) {
 
 		final String name = prefix + "." + key;

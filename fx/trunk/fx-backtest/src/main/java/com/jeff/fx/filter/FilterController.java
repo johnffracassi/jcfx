@@ -56,14 +56,15 @@ public class FilterController
 
             List<SimpleCandleFilter> filters = new ArrayList<SimpleCandleFilter>();
 
-            if(view.getPattern() != null)
-                filters.add(new CandlePatternFilter(view.getPattern(), 0));
-            if(view.getPreviousPattern() != null)
-                filters.add(new CandlePatternFilter(view.getPreviousPattern(), 1));
-            if(view.getPrePreviousPattern() != null)
-                filters.add(new CandlePatternFilter(view.getPrePreviousPattern(), 2));
+            for(int i=0; i<5; i++)
+                if(view.getPattern(i) != null)
+                    filters.add(new CandlePatternFilter(view.getPattern(i), i));
+
             if(view.isTimeEnabled())
                 filters.add(new CandleTimeFilter(view.getSlider().getTimeOfWeek()));
+
+            if(view.getExpression() != null)
+                filters.add(new ExpressionFilter(view.getExpression()));
 
             startPoints = findStartPoints(candles, filters);
 
@@ -91,8 +92,9 @@ public class FilterController
             {
                 boolean include = true;
 
-                for (SimpleCandleFilter filter : filters) {
-                    if(filter.filter(model, c))
+                for (SimpleCandleFilter filter : filters)
+                {
+                    if(filter.filter(model))
                     {
                         include = false;
                     }

@@ -13,9 +13,9 @@ public class CandleTimeFilter implements SimpleCandleFilter
     }
 
     @Override
-    public boolean filter(CandleFilterModel model, int idx)
+    public boolean filter(CandleFilterModel model)
     {
-        CandleDataPoint candle = model.getCandles().getCandle(idx);
+        CandleDataPoint candle = model.getCandles().getCandle(model.getIndex());
         return !(new TimeOfWeek(candle.getDateTime()).equals(time));
     }
 }
