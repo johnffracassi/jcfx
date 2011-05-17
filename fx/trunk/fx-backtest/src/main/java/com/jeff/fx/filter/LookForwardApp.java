@@ -1,7 +1,6 @@
 package com.jeff.fx.filter;
 
 import com.jeff.fx.backtest.AppCtx;
-import com.jeff.fx.backtest.BackTestDataManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -17,9 +16,6 @@ public class LookForwardApp {
 
     @Autowired
     private LookForwardFrame frame;
-    
-    @Autowired
-    private BackTestDataManager dataManager;
     
     public static void main(String[] args) {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("context-*.xml");

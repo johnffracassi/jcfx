@@ -1,31 +1,24 @@
 package com.jeff.fx.backtest;
 
-import java.awt.BorderLayout;
-
-import javax.annotation.PostConstruct;
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JTabbedPane;
-import javax.swing.JToolBar;
-
-import org.jdesktop.swingx.JXFrame;
-import org.jdesktop.swingx.JXPanel;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.jeff.fx.action.AboutAction;
 import com.jeff.fx.action.ExitAction;
 import com.jeff.fx.backtest.action.ApplicationPreferencesAction;
 import com.jeff.fx.backtest.action.ClearCacheAction;
+import com.jeff.fx.backtest.chart.NewCandleChartAction;
+import com.jeff.fx.backtest.chart.NewPriceChartAction;
 import com.jeff.fx.backtest.strategy.coder.NewStrategyCoderAction;
 import com.jeff.fx.backtest.strategy.time.NewTimeStrategyAction;
 import com.jeff.fx.gui.ButtonTabComponent;
 import com.jeff.fx.gui.GUIUtil;
 import com.siebentag.gui.VerticalFlowLayout;
+import org.jdesktop.swingx.JXFrame;
+import org.jdesktop.swingx.JXPanel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.swing.*;
+import java.awt.*;
 
 @SuppressWarnings("serial")
 @Component
@@ -39,6 +32,8 @@ public class BackTestFrame extends JXFrame {
 	@Autowired private NewTimeStrategyAction newTimeStrategyAction;
 	@Autowired private NewStrategyCoderAction newStrategyCoderAction;
 	@Autowired private ApplicationPreferencesAction applicationPreferencesAction;
+	@Autowired private NewPriceChartAction newPriceChartAction;
+	@Autowired private NewCandleChartAction newCandleChartAction;
 
 	@PostConstruct
 	public void init() {
@@ -73,6 +68,8 @@ public class BackTestFrame extends JXFrame {
         JToolBar toolBar = new JToolBar("Main");
         toolBar.add(newTimeStrategyAction);
         toolBar.add(newStrategyCoderAction);
+        toolBar.add(newPriceChartAction);
+        toolBar.add(newCandleChartAction);
         return toolBar;
 	}
 	

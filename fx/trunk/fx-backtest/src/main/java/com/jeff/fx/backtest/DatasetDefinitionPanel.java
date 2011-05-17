@@ -1,14 +1,11 @@
 package com.jeff.fx.backtest;
 
-import com.jeff.fx.backtest.chart.NewCandleChartAction;
-import com.jeff.fx.backtest.chart.NewPriceChartAction;
 import com.jeff.fx.common.FXDataRequest;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 import com.jeff.fx.gui.field.PEnumComboBox;
 import com.siebentag.gui.VerticalFlowLayout;
-import org.jdesktop.swingx.JXButton;
 import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.JXLabel;
 import org.jdesktop.swingx.JXPanel;
@@ -35,15 +32,6 @@ public class DatasetDefinitionPanel extends JPanel {
 		add(createLine("Period", 130, new PEnumComboBox<Period>(prefix + ".period", Period.class)));
 		add(createDateLine("Start Date", "startDate"));
 		add(createDateLine("End Date", "endDate"));
-		
-		JXPanel pnlActions = new JXPanel();
-		JXButton button = new JXButton(new NewPriceChartAction());
-		button.setIcon(new ImageIcon(DatasetDefinitionPanel.class.getResource("/images/chart_curve_add.png")));
-		pnlActions.add(button);
-		JXButton button_1 = new JXButton(new NewCandleChartAction());
-		button_1.setIcon(new ImageIcon(DatasetDefinitionPanel.class.getResource("/images/chart_line_add.png")));
-		pnlActions.add(button_1);
-		add(pnlActions);
 	}
 
     public FXDataRequest getRequest()

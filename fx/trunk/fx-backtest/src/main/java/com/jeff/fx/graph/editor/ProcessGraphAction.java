@@ -3,10 +3,12 @@ package com.jeff.fx.graph.editor;
 import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.common.*;
 import com.jeff.fx.datastore.CandleDataStore;
-import com.jeff.fx.graph.node.BaseNode;
-import com.jeff.fx.graph.node.EntryNode;
 import com.jeff.fx.filter.CandleFilterModel;
 import com.jeff.fx.filter.CandleFilterModelEvaluator;
+import com.jeff.fx.filter.LookForwardController;
+import com.jeff.fx.filter.LookForwardFrame;
+import com.jeff.fx.graph.node.BaseNode;
+import com.jeff.fx.graph.node.EntryNode;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
@@ -15,9 +17,11 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @org.springframework.stereotype.Component
 public class ProcessGraphAction extends AbstractAction
@@ -27,6 +31,12 @@ public class ProcessGraphAction extends AbstractAction
 
     @Autowired
     private CandleFilterModelEvaluator evaluator;
+
+    @Autowired
+    private LookForwardFrame lookForwardFrame;
+
+    @Autowired
+    private LookForwardController lookForwardController;
 
 	public static final BasicGraphEditor getEditor(ActionEvent e)
 	{
@@ -48,10 +58,11 @@ public class ProcessGraphAction extends AbstractAction
     private void apply(EntryNode node)
     {
         long stime = System.nanoTime();
+        List<CandleDataPoint> startPoints = new ArrayList<CandleDataPoint>();
 
         try
         {
-            CandleCollection candles = loadTestData();
+            CandleCollection candles = loadCandles();
             CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), evaluator);
 
             for(int c=0; c<candles.getCandleCount(); c++)
@@ -61,15 +72,25 @@ public class ProcessGraphAction extends AbstractAction
                 boolean result = decide(node, model, c);
 
                 if(result)
-                    System.out.println(candle + " = " + result);
+                {
+                    startPoints.add(candle);
+                }
             }
+
+            System.out.printf("Completed in %.3fs (selected %d of %d candles)", (System.nanoTime() - stime) / 1000000000.0, startPoints.size(), candles.getCandleCount());
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
 
-        System.out.printf("Completed in %.3fs", (System.nanoTime() - stime) / 1000000000.0);
+        lookForwardController.updateStartPoints(startPoints);
+        lookForwardController.activate();
+    }
+
+    private CandleCollection loadCandles() throws IOException
+    {
+        return lookForwardController.getCandles();
     }
 
     private CandleCollection loadTestData() throws IOException
@@ -77,12 +98,13 @@ public class ProcessGraphAction extends AbstractAction
         FXDataSource dataSource = FXDataSource.Forexite;
         Instrument instrument = Instrument.GBPUSD;
         Period period = Period.FifteenMin;
-        LocalDate startDate = new LocalDate(2010, 10, 13);
+        LocalDate startDate = new LocalDate(2005, 1, 4);
+        LocalDate endDate = new LocalDate(2011, 4, 29);
 
         FXDataRequest request = new FXDataRequest();
         request.setDataSource(dataSource);
         request.setDate(startDate);
-        request.setEndDate(startDate);
+        request.setEndDate(endDate);
         request.setInstrument(instrument);
         request.setPeriod(period);
         return new CandleCollection(loader.loadCandlesForWeek(request));

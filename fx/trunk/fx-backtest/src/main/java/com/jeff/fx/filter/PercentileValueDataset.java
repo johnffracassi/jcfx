@@ -25,7 +25,7 @@ public class PercentileValueDataset extends DefaultXYDataset
 	
 	public double getXValue(int series, int item)
     {
-        return item * period.getInterval();
+        return item * period.getInterval() / 60000;
     }
 
 	public int getItemCount(int series)
