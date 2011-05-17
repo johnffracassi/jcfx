@@ -27,9 +27,12 @@ public class LookForwardController {
     @Autowired
     private CandleDataStore loader;
 
+    @Autowired
+    private LookForwardFrame frame;
+
     private CandleCollection candles;
     private List<CandleDataPoint> startPoints;
-    private int lookAheadDistance = 64;
+    private int lookAheadDistance = 120;
 
     public LookForwardController()
     {
@@ -83,5 +86,10 @@ public class LookForwardController {
     {
         return loadCandles();
 //        return (candles == null) ? loadCandles() : candles;
+    }
+
+    public void activate()
+    {
+        frame.setVisible(true);
     }
 }

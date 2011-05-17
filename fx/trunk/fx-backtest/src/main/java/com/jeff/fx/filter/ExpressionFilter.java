@@ -12,7 +12,6 @@ public class ExpressionFilter implements SimpleCandleFilter
     @Override
     public boolean filter(CandleFilterModel model)
     {
-        System.out.printf("%.4f - %.4f = %d %n", model.evaluate("candle.open"), model.evaluate("candle.close"), model.evaluate("candle.size"));
         return model.evaluate(expression, Boolean.class);
     }
 }
