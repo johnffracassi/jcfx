@@ -1,5 +1,7 @@
 package com.jeff.fx.filter;
 
+import com.jeff.fx.filter.candletype.CandlePattern;
+
 public class CandlePatternFilter implements SimpleCandleFilter
 {
     private CandlePattern pattern;
