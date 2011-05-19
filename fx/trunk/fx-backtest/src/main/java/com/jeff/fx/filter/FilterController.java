@@ -4,7 +4,9 @@ import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.CandleValueModel;
+import com.jeff.fx.indicator.Indicator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ConcurrentTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.awt.event.ActionEvent;
@@ -76,39 +78,74 @@ public class FilterController
         }
     }
 
-    private List<CandleDataPoint> findStartPoints(CandleCollection candles, List<SimpleCandleFilter> filters)
+    private int runningThreads = 0;
+
+    private List<CandleDataPoint> findStartPoints(final CandleCollection candles, final List<SimpleCandleFilter> filters)
     {
-        List<CandleDataPoint> list = new LinkedList<CandleDataPoint>();
+        final int threads = 6;
+        final int cpt = candles.getCandleCount() / threads;
 
-        long stime = System.nanoTime();
+        final IndicatorCache indicatorCache = new IndicatorCache();
+        final List<CandleDataPoint> startPoints = new LinkedList<CandleDataPoint>();
 
-        CandleFilterModel model = new CandleFilterModel(candles, new IndicatorCache(), evaluator);
-        for(int c=0; c<candles.getCandleCount(); c++)
+        final long stime = System.nanoTime();
+        for(int t=0; t<threads; t++)
         {
-            model.setIndex(c);
-            CandleDataPoint candle = model.getCandles().getCandle(c);
-
-            if(cvm.evaluate(candle) > 0)
+            runningThreads ++;
+            final int threadIdx = t;
+            new Thread()
             {
-                boolean include = true;
-
-                for (SimpleCandleFilter filter : filters)
+                public void run()
                 {
-                    if(filter.filter(model))
+                    System.out.printf("Thread #%d started (%d to %d) %n", threadIdx, threadIdx*cpt, (threadIdx+1)*cpt);
+                    CandleFilterModel model = new CandleFilterModel(candles, indicatorCache, evaluator);
+                    List<CandleDataPoint> list = new LinkedList<CandleDataPoint>();
+
+                    for(int c=threadIdx*cpt; c<(threadIdx+1)*cpt; c++)
                     {
-                        include = false;
+                        model.setIndex(c);
+                        CandleDataPoint candle = model.getCandles().getCandle(c);
+
+                        if(cvm.evaluate(candle) > 0)
+                        {
+                            boolean include = true;
+
+                            for (SimpleCandleFilter filter : filters)
+                            {
+                                if(filter.filter(model))
+                                {
+                                    include = false;
+                                }
+                            }
+
+                            if(include)
+                            {
+                                list.add(candle);
+                            }
+                        }
+                    }
+
+                    synchronized(startPoints)
+                    {
+                        startPoints.addAll(list);
+                        System.out.printf("Thread #%d, completed in %.3fs (selected %d of %d candles) %n", threadIdx, (System.nanoTime() - stime) / 1000000000.0, list.size(), cpt);
+                        runningThreads --;
                     }
                 }
+            }.start();
+        }
 
-                if(include)
-                {
-                    list.add(candle);
-                }
+        while(runningThreads > 0)
+        {
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
         }
 
-        System.out.printf("Completed in %.3fs (selected %d of %d candles)", (System.nanoTime() - stime) / 1000000000.0, list.size(), candles.getCandleCount());
+        System.out.printf("All threads, completed in %.3fs (selected %d of %d candles) %n", (System.nanoTime() - stime) / 1000000000.0, startPoints.size(), cpt);
 
-        return list;
+        return startPoints;
     }
 }

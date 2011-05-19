@@ -2,6 +2,7 @@ package com.jeff.fx.filter;
 
 import com.jeff.fx.backtest.DatasetDefinitionPanel;
 import com.jeff.fx.common.FXDataSource;
+import com.jeff.fx.filter.candletype.CandlePattern;
 import com.jeff.fx.gui.TimeOfWeekSliderLine;
 import com.jeff.fx.gui.field.PEnumComboBox;
 import com.siebentag.gui.VerticalFlowLayout;

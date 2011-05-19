@@ -1,4 +1,4 @@
-package com.jeff.fx.filter;
+package com.jeff.fx.filter.candletype;
 
 import com.jeff.fx.common.CandleDataPoint;
 
