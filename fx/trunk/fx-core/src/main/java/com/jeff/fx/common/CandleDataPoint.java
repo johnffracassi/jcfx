@@ -296,4 +296,9 @@ public class CandleDataPoint extends AbstractFXDataPoint implements Serializable
     {
         return Math.min(getOpen(), getClose());
     }
+
+    public int getBodySize()
+    {
+        return (int)((getHigherOpenOrClose() - getLowerOpenOrClose()) / getInstrument().pipValue);
+    }
 }

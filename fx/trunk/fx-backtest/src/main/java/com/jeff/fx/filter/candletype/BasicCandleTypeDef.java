@@ -50,7 +50,7 @@ public abstract class BasicCandleTypeDef implements CandleTypeDef
     {
         double perc = 0.0;
         if(candle.getRange() > 0)
-            perc = (double)Math.abs(candle.getSize()) / (double)candle.getRange();
+            perc = (double)candle.getBodySize() / (double)candle.getRange();
 
         return (perc >= minBodySize && perc <= maxBodySize);
     }

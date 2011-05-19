@@ -4,9 +4,7 @@ import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.CandleValueModel;
-import com.jeff.fx.indicator.Indicator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ConcurrentTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.awt.event.ActionEvent;
@@ -144,7 +142,7 @@ public class FilterController
             }
         }
 
-        System.out.printf("All threads, completed in %.3fs (selected %d of %d candles) %n", (System.nanoTime() - stime) / 1000000000.0, startPoints.size(), cpt);
+        System.out.printf("All threads, completed in %.3fs (selected %d of %d candles) %n", (System.nanoTime() - stime) / 1000000000.0, startPoints.size(), candles.getCandleCount());
 
         return startPoints;
     }

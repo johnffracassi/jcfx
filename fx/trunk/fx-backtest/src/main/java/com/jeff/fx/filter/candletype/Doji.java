@@ -6,8 +6,8 @@ public class Doji extends BasicCandleTypeDef
     {
         minRange = 8;
         maxBodySize = 0.05;
-        maxTailSize = 0.4;
-        maxHeadSize = 0.4;
+        maxTailSize = 0.65;
+        maxHeadSize = 0.65;
     }
 
     @Override
