@@ -4,9 +4,9 @@ public class StrongBear extends BasicCandleTypeDef
 {
     public StrongBear()
     {
-        maxSize = -5;
+        maxSize = -6;
         minRange = 8;
-        minBodySize = 0.4;
+        minBodySize = 0.5;
     }
 
     @Override

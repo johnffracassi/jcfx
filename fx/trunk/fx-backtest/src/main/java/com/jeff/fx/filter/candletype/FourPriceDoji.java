@@ -1,10 +1,17 @@
 package com.jeff.fx.filter.candletype;
 
+import com.jeff.fx.common.CandleDataPoint;
+
 public class FourPriceDoji extends Doji
 {
     public FourPriceDoji()
     {
-        this.maxRange = 0.04;
+    }
+
+    @Override
+    public boolean is(CandleDataPoint candle)
+    {
+        return (candle.getBuyHigh() == candle.getBuyLow());
     }
 
     @Override
