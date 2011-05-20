@@ -1,15 +1,15 @@
 package com.jeff.fx.filter;
 
-import com.jeff.fx.filter.candletype.CandlePattern;
+import com.jeff.fx.filter.candletype.CandleType;
 
 public class CandlePatternFilter implements SimpleCandleFilter
 {
-    private CandlePattern pattern;
+    private CandleType type;
     private int offset = 0;
 
-    public CandlePatternFilter(CandlePattern pattern, int offset)
+    public CandlePatternFilter(CandleType type, int offset)
     {
-        this.pattern = pattern;
+        this.type = type;
         this.offset = offset;
     }
 
@@ -18,7 +18,7 @@ public class CandlePatternFilter implements SimpleCandleFilter
     {
         int idx = model.getIndex();
         if(idx - offset > 0)
-            return !pattern.evaluate(model.getCandles().getCandle(idx - offset));
+            return !type.evaluate(model.getCandles().getCandle(idx - offset));
         else
             return false;
     }

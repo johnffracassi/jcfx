@@ -1,6 +1,8 @@
-package com.jeff.fx.filter.candletype;
+package com.jeff.fx.filter.candletype.def;
 
-public class InvertedHammer extends BasicCandleTypeDef
+import com.jeff.fx.filter.MarketSentiment;
+
+public class InvertedHammer extends AbstractCandleTypeDef
 {
     public InvertedHammer()
     {
@@ -14,8 +16,8 @@ public class InvertedHammer extends BasicCandleTypeDef
     }
 
     @Override
-    public CandleSentiment sentiment()
+    public MarketSentiment sentiment()
     {
-        return CandleSentiment.Bullish;
+        return MarketSentiment.Bullish;
     }
 }

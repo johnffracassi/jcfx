@@ -1,4 +1,6 @@
-package com.jeff.fx.filter.candletype;
+package com.jeff.fx.filter.candletype.def;
+
+import com.jeff.fx.filter.MarketSentiment;
 
 public class Hammer extends HangingMan
 {
@@ -9,8 +11,8 @@ public class Hammer extends HangingMan
     }
 
     @Override
-    public CandleSentiment sentiment()
+    public MarketSentiment sentiment()
     {
-        return CandleSentiment.Bullish;
+        return MarketSentiment.Bullish;
     }
 }
