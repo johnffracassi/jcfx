@@ -90,7 +90,7 @@ public class CandleTypeTestForm extends JFrame
 
         for (CandleType candleType : CandleType.values())
         {
-            if(candleType.evaluate(candle))
+            if(candleType.is(candle))
             {
                 buf.append(candleType.toString()).append(", ");
             }
