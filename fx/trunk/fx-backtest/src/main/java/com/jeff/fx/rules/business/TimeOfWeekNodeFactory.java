@@ -1,7 +1,7 @@
 package com.jeff.fx.rules.business;
 
 import com.jeff.fx.common.TimeOfWeek;
-import com.jeff.fx.filter.CandleFilterModel;
+import com.jeff.fx.lfwd.CandleFilterModel;
 import com.jeff.fx.rules.Node;
 import com.jeff.fx.rules.Operand;
 import com.jeff.fx.rules.logic.AndNode;

@@ -1,6 +1,6 @@
 package com.jeff.fx.graph.node;
 
-import com.jeff.fx.filter.CandleFilterModel;
+import com.jeff.fx.lfwd.CandleFilterModel;
 
 public class ProceedNode extends BaseNode
 {

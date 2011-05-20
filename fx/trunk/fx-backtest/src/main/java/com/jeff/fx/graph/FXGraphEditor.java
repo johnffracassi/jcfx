@@ -1,9 +1,9 @@
 package com.jeff.fx.graph;
 
 import com.jeff.fx.datastore.CandleDataStore;
-import com.jeff.fx.filter.CandleFilterProcessor;
 import com.jeff.fx.graph.editor.*;
 import com.jeff.fx.graph.node.*;
+import com.jeff.fx.lfwd.CandleFilterProcessor;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;

@@ -9,11 +9,10 @@
  */
 package com.jeff.fx.graph.editor;
 
-import java.io.File;
-
 import javax.imageio.ImageIO;
-import javax.swing.JFileChooser;
+import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import java.io.File;
 
 /**
  * Filter for use in a {@link JFileChooser}.
@@ -32,7 +31,7 @@ public class DefaultFileFilter extends FileFilter
 	protected String desc;
 
 	/**
-	 * Constructs a new filter for the specified extension and descpription.
+	 * Constructs a new lfwd for the specified extension and descpription.
 	 * 
 	 * @param extension
 	 *            The extension to accept files with.
@@ -90,7 +89,7 @@ public class DefaultFileFilter extends FileFilter
 	}
 
 	/**
-	 * Utility file filter to accept all image formats supported by image io.
+	 * Utility file lfwd to accept all image formats supported by image io.
 	 * 
 	 * @see ImageIO#getReaderFormatNames()
 	 */
@@ -103,16 +102,16 @@ public class DefaultFileFilter extends FileFilter
 		protected static String[] imageFormats = ImageIO.getReaderFormatNames();
 
 		/**
-		 * Description of the filter.
+		 * Description of the lfwd.
 		 */
 		protected String desc;
 
 		/**
-		 * Constructs a new file filter for all supported image formats using
+		 * Constructs a new file lfwd for all supported image formats using
 		 * the specified description.
 		 * 
 		 * @param description
-		 *            The description to use for the file filter.
+		 *            The description to use for the file lfwd.
 		 */
 		public ImageFileFilter(String description)
 		{
@@ -160,7 +159,7 @@ public class DefaultFileFilter extends FileFilter
 	}
 
 	/**
-	 * Utility file filter to accept editor files, namely .xml and .xml.gz
+	 * Utility file lfwd to accept editor files, namely .xml and .xml.gz
 	 * extensions.
 	 * 
 	 * @see ImageIO#getReaderFormatNames()
@@ -174,10 +173,10 @@ public class DefaultFileFilter extends FileFilter
 		protected String desc;
 
 		/**
-		 * Constructs a new editor file filter using the specified description.
+		 * Constructs a new editor file lfwd using the specified description.
 		 * 
 		 * @param description
-		 *            The description to use for the filter.
+		 *            The description to use for the lfwd.
 		 */
 		public EditorFileFilter(String description)
 		{

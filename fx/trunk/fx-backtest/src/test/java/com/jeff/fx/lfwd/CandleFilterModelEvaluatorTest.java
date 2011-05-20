@@ -1,4 +1,4 @@
-package com.jeff.fx.filter;
+package com.jeff.fx.lfwd;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,24 +1,18 @@
 package com.jeff.fx.rules;
 
-import java.io.IOException;
-import java.util.List;
-
+import com.jeff.fx.common.*;
+import com.jeff.fx.datastore.CandleDataStore;
+import com.jeff.fx.indicator.Indicator;
+import com.jeff.fx.lfwd.CandleFilterProcessor;
+import com.jeff.fx.rules.business.ELNode;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.jeff.fx.common.CandleCollection;
-import com.jeff.fx.common.CandleDataPoint;
-import com.jeff.fx.common.FXDataRequest;
-import com.jeff.fx.common.FXDataSource;
-import com.jeff.fx.common.Instrument;
-import com.jeff.fx.common.Period;
-import com.jeff.fx.datastore.CandleDataStore;
-import com.jeff.fx.indicator.Indicator;
-import com.jeff.fx.filter.CandleFilterProcessor;
-import com.jeff.fx.rules.business.ELNode;
+import java.io.IOException;
+import java.util.List;
 
 @Component("candleFilterTest")
 public class CandleFilterTest {
