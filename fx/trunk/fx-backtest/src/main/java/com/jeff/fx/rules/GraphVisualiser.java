@@ -1,54 +1,34 @@
 package com.jeff.fx.rules;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JToolBar;
-
-import org.joda.time.LocalDate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
-
 import com.jeff.fx.backtest.GenericDialog;
-import com.jeff.fx.common.CandleCollection;
-import com.jeff.fx.common.CandleDataPoint;
-import com.jeff.fx.common.FXDataRequest;
-import com.jeff.fx.common.FXDataSource;
-import com.jeff.fx.common.Instrument;
-import com.jeff.fx.common.Period;
+import com.jeff.fx.common.*;
 import com.jeff.fx.datastore.CandleDataStore;
 import com.jeff.fx.gui.beanform.BeanForm;
-import com.jeff.fx.filter.CandleFilterProcessor;
+import com.jeff.fx.lfwd.CandleFilterProcessor;
 import com.jeff.fx.rules.business.ELNode;
 import com.jeff.fx.rules.business.TimeOfWeekNode;
 import com.jeff.fx.rules.business.TimeRangeNode;
-import com.jeff.fx.rules.logic.AndNode;
-import com.jeff.fx.rules.logic.FalseNode;
-import com.jeff.fx.rules.logic.NandNode;
-import com.jeff.fx.rules.logic.OrNode;
-import com.jeff.fx.rules.logic.TrueNode;
-import com.jeff.fx.rules.logic.XorNode;
+import com.jeff.fx.rules.logic.*;
 import com.mxgraph.layout.mxCompactTreeLayout;
 import com.mxgraph.layout.mxIGraphLayout;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxLayoutManager;
+import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.List;
 
 @Component("graphVisualiser")
 public class GraphVisualiser extends JFrame
@@ -114,7 +94,7 @@ public class GraphVisualiser extends JFrame
             lblResult.setText("Loading candles...");
             CandleCollection candles = loadTestData();
 
-            lblResult.setText("Applying filter");
+            lblResult.setText("Applying lfwd");
             List<CandleDataPoint> filtered = processor.apply(rootNode, candles);
 
             lblResult.setText("Found " + filtered.size() + " candle(s)");

@@ -4,7 +4,7 @@ import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.TimeOfWeek;
 import com.jeff.fx.gui.beanform.Label;
 import com.jeff.fx.gui.beanform.Property;
-import com.jeff.fx.filter.CandleFilterModel;
+import com.jeff.fx.lfwd.CandleFilterModel;
 
 @Label("Time Range Node")
 public class TimeRangeNode extends BaseNode

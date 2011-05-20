@@ -1,14 +1,13 @@
 package com.jeff.fx.rules;
 
+import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.datastore.CandleDataStore;
+import com.jeff.fx.lfwd.CandleFilterProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.jeff.fx.common.CandleDataPoint;
-import com.jeff.fx.datastore.CandleDataStore;
-import com.jeff.fx.filter.CandleFilterProcessor;
 
 public class NonContiguousCandleController
 {
@@ -43,6 +42,6 @@ public class NonContiguousCandleController
     {
         // load candle dataset
         
-        // apply filter
+        // apply lfwd
     }
 }

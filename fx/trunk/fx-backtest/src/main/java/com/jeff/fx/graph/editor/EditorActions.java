@@ -482,7 +482,7 @@ public class EditorActions
                     fc.addChoosableFileFilter(vmlFileFilter);
 					fc.addChoosableFileFilter(new DefaultFileFilter(".html","HTML " + mxResources.get("file") + " (.html)"));
 
-					// Adds a filter for each supported image format
+					// Adds a lfwd for each supported image format
 					Object[] imageFormats = ImageIO.getReaderFormatNames();
 
 					// Finds all distinct extensions
@@ -502,7 +502,7 @@ public class EditorActions
 						fc.addChoosableFileFilter(new DefaultFileFilter("."+ ext, ext.toUpperCase() + " "+ mxResources.get("file") + " (." + ext + ")"));
 					}
 
-					// Adds filter that accepts all supported image formats
+					// Adds lfwd that accepts all supported image formats
 					fc.addChoosableFileFilter(new DefaultFileFilter.ImageFileFilter(mxResources.get("allImages")));
 					fc.setFileFilter(defaultFilter);
 					int rc = fc.showDialog(null, mxResources.get("save"));
@@ -1182,7 +1182,7 @@ public class EditorActions
 
 				fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
-				// Adds file filter for Dia shape import
+				// Adds file lfwd for Dia shape import
 				fc.addChoosableFileFilter(new DefaultFileFilter(".shape",
 						"Dia Shape " + mxResources.get("file") + " (.shape)"));
 
