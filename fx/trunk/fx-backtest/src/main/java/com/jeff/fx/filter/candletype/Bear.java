@@ -4,7 +4,7 @@ public class Bear extends BasicCandleTypeDef
 {
     public Bear()
     {
-        maxSize = -1;
+        maxSize = -4;
     }
 
     @Override

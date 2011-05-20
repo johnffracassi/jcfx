@@ -1,11 +1,15 @@
 package com.jeff.fx.filter.candletype;
 
-public class DragonFlyDoji extends Doji
+import com.jeff.fx.common.CandleDataPoint;
+
+public class DragonFlyDoji extends BasicCandleTypeDef
 {
     public DragonFlyDoji()
     {
-        super();
-        maxHeadSize = 0.04;
+        minRange = 10;
+        minSize = 0;
+        maxBodySize = 0.05;
+        maxHeadSize = 0.05;
     }
 
     @Override

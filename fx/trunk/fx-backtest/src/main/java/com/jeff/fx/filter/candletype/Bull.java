@@ -4,7 +4,7 @@ public class Bull extends BasicCandleTypeDef
 {
     public Bull()
     {
-        minSize = 1;
+        minSize = 4;
     }
 
     @Override

@@ -4,9 +4,9 @@ public class StrongBull extends BasicCandleTypeDef
 {
     public StrongBull()
     {
-        minSize = 5;
+        minSize = 6;
         minRange = 8;
-        minBodySize = 0.4;
+        minBodySize = 0.5;
     }
 
     @Override
