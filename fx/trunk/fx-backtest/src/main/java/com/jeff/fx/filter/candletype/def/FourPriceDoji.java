@@ -1,6 +1,7 @@
-package com.jeff.fx.filter.candletype;
+package com.jeff.fx.filter.candletype.def;
 
 import com.jeff.fx.common.CandleDataPoint;
+import com.jeff.fx.filter.MarketSentiment;
 
 public class FourPriceDoji extends Doji
 {
@@ -15,8 +16,8 @@ public class FourPriceDoji extends Doji
     }
 
     @Override
-    public CandleSentiment sentiment()
+    public MarketSentiment sentiment()
     {
-        return CandleSentiment.Indecision;
+        return MarketSentiment.Indecision;
     }
 }

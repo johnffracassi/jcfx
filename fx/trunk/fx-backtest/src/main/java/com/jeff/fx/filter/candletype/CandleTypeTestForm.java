@@ -5,7 +5,6 @@ import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
@@ -89,11 +88,11 @@ public class CandleTypeTestForm extends JFrame
 
         StringBuffer buf = new StringBuffer(String.format("%.4f / %.4f / %.4f / %.4f %n", candle.getOpen(), candle.getHigh(), candle.getLow(), candle.getClose()));
 
-        for (CandlePattern candlePattern : CandlePattern.values())
+        for (CandleType candleType : CandleType.values())
         {
-            if(candlePattern.evaluate(candle))
+            if(candleType.evaluate(candle))
             {
-                buf.append(candlePattern.toString()).append(", ");
+                buf.append(candleType.toString()).append(", ");
             }
         }
 

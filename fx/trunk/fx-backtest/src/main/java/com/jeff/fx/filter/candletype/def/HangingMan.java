@@ -1,6 +1,8 @@
-package com.jeff.fx.filter.candletype;
+package com.jeff.fx.filter.candletype.def;
 
-public class HangingMan extends BasicCandleTypeDef
+import com.jeff.fx.filter.MarketSentiment;
+
+public class HangingMan extends AbstractCandleTypeDef
 {
     public HangingMan()
     {
@@ -14,8 +16,8 @@ public class HangingMan extends BasicCandleTypeDef
     }
 
     @Override
-    public CandleSentiment sentiment()
+    public MarketSentiment sentiment()
     {
-        return CandleSentiment.Bearish;
+        return MarketSentiment.Bearish;
     }
 }

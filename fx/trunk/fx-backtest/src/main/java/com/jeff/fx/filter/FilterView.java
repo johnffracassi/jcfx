@@ -2,7 +2,7 @@ package com.jeff.fx.filter;
 
 import com.jeff.fx.backtest.DatasetDefinitionPanel;
 import com.jeff.fx.common.FXDataSource;
-import com.jeff.fx.filter.candletype.CandlePattern;
+import com.jeff.fx.filter.candletype.CandleType;
 import com.jeff.fx.gui.TimeOfWeekSliderLine;
 import com.jeff.fx.gui.field.PEnumComboBox;
 import com.siebentag.gui.VerticalFlowLayout;
@@ -75,7 +75,7 @@ public class FilterView extends JXPanel
         return (expressionView.isEnabled() ? expressionView.getExpression() : null);
     }
 
-    public CandlePattern getPattern(int idx)
+    public CandleType getPattern(int idx)
     {
         return patternView[idx].isEnabled() ? patternView[idx].getValue() : null;
     }
@@ -111,7 +111,7 @@ class CandlePatternFilterView extends JXPanel
 
     public CandlePatternFilterView(String label, int offset)
     {
-        options = new PEnumComboBox("cpfv.combo."+offset, CandlePattern.class);
+        options = new PEnumComboBox("cpfv.combo."+offset, CandleType.class);
         this.offset = new JComboBox(new Integer[] {0, -1, -2, -3, -4});
         this.offset.setSelectedItem(-offset);
 
@@ -133,8 +133,8 @@ class CandlePatternFilterView extends JXPanel
         return (Integer)offset.getSelectedItem();
     }
 
-    public CandlePattern getValue()
+    public CandleType getValue()
     {
-        return (CandlePattern)options.getSelectedItem();
+        return (CandleType)options.getSelectedItem();
     }
 }

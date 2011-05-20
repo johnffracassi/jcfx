@@ -1,8 +1,8 @@
-package com.jeff.fx.filter.candletype;
+package com.jeff.fx.filter.candletype.def;
 
 import com.jeff.fx.common.CandleDataPoint;
 
-public abstract class BasicCandleTypeDef implements CandleTypeDef
+abstract class AbstractCandleTypeDef implements CandleTypeDef
 {
     protected double minRange = 0.0;
     protected double maxRange = Double.POSITIVE_INFINITY;
