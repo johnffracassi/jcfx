@@ -19,7 +19,7 @@ public class CandleTypeFilter implements SimpleCandleFilter
     {
         int idx = model.getIndex();
         if(idx - offset > 0)
-            return !type.evaluate(model.getCandles().getCandle(idx - offset));
+            return !type.is(model.getCandles().getCandle(idx - offset));
         else
             return false;
     }
