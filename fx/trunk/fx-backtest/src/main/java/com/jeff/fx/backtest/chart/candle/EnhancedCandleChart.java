@@ -1,16 +1,10 @@
-package com.jeff.fx.backtest.chart;
+package com.jeff.fx.backtest.chart.candle;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
-import java.util.List;
-
-import javax.swing.JScrollBar;
-
+import com.jeff.fx.backtest.chart.CircleDrawer;
+import com.jeff.fx.backtest.chart.DateTranslatingFormat;
+import com.jeff.fx.common.CandleCollection;
+import com.jeff.fx.indicator.IndicatorMarker;
+import com.jeff.fx.indicator.overlay.ZigZagIndicator;
 import org.jdesktop.swingx.JXPanel;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -26,9 +20,11 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.TextAnchor;
 
-import com.jeff.fx.common.CandleCollection;
-import com.jeff.fx.indicator.IndicatorMarker;
-import com.jeff.fx.indicator.overlay.ZigZagIndicator;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
+import java.util.List;
 
 public class EnhancedCandleChart extends JXPanel {
 	
