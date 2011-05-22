@@ -6,12 +6,10 @@ import com.jeff.fx.lfwd.candlepattern.CandlePattern;
 public class CandlePatternFilter implements SimpleCandleFilter
 {
     private CandlePattern pattern;
-    private int offset = 0;
 
-    public CandlePatternFilter(CandlePattern pattern, int offset)
+    public CandlePatternFilter(CandlePattern pattern)
     {
         this.pattern = pattern;
-        this.offset = offset;
     }
 
     @Override

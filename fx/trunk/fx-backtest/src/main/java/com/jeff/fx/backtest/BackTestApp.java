@@ -1,19 +1,9 @@
 package com.jeff.fx.backtest;
 
-import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
-import javax.swing.UIManager;
-
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
-
-import com.jeff.fx.backtest.chart.EnhancedCandleChart;
 import com.jeff.fx.backtest.chart.NewCandleChartEvent;
 import com.jeff.fx.backtest.chart.NewPriceChartEvent;
 import com.jeff.fx.backtest.chart.PriceChartController;
+import com.jeff.fx.backtest.chart.candle.EnhancedCandleChart;
 import com.jeff.fx.backtest.strategy.coder.NewStrategyCoderEvent;
 import com.jeff.fx.backtest.strategy.coder.StrategyCoderController;
 import com.jeff.fx.backtest.strategy.time.NewTimeStrategyEvent;
@@ -21,6 +11,13 @@ import com.jeff.fx.backtest.strategy.time.StrategyView;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.Instrument;
 import com.jeff.fx.common.Period;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
+
+import javax.swing.*;
 
 @Component("backTestApp")
 public class BackTestApp {

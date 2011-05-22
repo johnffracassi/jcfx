@@ -4,10 +4,7 @@ import com.jeff.fx.backtest.strategy.IndicatorCache;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.CandleValueModel;
-import com.jeff.fx.lfwd.filter.CandleTimeFilter;
-import com.jeff.fx.lfwd.filter.CandleTypeFilter;
-import com.jeff.fx.lfwd.filter.ExpressionFilter;
-import com.jeff.fx.lfwd.filter.SimpleCandleFilter;
+import com.jeff.fx.lfwd.filter.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -61,8 +58,11 @@ public class FilterController
             List<SimpleCandleFilter> filters = new ArrayList<SimpleCandleFilter>();
 
             for(int i=0; i<5; i++)
-                if(view.getPattern(i) != null)
-                    filters.add(new CandleTypeFilter(view.getPattern(i), i));
+                if(view.getType(i) != null)
+                    filters.add(new CandleTypeFilter(view.getType(i), i));
+
+            if(view.getPattern() != null)
+                filters.add(new CandlePatternFilter(view.getPattern()));
 
             if(view.isTimeEnabled())
                 filters.add(new CandleTimeFilter(view.getSlider().getTimeOfWeek()));

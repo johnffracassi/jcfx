@@ -4,6 +4,7 @@ import com.jeff.fx.backtest.DatasetDefinitionPanel;
 import com.jeff.fx.common.FXDataSource;
 import com.jeff.fx.gui.TimeOfWeekSliderLine;
 import com.jeff.fx.gui.field.PEnumComboBox;
+import com.jeff.fx.lfwd.candlepattern.CandlePattern;
 import com.jeff.fx.lfwd.candletype.CandleType;
 import com.siebentag.gui.VerticalFlowLayout;
 import org.jdesktop.swingx.JXPanel;
@@ -15,7 +16,8 @@ public class FilterView extends JXPanel
 {
     private TimeOfWeekSliderLine slider;
     private JCheckBox chkTimeEnabled = new JCheckBox();
-    private CandlePatternFilterView patternView[];
+    private CandleTypeFilterView typeView[];
+    private CandlePatternFilterView patternView;
     private ExpressionFilterView expressionView;
     private JButton btnUpdate;
     private DatasetDefinitionPanel pnlDataset;
@@ -37,11 +39,14 @@ public class FilterView extends JXPanel
         expressionView = new ExpressionFilterView();
         add(expressionView);
 
-        patternView = new CandlePatternFilterView[5];
-        for(int i=0; i<patternView.length; i++)
+        patternView = new CandlePatternFilterView("Pattern");
+        add(patternView);
+
+        typeView = new CandleTypeFilterView[5];
+        for(int i=0; i< typeView.length; i++)
         {
-            patternView[i] = new CandlePatternFilterView("Pattern " + i, i);
-            add(patternView[i]);
+            typeView[i] = new CandleTypeFilterView("Candle Type " + i, i);
+            add(typeView[i]);
         }
 
         JPanel pnlUpdate = new JXPanel();
@@ -75,9 +80,14 @@ public class FilterView extends JXPanel
         return (expressionView.isEnabled() ? expressionView.getExpression() : null);
     }
 
-    public CandleType getPattern(int idx)
+    public CandlePattern getPattern()
     {
-        return patternView[idx].isEnabled() ? patternView[idx].getValue() : null;
+        return patternView.isEnabled() ? patternView.getValue() : null;
+    }
+
+    public CandleType getType(int idx)
+    {
+        return typeView[idx].isEnabled() ? typeView[idx].getValue() : null;
     }
 }
 
@@ -105,13 +115,40 @@ class ExpressionFilterView extends JXPanel
 
 class CandlePatternFilterView extends JXPanel
 {
+    private JCheckBox enabled;
+    private JComboBox options;
+
+    public CandlePatternFilterView(String label)
+    {
+        options = new PEnumComboBox("cpfv.combo", CandlePattern.class);
+
+        enabled = new JCheckBox();
+
+        add(enabled);
+        add(new JLabel(label));
+        add(options);
+    }
+
+    public boolean isEnabled()
+    {
+        return enabled.isSelected();
+    }
+
+    public CandlePattern getValue()
+    {
+        return (CandlePattern)options.getSelectedItem();
+    }
+}
+
+class CandleTypeFilterView extends JXPanel
+{
     private JComboBox options;
     private JComboBox offset;
     private JCheckBox enabled;
 
-    public CandlePatternFilterView(String label, int offset)
+    public CandleTypeFilterView(String label, int offset)
     {
-        options = new PEnumComboBox("cpfv.combo."+offset, CandleType.class);
+        options = new PEnumComboBox("ctfv.combo."+offset, CandleType.class);
         this.offset = new JComboBox(new Integer[] {0, -1, -2, -3, -4});
         this.offset.setSelectedItem(-offset);
 

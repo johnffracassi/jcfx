@@ -1,16 +1,6 @@
 package com.jeff.fx.backtest.chart;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JScrollBar;
-
+import com.jeff.fx.common.CandleCollection;
 import org.jdesktop.swingx.JXPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -18,7 +8,10 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 
-import com.jeff.fx.common.CandleCollection;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 
 public class TypicalValueChart extends JXPanel {
 	
@@ -121,7 +114,7 @@ public class TypicalValueChart extends JXPanel {
 
         // set domain/category/x-axis bounds
         domainAxis = (NumberAxis)chart.getXYPlot().getDomainAxis();
-        domainAxis.setNumberFormatOverride(new DateTranslatingFormat((TypicalValueDataset)chart.getXYPlot().getDataset()));
+//        domainAxis.setNumberFormatOverride(new DateTranslatingFormat(ccd));
 //        domainAxis.setRange(0, 200);
 //        domainAxis.setAutoRangeMinimumSize(200);
 
