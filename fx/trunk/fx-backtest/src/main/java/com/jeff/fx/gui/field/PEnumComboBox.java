@@ -18,10 +18,13 @@ public class PEnumComboBox<T extends Enum<T>> extends PComboBox {
 	@Override
 	public T resolve(String str) {
 		
-		try {
+		try
+        {
 			return (T)type.getField(str).get(null);
-		} catch (Exception e) {
-			e.printStackTrace();
+		}
+        catch (Exception e)
+        {
+            System.out.printf("WARNING: Could not resolve %s to a value in %s %n", str, type.getSimpleName());
 		}
 		
 		return null;
@@ -30,9 +33,12 @@ public class PEnumComboBox<T extends Enum<T>> extends PComboBox {
 	@SuppressWarnings("unchecked")
 	private T[] values() {
 		
-		try {
+		try
+        {
 			return (T[])type.getMethod("values").invoke(null);
-		} catch (Exception e) {
+		}
+        catch (Exception e)
+        {
 			e.printStackTrace();
 		}
 		

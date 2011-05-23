@@ -10,21 +10,33 @@ import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.JXLabel;
 import org.jdesktop.swingx.JXPanel;
 import org.joda.time.LocalDate;
+import org.springframework.stereotype.*;
 
+import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-@SuppressWarnings("serial")
+@org.springframework.stereotype.Component
 public class DatasetDefinitionPanel extends JPanel {
 	
 	private String prefix;
 
+    public DatasetDefinitionPanel()
+    {
+        this.prefix = "ddp";
+    }
+
 	public DatasetDefinitionPanel(String prefix) {
 		
 		this.prefix = prefix;
-		
+    }
+
+    @PostConstruct
+    private void init()
+    {
 		setLayout(new VerticalFlowLayout(0));
 
 		add(createLine("Data Source", 130, new PEnumComboBox<FXDataSource>(prefix + ".dataSource", FXDataSource.class)));

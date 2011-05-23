@@ -24,8 +24,7 @@ public class DateTranslatingFormat extends DecimalFormat {
     	if (Double.isNaN(number))
             return toAppendTo;
         
-        Date date = dataset.getXDate(0, (int)number);
-
+        Date date = new Date((long)number);
         return toAppendTo.append(fmt.format(date));
     }
 }

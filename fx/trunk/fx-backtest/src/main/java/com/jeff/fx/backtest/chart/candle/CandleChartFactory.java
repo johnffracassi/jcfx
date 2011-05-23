@@ -27,9 +27,9 @@ public class CandleChartFactory
     @Autowired
     private CandleListDatasetFactory candleListDatasetFactory;
 
-    public void showChart(List<CandleDataPoint> candles)
+    public void showChart(List<CandleDataPoint> candles, int pivotIdx)
     {
-        JFreeChart chart = build(candles);
+        JFreeChart chart = build(candles, pivotIdx);
         ChartPanel panel = new ChartPanel(chart);
 
         JXFrame frame = new JXFrame("Candles", false);
@@ -39,13 +39,17 @@ public class CandleChartFactory
         frame.setVisible(true);
     }
 
-    private JFreeChart build(List<CandleDataPoint> candles)
+    private JFreeChart build(List<CandleDataPoint> candles, int pivotIdx)
     {
         DefaultHighLowDataset dataset = candleListDatasetFactory.create(candles);
-        return createChart(dataset);
+
+        long start = candles.get(0).getDateTime().toDateTime().toDate().getTime() - candles.get(0).getPeriod().getInterval();
+        long end = candles.get(candles.size()-1).getDateTime().toDateTime().toDate().getTime() + candles.get(candles.size()-1).getPeriod().getInterval();
+
+        return createChart(dataset, pivotIdx, start, end);
     }
 
-    private JFreeChart createChart(DefaultHighLowDataset dataset)
+    private JFreeChart createChart(DefaultHighLowDataset dataset, int pivotIdx, long start, long end)
     {
     	NumberAxis timeAxis = new NumberAxis();
 		NumberAxis valueAxis = new NumberAxis();
@@ -57,17 +61,15 @@ public class CandleChartFactory
 
         // set domain/category/x-axis bounds
         NumberAxis domainAxis = (NumberAxis)chart.getXYPlot().getDomainAxis();
-        domainAxis.setRange(0, 200);
-        domainAxis.setAutoRangeMinimumSize(200);
+        domainAxis.setRange(start, end);
+        domainAxis.setAutoRangeMinimumSize(start);
 
         // set range/value/y-axis bounds
         NumberAxis rangeAxis = (NumberAxis)chart.getXYPlot().getRangeAxis();
         rangeAxis.setAutoRangeIncludesZero(false);
         rangeAxis.setAutoRangeMinimumSize(0.005);
 
-        // @HACK broken to make it compile
-        List<IndicatorMarker> markers = null;
-        for(IndicatorMarker marker : markers)
+        IndicatorMarker marker = new IndicatorMarker(dataset.getXValue(0, pivotIdx), dataset.getYValue(0, pivotIdx), "Pivot");
         {
         	// add marker and label
             final CircleDrawer cd = new CircleDrawer(Color.red, new BasicStroke(1.0f), null);
