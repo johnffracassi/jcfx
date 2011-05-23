@@ -15,21 +15,12 @@ public class MiniDataLoader
     @Autowired
     private CandleDataStore store;
 
-    public List<CandleDataPoint> load(Instrument instrument, Period period, LocalDateTime time, int candlesEitherSide)
+    public List<CandleDataPoint> load(FXDataSource dataSource, Instrument instrument, Period period, LocalDateTime time, int candlesEitherSide) throws IOException
     {
-        FXDataRequest request = new FXDataRequest(FXDataSource.Forexite, instrument, time.toLocalDate(), period);
-
-        try
-        {
-            CandleDataResponse response = store.loadCandles(request);
-            CandleCollection collection = response.getCandles();
-            int idx = collection.getCandleIndex(time);
-            return collection.getCandles(idx, candlesEitherSide * 2);
-
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        FXDataRequest request = new FXDataRequest(dataSource, instrument, time.toLocalDate().minusDays(1), time.toLocalDate().plusDays(1), period);
+        CandleDataResponse response = store.loadCandles(request);
+        CandleCollection collection = response.getCandles();
+        int idx = collection.getCandleIndex(time);
+        return collection.getCandles(Math.max(0, idx - candlesEitherSide), Math.min(candlesEitherSide * 2 + 1, collection.getCandleCount()));
     }
 }

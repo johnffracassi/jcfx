@@ -8,10 +8,14 @@ import com.jeff.fx.lfwd.candlepattern.CandlePattern;
 import com.jeff.fx.lfwd.candletype.CandleType;
 import com.siebentag.gui.VerticalFlowLayout;
 import org.jdesktop.swingx.JXPanel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.*;
 
+import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.*;
 
+@org.springframework.stereotype.Component
 public class FilterView extends JXPanel
 {
     private TimeOfWeekSliderLine slider;
@@ -20,14 +24,19 @@ public class FilterView extends JXPanel
     private CandlePatternFilterView patternView;
     private ExpressionFilterView expressionView;
     private JButton btnUpdate;
+
+    @Autowired
     private DatasetDefinitionPanel pnlDataset;
 
     public FilterView()
     {
         setLayout(new VerticalFlowLayout());
         setPreferredSize(new Dimension(325, 600));
+    }
 
-        pnlDataset = new DatasetDefinitionPanel("lfwd");
+    @PostConstruct
+    private void init()
+    {
         add(pnlDataset);
 
         JXPanel pnlTime = new JXPanel();

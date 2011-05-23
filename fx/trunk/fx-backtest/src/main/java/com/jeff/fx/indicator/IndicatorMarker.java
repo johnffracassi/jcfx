@@ -2,20 +2,20 @@ package com.jeff.fx.indicator;
 
 public class IndicatorMarker {
 	
-	private int x;
+	private double x;
 	private double y;
 	private String label;
 	private int labelLocation;
 	
-	public IndicatorMarker(int x, double y) {
+	public IndicatorMarker(double x, double y) {
 		this(x, y, null, 0);
 	}
 	
-	public IndicatorMarker(int x, double y, String label) {
+	public IndicatorMarker(double x, double y, String label) {
 		this(x, y, label, 1);
 	}
 	
-	public IndicatorMarker(int x, double y, String label, int labelLocation) {
+	public IndicatorMarker(double x, double y, String label, int labelLocation) {
 		this.label = label;
 		this.labelLocation = labelLocation;
 		this.x = x;
@@ -38,7 +38,7 @@ public class IndicatorMarker {
 		this.label = label;
 	}
 
-	public int getIndex() {
+	public double getIndex() {
 		return x;
 	}
 	

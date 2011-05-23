@@ -8,6 +8,7 @@ import com.jeff.fx.lfwd.filter.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -23,14 +24,20 @@ public class FilterController
     @Autowired
     private CandleFilterModelEvaluator evaluator;
 
+    @Autowired
     private FilterView view;
+    
     private IndicatorCache indicatorCache;
     private CandleValueModel cvm = CandleValueModel.Close;
 
     public FilterController()
     {
-        view = new FilterView();
+        indicatorCache = new IndicatorCache();
+    }
 
+    @PostConstruct
+    private void init()
+    {
         view.getBtnUpdate().addActionListener(new ActionListener()
         {
             @Override
@@ -39,8 +46,6 @@ public class FilterController
                 update();
             }
         });
-
-        indicatorCache = new IndicatorCache();
     }
 
     public FilterView getView()
