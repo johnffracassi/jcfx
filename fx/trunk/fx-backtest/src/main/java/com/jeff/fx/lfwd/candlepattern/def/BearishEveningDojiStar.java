@@ -12,19 +12,28 @@ public class BearishEveningDojiStar implements CandlePatternDef
         if(model.getIndex() < 2)
             return false;
 
-        CandleDataPoint candle0 = model.getCandles().getCandle(model.getIndex());
-        CandleDataPoint candle1 = model.getCandles().getCandle(model.getIndex() - 1);
-        CandleDataPoint candle2 = model.getCandles().getCandle(model.getIndex() - 2);
+        CandleDataPoint c0 = model.getCandles().getCandle(model.getIndex());
+        CandleDataPoint c1 = model.getCandles().getCandle(model.getIndex() - 1);
+        CandleDataPoint c2 = model.getCandles().getCandle(model.getIndex() - 2);
 
-        if(candle2.getSize() < 20)
-            return false;
+        boolean[] conditions = {
+            c2.getLow() < c1.getLow(),
+            c1.getLow() > c0.getLow(),
+            c2.getHigh() < c1.getHigh(),
+            c1.getHigh() > c0.getHigh(),
+            c1.getLow() > c2.getOpen(),
+            c1.getLow() < c0.getClose(),
+            c2.getSize() >= 10,
+            c1.getBodySize() <= 5,
+            c0.getSize() <= -10
 
-        if(candle1.getSize() > 4 || candle1.getSize() < -4)
-            return false;
+        };
 
-        if(candle0.getSize() > candle2.getSize() / 2)
-            return false;
-
+        for(boolean b : conditions)
+        {
+            if(!b)
+                return false;
+        }
         return true;
     }
 

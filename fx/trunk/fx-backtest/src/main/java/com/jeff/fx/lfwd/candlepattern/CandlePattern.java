@@ -1,13 +1,13 @@
 package com.jeff.fx.lfwd.candlepattern;
 
 import com.jeff.fx.lfwd.CandleFilterModel;
-import com.jeff.fx.lfwd.candlepattern.def.BearishEveningDojiStar;
-import com.jeff.fx.lfwd.candlepattern.def.BullishMorningDojiStar;
+import com.jeff.fx.lfwd.candlepattern.def.*;
 
 public enum CandlePattern
 {
     BearishEveningDojiStar(new BearishEveningDojiStar()),
-    BullishMorningDojiStar(new BullishMorningDojiStar());
+    BullishMorningDojiStar(new BullishMorningDojiStar()),
+    Pennant(new Pennant());
 
     private CandlePatternDef pattern;
 

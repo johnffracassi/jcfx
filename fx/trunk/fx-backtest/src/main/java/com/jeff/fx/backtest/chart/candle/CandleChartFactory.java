@@ -15,6 +15,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.data.xy.DefaultHighLowDataset;
 import org.jfree.ui.TextAnchor;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,9 +28,9 @@ public class CandleChartFactory
     @Autowired
     private CandleListDatasetFactory candleListDatasetFactory;
 
-    public void showChart(List<CandleDataPoint> candles, int pivotIdx)
+    public void showChart(List<CandleDataPoint> candles, LocalDateTime pivotTime)
     {
-        JFreeChart chart = build(candles, pivotIdx);
+        JFreeChart chart = build(candles, pivotTime);
         ChartPanel panel = new ChartPanel(chart);
 
         JXFrame frame = new JXFrame("Candles", false);
@@ -39,12 +40,22 @@ public class CandleChartFactory
         frame.setVisible(true);
     }
 
-    private JFreeChart build(List<CandleDataPoint> candles, int pivotIdx)
+    private JFreeChart build(List<CandleDataPoint> candles, LocalDateTime pivotTime)
     {
         DefaultHighLowDataset dataset = candleListDatasetFactory.create(candles);
 
         long start = candles.get(0).getDateTime().toDateTime().toDate().getTime() - candles.get(0).getPeriod().getInterval();
         long end = candles.get(candles.size()-1).getDateTime().toDateTime().toDate().getTime() + candles.get(candles.size()-1).getPeriod().getInterval();
+
+        int pivotIdx = 0;
+        for(int i=0; i<candles.size(); i++)
+        {
+            if(candles.get(i).getDateTime().equals(pivotTime))
+            {
+                pivotIdx = i;
+                break;
+            }
+        }
 
         return createChart(dataset, pivotIdx, start, end);
     }
