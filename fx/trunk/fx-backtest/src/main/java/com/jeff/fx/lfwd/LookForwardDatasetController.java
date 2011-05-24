@@ -55,7 +55,7 @@ public class LookForwardDatasetController
                     {
                         FXDataRequest request = datasetDefinitionPanel.getRequest();
                         candles = dataLoader.load(request.getDataSource(), request.getInstrument(), request.getPeriod(), dateTime, 24);
-                        chartFactory.showChart(candles, 24);
+                        chartFactory.showChart(candles, dateTime);
                     }
                     catch (IOException e1)
                     {
