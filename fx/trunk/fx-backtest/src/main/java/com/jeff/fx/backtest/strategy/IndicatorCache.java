@@ -1,17 +1,12 @@
 package com.jeff.fx.backtest.strategy;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.jeff.fx.common.CandleCollection;
+import com.jeff.fx.indicator.Indicator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.jeff.fx.common.CandleCollection;
-import com.jeff.fx.indicator.Indicator;
+import java.util.*;
 
 @Component
 public class IndicatorCache {
@@ -33,26 +28,32 @@ public class IndicatorCache {
 		return classLookup.values();
 	}
 	
-	private Indicator createIndicatorInstance(String key) throws InstantiationException, IllegalAccessException {
+	private Indicator createIndicatorInstance(String key)
+    {
 		log.debug("creating new instance of " + key);
 		Class<? extends Indicator> type = classLookup.get(key);
-		log.debug("found class for " + key + ": " + type.getName());
-		return type.newInstance();
-	}
+
+        log.debug("found class for " + key + ": " + type.getName());
+        try {
+            return type.newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 	
-	public Indicator getIndicator(String key, Object ... params) throws Exception
+	public Indicator getIndicator(String key, Object ... params)
 	{
         String instanceKey = key + "(" + Arrays.toString(params) + ")";
         log.debug("instanceKey = " + instanceKey + " (" + (descriptorLookup.containsKey(instanceKey)?"exists":"does not exist") + ")");
 
-        if(descriptorLookup.containsKey(instanceKey)) {
-            
+        if(descriptorLookup.containsKey(instanceKey))
+        {
             Indicator indicator = descriptorLookup.get(instanceKey);
             log.debug("found indicator in cache: " + indicator.getDisplayName());
             return indicator;
-            
-        } else {
-            
+        }
+        else
+        {
             Indicator indicator = createIndicatorInstance(key);
             indicator.setParams(params);
             log.debug("setup indicator with params. " + indicator.getDisplayName());
@@ -61,8 +62,8 @@ public class IndicatorCache {
         }
 	}
 	
-	public double get(String key, CandleCollection candles, int idx, Object ... params) throws Exception {
-
+	public double get(String key, CandleCollection candles, int idx, Object ... params)
+    {
 		log.debug("looking up indicator value: " + key + ",cc," + idx + "," + Arrays.toString(params));
 		
 		Indicator indicator = getIndicator(key, params);

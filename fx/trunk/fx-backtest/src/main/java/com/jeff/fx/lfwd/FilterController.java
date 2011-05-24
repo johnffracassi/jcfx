@@ -26,7 +26,7 @@ public class FilterController
 
     @Autowired
     private FilterView view;
-    
+
     private IndicatorCache indicatorCache;
     private CandleValueModel cvm = CandleValueModel.Close;
 

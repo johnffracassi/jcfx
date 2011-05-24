@@ -93,7 +93,8 @@ public class CandleCollection {
 		return getCandleWeek(getWeekIdx(idx)).getPrice(getIdxInWeek(idx), model);
 	}
 	
-	public CandleDataPoint getCandle(int idx) {
+	public CandleDataPoint getCandle(int idx)
+    {
 		return getCandleWeek(getWeekIdx(idx)).getCandle(getIdxInWeek(idx));
 	}
 	

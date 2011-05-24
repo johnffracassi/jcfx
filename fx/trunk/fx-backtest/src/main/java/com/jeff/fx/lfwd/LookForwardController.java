@@ -1,5 +1,6 @@
 package com.jeff.fx.lfwd;
 
+import com.jeff.fx.backtest.DatasetDefinitionPanel;
 import com.jeff.fx.common.CandleCollection;
 import com.jeff.fx.common.CandleDataPoint;
 import com.jeff.fx.common.FXDataRequest;
@@ -29,6 +30,9 @@ public class LookForwardController {
 
     @Autowired
     private LookForwardFrame frame;
+
+    @Autowired
+    private DatasetDefinitionPanel datasetDefinitionPanel;
 
     private CandleCollection candles;
     private List<CandleDataPoint> startPoints;
@@ -65,7 +69,7 @@ public class LookForwardController {
 
     private CandleCollection loadTestData() throws IOException
     {
-        FXDataRequest request = filterController.getView().getDatasetDefinitionPanel().getRequest();
+        FXDataRequest request = datasetDefinitionPanel.getRequest();
         return loader.loadCandles(request).getCandles();
     }
 
