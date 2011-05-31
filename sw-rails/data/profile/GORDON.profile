@@ -1,0 +1,16 @@
+fullName 		= Gordon Collins
+dob 			= 1984
+currentAge		= 26
+flag 			= nz.gif
+origin 			= New Zealand
+teams	 		= Steamboat Willies ICC, Hendon Edgware CC
+role 			= Wicketkeeper
+battingStyle 	= Deft and busy
+bowlingStyle 	= Swinging
+height			= McCairneyesque
+debut			= 29/1/2009
+lastGame		= Current
+nicknames		= Gordon, Gordo, Super-G, Gourd, Giant Slalom, Super-G Spot
+profile			= Useful allrounder, quick between the wickets when batting.  No 1 'keeper.
+specialMove		= The Flatmate Hat-trick
+registered		= 1

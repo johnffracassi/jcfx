@@ -1,0 +1,16 @@
+fullName 		= Rudy
+dob 			= 
+currentAge		= 
+flag 			= nz.gif
+origin 			= New Zealand
+teams	 		= Steamboat Willies
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 20/11/2008
+lastGame		= Current
+nicknames		= Rudy
+profile			= 
+specialMove		= 
+registered		= 0

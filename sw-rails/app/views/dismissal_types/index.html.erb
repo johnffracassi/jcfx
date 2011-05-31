@@ -1,0 +1,23 @@
+<h1>Listing dismissal_types</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @dismissal_types.each do |dismissal_type| %>
+  <tr>
+      <td><%= dismissal_type.code %></td>
+      <td><%= dismissal_type.name %></td>
+    <td><%= link_to 'Show', dismissal_type %></td>
+    <td><%= link_to 'Edit', edit_dismissal_type_path(dismissal_type) %></td>
+    <td><%= link_to 'Destroy', dismissal_type, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Dismissal type', new_dismissal_type_path %>

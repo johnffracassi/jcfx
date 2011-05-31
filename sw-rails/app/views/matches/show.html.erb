@@ -1,0 +1,103 @@
+<p id="notice"><%= notice %></p>
+
+<table id="matchdetails">
+    <caption>
+        Match Details
+    </caption>
+    <tbody>
+        <tr>
+            <th>Opposition</th>
+            <td><%= @match.opposition_team.name %></td>
+        </tr>
+        <tr>
+            <th>Season</th>
+            <td><%= @match.team.season.name %></td>
+        </tr>
+        <tr>
+            <th>Round</th>
+            <td><%= @match.round %></td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td><%= @match.datetime.strftime("%d/%m/%Y") %></td>
+        </tr>
+        <tr>
+            <th>Time</th>
+            <td><%= @match.datetime.strftime("%H:%M") %></td>
+        </tr>
+    </tbody>
+</table>
+
+<table id="batinns">
+    <caption>
+        Batting Scorecard
+    </caption>
+    <thead>
+        <tr>
+            <th>Batsman</th>
+            <th colspan="6">1st Over</th>
+            <th colspan="6">2nd Over</th>
+            <th colspan="6">3rd Over</th>
+            <th colspan="9">4th Over</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @match.batsman_inningss.each do |inns| %>
+            <tr>
+                <td><%= inns.player.display %></td>
+                <% (1..27).each do |ordinal| %>
+                  <%= ball_td(inns.balls.select{|b|b.ordinal == ordinal}[0]) %>
+                <% end %>
+                <td>
+                  <%= "#{inns.score} (#{inns.bf})" %>
+                </td>
+            </tr>
+        <% end  %>
+    </tbody>
+</table>
+
+<table id="bowlinns">
+  <caption>Bowling Scorecard</caption>
+  <thead>
+    <tr>
+      <th>Bowler</th>
+      <% (1..9).each do |i| %>
+        <th><%= i %></th>
+      <% end %>
+      <th>Total</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @match.overs.each do |over| %>
+      <tr>
+        <td><%= over.player.display %></td>
+        <% (1..9).each do |ordinal| %>
+          <%= ball_td(over.balls.select{|b|b.ordinal == ordinal}[0]) %>
+        <% end %>
+        <td>
+          <%= "#{over.score}" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= javascript_include_tag("http://people.iola.dk/olau/flot/jquery.js") %>
+<%= javascript_include_tag("http://people.iola.dk/olau/flot/jquery.flot.js") %>
+<div id="worm" style="width:980px;height:300px;" />
+
+<script type="text/javascript">
+    $(function() {
+        var ds_bat = <%= bat_worm(@match)%>;
+        var ds_bowl = <%= bowl_worm(@match)%>;
+        $.plot($("#worm"), [ds_bat, ds_bowl]);
+    });
+</script>
+
+<br/>
+
+<%= link_to 'Edit', edit_match_path(@match) %> |
+<%= link_to 'Back', matches_path %>

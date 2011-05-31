@@ -1,0 +1,17 @@
+fullName 		= Kat
+dob 			= 
+currentAge		= 
+flag 			= nz.gif
+origin 			= 
+teams	 		= 
+role 			= Fill in
+battingStyle 	= dodgy
+bowlingStyle 	= worse
+height			= not much
+debut			= 28/11/2008
+lastGame		= 
+nicknames		= Kat
+profile			= 
+specialMove		= secret
+registered		= 0
+retired			= Yes

@@ -1,0 +1,21 @@
+<h1>Listing player_aliases</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @player_aliases.each do |player_alias| %>
+  <tr>
+    <td><%= link_to 'Show', player_alias %></td>
+    <td><%= link_to 'Edit', edit_player_alias_path(player_alias) %></td>
+    <td><%= link_to 'Destroy', player_alias, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Player alias', new_player_alias_path %>

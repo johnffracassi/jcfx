@@ -1,0 +1,16 @@
+fullName 		= Jeff Dudgeon
+dob 			= 
+currentAge		= 
+flag 			= au.gif
+origin 			= Australia
+teams	 		= Steamboat Willies ICC
+role 			= 
+battingStyle 	= decent
+bowlingStyle 	= decent
+height			= 
+debut			= 29/1/2009
+lastGame		= Current
+nicknames		= Jeff D, Jeff Junior
+profile			= Organiser of a Steamboats challenge match at HECC. Didn't bother with it.
+specialMove		= Not turning up
+registered		= 0

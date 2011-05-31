@@ -1,0 +1,16 @@
+fullName 		= Owen Fitz-Gerald
+dob 			= 
+currentAge		= 
+flag 			= au.gif
+origin 			= Australia
+teams	 		= Steamboat Willies
+role 			= Decoy
+battingStyle 	= Interesting
+bowlingStyle 	= Intriguing
+height			= Tall
+debut			= 22/10/2009
+lastGame		= Current
+nicknames		= Owen, Gangly, Amish Owen
+profile			= Keen armchair cricketer converted from pub to pitch.  Has yet to turn down a beer.
+specialMove		= Being Amish
+registered		= 0

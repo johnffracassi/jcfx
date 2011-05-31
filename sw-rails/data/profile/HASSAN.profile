@@ -1,0 +1,17 @@
+fullName 		= Hassan 
+dob 			= 
+currentAge		= 
+flag 			= pk.gif
+origin 			= Pakistan / England 
+teams	 		= Steamboat Willies CC
+role 			= 
+battingStyle 	= disinterested
+bowlingStyle 	= rubbish
+height			= 
+debut			= 
+lastGame		= 
+nicknames		= Hassan
+profile			= Moves at a pace of about 1.5 carltons.  Visible to the naked eye ...if you concentrate
+specialMove		= Hassan, the amblin man
+registered		= 0
+retired			= Yes

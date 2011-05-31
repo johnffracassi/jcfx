@@ -1,0 +1,27 @@
+<h1>Listing profiles</h1>
+
+<table>
+  <tr>
+    <th>Player</th>
+    <th>Age (days)</th>
+    <th>Actions</th>
+  </tr>
+
+<% @profiles.sort{|x,y| x.name <=> y.name}.each do |profile| %>
+  <tr>
+    <td><%= profile.display %></td>
+    <td><%= profile.age %></td>
+    <td><%= profile.origin %></td>
+    <td><%= profile.blurb %></td>
+    <td>
+      <%= link_to 'Show', profile %>
+      <%= link_to 'Edit', edit_profile_path(profile) %>
+      <%= link_to 'Destroy', profile, :confirm => 'Are you sure?', :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Profile', new_profile_path %>

@@ -1,0 +1,23 @@
+<table>
+    <caption><%= @caption %></caption>
+    <thead>
+        <tr>
+            <th>Score</th>
+            <th>Against</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @inns.each do |i| %>
+        <tr>
+            <td><%= "#{i.score} (#{i.bf})" %></td>
+            <td><%= i.match.opposition_team.name %></td>
+            <td><%= i.match.datetime.strftime("%d-%m-%Y") %></td>
+            <td><%= i.match.datetime.strftime("%H:%M") %></td>
+            <td><%= link_to "Scorecard", i.match %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>

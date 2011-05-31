@@ -1,0 +1,17 @@
+fullName 		= Craig Archer
+dob 			= 
+currentAge		= 
+flag 			= nz.gif
+origin 			= 
+teams	 		= Steamboat Willies CC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= Semi-original
+lastGame		= Late 2007
+nicknames		= Craig
+profile			= 
+specialMove		= 
+registered		= 1
+retired			= Yes

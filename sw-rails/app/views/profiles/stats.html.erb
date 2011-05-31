@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<h2><%= @profile.display %></h2>
+
+<%
+   inns = BatsmanInnings.find_all_by_player_id(@profile.player.id)
+%>
+
+<div>Matches: <%= inns.collect{|i|i.match_id}.uniq.count %></div>
+<div>Innings: <%= inns.collect{|i|i.match_id}.count %></div>
+<div>Runs: <%= inns.collect{|i|i.score}.sum %></div>
+<div>Balls: <%= inns.collect{|i|i.bf}.sum %></div>
+
+<%= inns_table("Best 5 Innings", inns.sort{|x,y|y.score <=> x.score}[0..4]) %>
+<%= inns_table("Worst 5 Innings", inns.sort{|x,y|x.score <=> y.score}[0..4]) %>
+
+<%= link_to 'Back', profiles_path %>

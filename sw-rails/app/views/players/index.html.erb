@@ -1,0 +1,26 @@
+<h1>Listing players</h1>
+
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Profile</th>
+    <th>Actions</th>
+  </tr>
+
+<% @players.each do |player| %>
+  <tr>
+    <td><%= player.code %></td>
+    <td><%= player.profile.nil? ? "N/A" : player.profile.name %></td>
+    <td>
+      <%= link_to 'Profile', player.profile %>
+      <%= link_to 'Stats', "/profiles/#{player.profile.id}/stats" %>
+      <%= link_to 'Show', player %>
+      <%= link_to 'Edit', edit_player_path(player) %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Player', new_player_path %>

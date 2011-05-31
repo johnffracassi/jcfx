@@ -1,0 +1,17 @@
+fullName 		= Adnan Pujani
+dob 			= August, 1989
+currentAge		= 19
+picture			= adnan.jpg
+flag 			= ke.gif
+origin 			= Kenya / England
+teams	 		= HECC, Steamboat Willies ICC
+role 			= Jnr Bowler
+battingStyle 	= Good enough
+bowlingStyle 	= Gentle Fast Psuedo-Angry
+height			= Shortish
+debut			= 6/10/2008
+lastGame		= Current
+nicknames		= Adnan
+profile			= Adnan "2 Kewl 4 Skul" Pujani, is the youngest player ever to take the field for Steamboat Willies.
+specialMove		= 
+registered		= 1
