@@ -12,4 +12,53 @@
 <%= inns_table("Best 5 Innings", inns.sort{|x,y|y.score <=> x.score}[0..4]) %>
 <%= inns_table("Worst 5 Innings", inns.sort{|x,y|x.score <=> y.score}[0..4]) %>
 
-<%= link_to 'Back', profiles_path %>
+<%
+   balls = []
+   inns.each{|i|balls << i.balls}
+   bg = balls.flatten.group_by{|b|b.score}
+
+   hist_ds = []
+   bg.keys.sort.each{|bs|hist_ds << [bs,bg[bs].length]}
+%>
+
+<div class="chartContainer">
+    <h1>Pies</h1>
+    <div id="pie" style="width:250px;height:250px;" />
+</div>
+
+<div class="chartContainer">
+    <h1>Batting Bell Curve</h1>
+    <div id="bell" style="width:980px;height:300px;" />
+</div>
+
+<%= javascript_include_tag("http://people.iola.dk/olau/flot/jquery.js") %>
+<%= javascript_include_tag("http://people.iola.dk/olau/flot/jquery.flot.js") %>
+<%= javascript_include_tag("http://people.iola.dk/olau/flot/jquery.flot.pie.js") %>
+<script type="text/javascript">
+    $(function() {
+
+        var pie_ds = [
+            <% hist_ds.each do |dp| %>
+            {label: "<%= dp[0] %>", data: <%= dp[1] %>},
+            <% end %>
+        ];
+        
+        $.plot($("#pie"), pie_ds, {
+            series: {
+                pie: {
+                    show: true
+                }
+            }
+        });
+
+        var bbc_ds = <%= bat_bell(inns) %>;
+        var bbc_options = {
+            yaxis: {
+                min: -50,
+                max: 50,
+                tickSize: 10
+            }
+        }
+        $.plot($("#bell"), [bbc_ds], bbc_options);
+    });
+</script>
