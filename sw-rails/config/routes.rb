@@ -2,7 +2,11 @@ SwRails::Application.routes.draw do
 
   root :to => "home#index"
 
-  get "/profiles/:id/stats" => "profiles#stats"
+  get "/profiles/:id/career" => "profiles#career"
+  get "/profiles/:id/batting" => "profiles#batting"
+  get "/profiles/:id/bowling" => "profiles#bowling"
+
+  get "/admin" => "common#admin"
 
   resources :extra_types
   resources :dismissal_types

@@ -1,6 +1,4 @@
-<p id="notice"><%= notice %></p>
-
-<h2><%= @profile.display %></h2>
+<%= render 'tabs' %>
 
 <%
    inns = BatsmanInnings.find_all_by_player_id(@profile.player.id)

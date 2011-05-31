@@ -13,7 +13,7 @@
     <td><%= player.profile.nil? ? "N/A" : player.profile.name %></td>
     <td>
       <%= link_to 'Profile', player.profile %>
-      <%= link_to 'Stats', "/profiles/#{player.profile.id}/stats" %>
+      <%= link_to 'Stats', "/profiles/#{player.profile.id}/bowling" %>
       <%= link_to 'Show', player %>
       <%= link_to 'Edit', edit_player_path(player) %>
     </td>

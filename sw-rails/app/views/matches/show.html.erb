@@ -87,17 +87,38 @@
 
 <%= javascript_include_tag("http://people.iola.dk/olau/flot/jquery.js") %>
 <%= javascript_include_tag("http://people.iola.dk/olau/flot/jquery.flot.js") %>
-<div id="worm" style="width:980px;height:300px;" />
+<div class="chartContainer">
+    <h1>The Worm</h1>
+    <div id="worm" style="width:980px;height:300px;" />
+</div>
 
 <script type="text/javascript">
     $(function() {
-        var ds_bat = <%= bat_worm(@match)%>;
-        var ds_bowl = <%= bowl_worm(@match)%>;
-        $.plot($("#worm"), [ds_bat, ds_bowl]);
+        var ds_bat = <%= bat_worm(@match) %>;
+        var ds_bowl = <%= bowl_worm(@match) %>;
+
+        var bat_data = {
+            label: "Steamboat Willies",
+            data: ds_bat
+        };
+
+        var bowl_data = {
+            label: "<%= @match.opposition_team.name %>",
+            data: ds_bowl
+        };
+
+        var options = {
+            legend: {
+                show: true,
+                position: "se",
+                backgroundColor: null
+            },
+            xaxis: {
+                tickSize:27
+            }
+
+        }
+
+        $.plot($("#worm"), [bat_data, bowl_data], options);
     });
 </script>
-
-<br/>
-
-<%= link_to 'Edit', edit_match_path(@match) %> |
-<%= link_to 'Back', matches_path %>

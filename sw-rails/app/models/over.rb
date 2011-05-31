@@ -17,4 +17,12 @@ class Over < ActiveRecord::Base
     balls.count
   end
 
+  def extras
+    balls.select{|b|!b.extra_type.nil?}.count
+  end
+
+  def wickets
+    balls.select{|b|!b.dismissal_type.nil?}.count
+  end
+
 end

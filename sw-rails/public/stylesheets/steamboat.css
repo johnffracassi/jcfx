@@ -7,12 +7,11 @@ html, body {
 }
 
 #container {
-    background: none repeat scroll 0 0 #F0F0F0;
-    border-radius: 6px;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.6);
-    margin: 16px;
-    padding: 10px;
-    position: relative;
+    /*background: none repeat scroll 0 0 #F0F0F0;*/
+    /*border-radius: 6px;*/
+    /*box-shadow: 0 0 16px rgba(0, 0, 0, 0.6);*/
+    /*margin: 16px;*/
+    padding: 15px;
     width: 1200px;
 }
 
@@ -38,9 +37,9 @@ html, body {
     border-radius: 6px;
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
     width: 990px;
-    float: right;
     background-color: white;
     padding: 10px;
+    float: right
 }
 
 #footer {
@@ -144,3 +143,38 @@ td.score-5, td.score-6 { background-color: #eef; border:  solid 1px #aaf; }
 td.score-7, td.score-8, td.score-9 { background-color: #ccf; border:  solid 1px #99f; }
 td.score-X { background-color: #ffc; border: solid 1px #bb5; }
 td.score-W { background-color: #fee; border: solid 1px red; }
+
+div.chartContainer {
+    border: solid 1px #b7b7b7;
+    background-color: #f7f7f7;
+    margin-bottom: 20px;
+}
+
+div.chartContainer h1 {
+    text-align: center;
+    font-size: x-large;
+}
+
+ul.tabs {
+    border-bottom: solid 1px black;
+}
+
+ul.tabs li {
+    display: inline;
+}
+
+ul.tabs li a {
+    background-color: #ccf;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 14px;
+    padding-right: 14px;
+    border: solid 1px black;
+    text-decoration: none;
+    -moz-border-radius-topright: 6px;
+    -moz-border-radius-topleft: 6px;
+}
+
+ul.tabs li a:hover {
+    background-color: #aad;
+}
