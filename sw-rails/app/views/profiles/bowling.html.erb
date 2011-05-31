@@ -1,0 +1,38 @@
+<%= render 'tabs' %>
+
+<%
+   overs = Over.find_all_by_player_id(@profile.player.id)
+%>
+
+<table>
+    <caption>Bowling Overview</caption>
+    <tbody>
+        <tr>
+            <th>Matches</th>
+            <td><%= overs.collect{|i|i.match_id}.uniq.count %></td>
+        </tr>
+        <tr>
+            <th>Overs</th>
+            <td><%= overs.collect{|i|i.match_id}.count %></td>
+        </tr>
+        <tr>
+            <th>Runs Conceeded</th>
+            <td><%= overs.collect{|i|i.score}.sum %></td>
+        </tr>
+        <tr>
+            <th>Balls Bowled</th>
+            <td><%= overs.collect{|i|i.bf}.sum %></td>
+        </tr>
+        <tr>
+            <th>Extras</th>
+            <td><%= overs.collect{|i|i.extras}.sum %></td>
+        </tr>
+        <tr>
+            <th>Wickets</th>
+            <td><%= overs.collect{|i|i.wickets}.sum %></td>
+        </tr>
+    </tbody>
+</table>
+
+<%= inns_table("Best 10 Overs", overs.sort{|x,y|x.score <=> y.score}[0..9]) %>
+<%= inns_table("Worst 10 Overs", overs.sort{|x,y|y.score <=> x.score}[0..9]) %>

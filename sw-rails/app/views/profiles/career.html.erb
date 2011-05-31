@@ -1,0 +1,7 @@
+<%= render 'tabs' %>
+
+<%
+   inns = BatsmanInnings.find_all_by_player_id(@profile.player.id)
+%>
+
+<div>Matches: <%= inns.collect{|i|i.match_id}.uniq.count %></div>
