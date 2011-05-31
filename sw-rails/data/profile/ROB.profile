@@ -1,0 +1,16 @@
+fullName 		= Rob
+dob 			= 
+currentAge		= 
+flag 			= england.gif
+origin 			= 
+teams	 		= Steamboat Willies
+role 			= to average out Max
+battingStyle 	= needs work
+bowlingStyle 	= improvable
+height			= average
+debut			= 22/10/2009
+lastGame		= 22/10/2009
+nicknames		= Rob
+profile			= Max's mate
+specialMove		= Run outs
+registered		= 0

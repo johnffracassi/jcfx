@@ -1,0 +1,17 @@
+fullName 		= Chris Grover
+dob 			= 
+currentAge		= 
+flag 			= england.gif
+origin 			= UK
+teams	 		= Steamboat Willies CC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 16/4/2007
+lastGame		= Current
+nicknames		= Chris
+profile			= 
+specialMove		= 
+registered		= 0
+retired			= Yes

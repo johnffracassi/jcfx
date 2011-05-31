@@ -1,0 +1,17 @@
+fullName 		= Mishaal
+dob 			= 
+currentAge		= 
+flag 			= in.gif
+origin 			= India
+teams	 		= Steamboat Willies ICC, HECC
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 16/4/2009
+lastGame		= Current
+nicknames		= 
+profile			= 
+specialMove		= 
+registered		= 0
+retired			= 

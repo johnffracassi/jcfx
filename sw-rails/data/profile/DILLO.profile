@@ -1,0 +1,17 @@
+fullName 		= Gregory Dillon
+dob 			= 2004
+currentAge		= Youngster
+picture			= dillo.jpg
+flag 			= au.gif
+origin 			= Melbourne
+teams	 		= Steamboat Willies ICC
+role 			= Test Match ticket organiser
+battingStyle 	= Wristy (no surprise there)
+bowlingStyle 	= Enormous, uncontrollable outswingers. Known to bewilder batsmen in picking up LBWs.  
+height			= Average
+debut			= 9/10/2008
+lastGame		= Current
+nicknames		= Dillo, Blue Light, Bluey, Bubbles, Dilbert, Blue Light Dillo, Bob Dillon, Cougar Bait
+profile			= Drinking buckets of cobalt blue cocktails. Most likely to hang out with someone smelling of vomit and occasionally sleeps rough.  Not much more hair than Jeff.
+specialMove		= ...on anything at least double his own age - 7
+registered		= 1

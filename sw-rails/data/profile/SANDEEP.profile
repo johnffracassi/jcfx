@@ -1,0 +1,16 @@
+fullName 		= Sandeep
+dob 			= 
+currentAge		= 
+flag 			= nz.gif
+origin 			= New Zealand
+teams	 		= Steamboat Willies
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 13/11/2008
+lastGame		= Current
+nicknames		= Sandeep
+profile			= 
+specialMove		= 
+registered		= 0

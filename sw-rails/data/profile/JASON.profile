@@ -1,0 +1,17 @@
+fullName 		= Jason
+dob 			= 
+currentAge		= 
+flag 			= england.gif
+origin 			= England
+teams	 		= Steamboat Willies ICC
+role 			= None
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 29/1/2009
+lastGame		= 29/1/2009
+nicknames		= Jason the 1st
+profile			= Who the fuck is he?
+specialMove		= playing for steamboat willies
+registered		= 0
+retired			= Yes

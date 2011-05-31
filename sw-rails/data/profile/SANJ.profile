@@ -1,0 +1,17 @@
+fullName 		= Sange
+dob 			= 
+currentAge		= 
+flag 			= in.gif
+origin 			= India / England
+teams	 		= Steamboat Willies CC
+role 			= Sweater knitter
+battingStyle 	= 
+bowlingStyle 	= 
+height			= Short
+debut			= 
+lastGame		= 
+nicknames		= Sanj, Chicken Haematoma
+profile			= Some chick that D2 bought along
+specialMove		= 
+registered		= 0
+retired			= Yes

@@ -1,0 +1,17 @@
+fullName 		= Rod "Rocket" Scotton
+dob 			= Long ago
+currentAge		= Oldish
+flag 			= au.gif
+picture			= rocket.jpg
+origin 			= Tassie
+teams	 		= Steamboat Willies, Antelopes
+role 			= Stalwart / Lottery czar
+battingStyle 	= Compact & accumulating
+bowlingStyle 	= Deceptively quick
+height			= Average
+debut			= 6/3/2009
+lastGame		= Current
+nicknames		= Red Rocket, Rocket, Rocket Salad, Rod
+profile			= Nuggety recent joiner who proved his worth picking up Player of the Season on his debut.  Has quickly stepped up to the mark and organises the Steamboat Willia fund.
+specialMove		= Cleaning Vomit off his mo
+registered		= 1

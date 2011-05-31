@@ -1,0 +1,2 @@
+module OppositionTeamsHelper
+end

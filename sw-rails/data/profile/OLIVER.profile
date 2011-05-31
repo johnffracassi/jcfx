@@ -1,0 +1,15 @@
+fullName 		= Oliver
+dob 			= 
+currentAge		= 
+flag 			= ie.gif
+origin 			= 
+teams	 		= Steamboat Willies
+role 			= 
+battingStyle 	= 
+bowlingStyle 	= 
+height			= 
+debut			= 7/2/2011
+lastGame		= 
+nicknames		= Oliver
+profile			= 
+specialMove		= 

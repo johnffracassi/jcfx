@@ -1,0 +1,146 @@
+html, body {
+    font-family: Georgia;
+    margin:0;
+    padding:0;
+    color:#000;
+    background:#a7a09a;
+}
+
+#container {
+    background: none repeat scroll 0 0 #F0F0F0;
+    border-radius: 6px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.6);
+    margin: 16px;
+    padding: 10px;
+    position: relative;
+    width: 1200px;
+}
+
+#title {
+    text-align: center;
+    border-radius: 6px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
+    font-size: xx-large;
+    background-color: navy;
+    color: white;
+    padding: 25px;
+    margin-bottom: 15px;
+}
+
+#menu {
+    float: left;
+    width: 180px;
+    height: 800px;
+    color: white;
+}
+
+#content {
+    border-radius: 6px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+    width: 990px;
+    float: right;
+    background-color: white;
+    padding: 10px;
+}
+
+#footer {
+    border-radius: 6px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.7);
+    font-size: small;
+    text-align: center;
+    background-color: navy;
+    color: white;
+    padding: 15px;
+    clear: both;
+}
+
+table {
+    margin-bottom: 25px;
+    border-spacing: 2px;
+    padding: 0px;
+}
+
+td {
+    padding: 4px;
+    background: #f5f5f5;
+    padding: 4px;
+}
+
+th {
+    background-color: navy;
+    color: #eef;
+    padding: 4px;
+    text-align: left;
+    font-weight: normal;
+}
+
+table#bowlinns {
+    width: 500px;
+    border-spacing: 1px;
+}
+
+table#batinns {
+    width: 990px;
+    border-spacing: 1px;
+}
+
+table#matchdetails {
+    width: 400px;
+}
+
+ul.menu {
+    border-radius: 6px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.4);
+    list-style-type: none;
+    margin: 0px;
+    padding:  0px;
+}
+
+ul.submenu {
+    list-style-type: none;
+    margin: 0px;
+    padding:  0px;
+}
+
+ul.menu li a {
+    background-color: navy;
+    display: block;
+    padding: 8px;
+    color: white;
+    text-decoration: none;
+}
+
+ul.submenu li a {
+    background-color: #f5f5f5;
+    display: block;
+    padding: 3px 10px 3px 10px;
+    color: black;
+    text-decoration: none;
+}
+ul.submenu li a:hover {
+    background-color: #ddddff;
+    color: #000000;
+}
+
+caption {
+    background-color: navy;
+    padding:  5px;
+    color: white;
+    font-weight: bold;
+}
+
+td.ball {
+    width: 20px;
+    font-size: 9pt;
+    text-align: center;
+    background-color: white;
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+td.score-0 { background-color: #f7f7f7; border:  solid 1px #ccc; }
+td.score-1, td.score-2, td.score-3, td.score-4  { background-color: #f7fff7; border:  solid 1px #ccc; }
+td.score-5, td.score-6 { background-color: #eef; border:  solid 1px #aaf; }
+td.score-7, td.score-8, td.score-9 { background-color: #ccf; border:  solid 1px #99f; }
+td.score-X { background-color: #ffc; border: solid 1px #bb5; }
+td.score-W { background-color: #fee; border: solid 1px red; }

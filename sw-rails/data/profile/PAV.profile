@@ -1,0 +1,16 @@
+fullName 		= Pavan Vyas
+dob 			= 
+currentAge		= Youngster
+flag 			= nz.gif
+origin 			= New Zealand
+teams	 		= HECC, Steamboat Willies
+role 			= The new Kinga
+battingStyle 	= Left
+bowlingStyle 	= Angry
+height			= 
+debut			= 3/4/2008
+lastGame		= Current
+nicknames		= Pav
+profile			= Bowled more bouncers than any other Steamboat Willie, all in his first game.
+specialMove		= The Angry Bouncer
+registered		= 0
