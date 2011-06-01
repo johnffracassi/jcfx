@@ -4,6 +4,8 @@
   <tr>
     <th>Player</th>
     <th>Age (days)</th>
+    <th>Origin</th>
+    <th>About...</th>
     <th>Actions</th>
   </tr>
 
@@ -14,7 +16,10 @@
     <td><%= profile.origin %></td>
     <td><%= profile.blurb %></td>
     <td>
-      <%= link_to 'Show', profile %>
+      <%= link_to 'Profile', profile %>
+        <%= link_to 'Career',  "/profiles/#{profile.id}/career" %>
+        <%= link_to 'Batting', "/profiles/#{profile.id}/batting" %>
+        <%= link_to 'Bowling', "/profiles/#{profile.id}/bowling" %>
       <%= link_to 'Edit', edit_profile_path(profile) %>
       <%= link_to 'Destroy', profile, :confirm => 'Are you sure?', :method => :delete %>
     </td>
