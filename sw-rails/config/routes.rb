@@ -5,6 +5,7 @@ SwRails::Application.routes.draw do
   get "/profiles/:id/career" => "profiles#career"
   get "/profiles/:id/batting" => "profiles#batting"
   get "/profiles/:id/bowling" => "profiles#bowling"
+  get "/records" => "records#index"
 
   get "/admin" => "common#admin"
 
