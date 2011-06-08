@@ -4,6 +4,7 @@ class CreatePlayers < ActiveRecord::Migration
       t.string :code
       t.timestamps
     end
+
   end
 
   def self.down

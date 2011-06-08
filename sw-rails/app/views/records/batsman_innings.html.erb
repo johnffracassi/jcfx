@@ -1,0 +1,31 @@
+<h1><%= "#{params[:order]} scores - #{params[:scope]}" %></h1>
+
+<div>
+    <div>Order: <%= order_select("order", "#{params[:order]}") %></div>
+    <div>Season: <%= season_select("season_id") %></div>
+    <div>Player: <%= player_select("player_id") %></div>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Player</th>
+            <th>Runs</th>
+            <th>Balls</th>
+            <th>Opposition</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @data.each do |row| %>
+            <tr>
+                <td><%= Player.find(row['player_id']).display %></td>
+                <td><%= row['runs'] %></td>
+                <td><%= row['bf'] %></td>
+                <td><%= Match.find(row['match_id']).opposition_team.name %></td>
+                <td><%= Match.find(row['match_id']).datetime %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

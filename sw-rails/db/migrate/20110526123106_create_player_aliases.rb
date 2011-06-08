@@ -5,6 +5,8 @@ class CreatePlayerAliases < ActiveRecord::Migration
       t.string :name
       t.timestamps
     end
+
+    add_index :player_aliases, :player_id
   end
 
   def self.down

@@ -6,6 +6,8 @@ class CreateNicknames < ActiveRecord::Migration
       t.integer :weight
       t.timestamps
     end
+
+    add_index :nicknames, :player_id
   end
 
   def self.down

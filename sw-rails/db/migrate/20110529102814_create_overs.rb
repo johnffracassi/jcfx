@@ -6,6 +6,10 @@ class CreateOvers < ActiveRecord::Migration
       t.integer :match_id
       t.timestamps
     end
+
+    add_index :overs, :player_id
+    add_index :overs, :match_id
+
   end
 
   def self.down

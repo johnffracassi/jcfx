@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(:version => 20110530024950) do
   create_table "balls", :force => true do |t|
     t.integer  "ordinal"
     t.string   "score"
-    t.integer  "runs"
+    t.integer  "batsman_innings"
     t.integer  "batsman_value"
     t.integer  "bowler_value"
     t.integer  "extra_type_id"
@@ -26,11 +26,8 @@ ActiveRecord::Schema.define(:version => 20110530024950) do
     t.datetime "updated_at"
   end
 
-  create_table "bat_innings", :force => true do |t|
-    t.integer  "player_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+  add_index "balls", ["batsman_innings_id"], :name => "index_balls_on_batsman_innings_id"
+  add_index "balls", ["over_id"], :name => "index_balls_on_over_id"
 
   create_table "batsman_innings", :force => true do |t|
     t.integer  "player_id"
@@ -39,6 +36,9 @@ ActiveRecord::Schema.define(:version => 20110530024950) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "batsman_innings", ["match_id"], :name => "index_batsman_innings_on_match_id"
+  add_index "batsman_innings", ["player_id"], :name => "index_batsman_innings_on_player_id"
 
   create_table "clubs", :force => true do |t|
     t.string   "code"
@@ -116,6 +116,8 @@ ActiveRecord::Schema.define(:version => 20110530024950) do
     t.datetime "updated_at"
   end
 
+  add_index "nicknames", ["player_id"], :name => "index_nicknames_on_player_id"
+
   create_table "opposition_teams", :force => true do |t|
     t.string   "code"
     t.string   "name"
@@ -123,6 +125,8 @@ ActiveRecord::Schema.define(:version => 20110530024950) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "opposition_teams", ["name"], :name => "index_opposition_teams_on_name"
 
   create_table "overs", :force => true do |t|
     t.integer  "player_id"
@@ -132,12 +136,17 @@ ActiveRecord::Schema.define(:version => 20110530024950) do
     t.datetime "updated_at"
   end
 
+  add_index "overs", ["match_id"], :name => "index_overs_on_match_id"
+  add_index "overs", ["player_id"], :name => "index_overs_on_player_id"
+
   create_table "player_aliases", :force => true do |t|
     t.integer  "player_id"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "player_aliases", ["player_id"], :name => "index_player_aliases_on_player_id"
 
   create_table "players", :force => true do |t|
     t.string   "code"
@@ -169,6 +178,8 @@ ActiveRecord::Schema.define(:version => 20110530024950) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "profiles", ["player_id"], :name => "index_profiles_on_player_id"
 
   create_table "seasons", :force => true do |t|
     t.string   "code"

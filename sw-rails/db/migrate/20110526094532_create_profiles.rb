@@ -16,6 +16,8 @@ class CreateProfiles < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :profiles, :player_id
   end
 
   def self.down
