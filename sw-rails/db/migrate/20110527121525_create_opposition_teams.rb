@@ -6,6 +6,8 @@ class CreateOppositionTeams < ActiveRecord::Migration
       t.text :notes
       t.timestamps
     end
+
+    add_index :opposition_teams, :name
   end
 
   def self.down

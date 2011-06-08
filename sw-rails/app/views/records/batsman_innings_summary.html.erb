@@ -1,0 +1,13 @@
+<h1><%= "#{params[:order]} scores - #{params[:scope]}" %></h1>
+
+<table>
+    <% @data.each do |row| %>
+        <tr>
+            <td><%= Player.find(row['player_id']).display %></td>
+            <td><%= row['runs'] %></td>
+            <td><%= row['bf'] %></td>
+            <td><%= Match.find(row['match_id']).opposition_team.name %></td>
+            <td><%= Match.find(row['match_id']).datetime %></td>
+        </tr>
+    <% end %>
+</table>

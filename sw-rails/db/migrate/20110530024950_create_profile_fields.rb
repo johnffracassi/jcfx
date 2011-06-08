@@ -6,9 +6,14 @@ class CreateProfileFields < ActiveRecord::Migration
       t.integer :profile_id
       t.timestamps
     end
+
+    add_index :balls, :batsman_innings_id
+    add_index :balls, :over_id
   end
 
   def self.down
     drop_table :profile_fields
+    remove_index :balls, :batsman_innings_id
+    remove_index :balls, :over_id
   end
 end

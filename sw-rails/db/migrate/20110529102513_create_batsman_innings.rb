@@ -6,6 +6,9 @@ class CreateBatsmanInnings < ActiveRecord::Migration
       t.integer :match_id
       t.timestamps
     end
+
+    add_index :batsman_innings, :player_id
+    add_index :batsman_innings, :match_id
   end
 
   def self.down
