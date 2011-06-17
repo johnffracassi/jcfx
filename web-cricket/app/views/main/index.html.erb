@@ -12,12 +12,12 @@
         canvas = document.getElementById("canvas");
         g = canvas.getContext("2d");
         targetFPS = 200;
+        actualFPS = 0;
         frameCounter = 0
         gameTime = 0.0;
         gameResetTime = 0.0;
         screenOrigin = [500,450];
     </script>
-
 
     <%= javascript_include_tag('data/sprites') %>
     <%= javascript_include_tag('data/field_settings') %>
@@ -26,6 +26,10 @@
     <%= javascript_include_tag('model/fielders') %>
     <%= javascript_include_tag('model/ground') %>
     <%= javascript_include_tag('model/pitch') %>
+
+    <br/>
+    <%= button_to_function("Reset", "reset()") %>
+    <%= button_to_function("Bowl", "bowl()") %>
 
     <script type="text/javascript">
         var mouseLoc = [0,0];
@@ -47,13 +51,20 @@
         function update()
         {
             gameTime = (new Date().getTime() - gameResetTime) / 1000.0;
-            updatePeople();
         }
 
 
-        function updatePeople()
+        // =============================================================================================================
+        // bowling
+        // =============================================================================================================
+        function bowl()
         {
+            personController.bowler.runTo([0.75,21]);
         }
+
+        var GameState = Class.extend({
+
+        });
 
         // =============================================================================================================
         // render loop
@@ -81,8 +92,11 @@
             g.fillStyle = "black";
             g.fillText("frameCounter: " + frameCounter, 30, 34);
             g.fillText("gameTime: " + gameTime.toFixed(2), 30, 54);
-            if(gameTime > 1)
-                g.fillText("fps: " + (frameCounter / gameTime).toFixed(1) + "fps", 30, 74);
+            if(gameTime > 0)
+            {
+                actualFPS = (frameCounter / gameTime);
+                g.fillText("fps: " + actualFPS.toFixed(1) + "fps", 30, 74);
+            }
         }
 
         function renderPeople()
@@ -93,7 +107,7 @@
                 var person = people[i];
                 var sloc = convertWorldToScreen(person.location());
 
-                drawSprite(g, 1, 0, sloc);
+                drawAnimation(g, person.animKey(), sloc);
 
                 if(mouseDistance(sloc) < 25)
                 {

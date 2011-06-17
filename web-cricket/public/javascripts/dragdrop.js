@@ -327,7 +327,7 @@ var Draggable = Class.create({
 
     if(this.options.zindex) {
       this.originalZ = parseInt(Element.getStyle(this.element,'z-index') || 0);
-      this.element.style.zIndex = this.options.zindex;
+      this.element.strokeStyle.zIndex = this.options.zindex;
     }
 
     if(this.options.ghosting) {
@@ -432,7 +432,7 @@ var Draggable = Class.create({
     }
 
     if(this.options.zindex)
-      this.element.style.zIndex = this.originalZ;
+      this.element.strokeStyle.zIndex = this.originalZ;
 
     if(this.options.endeffect)
       this.options.endeffect(this.element);
@@ -486,7 +486,7 @@ var Draggable = Class.create({
       }
     }}
 
-    var style = this.element.style;
+    var style = this.element.strokeStyle;
     if((!this.options.constraint) || (this.options.constraint=='horizontal'))
       style.left = p[0] + "px";
     if((!this.options.constraint) || (this.options.constraint=='vertical'))
@@ -674,8 +674,8 @@ var Sortable = {
       options_for_draggable.reverteffect = options.reverteffect;
     else
       if(options.ghosting) options_for_draggable.reverteffect = function(element) {
-        element.style.top  = 0;
-        element.style.left = 0;
+        element.strokeStyle.top  = 0;
+        element.strokeStyle.left = 0;
       };
 
     if(options.endeffect)
@@ -758,7 +758,7 @@ var Sortable = {
       Sortable.mark(dropon, 'before');
       if(dropon.previousSibling != element) {
         var oldParentNode = element.parentNode;
-        element.style.visibility = "hidden"; // fix gecko rendering
+        element.strokeStyle.visibility = "hidden"; // fix gecko rendering
         dropon.parentNode.insertBefore(element, dropon);
         if(dropon.parentNode!=oldParentNode)
           Sortable.options(oldParentNode).onChange(element);
@@ -769,7 +769,7 @@ var Sortable = {
       var nextElement = dropon.nextSibling || null;
       if(nextElement != element) {
         var oldParentNode = element.parentNode;
-        element.style.visibility = "hidden"; // fix gecko rendering
+        element.strokeStyle.visibility = "hidden"; // fix gecko rendering
         dropon.parentNode.insertBefore(element, nextElement);
         if(dropon.parentNode!=oldParentNode)
           Sortable.options(oldParentNode).onChange(element);

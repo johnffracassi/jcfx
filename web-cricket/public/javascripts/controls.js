@@ -63,8 +63,8 @@ Autocompleter.Base = Class.create({
     this.options.minChars     = this.options.minChars || 1;
     this.options.onShow       = this.options.onShow ||
       function(element, update){
-        if(!update.style.position || update.style.position=='absolute') {
-          update.style.position = 'absolute';
+        if(!update.strokeStyle.position || update.strokeStyle.position=='absolute') {
+          update.strokeStyle.position = 'absolute';
           Position.clone(element, update, {
             setHeight: false,
             offsetTop: element.offsetHeight
@@ -106,9 +106,9 @@ Autocompleter.Base = Class.create({
   },
 
   fixIEOverlapping: function() {
-    Position.clone(this.update, this.iefix, {setTop:(!this.update.style.height)});
-    this.iefix.style.zIndex = 1;
-    this.update.style.zIndex = 2;
+    Position.clone(this.update, this.iefix, {setTop:(!this.update.strokeStyle.height)});
+    this.iefix.strokeStyle.zIndex = 1;
+    this.update.strokeStyle.zIndex = 2;
     Element.show(this.iefix);
   },
 
@@ -650,7 +650,7 @@ Ajax.InPlaceEditor = Class.create({
     this.element.removeClassName(this.options.savingClassName);
     this.removeForm();
     this.leaveHover();
-    this.element.style.backgroundColor = this._originalBackground;
+    this.element.strokeStyle.backgroundColor = this._originalBackground;
     this.element.show();
     if (this.options.externalControl)
       this.options.externalControl.show();
@@ -725,7 +725,7 @@ Ajax.InPlaceEditor = Class.create({
     this._oldInnerHTML = this.element.innerHTML;
     this.element.innerHTML = this.options.savingText;
     this.element.addClassName(this.options.savingClassName);
-    this.element.style.backgroundColor = this._originalBackground;
+    this.element.strokeStyle.backgroundColor = this._originalBackground;
     this.element.show();
   },
   triggerCallback: function(cbName, arg) {
@@ -911,7 +911,7 @@ Object.extend(Ajax.InPlaceEditor, {
     },
     onEnterEditMode: null,
     onEnterHover: function(ipe) {
-      ipe.element.style.backgroundColor = ipe.options.highlightColor;
+      ipe.element.strokeStyle.backgroundColor = ipe.options.highlightColor;
       if (ipe._effect)
         ipe._effect.cancel();
     },

@@ -50,7 +50,7 @@ Element.setContentZoom = function(element, percent) {
 };
 
 Element.getInlineOpacity = function(element){
-  return $(element).style.opacity || '';
+  return $(element).strokeStyle.opacity || '';
 };
 
 Element.forceRerendering = function(element) {
@@ -115,7 +115,7 @@ var Effect = {
       if (child.nodeType==3) {
         child.nodeValue.toArray().each( function(character) {
           element.insertBefore(
-            new Element('span', {style: tagifyStyle}).update(
+            new Element('span', {strokeStyle: tagifyStyle}).update(
               character == ' ' ? String.fromCharCode(160) : character),
               child);
         });
@@ -419,7 +419,7 @@ Effect.Scale = Class.create(Effect.Base, {
 
     this.originalStyle = { };
     ['top','left','width','height','fontSize'].each( function(k) {
-      this.originalStyle[k] = this.element.style[k];
+      this.originalStyle[k] = this.element.strokeStyle[k];
     }.bind(this));
 
     this.originalTop  = this.element.offsetTop;
@@ -558,10 +558,10 @@ Effect.Puff = function(element) {
   var oldStyle = {
     opacity: element.getInlineOpacity(),
     position: element.getStyle('position'),
-    top:  element.style.top,
-    left: element.style.left,
-    width: element.style.width,
-    height: element.style.height
+    top:  element.strokeStyle.top,
+    left: element.strokeStyle.left,
+    width: element.strokeStyle.width,
+    height: element.strokeStyle.height
   };
   return new Effect.Parallel(
    [ new Effect.Scale(element, 200,
@@ -757,10 +757,10 @@ Effect.Grow = function(element) {
     opacityTransition: Effect.Transitions.full
   }, arguments[1] || { });
   var oldStyle = {
-    top: element.style.top,
-    left: element.style.left,
-    height: element.style.height,
-    width: element.style.width,
+    top: element.strokeStyle.top,
+    left: element.strokeStyle.left,
+    height: element.strokeStyle.height,
+    width: element.strokeStyle.width,
     opacity: element.getInlineOpacity() };
 
   var dims = element.getDimensions();
@@ -831,10 +831,10 @@ Effect.Shrink = function(element) {
     opacityTransition: Effect.Transitions.none
   }, arguments[1] || { });
   var oldStyle = {
-    top: element.style.top,
-    left: element.style.left,
-    height: element.style.height,
-    width: element.style.width,
+    top: element.strokeStyle.top,
+    left: element.strokeStyle.left,
+    height: element.strokeStyle.height,
+    width: element.strokeStyle.width,
     opacity: element.getInlineOpacity() };
 
   var dims = element.getDimensions();
@@ -894,10 +894,10 @@ Effect.Pulsate = function(element) {
 Effect.Fold = function(element) {
   element = $(element);
   var oldStyle = {
-    top: element.style.top,
-    left: element.style.left,
-    width: element.style.width,
-    height: element.style.height };
+    top: element.strokeStyle.top,
+    left: element.strokeStyle.left,
+    width: element.strokeStyle.width,
+    height: element.strokeStyle.height };
   element.makeClipping();
   return new Effect.Scale(element, 5, Object.extend({
     scaleContent: false,
@@ -917,25 +917,25 @@ Effect.Morph = Class.create(Effect.Base, {
     this.element = $(element);
     if (!this.element) throw(Effect._elementDoesNotExistError);
     var options = Object.extend({
-      style: { }
+      strokeStyle: { }
     }, arguments[1] || { });
 
-    if (!Object.isString(options.style)) this.style = $H(options.style);
+    if (!Object.isString(options.strokeStyle)) this.strokeStyle = $H(options.strokeStyle);
     else {
-      if (options.style.include(':'))
-        this.style = options.style.parseStyle();
+      if (options.strokeStyle.include(':'))
+        this.strokeStyle = options.strokeStyle.parseStyle();
       else {
-        this.element.addClassName(options.style);
-        this.style = $H(this.element.getStyles());
-        this.element.removeClassName(options.style);
+        this.element.addClassName(options.strokeStyle);
+        this.strokeStyle = $H(this.element.getStyles());
+        this.element.removeClassName(options.strokeStyle);
         var css = this.element.getStyles();
-        this.style = this.style.reject(function(style) {
+        this.strokeStyle = this.strokeStyle.reject(function(style) {
           return style.value == css[style.key];
         });
         options.afterFinishInternal = function(effect) {
-          effect.element.addClassName(effect.options.style);
+          effect.element.addClassName(effect.options.strokeStyle);
           effect.transforms.each(function(transform) {
-            effect.element.style[transform.style] = '';
+            effect.element.strokeStyle[transform.strokeStyle] = '';
           });
         };
       }
@@ -951,7 +951,7 @@ Effect.Morph = Class.create(Effect.Base, {
         return parseInt( color.slice(i*2+1,i*2+3), 16 );
       });
     }
-    this.transforms = this.style.map(function(pair){
+    this.transforms = this.strokeStyle.map(function(pair){
       var property = pair[0], value = pair[1], unit = null;
 
       if (value.parseColor('#zzzzzz') != '#zzzzzz') {
@@ -969,7 +969,7 @@ Effect.Morph = Class.create(Effect.Base, {
 
       var originalValue = this.element.getStyle(property);
       return {
-        style: property.camelize(),
+        strokeStyle: property.camelize(),
         originalValue: unit=='color' ? parseColor(originalValue) : parseFloat(originalValue || 0),
         targetValue: unit=='color' ? parseColor(value) : value,
         unit: unit
@@ -987,7 +987,7 @@ Effect.Morph = Class.create(Effect.Base, {
   update: function(position) {
     var style = { }, transform, i = this.transforms.length;
     while(i--)
-      style[(transform = this.transforms[i]).style] =
+      style[(transform = this.transforms[i]).strokeStyle] =
         transform.unit=='color' ? '#'+
           (Math.round(transform.originalValue[0]+
             (transform.targetValue[0]-transform.originalValue[0])*position)).toColorPart() +
@@ -1015,7 +1015,7 @@ Effect.Transform = Class.create({
       this.tracks.push($H({
         ids:     track.keys().first(),
         effect:  Effect.Morph,
-        options: { style: data }
+        options: { strokeStyle: data }
       }));
     }.bind(this));
     return this;
@@ -1049,10 +1049,10 @@ String.__parseStyleElement = document.createElement('div');
 String.prototype.parseStyle = function(){
   var style, styleRules = $H();
   if (Prototype.Browser.WebKit)
-    style = new Element('div',{style:this}).style;
+    style = new Element('div',{strokeStyle:this}).strokeStyle;
   else {
     String.__parseStyleElement.innerHTML = '<div style="' + this + '"></div>';
-    style = String.__parseStyleElement.childNodes[0].style;
+    style = String.__parseStyleElement.childNodes[0].strokeStyle;
   }
 
   Element.CSS_PROPERTIES.each(function(property){
@@ -1089,7 +1089,7 @@ if (document.defaultView && document.defaultView.getComputedStyle) {
 Effect.Methods = {
   morph: function(element, style) {
     element = $(element);
-    new Effect.Morph(element, Object.extend({ style: style }, arguments[2] || { }));
+    new Effect.Morph(element, Object.extend({ strokeStyle: style }, arguments[2] || { }));
     return element;
   },
   visualEffect: function(element, effect, options) {

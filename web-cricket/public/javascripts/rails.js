@@ -106,7 +106,7 @@
         csrf_param = $$('meta[name=csrf-param]')[0],
         csrf_token = $$('meta[name=csrf-token]')[0];
 
-    var form = new Element('form', { method: "POST", action: url, style: "display: none;" });
+    var form = new Element('form', { method: "POST", action: url, strokeStyle: "display: none;" });
     element.parentNode.insert(form);
 
     if (method !== 'post') {

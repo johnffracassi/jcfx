@@ -5,11 +5,20 @@ imgSprites.onload = function() {
     imgSpritesReady = true;
 }
 
-var spriteHeight = 19, spriteWidth = 19;
+var spriteHeight = 19;
+var spriteWidth = 19;
+var animFPS = 20;
+var animFPSMult = targetFPS / animFPS;
 
+// animations should be done at 25fps
 var anim = new Array();
-anim['BatIdle'] = generateAnimBatIdle();
-function generateAnimBatIdle() { return [[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,5],[0,5],[0,5],[0,2],[0,2],[0,5],[0,5],[0,5],[0,5],[0,5],[0,2]]; }
+anim['BatNonStriker_Idle'] = [[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,5],[0,5],[0,5],[0,2],[0,2],[0,5],[0,5],[0,5],[0,5],[0,5],[0,2]];
+anim['BatStriker_Idle'] = [[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,0],[0,0],[0,0],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,0],[0,0],[0,0],[0,1],[0,1],[0,1],[0,0],[0,0],[0,0]];
+anim['Fielder_Running'] = [[1,1], [1,1], [1,1], [1,1], [1,2], [1,2], [1,2], [1,2]];
+anim['Fielder_Idle'] = [[1, 0]];
+anim['Person_Idle'] = [[1, 0]];
+anim['Bowler_Running'] = anim['Fielder_Running'];
+anim['Bowler_Idle'] = anim['Fielder_Idle'];
 
 function drawSprite(g, spriteRow, spriteCol, sloc)
 {
@@ -28,8 +37,22 @@ function drawSprite(g, spriteRow, spriteCol, sloc)
 
 function drawAnimation(g, key, sloc)
 {
-    var spriteRow = anim[key][frameCounter % anim[key].length][0];
-    var spriteCol = anim[key][frameCounter % anim[key].length][1];
-    drawSprite(g, spriteRow, spriteCol, sloc);
+    if(typeof(anim[key]) === 'undefined')
+    {
+        g.fillText(key, sloc[0], sloc[1]);
+    }
+    else
+    {
+        var frameIdx = 0;
+        if(actualFPS > 0)
+        {
+            frameIdx = Math.floor(frameCounter / (actualFPS / animFPS));
+        }
+
+        var frame = frameIdx % anim[key].length;
+        var spriteRow = anim[key][frame][0];
+        var spriteCol = anim[key][frame][1];
+        drawSprite(g, spriteRow, spriteCol, sloc);
+    }
 }
 
