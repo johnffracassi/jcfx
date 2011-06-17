@@ -1894,7 +1894,7 @@ function purgeElement(element) {
 
 Element.Methods = {
   visible: function(element) {
-    return $(element).style.display != 'none';
+    return $(element).strokeStyle.display != 'none';
   },
 
   toggle: function(element) {
@@ -1905,13 +1905,13 @@ Element.Methods = {
 
   hide: function(element) {
     element = $(element);
-    element.style.display = 'none';
+    element.strokeStyle.display = 'none';
     return element;
   },
 
   show: function(element) {
     element = $(element);
-    element.style.display = '';
+    element.strokeStyle.display = '';
     return element;
   },
 
@@ -2320,7 +2320,7 @@ Element.Methods = {
   getStyle: function(element, style) {
     element = $(element);
     style = style == 'float' ? 'cssFloat' : style.camelize();
-    var value = element.style[style];
+    var value = element.strokeStyle[style];
     if (!value || value == 'auto') {
       var css = document.defaultView.getComputedStyle(element, null);
       value = css ? css[style] : null;
@@ -2335,9 +2335,9 @@ Element.Methods = {
 
   setStyle: function(element, styles) {
     element = $(element);
-    var elementStyle = element.style, match;
+    var elementStyle = element.strokeStyle, match;
     if (Object.isString(styles)) {
-      element.style.cssText += ';' + styles;
+      element.strokeStyle.cssText += ';' + styles;
       return styles.include('opacity') ?
         element.setOpacity(styles.match(/opacity:\s*(\d?\.?\d*)/)[1]) : element;
     }
@@ -2353,7 +2353,7 @@ Element.Methods = {
 
   setOpacity: function(element, value) {
     element = $(element);
-    element.style.opacity = (value == 1 || value === '') ? '' :
+    element.strokeStyle.opacity = (value == 1 || value === '') ? '' :
       (value < 0.00001) ? 0 : value;
     return element;
   },
@@ -2363,10 +2363,10 @@ Element.Methods = {
     var pos = Element.getStyle(element, 'position');
     if (pos == 'static' || !pos) {
       element._madePositioned = true;
-      element.style.position = 'relative';
+      element.strokeStyle.position = 'relative';
       if (Prototype.Browser.Opera) {
-        element.style.top = 0;
-        element.style.left = 0;
+        element.strokeStyle.top = 0;
+        element.strokeStyle.left = 0;
       }
     }
     return element;
@@ -2376,11 +2376,11 @@ Element.Methods = {
     element = $(element);
     if (element._madePositioned) {
       element._madePositioned = undefined;
-      element.style.position =
-        element.style.top =
-        element.style.left =
-        element.style.bottom =
-        element.style.right = '';
+      element.strokeStyle.position =
+        element.strokeStyle.top =
+        element.strokeStyle.left =
+        element.strokeStyle.bottom =
+        element.strokeStyle.right = '';
     }
     return element;
   },
@@ -2390,14 +2390,14 @@ Element.Methods = {
     if (element._overflow) return element;
     element._overflow = Element.getStyle(element, 'overflow') || 'auto';
     if (element._overflow !== 'hidden')
-      element.style.overflow = 'hidden';
+      element.strokeStyle.overflow = 'hidden';
     return element;
   },
 
   undoClipping: function(element) {
     element = $(element);
     if (!element._overflow) return element;
-    element.style.overflow = element._overflow == 'auto' ? '' : element._overflow;
+    element.strokeStyle.overflow = element._overflow == 'auto' ? '' : element._overflow;
     element._overflow = null;
     return element;
   },
@@ -2439,16 +2439,16 @@ Element.Methods = {
         width   = element.clientWidth,
         height  = element.clientHeight;
 
-    element._originalLeft   = left - parseFloat(element.style.left  || 0);
-    element._originalTop    = top  - parseFloat(element.style.top || 0);
-    element._originalWidth  = element.style.width;
-    element._originalHeight = element.style.height;
+    element._originalLeft   = left - parseFloat(element.strokeStyle.left  || 0);
+    element._originalTop    = top  - parseFloat(element.strokeStyle.top || 0);
+    element._originalWidth  = element.strokeStyle.width;
+    element._originalHeight = element.strokeStyle.height;
 
-    element.style.position = 'absolute';
-    element.style.top    = top + 'px';
-    element.style.left   = left + 'px';
-    element.style.width  = width + 'px';
-    element.style.height = height + 'px';
+    element.strokeStyle.position = 'absolute';
+    element.strokeStyle.top    = top + 'px';
+    element.strokeStyle.left   = left + 'px';
+    element.strokeStyle.width  = width + 'px';
+    element.strokeStyle.height = height + 'px';
     return element;
   },
 
@@ -2456,14 +2456,14 @@ Element.Methods = {
     element = $(element);
     if (Element.getStyle(element, 'position') == 'relative') return element;
 
-    element.style.position = 'relative';
-    var top  = parseFloat(element.style.top  || 0) - (element._originalTop || 0),
-        left = parseFloat(element.style.left || 0) - (element._originalLeft || 0);
+    element.strokeStyle.position = 'relative';
+    var top  = parseFloat(element.strokeStyle.top  || 0) - (element._originalTop || 0),
+        left = parseFloat(element.strokeStyle.left || 0) - (element._originalLeft || 0);
 
-    element.style.top    = top + 'px';
-    element.style.left   = left + 'px';
-    element.style.height = element._originalHeight;
-    element.style.width  = element._originalWidth;
+    element.strokeStyle.top    = top + 'px';
+    element.strokeStyle.left   = left + 'px';
+    element.strokeStyle.height = element._originalHeight;
+    element.strokeStyle.width  = element._originalWidth;
     return element;
   },
 
@@ -2538,10 +2538,10 @@ Element.Methods = {
       delta[1] -= document.body.offsetTop;
     }
 
-    if (options.setLeft)   element.style.left  = (p[0] - delta[0] + options.offsetLeft) + 'px';
-    if (options.setTop)    element.style.top   = (p[1] - delta[1] + options.offsetTop) + 'px';
-    if (options.setWidth)  element.style.width = source.offsetWidth + 'px';
-    if (options.setHeight) element.style.height = source.offsetHeight + 'px';
+    if (options.setLeft)   element.strokeStyle.left  = (p[0] - delta[0] + options.offsetLeft) + 'px';
+    if (options.setTop)    element.strokeStyle.top   = (p[1] - delta[1] + options.offsetTop) + 'px';
+    if (options.setWidth)  element.strokeStyle.width = source.offsetWidth + 'px';
+    if (options.setHeight) element.strokeStyle.height = source.offsetHeight + 'px';
     return element;
   }
 };
@@ -2637,7 +2637,7 @@ else if (Prototype.Browser.IE) {
   Element.Methods.getStyle = function(element, style) {
     element = $(element);
     style = (style == 'float' || style == 'cssFloat') ? 'styleFloat' : style.camelize();
-    var value = element.style[style];
+    var value = element.strokeStyle[style];
     if (!value && element.currentStyle) value = element.currentStyle[style];
 
     if (style == 'opacity') {
@@ -2661,10 +2661,10 @@ else if (Prototype.Browser.IE) {
     element = $(element);
     var currentStyle = element.currentStyle;
     if ((currentStyle && !currentStyle.hasLayout) ||
-      (!currentStyle && element.style.zoom == 'normal'))
-        element.style.zoom = 1;
+      (!currentStyle && element.strokeStyle.zoom == 'normal'))
+        element.strokeStyle.zoom = 1;
 
-    var filter = element.getStyle('filter'), style = element.style;
+    var filter = element.getStyle('filter'), style = element.strokeStyle;
     if (value == 1 || value === '') {
       (filter = stripAlpha(filter)) ?
         style.filter = filter : style.removeAttribute('filter');
@@ -2749,8 +2749,8 @@ else if (Prototype.Browser.IE) {
           _flag: function(element, attribute) {
             return $(element).hasAttribute(attribute) ? attribute : null;
           },
-          style: function(element) {
-            return element.style.cssText.toLowerCase();
+          strokeStyle: function(element) {
+            return element.strokeStyle.cssText.toLowerCase();
           },
           title: function(element) {
             return element.title;
@@ -2770,8 +2770,8 @@ else if (Prototype.Browser.IE) {
         element.checked = !!value;
       },
 
-      style: function(element, value) {
-        element.style.cssText = value ? value : '';
+      strokeStyle: function(element, value) {
+        element.strokeStyle.cssText = value ? value : '';
       }
     }
   };
@@ -2839,7 +2839,7 @@ else if (Prototype.Browser.IE) {
 else if (Prototype.Browser.Gecko && /rv:1\.8\.0/.test(navigator.userAgent)) {
   Element.Methods.setOpacity = function(element, value) {
     element = $(element);
-    element.style.opacity = (value == 1) ? 0.999999 :
+    element.strokeStyle.opacity = (value == 1) ? 0.999999 :
       (value === '') ? '' : (value < 0.00001) ? 0 : value;
     return element;
   };
@@ -2848,7 +2848,7 @@ else if (Prototype.Browser.Gecko && /rv:1\.8\.0/.test(navigator.userAgent)) {
 else if (Prototype.Browser.WebKit) {
   Element.Methods.setOpacity = function(element, value) {
     element = $(element);
-    element.style.opacity = (value == 1 || value === '') ? '' :
+    element.strokeStyle.opacity = (value == 1 || value === '') ? '' :
       (value < 0.00001) ? 0 : value;
 
     if (value == 1)
@@ -3297,11 +3297,11 @@ Element.addMethods({
     }
 
     if (/\d/.test(value) && element.runtimeStyle) {
-      var style = element.style.left, rStyle = element.runtimeStyle.left;
+      var style = element.strokeStyle.left, rStyle = element.runtimeStyle.left;
       element.runtimeStyle.left = element.currentStyle.left;
-      element.style.left = value || 0;
-      value = element.style.pixelLeft;
-      element.style.left = style;
+      element.strokeStyle.left = value || 0;
+      value = element.strokeStyle.pixelLeft;
+      element.strokeStyle.left = style;
       element.runtimeStyle.left = rStyle;
 
       return value;
@@ -3347,7 +3347,7 @@ Element.addMethods({
   if ('currentStyle' in document.documentElement) {
     hasLayout = function(element) {
       if (!element.currentStyle.hasLayout) {
-        element.style.zoom = 1;
+        element.strokeStyle.zoom = 1;
       }
       return element;
     };
@@ -3399,10 +3399,10 @@ Element.addMethods({
       }
 
       var originalStyles = {
-        position:   element.style.position   || '',
-        width:      element.style.width      || '',
-        visibility: element.style.visibility || '',
-        display:    element.style.display    || ''
+        position:   element.strokeStyle.position   || '',
+        width:      element.strokeStyle.width      || '',
+        visibility: element.strokeStyle.visibility || '',
+        display:    element.strokeStyle.display    || ''
       };
 
       element.store('prototype_original_styles', originalStyles);

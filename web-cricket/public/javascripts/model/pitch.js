@@ -2,8 +2,8 @@ var PitchModel = Class.extend({
    length: 20,
    width: 2.7,
    crease: 1.2,
-   fillColour: "rgba(255, 222, 192, 0.5)",
-   colour: "#edb",
+   fillColour: "rgba(255, 222, 192, 0.33)",
+   strokeStyle: "rgba(255, 255, 255, 0.33)",
    efficiency: 0.6,
    spin: 0.5,
    suprisiness: 0.1
@@ -17,6 +17,7 @@ var PitchRenderer = Class.extend({
         var pt1 = convertWorldToScreen([bottomLeft[0], topRight[1]]);
         var pt2 = convertWorldToScreen(topRight);
         var pt3 = convertWorldToScreen([topRight[0], bottomLeft[1]]);
+
         g.fillStyle = model.fillColour;
         g.beginPath();
         g.moveTo(pt0[0], pt0[1]);
@@ -26,33 +27,38 @@ var PitchRenderer = Class.extend({
         g.closePath();
         g.fill();
 
-        screenLine([-4,1.5],[4,1.5]);
-        screenLine([-2,0],[2,0]);
-        screenLine([-4,model.length],[4,model.length]);
-        screenLine([-2,model.length + 1.5],[2,model.length + 1.5]);
+        g.strokeStyle = model.strokeStyle;
+        screenLine(g, [-4,1.5],[4,1.5]);
+        screenLine(g, [-2,0],[2,0]);
+        screenLine(g, [-4,model.length],[4,model.length]);
+        screenLine(g, [-2,model.length + 1.5],[2,model.length + 1.5]);
     }
 });
 
-function screenLine(start, end)
-{
-    var sloc1 = convertWorldToScreen(start);
-    var sloc2 = convertWorldToScreen(end);
-    g.moveTo(sloc1[0], sloc1[1]);
-    g.lineTo(sloc2[0], sloc2[1]);
-    g.stroke();
-}
-
 var StumpsModel = Class.extend({
    width: 0.3,
-   height: 0.7,
-   colour: "#884",
+   height: 0.8,
+   strokeStyle: "rgb(255,192,0)",
    state: "Idle"
 });
 
 var StumpsRenderer = Class.extend({
     render: function(model,g,loc) {
-        screenLine([loc[0],loc[1],0], [loc[0],loc[1],model.height]);
-        screenLine([loc[0]+model.width/2,loc[1],0], [loc[0]+model.width/2,loc[1],model.height]);
-        screenLine([loc[0]-model.width/2,loc[1],0], [loc[0]-model.width/2,loc[1],model.height]);
+        g.strokeStyle = model.strokeStyle;
+        g.lineWidth = 0.75;
+        screenLine(g, [loc[0],loc[1],0], [loc[0],loc[1],model.height]);
+        screenLine(g, [loc[0]+model.width/2,loc[1],0], [loc[0]+model.width/2,loc[1],model.height]);
+        screenLine(g, [loc[0]-model.width/2,loc[1],0], [loc[0]-model.width/2,loc[1],model.height]);
     }
 });
+
+function screenLine(g, start, end)
+{
+    var sloc1 = convertWorldToScreen(start);
+    var sloc2 = convertWorldToScreen(end);
+    g.beginPath();
+    g.moveTo(sloc1[0], sloc1[1]);
+    g.lineTo(sloc2[0], sloc2[1]);
+    g.stroke();
+}
+

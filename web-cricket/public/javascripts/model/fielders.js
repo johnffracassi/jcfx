@@ -7,6 +7,8 @@ var Person = Class.extend({
         this.state = "Idle";
         this.speed = null;
         this.lastLocUpdate = 0.0;
+        this.lastStateUpdate = 0.0;
+        this.spriteClass = "Person";
     },
 
     display: function() {
@@ -15,15 +17,37 @@ var Person = Class.extend({
 
     runTo: function(loc) {
         this.moveTo(loc, 8.0);
+        this.setState("Running");
     },
 
     walkTo: function(loc) {
         this.moveTo(loc, 3.0);
+        this.setState("Walking");
     },
 
     moveTo: function(loc, speed) {
-        this.targetLoc = loc;
-        this.speed = speed;
+        if(speed == 0)
+        {
+            this.targetLoc = null;
+            this.currentLoc = loc;
+            this.lastLocUpdate = gameTime;
+            this.setState("Idle");
+        }
+        else
+        {
+            this.targetLoc = loc;
+            this.speed = speed;
+            this.lastLocUpdate = gameTime;
+        }
+    },
+
+    setState: function(state) {
+        this.state = state;
+        this.lastStateUpdate = gameTime;
+    },
+
+    setLoc: function(loc) {
+        this.currentLoc = loc;
         this.lastLocUpdate = gameTime;
     },
 
@@ -32,9 +56,10 @@ var Person = Class.extend({
         {
             if(this.speed == null || this.speed == 0.0)
             {
-                this.currentLoc = this.targetLoc;
                 this.targetLoc = null;
                 this.speed = 0.0;
+                this.setLoc(this.targetLoc);
+                this.setState("Idle");
             }
             else
             {
@@ -52,8 +77,8 @@ var Person = Class.extend({
                 // the player has arrived if move time is less than the delta time
                 if(mt <= dt)
                 {
-                    this.targetLoc = null;
-                    this.speed = null;
+                    this.moveTo(this.currentLoc, 0);
+                    // TODO do callback here!!!
                 }
                 else
                 {
@@ -63,13 +88,16 @@ var Person = Class.extend({
                     var dy = mp * my;
 
                     // update the co-ordinates
-                    this.currentLoc[0] += dx;
-                    this.currentLoc[1] += dy;
-                    this.lastLocUpdate = gameTime;
+                    var loc = [this.currentLoc[0] + dx, this.currentLoc[1] + dy];
+                    this.setLoc(loc);
                 }
             }
         }
         return this.currentLoc;
+    },
+
+    animKey: function() {
+        return this.spriteClass + "_" + this.state;
     }
 });
 
@@ -77,6 +105,7 @@ var Person = Class.extend({
 var Fielder = Person.extend({
     init: function(name) {
         this._super(name)
+        this.spriteClass = "Fielder";
     }
 });
 
@@ -89,15 +118,23 @@ var PersonController = Class.extend({
         this.keeper = new WicketKeeper();
         this.striker = new BatsmanStriker();
         this.nonStriker = new BatsmanNonStriker();
+
+        for(var i=0; i<this.fieldSetting.length; i++)
+        {
+            this.fielders[i] = new Fielder("Fielder " + i);;
+        }
     },
     all: function() {
         return [this.bowler, this.keeper, this.fielders[0], this.fielders[1], this.fielders[2], this.fielders[3], this.fielders[4], this.fielders[5], this.fielders[6], this.fielders[7], this.fielders[8], this.striker, this.nonStriker];
     },
     reset: function() {
-        for(var i=0; i<this.fieldSetting.length; i++) {
-            var fielder = new Fielder("Fielder " + i);
-            fielder.currentLoc = this.fieldSetting[i];
-            this.fielders[i] = fielder;
+        for(var i=0; i<this.fieldSetting.length; i++)
+        {
+            this.fielders[i].moveTo(this.fieldSetting[i], 0);
+            this.bowler.moveTo([2, 33], 0);
+            this.keeper.moveTo([0, -10], 0);
+            this.striker.moveTo([-1, 1], 0);
+            this.nonStriker.moveTo([-2, 21], 0);
         }
     },
     sendFielderTo: function(loc) {
@@ -117,6 +154,7 @@ var WicketKeeper = Fielder.extend({
 var Bowler = Fielder.extend({
     init: function() {
         this._super("Bowler");
+        this.spriteClass = "Bowler";
         this.currentLoc = [3,35];
     }
 });
@@ -125,6 +163,7 @@ var Bowler = Fielder.extend({
 var BatsmanStriker = Person.extend({
     init: function() {
         this._super("Striker");
+        this.spriteClass = "BatStriker";
         this.currentLoc = [-1,1];
     }
 });
@@ -133,6 +172,7 @@ var BatsmanStriker = Person.extend({
 var BatsmanNonStriker = Person.extend({
     init: function() {
         this._super("Non-striker");
+        this.spriteClass = "BatNonStriker";
         this.currentLoc = [-2,20];
     }
 });
