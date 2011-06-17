@@ -1,0 +1,13 @@
+var imgSpritesReady = false;
+var imgSprites = new Image();
+imgSprites.src = "images/sprites2.png";
+imgSprites.onload = function() { imgSpritesReady = true; }
+
+var imgGroundReady = false;
+var imgGround = new Image();
+imgGround.src = "images/ground.jpg";
+imgGround.onload = function() { imgGroundReady = true; }
+
+var spriteHeight = 19, spriteWidth = 19;
+
+<%= animations_declarations %>
