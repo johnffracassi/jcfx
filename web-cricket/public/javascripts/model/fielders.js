@@ -9,28 +9,28 @@ var Person = Class.extend({
         this.lastLocUpdate = 0.0;
         this.lastStateUpdate = 0.0;
         this.spriteClass = "Person";
+        this.moveCompleteCallback = null;
     },
 
     display: function() {
         return this.name;
     },
 
-    runTo: function(loc) {
-        this.moveTo(loc, 8.0);
+    runTo: function(loc, callback) {
+        this.moveTo(loc, 8.0, callback);
         this.setState("Running");
     },
 
-    walkTo: function(loc) {
-        this.moveTo(loc, 3.0);
+    walkTo: function(loc, callback) {
+        this.moveTo(loc, 3.0, callback);
         this.setState("Walking");
     },
 
-    moveTo: function(loc, speed) {
+    moveTo: function(loc, speed, callback) {
         if(speed == 0)
         {
             this.targetLoc = null;
-            this.currentLoc = loc;
-            this.lastLocUpdate = gameTime;
+            this.setLoc(loc);
             this.setState("Idle");
         }
         else
@@ -38,6 +38,7 @@ var Person = Class.extend({
             this.targetLoc = loc;
             this.speed = speed;
             this.lastLocUpdate = gameTime;
+            this.moveCompleteCallback = callback;
         }
     },
 
@@ -78,7 +79,11 @@ var Person = Class.extend({
                 if(mt <= dt)
                 {
                     this.moveTo(this.currentLoc, 0);
-                    // TODO do callback here!!!
+                    if(this.moveCompleteCallback != null)
+                    {
+                        this.moveCompleteCallback(this);
+                        this.moveCompleteCallback = null;
+                    }
                 }
                 else
                 {
