@@ -30,6 +30,13 @@
     <br/>
     <%= button_to_function("Reset", "reset()") %>
     <%= button_to_function("Bowl", "bowl()") %>
+    <%= button_to_function("Umpire Idle", "personController.umpire.setState('Idle');") %>
+    <%= button_to_function("Umpire 4", "personController.umpire.setState('SignalFour');") %>
+    <%= button_to_function("Umpire 6", "personController.umpire.setState('SignalSix');") %>
+    <%= button_to_function("Umpire Wide", "personController.umpire.setState('SignalWide');") %>
+    <%= button_to_function("Umpire LegBye", "personController.umpire.setState('SignalLegBye');") %>
+    <%= button_to_function("Umpire Bye", "personController.umpire.setState('SignalBye');") %>
+    <%= button_to_function("Umpire Out", "personController.umpire.setState('SignalOut');") %>
 
     <script type="text/javascript">
         var mouseLoc = [0,0];
@@ -59,7 +66,7 @@
         // =============================================================================================================
         function bowl()
         {
-            personController.bowler.runTo([0.75,21]);
+            personController.bowler.runTo([1.2,21]);
         }
 
         var GameState = Class.extend({
