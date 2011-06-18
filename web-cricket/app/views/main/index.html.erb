@@ -19,24 +19,34 @@
         screenOrigin = [500,450];
     </script>
 
+    <%= javascript_include_tag('model/class') %>
     <%= javascript_include_tag('data/sprites') %>
     <%= javascript_include_tag('data/field_settings') %>
     <%= javascript_include_tag('data/util') %>
-    <%= javascript_include_tag('model/class') %>
     <%= javascript_include_tag('model/fielders') %>
     <%= javascript_include_tag('model/ground') %>
     <%= javascript_include_tag('model/pitch') %>
+    <%= javascript_include_tag('model/ball') %>
 
     <br/>
     <%= button_to_function("Reset", "reset()") %>
-    <%= button_to_function("Bowl", "bowl()") %>
-    <%= button_to_function("Umpire Idle", "personController.umpire.setState('Idle');") %>
-    <%= button_to_function("Umpire 4", "personController.umpire.setState('SignalFour');") %>
-    <%= button_to_function("Umpire 6", "personController.umpire.setState('SignalSix');") %>
-    <%= button_to_function("Umpire Wide", "personController.umpire.setState('SignalWide');") %>
-    <%= button_to_function("Umpire LegBye", "personController.umpire.setState('SignalLegBye');") %>
-    <%= button_to_function("Umpire Bye", "personController.umpire.setState('SignalBye');") %>
-    <%= button_to_function("Umpire Out", "personController.umpire.setState('SignalOut');") %>
+    <%= button_to_function("Bowl", "bowl_start()") %>
+    <%= button_to_function("Umpire Idle", "personController.umpire.setState('Idle')") %>
+    <%= button_to_function("Umpire 4", "personController.umpire.setState('SignalFour')") %>
+    <%= button_to_function("Umpire 6", "personController.umpire.setState('SignalSix')") %>
+    <%= button_to_function("Umpire Wide", "personController.umpire.setState('SignalWide')") %>
+    <%= button_to_function("Umpire LegBye", "personController.umpire.setState('SignalLegBye')") %>
+    <%= button_to_function("Umpire Bye", "personController.umpire.setState('SignalBye')") %>
+    <%= button_to_function("Umpire Out", "personController.umpire.setState('SignalOut')") %>
+    <br/>
+    <input type="text" id="vx" value="-1" size="3" />
+    <input type="text" id="vy" value="-45" size="3" />
+    <input type="text" id="vz" value="-5" size="3" />
+    <br/>
+    <input type="text" id="ballX" value="1.3" size="3" />
+    <input type="text" id="ballY" value="21.5" size="3" />
+    <input type="text" id="ballZ" value="2.4" size="3" />
+    <%= button_to_function("Fire!", "projectBall()") %>
 
     <script type="text/javascript">
         var mouseLoc = [0,0];
@@ -64,14 +74,15 @@
         // =============================================================================================================
         // bowling
         // =============================================================================================================
-        function bowl()
+        function bowl_start()
         {
-            personController.bowler.runTo([1.2,21]);
+            personController.bowler.runTo([1.2,21], bowl_arrive);
         }
 
-        var GameState = Class.extend({
-
-        });
+        function bowl_arrive(bowler)
+        {
+            personController.bowler.setState("Action");
+        }
 
         // =============================================================================================================
         // render loop
@@ -82,6 +93,7 @@
             //renderGroundBitmap();
             renderFixtures();
             renderPeople();
+            ballRenderer.render();
             renderOverlay();
         }
 
@@ -114,7 +126,7 @@
                 var person = people[i];
                 var sloc = convertWorldToScreen(person.location());
 
-                drawAnimation(g, person.animKey(), sloc);
+                drawAnimation(person.animKey(), sloc, person.lastStateUpdate);
 
                 if(mouseDistance(sloc) < 25)
                 {
@@ -149,10 +161,10 @@
 
         function reset()
         {
-            personController.reset();
             gameTime = 0.0;
             gameResetTime = new Date().getTime();
             frameCounter = 0;
+            personController.reset();
         }
 
         function mouseclick(ev)
