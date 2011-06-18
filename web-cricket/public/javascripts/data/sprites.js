@@ -8,23 +8,33 @@ imgSprites.onload = function() {
 var spriteHeight = 19;
 var spriteWidth = 19;
 var animFPS = 20;
-var animFPSMult = targetFPS / animFPS;
 
 // animations should be done at 25fps
 var anim = new Array();
 anim['BatNonStriker_Idle'] = [[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,5],[0,5],[0,5],[0,2],[0,2],[0,5],[0,5],[0,5],[0,5],[0,5],[0,2]];
 anim['BatStriker_Idle'] = [[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,0],[0,0],[0,0],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,0],[0,0],[0,0],[0,1],[0,1],[0,1],[0,0],[0,0],[0,0]];
-anim['Fielder_Running'] = [[1,1], [1,1], [1,1], [1,1], [1,2], [1,2], [1,2], [1,2]];
+anim['Fielder_Running'] = [[1,1], [1,1], [1,2], [1,2]];
 anim['Fielder_Idle'] = [[1, 0]];
 anim['Person_Idle'] = [[1, 0]];
 anim['Bowler_Running'] = anim['Fielder_Running'];
 anim['Bowler_Idle'] = anim['Fielder_Idle'];
 
+anim['Umpire_Idle'] = [[2,0]];
+anim['Umpire_SignalFour'] = [[2,2],[2,2],[2,2],[2,2],[2,3],[2,3],[2,3],[2,3]];
+anim['Umpire_SignalSix'] = [[2,1]];
+anim['Umpire_SignalWide'] = [[2,5]];
+anim['Umpire_SignalNoBall'] = [[2,3]];
+anim['Umpire_SignalOut'] = [[2,8]];
+anim['Umpire_SignalBye'] = [[2,8]];
+anim['Umpire_SignalLegBye'] = [[2,7],[2,7],[2,7],[2,7],[2,6],[2,6],[2,6],[2,6]];
+
+
+
 function drawSprite(g, spriteRow, spriteCol, sloc)
 {
     var dx = sloc[0];
     var dy = sloc[1];
-    var dx1 = (dx - spriteWidth / 2 + 1);
+    var dx1 = (dx - spriteWidth / 2) - 1;
     var dy1 = (dy - spriteHeight) + 3;
 
     if(imgSpritesReady == true)

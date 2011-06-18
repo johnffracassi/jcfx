@@ -118,6 +118,8 @@ var PersonController = Class.extend({
         this.keeper = new WicketKeeper();
         this.striker = new BatsmanStriker();
         this.nonStriker = new BatsmanNonStriker();
+        this.umpire = new Umpire();
+        this.umpireSquareLeg = new Umpire();
 
         for(var i=0; i<this.fieldSetting.length; i++)
         {
@@ -125,7 +127,7 @@ var PersonController = Class.extend({
         }
     },
     all: function() {
-        return [this.bowler, this.keeper, this.fielders[0], this.fielders[1], this.fielders[2], this.fielders[3], this.fielders[4], this.fielders[5], this.fielders[6], this.fielders[7], this.fielders[8], this.striker, this.nonStriker];
+        return [this.umpire, this.umpireSquareLeg, this.bowler, this.keeper, this.fielders[0], this.fielders[1], this.fielders[2], this.fielders[3], this.fielders[4], this.fielders[5], this.fielders[6], this.fielders[7], this.fielders[8], this.striker, this.nonStriker];
     },
     reset: function() {
         for(var i=0; i<this.fieldSetting.length; i++)
@@ -135,6 +137,8 @@ var PersonController = Class.extend({
             this.keeper.moveTo([0, -10], 0);
             this.striker.moveTo([-1, 1], 0);
             this.nonStriker.moveTo([-2, 21], 0);
+            this.umpire.moveTo([-0.1, 24], 0);
+            this.umpireSquareLeg.moveTo([-24, 0], 0);
         }
     },
     sendFielderTo: function(loc) {
@@ -146,7 +150,6 @@ var PersonController = Class.extend({
 var WicketKeeper = Fielder.extend({
     init: function() {
         this._super("Wickie");
-        this.currentLoc = [0,-10];
     }
 });
 
@@ -155,7 +158,6 @@ var Bowler = Fielder.extend({
     init: function() {
         this._super("Bowler");
         this.spriteClass = "Bowler";
-        this.currentLoc = [3,35];
     }
 });
 
@@ -164,7 +166,6 @@ var BatsmanStriker = Person.extend({
     init: function() {
         this._super("Striker");
         this.spriteClass = "BatStriker";
-        this.currentLoc = [-1,1];
     }
 });
 
@@ -173,6 +174,12 @@ var BatsmanNonStriker = Person.extend({
     init: function() {
         this._super("Non-striker");
         this.spriteClass = "BatNonStriker";
-        this.currentLoc = [-2,20];
     }
+});
+
+var Umpire = Person.extend({
+   init: function() {
+       this._super("Umpire");
+       this.spriteClass = "Umpire";
+   }
 });
