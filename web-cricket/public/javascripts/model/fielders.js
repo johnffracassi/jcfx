@@ -140,7 +140,7 @@ var PersonController = Class.extend({
             this.fielders[i].moveTo(this.fieldSetting[i], 0);
             this.bowler.moveTo([2, 33], 0);
             this.keeper.moveTo([0, -10], 0);
-            this.striker.moveTo([-1, 1], 0);
+            this.striker.moveTo([-0.2, 1.25], 0);
             this.nonStriker.moveTo([-2, 21], 0);
             this.umpire.moveTo([-0.1, 24], 0);
             this.umpireSquareLeg.moveTo([-24, 0], 0);

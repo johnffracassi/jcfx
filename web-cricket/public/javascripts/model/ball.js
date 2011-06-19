@@ -69,12 +69,12 @@ var pathTimeStep = 1.0 / pathResolution;
 
 function projectBall()
 {
-    var locx = parseInt(document.getElementById("ballX").value);
-    var locy = parseInt(document.getElementById("ballY").value);
-    var locz = parseInt(document.getElementById("ballZ").value);
-    var vx = parseInt(document.getElementById("vx").value);
-    var vy = parseInt(document.getElementById("vy").value);
-    var vz = parseInt(document.getElementById("vz").value);
+    var locx = parseFloat(document.getElementById("ballX").value);
+    var locy = parseFloat(document.getElementById("ballY").value);
+    var locz = parseFloat(document.getElementById("ballZ").value);
+    var vx = parseFloat(document.getElementById("vx").value);
+    var vy = parseFloat(document.getElementById("vy").value);
+    var vz = parseFloat(document.getElementById("vz").value);
     var loc = [locx,locy,locz];
     ballModel.currentLoc = loc;
     ballModel.setPath(calculatePath(loc, [vx, vy, vz]));
