@@ -98,7 +98,7 @@ anim['Umpire_SignalFour']   = new Animation(5, [[2,2],[2,2],[2,2],[2,2],[2,3],[2
 anim['Umpire_SignalSix']    = new Animation(40, [[2,1]], [2,0]);
 anim['Umpire_SignalWide']   = new Animation(40, [[2,5]], [2,0]);
 anim['Umpire_SignalNoBall'] = new Animation(40, [[2,3]], [2,0]);
-anim['Umpire_SignalOut']    = new Animation(40, [[2,8]], [2,0]);
+anim['Umpire_SignalOut']    = new Animation(40, [[2,9]], [2,0]);
 anim['Umpire_SignalBye']    = new Animation(40, [[2,8]], [2,0]);
 anim['Umpire_SignalLegBye'] = new Animation(5, [[2,7],[2,7],[2,7],[2,7],[2,6],[2,6],[2,6],[2,6]], [2,0]);
 
