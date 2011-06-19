@@ -57,6 +57,7 @@
             v = Math.sqrt(vx*vx + vy*vy + vz*vz) * 3.6;
             document.getElementById("v").value = Math.floor(v) + "kph";
         }
+            updateVelocity();
     </script>
 
 
@@ -94,8 +95,21 @@
         function bowl_arrive(bowler)
         {
             personController.bowler.setState("Action");
-            setTimeout("projectBall()", 275);
+            setTimeout("bowl_releaseball()", 275);
         }
+
+        function bowl_releaseball()
+        {
+            ballModel.setProjectile([1.0, 22, 2.1], [-1.7, -35, -6]);
+        }
+
+
+        // =============================================================================================================
+        // batting
+        // =============================================================================================================
+
+        
+
 
         // =============================================================================================================
         // render loop
