@@ -13,6 +13,11 @@ var BallModel = Class.extend({
        this.pathStartTime = gameTime;
    },
 
+   setProjectile: function(loc, dir) {
+       ballModel.currentLoc = loc;
+       ballModel.setPath(calculatePath(loc, dir));
+   },
+
    location: function() {
        if(this.path == null)
        {
