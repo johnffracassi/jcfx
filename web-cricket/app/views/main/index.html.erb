@@ -39,14 +39,26 @@
     <%= button_to_function("Umpire Bye", "personController.umpire.setState('SignalBye')") %>
     <%= button_to_function("Umpire Out", "personController.umpire.setState('SignalOut')") %>
     <br/>
-    <input type="text" id="vx" value="-2" size="3" />
-    <input type="text" id="vy" value="-35" size="3" />
-    <input type="text" id="vz" value="-8" size="3" />
+    <input type="text" id="vx" value="-2" size="3" onkeyup="updateVelocity();" />
+    <input type="text" id="vy" value="-35" size="3" onkeyup="updateVelocity();" />
+    <input type="text" id="vz" value="-8" size="3" onkeyup="updateVelocity();" />
+    <input type="text" id="v" value="0kph" size="3" />
     <br/>
     <input type="text" id="ballX" value="1.3" size="3" />
     <input type="text" id="ballY" value="21.5" size="3" />
     <input type="text" id="ballZ" value="2.4" size="3" />
     <%= button_to_function("Fire!", "projectBall()") %>
+
+    <script type="text/javascript">
+        function updateVelocity() {
+            var vx = parseFloat(document.getElementById("vx").value);
+            var vy = parseFloat(document.getElementById("vy").value);
+            var vz = parseFloat(document.getElementById("vz").value);
+            v = Math.sqrt(vx*vx + vy*vy + vz*vz) * 3.6;
+            document.getElementById("v").value = Math.floor(v) + "kph";
+        }
+    </script>
+
 
     <script type="text/javascript">
         var mouseLoc = [0,0];
