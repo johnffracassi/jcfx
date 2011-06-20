@@ -4,33 +4,91 @@
 		<title>WebCricket v0.001</title>
 	</head>
 
-    <script type="text/javascript" src="javascripts/classes/class.js"></script>
-	<script type="text/javascript" >
-        var Person = Class.extend({
-                    init: function(name) {
-                        this.name = name;
-                        this.loc = [2,4];
-                    },
-                    move: function(dest) {
-                        this.loc[0] = dest[0];
-                        this.loc[1] = dest[1];
-                    }
-                });
-    </script>
+    <%= javascript_include_tag('model/class') %>
+    <%= javascript_include_tag('jquery-1.5.1.min') %>
+    <%= javascript_include_tag('jquery-ui-1.8.13.custom.min') %>
+    <%= javascript_include_tag('pixastic.custom') %>
 
-    <script type="text/javascript">
-        function hi()
+	<script type="text/javascript" >
+
+        var sSkinColour = [255,128,64];
+        var sPrimaryColour = [255,0,0];
+        var sSecondaryColour = [0,0,255];
+        var tSkinColour = [192,92,32];
+        var tPrimaryColour = [255,255,0];
+        var tSecondaryColour = [0,192,0];
+        var cWhite = [255,255,255];
+        var cBlack = [0,0,0];
+
+        var imgSpritesReady = false;
+        var imgSprites = new Image();
+        imgSprites.src = "images/sprites.png";
+
+        imgSprites.onload = function()
         {
-            var p1 = new Person("jeff");
-            alert(p1.loc[0] + "," + p1.loc[1]);
-            p1.move([5,5]);
-            alert(p1.loc[0] + "," + p1.loc[1]);
+            var canvas = document.createElement('canvas');
+            var canvasContext = canvas.getContext('2d');
+            var imgW = imgSprites.width;
+            var imgH = imgSprites.height;
+            canvas.width = imgW;
+            canvas.height = imgH;
+            canvasContext.drawImage(imgSprites, 0, 0);
+
+            var imgPixels = canvasContext.getImageData(0, 0, imgW, imgH);
+
+            for(var y = 0; y < imgPixels.height; y++)
+            {
+                 for(var x = 0; x < imgPixels.width; x++)
+                 {
+                     var i = (y * 4) * imgPixels.width + x * 4;
+                     var pix = [imgPixels.data[i], imgPixels.data[i + 1], imgPixels.data[i + 2]];
+
+                     if(colourEq(pix, sPrimaryColour))
+                     {
+                         colourSet(imgPixels, i, tPrimaryColour);
+                     }
+                     else if(colourEq(pix, sSecondaryColour))
+                     {
+                         colourSet(imgPixels, i, tSecondaryColour);
+                     }
+                     else if(colourEq(pix, sSkinColour))
+                     {
+                         colourSet(imgPixels, i, tSkinColour);
+                     }
+                 }
+            }
+            canvasContext.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
+            imgSprites.src = canvas.toDataURL();
+        }
+
+        function colourSet(imgPixels, offset, col)
+        {
+            imgPixels.data[offset + 0] = col[0];
+            imgPixels.data[offset + 1] = col[1];
+            imgPixels.data[offset + 2] = col[2];
+        }
+
+        function colourEq(c1, c2)
+        {
+            return (c1[0] == c2[0] && c1[1] == c2[1] && c1[2] == c2[2]);
+        }
+
+        setTimeout("update()", 100);
+        function update()
+        {
+            draw();
+            setTimeout("update()", 100);
+        }
+
+        function draw()
+        {
+            var canvas = document.getElementById("canvas");
+            var g = canvas.getContext("2d");
+            g.drawImage(imgSprites, 1, 1, 19, 19, 10, 10, 19, 19);
         }
     </script>
 
 	<body>
-        <script type="text/javascript">
-            hi();
-        </script>
+        <canvas id="canvas" width="300" height="120" style="border: dashed 1px black;"></canvas>
     </body>
 </html>

@@ -1,9 +1,66 @@
+var sSkinColour         = [255,128,64];
+var sPrimaryColour      = [255,0,0];
+var sSecondaryColour    = [0,0,255];
+var tSkinColour         = [255,128,64];
+var tPrimaryColour      = [255,255,255];
+var tSecondaryColour    = [0,0,128];
+var cWhite = [255,255,255];
+var cBlack = [0,0,0];
+
 var imgSpritesReady = false;
 var imgSprites = new Image();
 imgSprites.src = "images/sprites.png";
-imgSprites.onload = function() {
+imgSprites.onload = function()
+{
+    var canvas = document.createElement('canvas');
+    var canvasContext = canvas.getContext('2d');
+    var imgW = imgSprites.width;
+    var imgH = imgSprites.height;
+    canvas.width = imgW;
+    canvas.height = imgH;
+    canvasContext.drawImage(imgSprites, 0, 0);
+
+    var imgPixels = canvasContext.getImageData(0, 0, imgW, imgH);
+
+    for(var y = 0; y < imgPixels.height; y++)
+    {
+         for(var x = 0; x < imgPixels.width; x++)
+         {
+             var i = (y * 4) * imgPixels.width + x * 4;
+             var pix = [imgPixels.data[i], imgPixels.data[i + 1], imgPixels.data[i + 2]];
+
+             if(colourEq(pix, sPrimaryColour))
+             {
+                 colourSet(imgPixels, i, tPrimaryColour);
+             }
+             else if(colourEq(pix, sSecondaryColour))
+             {
+                 colourSet(imgPixels, i, tSecondaryColour);
+             }
+             else if(colourEq(pix, sSkinColour))
+             {
+                 colourSet(imgPixels, i, tSkinColour);
+             }
+         }
+    }
+    canvasContext.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
+    imgSprites.src = canvas.toDataURL();
     imgSpritesReady = true;
 }
+
+function colourSet(imgPixels, offset, col)
+{
+    imgPixels.data[offset + 0] = col[0];
+    imgPixels.data[offset + 1] = col[1];
+    imgPixels.data[offset + 2] = col[2];
+}
+
+function colourEq(c1, c2)
+{
+    return (c1[0] == c2[0] && c1[1] == c2[1] && c1[2] == c2[2]);
+}
+
+
 
 var spriteHeight = 19;
 var spriteWidth = 19;
@@ -75,30 +132,3 @@ function drawAnimation(key, sloc, startTime)
         }
     }
 }
-
-
-
-// animations should be done at 20fps
-var anim = new Array();
-
-anim['Person_Idle']         = new SingleFrame([1, 0]);
-
-anim['BatStriker_Idle']     = new Animation(0, [[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,0],[0,0],[0,0],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,0],[0,0],[0,0],[0,1],[0,1],[0,1],[0,0],[0,0],[0,0]], [0,11]);
-anim['BatNonStriker_Idle']  = new Animation(0, [[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,5],[0,5],[0,5],[0,2],[0,2],[0,5],[0,5],[0,5],[0,5],[0,5],[0,2]], [0,11]);
-
-anim['Fielder_Running']     = new Animation(0, [[1,1], [1,1], [1,2], [1,2]]);
-anim['Fielder_Idle']        = new SingleFrame([1, 0]);
-
-anim['Bowler_Idle']         = anim['Fielder_Idle'];
-anim['Bowler_Running']      = anim['Fielder_Running'];
-anim['Bowler_Action']       = new Animation(1, [[3,0],[3,0],[3,1],[3,1],[3,2],[3,2],[3,3],[3,4],[3,5],[1,2]], [1,0]);
-
-anim['Umpire_Idle']         = new SingleFrame([2,0]);
-anim['Umpire_SignalFour']   = new Animation(5, [[2,2],[2,2],[2,2],[2,2],[2,3],[2,3],[2,3],[2,3]], [2,0]);
-anim['Umpire_SignalSix']    = new Animation(40, [[2,1]], [2,0]);
-anim['Umpire_SignalWide']   = new Animation(40, [[2,5]], [2,0]);
-anim['Umpire_SignalNoBall'] = new Animation(40, [[2,3]], [2,0]);
-anim['Umpire_SignalOut']    = new Animation(40, [[2,9]], [2,0]);
-anim['Umpire_SignalBye']    = new Animation(40, [[2,8]], [2,0]);
-anim['Umpire_SignalLegBye'] = new Animation(5, [[2,7],[2,7],[2,7],[2,7],[2,6],[2,6],[2,6],[2,6]], [2,0]);
-
