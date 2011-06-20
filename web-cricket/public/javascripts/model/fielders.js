@@ -128,7 +128,7 @@ var PersonController = Class.extend({
 
         for(var i=0; i<this.fieldSetting.length; i++)
         {
-            this.fielders[i] = new Fielder("Fielder " + i);;
+            this.fielders[i] = new Fielder("Fielder " + i);
         }
     },
     all: function() {
