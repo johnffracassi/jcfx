@@ -66,6 +66,8 @@
 
     <script type="text/javascript">
         var mouseLoc = [0,0];
+        var shotpoints = null;
+        var recording = false;
 
         var pitchRenderer = new PitchRenderer();
         var pitchModel = new PitchModel();
@@ -84,6 +86,14 @@
         function update()
         {
             gameTime = (new Date().getTime() - gameResetTime) / 1000.0;
+
+            if(recording)
+            {
+                shotpoints.push([mouseLoc[0], mouseLoc[1]]);
+                var mid = Math.floor(shotpoints.length / 2);
+                var end = shotpoints.length - 1;
+                console.log("#" + shotpoints.length + ": " + shotpoints[0] + " => " + shotpoints[mid] + " => " + shotpoints[end]);
+            }
         }
 
 
@@ -104,6 +114,8 @@
         function bowl_releaseball()
         {
             ballModel.setProjectile([1.0, 22, 2.1], [-1.7, -35, -6]);
+            bat_recordshot();
+            setTimeout("bat_playshot()", 750);
         }
 
 
@@ -111,8 +123,31 @@
         // batting
         // =============================================================================================================
 
-        
+        function bat_recordshot()
+        {
+            recording = true;
+            shotpoints = new Array();
+        }
 
+        function bat_playshot()
+        {
+            recording = false;
+        }
+
+        function renderShotPath()
+        {
+            if(shotpoints != null && shotpoints.length > 3)
+            {
+                g.beginPath();
+                var mid = Math.floor(shotpoints.length / 2);
+                var end = shotpoints.length - 1;
+                g.moveTo(shotpoints[0][0], shotpoints[0][1]);
+                g.moveTo(shotpoints[mid][0], shotpoints[mid][1]);
+                g.moveTo(shotpoints[end][0], shotpoints[end][1]);
+                g.strokeStyle = "red";
+                g.stroke();
+            }
+        }
 
         // =============================================================================================================
         // render loop
@@ -120,10 +155,10 @@
 
         function render()
         {
-            //renderGroundBitmap();
             renderFixtures();
             renderPeople();
             ballRenderer.render();
+            renderShotPath();
             renderOverlay();
         }
 
@@ -145,6 +180,15 @@
             {
                 actualFPS = (frameCounter / gameTime);
                 g.fillText("fps: " + actualFPS.toFixed(1) + "fps", 30, 74);
+            }
+
+            if(shotpoints != null)
+            {
+                var dx = shotpoints[shotpoints.length-1][0] - shotpoints[0][0];
+                var dy = shotpoints[shotpoints.length-1][1] - shotpoints[0][1];
+                var dist = Math.sqrt(dx*dx + dy*dy);
+                var ang = angle(dx, dy);
+                g.fillText("recorded shot: " + shotpoints.length + "pts / dist=" + (0|dist) + " / ang=" + (1|ang), 30, 94);
             }
         }
 

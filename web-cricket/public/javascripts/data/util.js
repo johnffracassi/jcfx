@@ -24,3 +24,32 @@ function convertWorldToScreen(wloc)
     }
 }
 
+function angle(dx, dy)
+{
+    if(dx >= 0.0 && dy < 0.0) // quadrant 1
+    {
+        return toDegrees(Math.atan(dx / -dy));
+    }
+    else if(dx >= 0.0 && dy >= 0.0) // quadrant 2
+    {
+        return toDegrees(Math.atan(dy / dx) + (Math.PI / 2));
+    }
+    else if(dx < 0.0 && dy >= 0.0) // quadrant 3
+    {
+        return toDegrees(Math.atan(-dx / dy) + Math.PI);
+    }
+    else // quadrant 4
+    {
+        return toDegrees(Math.atan(-dy / -dx) + 3*Math.PI / 2);
+    }
+}
+
+function toDegrees(radians)
+{
+    return radians * 180 / Math.PI;
+}
+
+function toRadians(degrees)
+{
+    return Math.PI * (degrees / 180);
+}
