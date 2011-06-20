@@ -92,7 +92,6 @@
                 shotpoints.push([mouseLoc[0], mouseLoc[1]]);
                 var mid = Math.floor(shotpoints.length / 2);
                 var end = shotpoints.length - 1;
-                console.log("#" + shotpoints.length + ": " + shotpoints[0] + " => " + shotpoints[mid] + " => " + shotpoints[end]);
             }
         }
 
@@ -115,9 +114,18 @@
         {
             ballModel.setProjectile([1.0, 22, 2.1], [-1.7, -35, -6]);
             bat_recordshot();
-            setTimeout("bat_playshot()", 750);
+            wk_getIntoPosition();
+            setTimeout("bat_playshot()", 500);
         }
 
+
+        // =============================================================================================================
+        // batting
+        // =============================================================================================================
+        function wk_getIntoPosition()
+        {
+
+        }
 
         // =============================================================================================================
         // batting
@@ -238,6 +246,7 @@
             gameTime = 0.0;
             gameResetTime = new Date().getTime();
             frameCounter = 0;
+            shotpoints = null;
             personController.reset();
         }
 
