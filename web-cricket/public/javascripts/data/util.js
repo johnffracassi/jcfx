@@ -24,6 +24,13 @@ function convertWorldToScreen(wloc)
     }
 }
 
+function distance2d(p1, p2)
+{
+    var dx = p1[0] - p2[0];
+    var dy = p1[1] - p2[1];
+    return Math.sqrt(dx*dx + dy*dy);
+}
+
 function angle(dx, dy)
 {
     if(dx >= 0.0 && dy < 0.0) // quadrant 1

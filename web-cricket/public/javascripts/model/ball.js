@@ -31,6 +31,29 @@ var BallModel = Class.extend({
    }
 });
 
+var BallRenderer = Class.extend({
+    init: function(model) {
+        this.model = model;
+    },
+    render: function() {
+        if(this.model.visible == true && this.model.currentLoc != null)
+        {
+            var wloc = this.model.location();
+
+            // shadow
+            var sloc = convertWorldToScreen([wloc[0],wloc[1]]);
+            g.fillStyle = "rgba(0,0,0,0.33)";
+            g.fillRect(sloc[0],sloc[1], 2, 2);
+
+            // ball
+            sloc = convertWorldToScreen(wloc);
+            g.fillStyle = this.model.fillColour;
+            g.fillRect(sloc[0],sloc[1], 2, 2);
+        }
+    }
+});
+
+
 var ProjectilePath = Class.extend({
    init: function(points) {
        this.points = points;
@@ -40,28 +63,15 @@ var ProjectilePath = Class.extend({
        idx = Math.min(idx, this.points.length-1);
        idx = Math.max(idx, 0);
        return this.points[idx];
+   },
+   pathDuration: function() {
+       return this.points * pathResolution;
+   },
+   terminateAt: function(t) {
+       this.points = this.points.slice(0, Math.floor(t * pathResolution));
    }
 });
 
-var BallRenderer = Class.extend({
-    init: function(model) {
-        this.model = model;
-    },
-    render: function() {
-        if(this.model.visible == true && this.model.currentLoc != null)
-        {
-            var wloc = this.model.location();
-            
-            var sloc = convertWorldToScreen([wloc[0],wloc[1]]);
-            g.fillStyle = "rgba(0,0,0,0.33)";
-            g.fillRect(sloc[0],sloc[1], 2, 2);
-
-            sloc = convertWorldToScreen(wloc);
-            g.fillStyle = this.model.fillColour;
-            g.fillRect(sloc[0],sloc[1], 2, 2);
-        }
-    }
-});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,7 +95,8 @@ function projectBall()
     ballModel.setPath(calculatePath(loc, [vx, vy, vz]));
 }
 
-function calculatePath(iloc, vmatrix) {
+function calculatePath(iloc, vmatrix)
+{
     var path = new Array();
     path.push(iloc);
     var lastLoc = [iloc[0],iloc[1],iloc[2]];
@@ -103,9 +114,9 @@ function calculatePath(iloc, vmatrix) {
         // bounce
         if(newz < 0 && vz < 0)
         {
-            vx = calculateNewVelocity(vx, 0.7);
-            vy = calculateNewVelocity(vy, 0.7);
-            vz = calculateNewVelocity(-vz, 0.3);
+            vx = applyEnergyChangeAfterBounce(vx, 0.7);
+            vy = applyEnergyChangeAfterBounce(vy, 0.7);
+            vz = applyEnergyChangeAfterBounce(-vz, 0.3);
         }
 
         var newLoc = [lastLoc[0]+dx, lastLoc[1]+dy, lastLoc[2]+dz];
@@ -115,9 +126,39 @@ function calculatePath(iloc, vmatrix) {
     return new ProjectilePath(path);
 }
 
-function calculateNewVelocity(v, eff)
+function applyEnergyChangeAfterBounce(v, eff)
 {
     var e = (0.5 * ballModel.weight * v*v) * eff;
     var newv = Math.sqrt(2 * e / ballModel.weight);
     return v > 0 ? newv : -newv;
+}
+
+function fastestTimeToPath(personModel, projectilePath)
+{
+    var personLoc = personModel.location();
+
+    var bestTimeThusfarForPerson = 999999;
+    var bestTimeThusfarForBall = 99999;
+    for(i=0; i<projectilePath.points.length; i++)
+    {
+        var ballLoc = projectilePath.points[i];
+
+        // don't look unless ball is below 2m high
+        if(ballLoc[2] < 2.0)
+        {
+            var distanceFromPersonToBallLoc = distance2d(personLoc, ballLoc);
+            var timeForPersonToRunToBallLoc = distanceFromPersonToBallLoc / personModel.walkSpeed;
+            if(timeForPersonToRunToBallLoc < bestTimeThusfarForPerson)
+            {
+                bestTimeThusfarForPerson = timeForPersonToRunToBallLoc;
+                bestTimeThusfarForBall = i / pathResolution;
+            }
+        }
+    }
+
+    var result = new Array();
+    result['personTime'] = bestTimeThusfarForPerson;
+    result['ballTime'] = bestTimeThusfarForBall;
+    result['location'] = projectilePath.location(bestTimeThusfarForBall);
+    return result;
 }
