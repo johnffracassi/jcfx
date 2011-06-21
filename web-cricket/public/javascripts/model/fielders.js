@@ -2,10 +2,13 @@ var Person = Class.extend({
     
     init: function(name) {
         this.name = name;
+        this.runSpeed = 7.0;
+        this.walkSpeed = 2.0;
+
         this.currentLoc = [0,0];
         this.targetLoc = null;
         this.state = "Idle";
-        this.speed = null;
+        this.currentSpeed = null;
         this.lastLocUpdate = 0.0;
         this.lastStateUpdate = 0.0;
         this.spriteClass = "Person";
@@ -17,12 +20,12 @@ var Person = Class.extend({
     },
 
     runTo: function(loc, callback) {
-        this.moveTo(loc, 8.0, callback);
+        this.moveTo(loc, this.runSpeed, callback);
         this.setState("Running");
     },
 
     walkTo: function(loc, callback) {
-        this.moveTo(loc, 3.0, callback);
+        this.moveTo(loc, this.walkSpeed, callback);
         this.setState("Walking");
     },
 
@@ -36,7 +39,7 @@ var Person = Class.extend({
         else
         {
             this.targetLoc = loc;
-            this.speed = speed;
+            this.currentSpeed = speed;
             this.lastLocUpdate = gameTime;
             this.moveCompleteCallback = callback;
         }
@@ -55,10 +58,10 @@ var Person = Class.extend({
     location: function() {
         if(this.targetLoc != null)
         {
-            if(this.speed == null || this.speed == 0.0)
+            if(this.currentSpeed == null || this.currentSpeed == 0.0)
             {
                 this.targetLoc = null;
-                this.speed = 0.0;
+                this.currentSpeed = 0.0;
                 this.setLoc(this.targetLoc);
                 this.setState("Idle");
             }
@@ -70,7 +73,7 @@ var Person = Class.extend({
                 var md = Math.sqrt(mx*mx + my*my);
 
                 // total move time
-                var mt = md / this.speed;
+                var mt = md / this.currentSpeed;
 
                 // time since last location update
                 var dt = gameTime - this.lastLocUpdate;
@@ -133,6 +136,9 @@ var PersonController = Class.extend({
     },
     all: function() {
         return [this.umpire, this.umpireSquareLeg, this.bowler, this.keeper, this.fielders[0], this.fielders[1], this.fielders[2], this.fielders[3], this.fielders[4], this.fielders[5], this.fielders[6], this.fielders[7], this.fielders[8], this.striker, this.nonStriker];
+    },
+    fielderables: function() {
+        return [this.bowler, this.keeper, this.fielders[0], this.fielders[1], this.fielders[2], this.fielders[3], this.fielders[4], this.fielders[5], this.fielders[6], this.fielders[7], this.fielders[8]];
     },
     reset: function() {
         for(var i=0; i<this.fieldSetting.length; i++)

@@ -11,7 +11,7 @@
     <script type="text/javascript">
         canvas = document.getElementById("canvas");
         g = canvas.getContext("2d");
-        targetFPS = 200;
+        targetFPS = 60;
         actualFPS = 0;
         frameCounter = 0
         gameTime = 0.0;
@@ -112,19 +112,24 @@
 
         function bowl_releaseball()
         {
-            ballModel.setProjectile([1.0, 22, 2.1], [-1.7, -35, -6]);
+            var vx = parseFloat(document.getElementById("vx").value);
+            var vy = parseFloat(document.getElementById("vy").value);
+            var vz = parseFloat(document.getElementById("vz").value);
+            ballModel.setProjectile([1.0, 22, 2.1], [vx,vy,vz]);
             bat_recordshot();
-            wk_getIntoPosition();
+            setTimeout("wk_getIntoPosition()", 250);
             setTimeout("bat_playshot()", 500);
         }
 
 
         // =============================================================================================================
-        // batting
+        // wicket keeper
         // =============================================================================================================
         function wk_getIntoPosition()
         {
-
+            var intersection = fastestTimeToPath(personController.keeper, ballModel.path);
+            personController.keeper.walkTo(intersection['location']);
+            ballModel.path.terminateAt(intersection['ballTime']);
         }
 
         // =============================================================================================================
