@@ -7,6 +7,7 @@ var BallModel = Class.extend({
    currentLoc: null,
    path: null,
    pathStartTime: null,
+   proximityTrigger: null,
 
    setPath: function(path) {
        this.path = path;
@@ -26,8 +27,26 @@ var BallModel = Class.extend({
        else
        {
            var pathTime = gameTime - this.pathStartTime;
-           return this.path.location(pathTime);
+           var loc = this.path.location(pathTime);
+
+           if(this.proximityPoint != null && this.proximityTrigger != null)
+           {
+               var d = distance2d(this.proximityPoint, loc);
+               if(d < 0.6)
+               {
+                   this.proximityTrigger();
+                   this.proximityTrigger = null;
+               }
+           }
+
+           return loc;
        }
+   },
+
+   addProximityTrigger: function(point, callback) {
+       this.proximityTrigger = callback;
+       this.proximityPoint = point;
+       console.log("setting proximity point to => " + point);
    }
 });
 
@@ -138,7 +157,7 @@ function fastestTimeToPath(personModel, projectilePath)
     var personLoc = personModel.location();
 
     var bestTimeThusfarForPerson = 999999;
-    var bestTimeThusfarForBall = 99999;
+    var bestTimeThusfarForBall = 999999;
     for(i=0; i<projectilePath.points.length; i++)
     {
         var ballLoc = projectilePath.points[i];

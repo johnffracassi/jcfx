@@ -102,6 +102,7 @@
         function bowl_start()
         {
             personController.bowler.runTo([1.2,21], bowl_arrive);
+            ballModel.visible = false;
         }
 
         function bowl_arrive(bowler)
@@ -115,8 +116,12 @@
             var vx = parseFloat(document.getElementById("vx").value);
             var vy = parseFloat(document.getElementById("vy").value);
             var vz = parseFloat(document.getElementById("vz").value);
+
             ballModel.setProjectile([1.0, 22, 2.1], [vx,vy,vz]);
+            ballModel.visible = true;
+
             bat_recordshot();
+
             setTimeout("wk_getIntoPosition()", 250);
             setTimeout("bat_playshot()", 500);
         }
@@ -130,6 +135,9 @@
             var intersection = fastestTimeToPath(personController.keeper, ballModel.path);
             personController.keeper.walkTo(intersection['location']);
             ballModel.path.terminateAt(intersection['ballTime']);
+            ballModel.addProximityTrigger(intersection['location'], function() {
+                ballModel.visible = false;
+            });
         }
 
         // =============================================================================================================
@@ -253,6 +261,7 @@
             frameCounter = 0;
             shotpoints = null;
             personController.reset();
+            ballModel.visible = false;
         }
 
         function mouseclick(ev)
