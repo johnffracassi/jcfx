@@ -154,7 +154,18 @@
         {
             recording = false;
 
-                        
+            var dx = shotpoints[shotpoints.length-1][0] - shotpoints[0][0];
+            var dy = shotpoints[shotpoints.length-1][1] - shotpoints[0][1];
+            var dist = distance2d(shotpoints[shotpoints.length-1], shotpoints[0]);
+
+            var vx = dx / 10;
+            var vy = -dy / 10;
+            var vz = 0;
+
+            ballModel.setProjectile(ballModel.currentLoc, [vx,vy,vz]);
+            ballModel.visible = true;
+
+            personController.sendFielderAfterBall();
         }
 
         function renderShotPath()
