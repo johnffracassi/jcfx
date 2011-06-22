@@ -1,6 +1,7 @@
 var Person = Class.extend({
     
-    init: function(name) {
+    init: function(name)
+    {
         this.name = name;
         this.runSpeed = 7.0;
         this.walkSpeed = 2.0;
@@ -15,21 +16,25 @@ var Person = Class.extend({
         this.moveCompleteCallback = null;
     },
 
-    display: function() {
+    display: function()
+    {
         return this.name;
     },
 
-    runTo: function(loc, callback) {
+    runTo: function(loc, callback)
+    {
         this.moveTo(loc, this.runSpeed, callback);
         this.setState("Running");
     },
 
-    walkTo: function(loc, callback) {
+    walkTo: function(loc, callback)
+    {
         this.moveTo(loc, this.walkSpeed, callback);
         this.setState("Walking");
     },
 
-    moveTo: function(loc, speed, callback) {
+    moveTo: function(loc, speed, callback)
+    {
         if(speed == 0)
         {
             this.targetLoc = null;
@@ -45,17 +50,20 @@ var Person = Class.extend({
         }
     },
 
-    setState: function(state) {
+    setState: function(state)
+    {
         this.state = state;
         this.lastStateUpdate = gameTime;
     },
 
-    setLoc: function(loc) {
+    setLoc: function(loc)
+    {
         this.currentLoc = loc;
         this.lastLocUpdate = gameTime;
     },
 
-    location: function() {
+    location: function()
+    {
         if(this.targetLoc != null)
         {
             if(this.currentSpeed == null || this.currentSpeed == 0.0)
@@ -104,14 +112,16 @@ var Person = Class.extend({
         return this.currentLoc;
     },
 
-    animKey: function() {
+    animKey: function()
+    {
         return this.spriteClass + "_" + this.state;
     }
 });
 
 
 var Fielder = Person.extend({
-    init: function(name) {
+    init: function(name)
+    {
         this._super(name)
         this.spriteClass = "Fielder";
     }
@@ -119,7 +129,8 @@ var Fielder = Person.extend({
 
 
 var PersonController = Class.extend({
-    init: function() {
+    init: function()
+    {
         this.fieldSetting = fieldSettings['Standard'];
         this.fielders = new Array(9);
         this.bowler = new Bowler();
@@ -134,16 +145,22 @@ var PersonController = Class.extend({
             this.fielders[i] = new Fielder("Fielder " + i);
         }
     },
-    all: function() {
+
+    all: function()
+    {
         return [this.umpire, this.umpireSquareLeg, this.bowler, this.keeper, this.fielders[0], this.fielders[1], this.fielders[2], this.fielders[3], this.fielders[4], this.fielders[5], this.fielders[6], this.fielders[7], this.fielders[8], this.striker, this.nonStriker];
     },
-    fielderables: function() {
+
+    fielderables: function()
+    {
         return [this.bowler, this.keeper, this.fielders[0], this.fielders[1], this.fielders[2], this.fielders[3], this.fielders[4], this.fielders[5], this.fielders[6], this.fielders[7], this.fielders[8]];
     },
-    reset: function() {
-        for(var i=0; i<this.fieldSetting.length; i++)
+
+    reset: function()
+    {
+        for(var idx=0; idx<this.fieldSetting.length; idx++)
         {
-            this.fielders[i].moveTo(this.fieldSetting[i], 0);
+            this.fielders[idx].moveTo(this.fieldSetting[idx], 0);
             this.bowler.moveTo([2, 33], 0);
             this.keeper.moveTo([0, -10], 0);
             this.striker.moveTo([-0.2, 1.25], 0);
@@ -152,8 +169,44 @@ var PersonController = Class.extend({
             this.umpireSquareLeg.moveTo([-24, 0], 0);
         }
     },
-    sendFielderTo: function(loc) {
-        this.fielders[0].runTo(loc);
+
+    sendFielderTo: function(loc)
+    {
+        var candidates = this.fielderables();
+        var closestDistance = Infinity;
+        var closestFielder = candidates[0];
+
+        // find the closest fielder to the point
+        for(var idx=0; idx<candidates.length; idx++)
+        {
+            var distance = distance2d(candidates[idx].currentLoc, loc);
+            if(distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestFielder = candidates[idx];
+            }
+        }
+
+        closestFielder.runTo(loc);
+    },
+
+    sendFielderAfterBall: function()
+    {
+        var candidates = this.fielderables();
+        var closestIntersection = null;
+
+        // find the closest fielder to the ball path
+        for(var idx = 0; idx<candidates.length; idx++)
+        {
+            var intersection = fastestTimeToPath(candidates[idx], ballModel.path);
+
+            if(closestIntersection == null || (intersection['personTime'] < closestIntersection['personTime']))
+            {
+                closestIntersection = intersection;
+            }
+        }
+
+        closestIntersection['person'].runTo(closestIntersection['location']);
     }
 });
 

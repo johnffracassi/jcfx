@@ -23,9 +23,9 @@ var BallModel = Class.extend({
        this.proximityTriggers = new Array();
    },
 
-   setProjectile: function(loc, dir) {
+   setProjectile: function(loc, vmatrix) {
        ballModel.currentLoc = loc;
-       ballModel.setPath(calculatePath(loc, dir));
+       ballModel.setPath(calculatePath(loc, vmatrix));
    },
 
    location: function() {
@@ -40,15 +40,16 @@ var BallModel = Class.extend({
 
            if(this.proximityTriggers.length > 0)
            {
-               for(i=0; i<this.proximityTriggers.length; i++)
+               var ptIdx = 0;
+               for(ptIdx=0; ptIdx<this.proximityTriggers.length; ptIdx++)
                {
-                   var trigger = this.proximityTriggers[i];
+                   var trigger = this.proximityTriggers[ptIdx];
                    if(trigger != null)
                    {
                        if(trigger.shouldTrigger(loc))
                        {
                            trigger.callback();
-                           this.proximityTriggers[i] = null;
+                           this.proximityTriggers[ptIdx] = null;
                        }
                    }
                }
@@ -161,7 +162,9 @@ function calculatePath(iloc, vmatrix)
     var vx = vmatrix[0];
     var vy = vmatrix[1];
     var vz = vmatrix[2];
-    for(i=1; i<500; i++)
+
+    var idx = 0;
+    for(;idx<500;idx++)
     {
         var dx = pathTimeStep * vx;
         var dy = pathTimeStep * vy;
@@ -197,9 +200,11 @@ function fastestTimeToPath(personModel, projectilePath)
 
     var bestTimeThusfarForPerson = 999999;
     var bestTimeThusfarForBall = 999999;
-    for(i=0; i<projectilePath.points.length; i++)
+
+    var idx = 0;
+    for(;idx<projectilePath.points.length; idx++)
     {
-        var ballLoc = projectilePath.points[i];
+        var ballLoc = projectilePath.points[idx];
 
         // don't look unless ball is below 2m high
         if(ballLoc[2] < 2.0)
@@ -209,7 +214,7 @@ function fastestTimeToPath(personModel, projectilePath)
             if(timeForPersonToRunToBallLoc < bestTimeThusfarForPerson)
             {
                 bestTimeThusfarForPerson = timeForPersonToRunToBallLoc;
-                bestTimeThusfarForBall = i / pathResolution;
+                bestTimeThusfarForBall = idx / pathResolution;
             }
         }
     }
@@ -218,5 +223,6 @@ function fastestTimeToPath(personModel, projectilePath)
     result['personTime'] = bestTimeThusfarForPerson;
     result['ballTime'] = bestTimeThusfarForBall;
     result['location'] = projectilePath.location(bestTimeThusfarForBall);
+    result['person'] = personModel;
     return result;
 }
