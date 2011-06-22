@@ -27,6 +27,7 @@ var PitchRenderer = Class.extend({
         g.closePath();
         g.fill();
 
+        g.lineWidth = 1;
         g.strokeStyle = model.strokeStyle;
         screenLine(g, [-4,1.5],[4,1.5]);
         screenLine(g, [-2,0],[2,0]);

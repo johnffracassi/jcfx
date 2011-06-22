@@ -23,6 +23,7 @@ var GroundRenderer = Class.extend({
         }
         g.closePath();
         g.fill();
+        g.lineWidth = 2;
         g.strokeStyle = "black";
         g.stroke();
 
@@ -37,7 +38,7 @@ var GroundRenderer = Class.extend({
             g.lineTo(pt[0],pt[1]);
         }
         g.closePath();
-        g.strokeStyle = "rgba(255,255,255,0.25)";
+        g.strokeStyle = "rgba(255,255,255,0.075)";
         g.stroke();
     }
 });
