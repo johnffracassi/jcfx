@@ -7,11 +7,20 @@ var BallModel = Class.extend({
    currentLoc: null,
    path: null,
    pathStartTime: null,
-   proximityTrigger: null,
+   proximityTriggers: new Array(),
+
+   reset: function() {
+       this.visible = false;
+       this.currentLoc = null;
+       this.path = null;
+       this.pathStartTime = null;
+       this.proximityTriggers = new Array();
+   },
 
    setPath: function(path) {
        this.path = path;
        this.pathStartTime = gameTime;
+       this.proximityTriggers = new Array();
    },
 
    setProjectile: function(loc, dir) {
@@ -29,26 +38,56 @@ var BallModel = Class.extend({
            var pathTime = gameTime - this.pathStartTime;
            var loc = this.path.location(pathTime);
 
-           if(this.proximityPoint != null && this.proximityTrigger != null)
+           if(this.proximityTriggers.length > 0)
            {
-               var d = distance2d(this.proximityPoint, loc);
-               if(d < 0.6)
+               for(i=0; i<this.proximityTriggers.length; i++)
                {
-                   this.proximityTrigger();
-                   this.proximityTrigger = null;
+                   var trigger = this.proximityTriggers[i];
+                   if(trigger != null)
+                   {
+                       if(trigger.shouldTrigger(loc))
+                       {
+                           trigger.callback();
+                           this.proximityTriggers[i] = null;
+                       }
+                   }
                }
            }
 
+           this.currentLoc = loc;
            return loc;
        }
    },
 
-   addProximityTrigger: function(point, callback) {
-       this.proximityTrigger = callback;
-       this.proximityPoint = point;
-       console.log("setting proximity point to => " + point);
+   addProximityTrigger: function(location, callback) {
+       this.proximityTriggers.push(new ProximityTrigger(location, callback));
    }
 });
+
+
+var ProximityTrigger = Class.extend({
+    tolerance: null,
+    trigger: null,
+    callback: null,
+
+    init: function(trigger, callback, tolerance) {
+        this.trigger = trigger;
+        this.callback = callback;
+        this.tolerance = tolerance||0.6;
+    },
+    shouldTrigger: function(location) {
+        if(typeof this.trigger == "function")
+        {
+            return (this.trigger() == true);
+        }
+        else if(this.trigger instanceof Array)
+        {
+            var d = distance2d(this.trigger, location);
+            return d < this.tolerance;
+        }
+    }
+});
+
 
 var BallRenderer = Class.extend({
     init: function(model) {
