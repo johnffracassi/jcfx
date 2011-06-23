@@ -9,7 +9,8 @@ var BallModel = Class.extend({
    pathStartTime: null,
    proximityTriggers: new Array(),
 
-   reset: function() {
+   reset: function()
+   {
        this.visible = false;
        this.currentLoc = null;
        this.path = null;
@@ -17,18 +18,21 @@ var BallModel = Class.extend({
        this.proximityTriggers = new Array();
    },
 
-   setPath: function(path) {
+   setPath: function(path)
+   {
        this.path = path;
        this.pathStartTime = gameTime;
        this.proximityTriggers = new Array();
    },
 
-   setProjectile: function(loc, vmatrix) {
+   setProjectile: function(loc, vmatrix)
+   {
        ballModel.currentLoc = loc;
        ballModel.setPath(calculatePath(loc, vmatrix));
    },
 
-   location: function() {
+   location: function()
+   {
        if(this.path == null)
        {
            return this.currentLoc;
@@ -44,13 +48,10 @@ var BallModel = Class.extend({
                for(ptIdx=0; ptIdx<this.proximityTriggers.length; ptIdx++)
                {
                    var trigger = this.proximityTriggers[ptIdx];
-                   if(trigger != null)
+                   if(trigger.shouldTrigger(loc))
                    {
-                       if(trigger.shouldTrigger(loc))
-                       {
-                           trigger.callback();
-                           this.proximityTriggers[ptIdx] = null;
-                       }
+                       trigger.callback();
+                       trigger.fired = true;
                    }
                }
            }
@@ -60,8 +61,9 @@ var BallModel = Class.extend({
        }
    },
 
-   addProximityTrigger: function(location, callback) {
-       this.proximityTriggers.push(new ProximityTrigger(location, callback));
+   addProximityTrigger: function(trigger, callback)
+   {
+       this.proximityTriggers.push(new ProximityTrigger(trigger, callback, null));
    }
 });
 
@@ -70,13 +72,21 @@ var ProximityTrigger = Class.extend({
     tolerance: null,
     trigger: null,
     callback: null,
+    fired: false,
 
-    init: function(trigger, callback, tolerance) {
+    init: function(trigger, callback, tolerance)
+    {
         this.trigger = trigger;
         this.callback = callback;
         this.tolerance = tolerance||0.6;
     },
-    shouldTrigger: function(location) {
+    shouldTrigger: function(location)
+    {
+        if(this.fired == true)
+        {
+            return false;
+        }
+
         if(typeof this.trigger == "function")
         {
             return (this.trigger() == true);
@@ -91,7 +101,8 @@ var ProximityTrigger = Class.extend({
 
 
 var BallRenderer = Class.extend({
-    init: function(model) {
+    init: function(model)
+    {
         this.model = model;
     },
     render: function() {
@@ -210,7 +221,7 @@ function fastestTimeToPath(personModel, projectilePath)
         if(ballLoc[2] < 2.0)
         {
             var distanceFromPersonToBallLoc = distance2d(personLoc, ballLoc);
-            var timeForPersonToRunToBallLoc = distanceFromPersonToBallLoc / personModel.walkSpeed;
+            var timeForPersonToRunToBallLoc = distanceFromPersonToBallLoc / personModel.runSpeed;
             if(timeForPersonToRunToBallLoc < bestTimeThusfarForPerson)
             {
                 bestTimeThusfarForPerson = timeForPersonToRunToBallLoc;
@@ -225,4 +236,30 @@ function fastestTimeToPath(personModel, projectilePath)
     result['location'] = projectilePath.location(bestTimeThusfarForBall);
     result['person'] = personModel;
     return result;
+}
+
+var keeperTakeHeight = 0.75;
+var gravity = -9.8;
+
+function approximateTrajectory(origin, target, fielder)
+{
+    var dx = target[0] - origin[0];
+    var dy = target[1] - origin[1];
+    var d  = distance2d(origin, target);
+
+    var flightTime = d / fielder.throwSpeed;
+
+    // solve for vz=0 halfway through the trajectory
+    var uz = -9.8 * (flightTime / 2);
+
+    var pointCount = (flightTime / pathResolution) + 1;
+
+    var points = new Array();
+    for(var idx=0; idx<pointCount; idx++)
+    {
+        var time = idx * pathTimeStep;
+        points.push([(origin[0] + time / flightTime * dx, origin[1] + time / flightTime * dy, keeperTakeHeight + uz * time + 0.5 * gravity * time*time)]);
+    }
+
+    return new ProjectilePath(points);
 }
