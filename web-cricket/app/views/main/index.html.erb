@@ -132,7 +132,7 @@
         function wk_getIntoPosition()
         {
             var intersection = fastestTimeToPath(personController.keeper, ballModel.path);
-            personController.keeper.walkTo(intersection['location']);
+            personController.keeper.runTo(intersection['location']);
             ballModel.path.terminateAt(intersection['ballTime']);
             ballModel.addProximityTrigger(intersection['location'], function() {
                 ballModel.visible = false;
@@ -165,7 +165,19 @@
             ballModel.setProjectile(ballModel.currentLoc, [vx,vy,vz]);
             ballModel.visible = true;
 
-            personController.sendFielderAfterBall();
+            var intersection = personController.sendFielderAfterBall();
+            ballModel.path.terminateAt(intersection['ballTime']);
+            ballModel.addProximityTrigger(intersection['location'], function() {
+                pickUpAndReturnBall(intersection['person']);
+            }, 2.0);
+        }
+
+        function pickUpAndReturnBall(person)
+        {
+            ballModel.visible = false;
+            person.setState("PickUpBall");
+            path = approximateTrajectory(ballModel.currentLoc, personController.keeper.location(), person);
+            ballModel.setPath(path);
         }
 
         function renderShotPath()

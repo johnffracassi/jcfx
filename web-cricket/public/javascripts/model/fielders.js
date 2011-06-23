@@ -5,6 +5,7 @@ var Person = Class.extend({
         this.name = name;
         this.runSpeed = 7.0;
         this.walkSpeed = 2.0;
+        this.throwSpeed = 35.0,
 
         this.currentLoc = [0,0];
         this.targetLoc = null;
@@ -207,6 +208,7 @@ var PersonController = Class.extend({
         }
 
         closestIntersection['person'].runTo(closestIntersection['location']);
+        return closestIntersection;
     }
 });
 
