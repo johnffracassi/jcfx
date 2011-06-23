@@ -241,24 +241,24 @@ function fastestTimeToPath(personModel, projectilePath)
 var keeperTakeHeight = 0.75;
 var gravity = -9.8;
 
-function approximateTrajectory(origin, target, fielder)
+function approximateTrajectory(origin, target, speed)
 {
     var dx = target[0] - origin[0];
     var dy = target[1] - origin[1];
     var d  = distance2d(origin, target);
 
-    var flightTime = d / fielder.throwSpeed;
+    var flightTime = d / speed;
 
     // solve for vz=0 halfway through the trajectory
-    var uz = -9.8 * (flightTime / 2);
+    var uz = -gravity * (flightTime / 2);
 
-    var pointCount = (flightTime / pathResolution) + 1;
+    var pointCount = (flightTime / pathTimeStep) + 1;
 
     var points = new Array();
     for(var idx=0; idx<pointCount; idx++)
     {
         var time = idx * pathTimeStep;
-        points.push([(origin[0] + time / flightTime * dx, origin[1] + time / flightTime * dy, keeperTakeHeight + uz * time + 0.5 * gravity * time*time)]);
+        points.push([origin[0] + time / flightTime * dx, origin[1] + time / flightTime * dy, keeperTakeHeight + uz * time + 0.5 * gravity * time*time]);
     }
 
     return new ProjectilePath(points);
