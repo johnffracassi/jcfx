@@ -34,13 +34,7 @@
     <br/>
     <%= button_to_function("Reset", "reset()") %>
     <%= button_to_function("Bowl", "bowl_start()") %>
-    <%= button_to_function("Umpire Idle", "personController.umpire.setState('Idle')") %>
-    <%= button_to_function("Umpire 4", "personController.umpire.setState('SignalFour')") %>
-    <%= button_to_function("Umpire 6", "personController.umpire.setState('SignalSix')") %>
-    <%= button_to_function("Umpire Wide", "personController.umpire.setState('SignalWide')") %>
-    <%= button_to_function("Umpire LegBye", "personController.umpire.setState('SignalLegBye')") %>
-    <%= button_to_function("Umpire Bye", "personController.umpire.setState('SignalBye')") %>
-    <%= button_to_function("Umpire Out", "personController.umpire.setState('SignalOut')") %>
+    <%= button_to_function("Return Ball", "throwBallToKeeper()") %>
     <br/>
     <input type="text" id="vx" value="-2" size="3" onkeyup="updateVelocity();" />
     <input type="text" id="vy" value="-35" size="3" onkeyup="updateVelocity();" />
@@ -158,9 +152,18 @@
             var dy = shotpoints[shotpoints.length-1][1] - shotpoints[0][1];
             var dist = distance2d(shotpoints[shotpoints.length-1], shotpoints[0]);
 
-            var vx = dx / 10;
-            var vy = -dy / 10;
-            var vz = 0;
+            if(dist < 20)
+            {
+                var vx = 4;
+                var vy = 3;
+                var vz = -2;
+            }
+            else
+            {
+                var vx = dx / 10;
+                var vy = -dy / 10;
+                var vz = 0;
+            }
 
             ballModel.setProjectile(ballModel.currentLoc, [vx,vy,vz]);
             ballModel.visible = true;
@@ -174,10 +177,23 @@
 
         function pickUpAndReturnBall(person)
         {
+            if(person.currentLoc[0] < 0)
+            {
+                person.setState("PickingUpBall_L");
+            }
+            else
+            {
+                person.setState("PickingUpBall_R");
+            }
             ballModel.visible = false;
-            person.setState("PickUpBall");
-            path = approximateTrajectory(ballModel.currentLoc, personController.keeper.location(), person);
+            setTimeout(throwBallToKeeper, 500);
+        }
+
+        function throwBallToKeeper()
+        {
+            path = approximateTrajectory(ballModel.currentLoc, personController.keeper.location(), 25);
             ballModel.setPath(path);
+            ballModel.visible = true;
         }
 
         function renderShotPath()
