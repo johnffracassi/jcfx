@@ -18,7 +18,7 @@ var BallModel = Class.extend({
        this.proximityTriggers = new Array();
    },
 
-   setPath: function(path)
+   setProjectilePath: function(path)
    {
        this.path = path;
        this.pathStartTime = gameTime;
@@ -28,10 +28,10 @@ var BallModel = Class.extend({
    setProjectile: function(loc, vmatrix)
    {
        ballModel.currentLoc = loc;
-       ballModel.setPath(calculatePath(loc, vmatrix));
+       ballModel.setProjectilePath(calculateProjectilePath(loc, vmatrix));
    },
 
-   location: function()
+   updateLocation: function()
    {
        if(this.path == null)
        {
@@ -78,8 +78,9 @@ var ProximityTrigger = Class.extend({
     {
         this.trigger = trigger;
         this.callback = callback;
-        this.tolerance = tolerance||0.6;
+        this.tolerance = tolerance || DEFAULT_PROXIMITY_TOLERANCE;
     },
+
     shouldTrigger: function(location)
     {
         if(this.fired == true)
@@ -105,10 +106,12 @@ var BallRenderer = Class.extend({
     {
         this.model = model;
     },
-    render: function() {
+    
+    render: function()
+    {
         if(this.model.visible == true && this.model.currentLoc != null)
         {
-            var wloc = this.model.location();
+            var wloc = this.model.currentLoc;
 
             // shadow
             var sloc = convertWorldToScreen([wloc[0],wloc[1]]);
@@ -125,22 +128,40 @@ var BallRenderer = Class.extend({
 
 
 var ProjectilePath = Class.extend({
-   init: function(points) {
+   init: function(points)
+   {
        this.points = points;
    },
-   location: function(pathTime) {
-       var idx = Math.floor(pathTime * pathResolution);
-       idx = Math.min(idx, this.points.length-1);
-       idx = Math.max(idx, 0);
-       return this.points[idx];
+   location: function(pathTime)
+   {
+       var pointIdx = Math.floor(pathTime * PATH_RESOLUTION);
+
+       if(pointIdx >= 0 && pointIdx < this.points.length -1)
+       {
+           var interpolation = (pathTime % PATH_TIMESTEP) / PATH_TIMESTEP;
+           var p1 = this.points[pointIdx];
+           var p2 = this.points[pointIdx + 1];
+           return interpolate(p1, p2, interpolation);
+       }
+       else if(pointIdx < 0)
+       {
+           return this.points[0];
+       }
+       else
+       {
+           return this.points[-1];
+       }
    },
-   pathDuration: function() {
-       return this.points * pathResolution;
+   pathDuration: function()
+   {
+       return this.points * PATH_RESOLUTION;
    },
-   terminateAt: function(t) {
-       this.points = this.points.slice(0, Math.floor(t * pathResolution));
+   terminateAt: function(t)
+   {
+       this.points = this.points.slice(0, Math.ceil(t * PATH_RESOLUTION));
    }
 });
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -149,8 +170,12 @@ var ProjectilePath = Class.extend({
 var ballModel = new BallModel();
 var ballRenderer = new BallRenderer(ballModel);
 
-var pathResolution = 50;
-var pathTimeStep = 1.0 / pathResolution;
+var DEFAULT_PROXIMITY_TOLERANCE = 0.6;
+var PATH_RESOLUTION = 40;
+var PATH_TOTAL_TIME = 9; // in seconds
+var PATH_TIMESTEP = 1.0 / PATH_RESOLUTION;
+var KEEPER_TAKE_HEIGHT = 0.75;
+var GRAVITY = -9.8;
 
 function projectBall()
 {
@@ -162,10 +187,10 @@ function projectBall()
     var vz = parseFloat(document.getElementById("vz").value);
     var loc = [locx,locy,locz];
     ballModel.currentLoc = loc;
-    ballModel.setPath(calculatePath(loc, [vx, vy, vz]));
+    ballModel.setProjectilePath(calculateProjectilePath(loc, [vx, vy, vz]));
 }
 
-function calculatePath(iloc, vmatrix)
+function calculateProjectilePath(iloc, vmatrix)
 {
     var path = new Array();
     path.push(iloc);
@@ -174,18 +199,18 @@ function calculatePath(iloc, vmatrix)
     var vy = vmatrix[1];
     var vz = vmatrix[2];
 
-    var idx = 0;
-    for(;idx<500;idx++)
+    for(var idx = 0; idx < PATH_TOTAL_TIME * PATH_RESOLUTION; idx++)
     {
-        var dx = pathTimeStep * vx;
-        var dy = pathTimeStep * vy;
-        var dz = pathTimeStep * vz;
-        vz += -9.8 * pathTimeStep;
+        var dx = PATH_TIMESTEP * vx;
+        var dy = PATH_TIMESTEP * vy;
+        var dz = PATH_TIMESTEP * vz;
+        vz += -9.8 * PATH_TIMESTEP;
         var newz = lastLoc[2] + dz;
 
         // bounce
         if(newz < 0 && vz < 0)
         {
+            // TODO efficiencies should be based upon the angle of incidence
             vx = applyEnergyChangeAfterBounce(vx, 0.7);
             vy = applyEnergyChangeAfterBounce(vy, 0.7);
             vz = applyEnergyChangeAfterBounce(-vz, 0.3);
@@ -198,6 +223,7 @@ function calculatePath(iloc, vmatrix)
     return new ProjectilePath(path);
 }
 
+
 function applyEnergyChangeAfterBounce(v, eff)
 {
     var e = (0.5 * ballModel.weight * v*v) * eff;
@@ -205,6 +231,8 @@ function applyEnergyChangeAfterBounce(v, eff)
     return v > 0 ? newv : -newv;
 }
 
+
+// TODO this needs some work, person is just running to closest point (by distance it seems?)
 function fastestTimeToPath(personModel, projectilePath)
 {
     var personLoc = personModel.location();
@@ -225,7 +253,7 @@ function fastestTimeToPath(personModel, projectilePath)
             if(timeForPersonToRunToBallLoc < bestTimeThusfarForPerson)
             {
                 bestTimeThusfarForPerson = timeForPersonToRunToBallLoc;
-                bestTimeThusfarForBall = idx / pathResolution;
+                bestTimeThusfarForBall = idx / PATH_RESOLUTION;
             }
         }
     }
@@ -238,9 +266,8 @@ function fastestTimeToPath(personModel, projectilePath)
     return result;
 }
 
-var keeperTakeHeight = 0.75;
-var gravity = -9.8;
 
+// TODO need a better way to approximate the trajectory, need to take in to consideration the fielders throwSpeed
 function approximateTrajectory(origin, target, speed)
 {
     var dx = target[0] - origin[0];
@@ -250,15 +277,15 @@ function approximateTrajectory(origin, target, speed)
     var flightTime = d / speed;
 
     // solve for vz=0 halfway through the trajectory
-    var uz = -gravity * (flightTime / 2);
+    var uz = -GRAVITY * (flightTime / 2);
 
-    var pointCount = (flightTime / pathTimeStep) + 1;
+    var pointCount = (flightTime / PATH_TIMESTEP) + 1;
 
     var points = new Array();
     for(var idx=0; idx<pointCount; idx++)
     {
-        var time = idx * pathTimeStep;
-        points.push([origin[0] + time / flightTime * dx, origin[1] + time / flightTime * dy, keeperTakeHeight + uz * time + 0.5 * gravity * time*time]);
+        var time = idx * PATH_TIMESTEP;
+        points.push([origin[0] + time / flightTime * dx, origin[1] + time / flightTime * dy, KEEPER_TAKE_HEIGHT + uz * time + 0.5 * GRAVITY * time*time]);
     }
 
     return new ProjectilePath(points);

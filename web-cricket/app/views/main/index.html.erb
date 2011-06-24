@@ -80,6 +80,7 @@
         function update()
         {
             gameTime = (new Date().getTime() - gameResetTime) / 1000.0;
+            ballModel.updateLocation();
 
             if(recording)
             {
@@ -192,7 +193,7 @@
         function throwBallToKeeper()
         {
             path = approximateTrajectory(ballModel.currentLoc, personController.keeper.location(), 25);
-            ballModel.setPath(path);
+            ballModel.setProjectilePath(path);
             ballModel.visible = true;
         }
 

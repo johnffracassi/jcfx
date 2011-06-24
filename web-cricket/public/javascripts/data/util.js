@@ -67,3 +67,17 @@ function toRadians(degrees)
 {
     return Math.PI * (degrees / 180);
 }
+
+function interpolate(p1, p2, percentage)
+{
+    var result = new Array();
+    result.push(p1[0] + ((p2[0] - p1[0]) * percentage));
+    result.push(p1[1] + ((p2[1] - p1[1]) * percentage));
+
+    if(p1.length == 3 && p2.length == 3)
+    {
+        result.push(p1[2] + ((p2[2] - p1[2]) * percentage));
+    }
+
+    return result;
+}
