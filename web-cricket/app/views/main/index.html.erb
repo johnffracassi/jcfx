@@ -173,7 +173,7 @@
             ballModel.path.terminateAt(intersection['ballTime']);
             ballModel.addProximityTrigger(intersection['location'], function() {
                 pickUpAndReturnBall(intersection['person']);
-            }, 2.0);
+            }, 1.0);
         }
 
         function pickUpAndReturnBall(person)

@@ -35,30 +35,30 @@ var BallModel = Class.extend({
    {
        if(this.path == null)
        {
-           return this.currentLoc;
+           if(this.currentLoc == null)
+           {
+               this.currentLoc = personController.umpire.location();
+           }
        }
        else
        {
            var pathTime = gameTime - this.pathStartTime;
-           var loc = this.path.location(pathTime);
+           this.currentLoc = this.path.location(pathTime);
 
            if(this.proximityTriggers.length > 0)
            {
-               var ptIdx = 0;
-               for(ptIdx=0; ptIdx<this.proximityTriggers.length; ptIdx++)
+               for(var idx=0; idx<this.proximityTriggers.length; idx++)
                {
-                   var trigger = this.proximityTriggers[ptIdx];
-                   if(trigger.shouldTrigger(loc))
+                   if(this.proximityTriggers[idx].shouldTrigger(this.currentLoc))
                    {
-                       trigger.callback();
-                       trigger.fired = true;
+                       this.proximityTriggers[idx].fire();
                    }
                }
            }
 
-           this.currentLoc = loc;
-           return loc;
        }
+
+       return this.currentLoc;
    },
 
    addProximityTrigger: function(trigger, callback)
@@ -69,6 +69,7 @@ var BallModel = Class.extend({
 
 
 var ProximityTrigger = Class.extend({
+
     tolerance: null,
     trigger: null,
     callback: null,
@@ -76,9 +77,26 @@ var ProximityTrigger = Class.extend({
 
     init: function(trigger, callback, tolerance)
     {
-        this.trigger = trigger;
         this.callback = callback;
         this.tolerance = tolerance || DEFAULT_PROXIMITY_TOLERANCE;
+
+        if(typeof trigger != 'function')
+        {
+            this.trigger = function()
+            {
+                return distance2d(trigger, location) < this.tolerance;
+            }
+        }
+        else
+        {
+            this.trigger = trigger;
+        }
+    },
+
+    fire: function()
+    {
+        this.fired = true;
+        this.callback();
     },
 
     shouldTrigger: function(location)
@@ -88,15 +106,7 @@ var ProximityTrigger = Class.extend({
             return false;
         }
 
-        if(typeof this.trigger == "function")
-        {
-            return (this.trigger() == true);
-        }
-        else if(this.trigger instanceof Array)
-        {
-            var d = distance2d(this.trigger, location);
-            return d < this.tolerance;
-        }
+        return (this.trigger() == true);
     }
 });
 
@@ -149,7 +159,7 @@ var ProjectilePath = Class.extend({
        }
        else
        {
-           return this.points[-1];
+           return this.points[this.points.length - 1];
        }
    },
    pathDuration: function()
