@@ -30,6 +30,10 @@ function distance2d(p1, p2)
     {
         console.log("Can't calculate distance between " + p1 + " and " + p2);
     }
+    else if(p1 == null || p2 == null)
+    {
+        console.log("One of the points is null, no idea what to do? " + p1 + " and " + p2);
+    }
     else
     {
         var dx = p1[0] - p2[0];

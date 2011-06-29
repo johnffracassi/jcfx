@@ -61,9 +61,9 @@ var BallModel = Class.extend({
        return this.currentLoc;
    },
 
-   addProximityTrigger: function(trigger, callback)
+   addProximityTrigger: function(trigger, callback, tolerance)
    {
-       this.proximityTriggers.push(new ProximityTrigger(trigger, callback, null));
+       this.proximityTriggers.push(new ProximityTrigger(trigger, callback, tolerance));
    }
 });
 
@@ -74,17 +74,20 @@ var ProximityTrigger = Class.extend({
     trigger: null,
     callback: null,
     fired: false,
+    location: null,
 
     init: function(trigger, callback, tolerance)
     {
         this.callback = callback;
-        this.tolerance = tolerance || DEFAULT_PROXIMITY_TOLERANCE;
+        this.tolerance = (tolerance == null) ? DEFAULT_PROXIMITY_TOLERANCE : tolerance;
 
         if(typeof trigger != 'function')
         {
             this.trigger = function()
             {
-                return distance2d(trigger, location) < this.tolerance;
+                this.location = trigger;
+                var distFromTrigger = distance2d(trigger, ballModel.currentLoc);
+                return distFromTrigger < this.tolerance;
             }
         }
         else
@@ -132,6 +135,17 @@ var BallRenderer = Class.extend({
             sloc = convertWorldToScreen(wloc);
             g.fillStyle = this.model.fillColour;
             g.fillRect(sloc[0],sloc[1], 2, 2);
+        }
+
+        var y = 14;
+        g.fillStyle = 'black';
+        g.fillText("Ball Location: " + this.model.currentLoc, 250, y += 20);
+        g.fillText("Proximity Triggers: " + this.model.proximityTriggers.length, 250, y += 20);
+        for(var idx=0; idx < this.model.proximityTriggers.length; idx++)
+        {
+            var d = distance2d(this.model.proximityTriggers[idx].location, ballModel.currentLoc);
+            var str = this.model.proximityTriggers[idx].shouldTrigger(ballModel.currentLoc) + " / " + this.model.proximityTriggers[idx].tolerance + " / " + d;
+            g.fillText("proximityTriggers[" + idx + "]: " + str, 250, y += 20);
         }
     }
 });
@@ -250,8 +264,7 @@ function fastestTimeToPath(personModel, projectilePath)
     var bestTimeThusfarForPerson = 999999;
     var bestTimeThusfarForBall = 999999;
 
-    var idx = 0;
-    for(;idx<projectilePath.points.length; idx++)
+    for(var idx = 0; idx<projectilePath.points.length; idx++)
     {
         var ballLoc = projectilePath.points[idx];
 
