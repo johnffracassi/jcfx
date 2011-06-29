@@ -200,6 +200,7 @@ var PATH_TOTAL_TIME = 9; // in seconds
 var PATH_TIMESTEP = 1.0 / PATH_RESOLUTION;
 var KEEPER_TAKE_HEIGHT = 0.75;
 var GRAVITY = -9.8;
+var FIELDER_REACH_HEIGHT = 2.0;
 
 function projectBall()
 {
@@ -260,19 +261,20 @@ function applyEnergyChangeAfterBounce(v, eff)
 function fastestTimeToPath(personModel, projectilePath)
 {
     var personLoc = personModel.location();
-
     var bestTimeThusfarForPerson = 999999;
     var bestTimeThusfarForBall = 999999;
+    var bestMagicFactor = 999999;
 
     for(var idx = 0; idx<projectilePath.points.length; idx++)
     {
         var ballLoc = projectilePath.points[idx];
 
         // don't look unless ball is below 2m high
-        if(ballLoc[2] < 2.0)
+        if(ballLoc[2] < FIELDER_REACH_HEIGHT)
         {
             var distanceFromPersonToBallLoc = distance2d(personLoc, ballLoc);
             var timeForPersonToRunToBallLoc = distanceFromPersonToBallLoc / personModel.runSpeed;
+
             if(timeForPersonToRunToBallLoc < bestTimeThusfarForPerson)
             {
                 bestTimeThusfarForPerson = timeForPersonToRunToBallLoc;
