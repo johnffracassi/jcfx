@@ -171,9 +171,11 @@
 
             var intersection = personController.sendFielderAfterBall();
             ballModel.path.terminateAt(intersection['ballTime']);
-            ballModel.addProximityTrigger(intersection['location'], function() {
+            ballModel.addProximityTrigger(function() {
+                return (gameTime - ballModel.pathStartTime) >= intersection['personTime'];
+            }, function() {
                 pickUpAndReturnBall(intersection['person']);
-            }, 1.0);
+            }, 1.2);
         }
 
         function pickUpAndReturnBall(person)

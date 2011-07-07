@@ -176,13 +176,21 @@ var ProjectilePath = Class.extend({
            return this.points[this.points.length - 1];
        }
    },
-   pathDuration: function()
+   duration: function()
    {
        return this.points * PATH_RESOLUTION;
    },
    terminateAt: function(t)
    {
        this.points = this.points.slice(0, Math.ceil(t * PATH_RESOLUTION));
+   },
+   startLoc: function()
+   {
+       return this.points[0];
+   },
+   endLoc: function()
+   {
+       return this.points[this.points.length - 1];
    }
 });
 
@@ -258,14 +266,12 @@ function applyEnergyChangeAfterBounce(v, eff)
 
 
 // TODO this needs some work, person is just running to closest point (by distance it seems?)
+// should find the first point where t(f) <= t(b), then return it
+// otherwise, run to the end of the path
 function fastestTimeToPath(personModel, projectilePath)
 {
     var personLoc = personModel.location();
-    var bestTimeThusfarForPerson = 999999;
-    var bestTimeThusfarForBall = 999999;
-    var bestMagicFactor = 999999;
-
-    for(var idx = 0; idx<projectilePath.points.length; idx++)
+    for(var idx = 0; idx < projectilePath.points.length; idx++)
     {
         var ballLoc = projectilePath.points[idx];
 
@@ -274,19 +280,26 @@ function fastestTimeToPath(personModel, projectilePath)
         {
             var distanceFromPersonToBallLoc = distance2d(personLoc, ballLoc);
             var timeForPersonToRunToBallLoc = distanceFromPersonToBallLoc / personModel.runSpeed;
+            var ballTime = idx / PATH_RESOLUTION;
 
-            if(timeForPersonToRunToBallLoc < bestTimeThusfarForPerson)
+            if(timeForPersonToRunToBallLoc <= ballTime)
             {
-                bestTimeThusfarForPerson = timeForPersonToRunToBallLoc;
-                bestTimeThusfarForBall = idx / PATH_RESOLUTION;
+                var result = new Array();
+                result['personTime'] = timeForPersonToRunToBallLoc;
+                result['ballTime'] = ballTime;
+                result['location'] = projectilePath.points[idx];
+                result['person'] = personModel;
+                return result;
             }
         }
     }
 
+    console.log("idx=" + idx + " t(b)=" + ballTime + " t(f)=" + timeForPersonToRunToBallLoc + " loc(b)=" + ballLoc);
+
     var result = new Array();
-    result['personTime'] = bestTimeThusfarForPerson;
-    result['ballTime'] = bestTimeThusfarForBall;
-    result['location'] = projectilePath.location(bestTimeThusfarForBall);
+    result['ballTime'] = projectilePath.duration();
+    result['location'] = projectilePath.endLoc();
+    result['personTime'] = distance2d(projectilePath.endLoc(), personLoc) / personModel.runSpeed;
     result['person'] = personModel;
     return result;
 }
