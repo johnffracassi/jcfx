@@ -22,6 +22,7 @@
     <%= javascript_include_tag('model/class') %>
     <%= javascript_include_tag('jquery-1.5.1.min') %>
     <%= javascript_include_tag('jquery-ui-1.8.13.custom.min') %>
+
     <%= javascript_include_tag('data/sprites') %>
     <%= javascript_include_tag('data/animations') %>
     <%= javascript_include_tag('data/field_settings') %>
@@ -36,15 +37,11 @@
     <%= button_to_function("Bowl", "bowl_start()") %>
     <%= button_to_function("Return Ball", "throwBallToKeeper()") %>
     <br/>
+    Bowling Velocity Matrix<br/>
     <input type="text" id="vx" value="-2" size="3" onkeyup="updateVelocity();" />
     <input type="text" id="vy" value="-35" size="3" onkeyup="updateVelocity();" />
     <input type="text" id="vz" value="-8" size="3" onkeyup="updateVelocity();" />
     <input type="text" id="v" value="0kph" size="3" />
-    <br/>
-    <input type="text" id="ballX" value="1.3" size="3" />
-    <input type="text" id="ballY" value="21.5" size="3" />
-    <input type="text" id="ballZ" value="2.4" size="3" />
-    <%= button_to_function("Fire!", "projectBall()") %>
 
     <script type="text/javascript">
         function updateVelocity() {
@@ -126,10 +123,10 @@
         // =============================================================================================================
         function wk_getIntoPosition()
         {
-            var intersection = fastestTimeToPath(personController.keeper, ballModel.path);
-            personController.keeper.runTo(intersection['location']);
-            ballModel.path.terminateAt(intersection['ballTime']);
-            ballModel.addProximityTrigger(intersection['location'], function() {
+            var keeperTargetLoc = ballModel.path.getLocForFirstYLessThan(personController.keeper.location[1]);
+            personController.keeper.runTo(keeperTargetLoc);
+//            ballModel.path.terminateAt(intersection['ballTime']);
+            ballModel.addProximityTrigger(keeperTargetLoc, function() {
                 ballModel.visible = false;
             });
         }
@@ -153,7 +150,11 @@
             var dy = shotpoints[shotpoints.length-1][1] - shotpoints[0][1];
             var dist = distance2d(shotpoints[shotpoints.length-1], shotpoints[0]);
 
-            if(dist < 20)
+            if(dist < 15)
+            {
+                return;
+            }
+            else if(dist < 50)
             {
                 var vx = 4;
                 var vy = 3;
@@ -199,6 +200,58 @@
             ballModel.visible = true;
         }
 
+        // =============================================================================================================
+        // render loop
+        // =============================================================================================================
+
+        function render()
+        {
+            frameCounter ++;
+            clearScreen();
+            renderFixtures();
+            renderPeople();
+            renderBall();
+            renderShotPath();
+            renderOverlays();
+        }
+
+        function clearScreen()
+        {
+            // clear screen
+            g.fillStyle = "#efe";
+            g.fillRect(0, 0, 1000, 1000);
+        }
+
+        function renderFixtures()
+        {
+            groundRenderer.render(groundModel, g, [0,0]);
+            pitchRenderer.render(pitchModel, g, [0,0]);
+            stumpRenderer.render(stumpModel, g, [0,0]);
+            stumpRenderer.render(stumpModel, g, [0,21.5]);
+        }
+        function renderPeople()
+        {
+            var people = personController.all();
+            for(var i=0; i<people.length; i++)
+            {
+                var person = people[i];
+                var sloc = convertWorldToScreen(person.location());
+
+                drawAnimation(person.animKey(), sloc, person.lastStateUpdate);
+
+                if(mouseDistance(sloc) < 25)
+                {
+                    g.fillStyle = "white";
+                    g.fillText(person.display(), sloc[0] - 10, sloc[1] + 10);
+                }
+            }
+        }
+
+        function renderBall()
+        {
+            ballRenderer.render();
+        }
+
         function renderShotPath()
         {
             if(shotpoints != null && shotpoints.length > 3)
@@ -214,28 +267,7 @@
             }
         }
 
-        // =============================================================================================================
-        // render loop
-        // =============================================================================================================
-
-        function render()
-        {
-            renderFixtures();
-            renderPeople();
-            ballRenderer.render();
-            renderShotPath();
-            renderOverlay();
-        }
-
-        function renderFixtures()
-        {
-            groundRenderer.render(groundModel, g, [0,0]);
-            pitchRenderer.render(pitchModel, g, [0,0]);
-            stumpRenderer.render(stumpModel, g, [0,0]);
-            stumpRenderer.render(stumpModel, g, [0,21.5]);
-        }
-
-        function renderOverlay()
+        function renderOverlays()
         {
             g.fontSize = "11pt";
             g.fillStyle = "black";
@@ -255,29 +287,6 @@
                 var ang = angle(dx, dy);
                 g.fillText("recorded shot: " + shotpoints.length + "pts / dist=" + (0|dist) + " / ang=" + (1|ang), 30, 94);
             }
-        }
-
-        function renderPeople()
-        {
-            var people = personController.all();
-            for(var i=0; i<people.length; i++)
-            {
-                var person = people[i];
-                var sloc = convertWorldToScreen(person.location());
-
-                drawAnimation(person.animKey(), sloc, person.lastStateUpdate);
-
-                if(mouseDistance(sloc) < 25)
-                {
-                    g.fillStyle = "white";
-                    g.fillText(person.display(), sloc[0] - 10, sloc[1] + 10);
-                }
-            }
-        }
-
-        function mouseDistance(loc)
-        {
-            return distance2d(loc, mouseLoc);
         }
 
         // =============================================================================================================
@@ -322,21 +331,16 @@
             }
         }
 
+        function mouseDistance(loc)
+        {
+            return distance2d(loc, mouseLoc);
+        }
+
         function gameLoop()
         {
             update();
-            clearScreen();
             render();
             setTimeout("gameLoop()", 1000.0 / targetFPS);
-        }
-
-        function clearScreen()
-        {
-            frameCounter ++;
-
-            // clear screen
-            g.fillStyle = "#efe";
-            g.fillRect(0, 0, 10000, 10000);
         }
 
     </script>
