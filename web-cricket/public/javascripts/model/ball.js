@@ -139,12 +139,12 @@ var BallRenderer = Class.extend({
 
         var y = 14;
         g.fillStyle = 'black';
-        g.fillText("Ball Location: " + this.model.currentLoc, 250, y += 20);
+        g.fillText("Ball Location: [" + (0|this.model.currentLoc[0]) + "," + (0|this.model.currentLoc[1]) + "," + (0|this.model.currentLoc[2]) + "]" , 250, y += 20);
         g.fillText("Proximity Triggers: " + this.model.proximityTriggers.length, 250, y += 20);
         for(var idx=0; idx < this.model.proximityTriggers.length; idx++)
         {
             var d = distance2d(this.model.proximityTriggers[idx].location, ballModel.currentLoc);
-            var str = this.model.proximityTriggers[idx].shouldTrigger(ballModel.currentLoc) + " / " + this.model.proximityTriggers[idx].tolerance + " / " + d;
+            var str = this.model.proximityTriggers[idx].shouldTrigger(ballModel.currentLoc) + " / " + this.model.proximityTriggers[idx].tolerance + " / " + (1|d);
             g.fillText("proximityTriggers[" + idx + "]: " + str, 250, y += 20);
         }
     }
@@ -191,6 +191,18 @@ var ProjectilePath = Class.extend({
    endLoc: function()
    {
        return this.points[this.points.length - 1];
+   },
+   getLocForFirstYLessThan: function(y)
+   {
+       for(var i=0; i<this.points.length; i++)
+       {
+           var pt = this.points[i];
+           if(pt[1] < y)
+           {
+               return pt;
+           }
+       }
+       return null;
    }
 });
 
@@ -265,9 +277,6 @@ function applyEnergyChangeAfterBounce(v, eff)
 }
 
 
-// TODO this needs some work, person is just running to closest point (by distance it seems?)
-// should find the first point where t(f) <= t(b), then return it
-// otherwise, run to the end of the path
 function fastestTimeToPath(personModel, projectilePath)
 {
     var personLoc = personModel.location();
