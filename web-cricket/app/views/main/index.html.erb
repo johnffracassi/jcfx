@@ -133,6 +133,11 @@
             });
         }
 
+        function wk_runToStumps()
+        {
+            personController.keeper.runTo([0,-1,0]);
+        }
+
         // =============================================================================================================
         // batting
         // =============================================================================================================
@@ -181,6 +186,8 @@
             }, function() {
                 pickUpAndReturnBall(intersection['person']);
             }, 1.2);
+
+            wk_runToStumps();
         }
 
         function pickUpAndReturnBall(person)
