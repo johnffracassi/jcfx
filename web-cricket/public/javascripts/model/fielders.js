@@ -72,7 +72,11 @@ var Person = Class.extend({
                 this.targetLoc = null;
                 this.currentSpeed = 0.0;
                 this.setLoc(this.targetLoc);
-                this.setState("Idle");
+
+                if(this.state == "Running" || this.state == "Walking")
+                {
+                    this.setState("Idle");
+                }
             }
             else
             {
