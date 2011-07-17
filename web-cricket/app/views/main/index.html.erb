@@ -123,7 +123,9 @@
         // =============================================================================================================
         function wk_getIntoPosition()
         {
-            var keeperTargetLoc = ballModel.path.getLocForFirstYLessThan(personController.keeper.location[1]);
+            var keeperLoc = personController.keeper.location();
+            var keeperTargetLoc = ballModel.path.getLocForFirstYLessThan(keeperLoc[1]);
+
             personController.keeper.runTo(keeperTargetLoc);
 //            ballModel.path.terminateAt(intersection['ballTime']);
             ballModel.addProximityTrigger(keeperTargetLoc, function() {
@@ -150,10 +152,12 @@
             var dy = shotpoints[shotpoints.length-1][1] - shotpoints[0][1];
             var dist = distance2d(shotpoints[shotpoints.length-1], shotpoints[0]);
 
+            // let the ball go to keeper
             if(dist < 15)
             {
                 return;
             }
+            // play a block shot
             else if(dist < 50)
             {
                 var vx = 4;
