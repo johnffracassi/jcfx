@@ -167,13 +167,13 @@
             {
                 var vx = 4;
                 var vy = 3;
-                var vz = -2;
+                var vz = -ballModel.;
             }
             else
             {
                 var vx = dx / 10;
                 var vy = -dy / 10;
-                var vz = 0;
+                var vz = -vz;
             }
 
             ballModel.setProjectile(ballModel.currentLoc, [vx,vy,vz]);

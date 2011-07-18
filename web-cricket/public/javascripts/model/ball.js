@@ -156,10 +156,36 @@ var ProjectilePath = Class.extend({
    {
        this.points = points;
    },
+   indexForTime: function(time)
+   {
+       return Math.max(0, pathTime * PATH_RESOLUTION);
+   },
+   velocityMatrix: function(time)
+   {
+
+   },
+   velocityMatrixForIndex: function(idx)
+   {
+       if(idx == 0)
+       {
+           idx = 1;
+       }
+
+       var p0 = locationForIndex(idx);
+       var p1 = locationForIndex(idx-1);
+       var dx = (p0[0] - p1[0]) * PATH_RESOLUTION;
+       var dy = (p0[1] - p1[1]) * PATH_RESOLUTION;
+       var dz = (p0[2] - p1[2]) * PATH_RESOLUTION;
+
+       return [dx,dy,dz];
+   },
    location: function(pathTime)
    {
-       var pointIdx = Math.floor(pathTime * PATH_RESOLUTION);
-
+       var pointIdx = indexForTime(pathTime);
+       return locationForIndex(pointIdx);
+   },
+   locationForIndex: function(pointIdx)
+   {
        if(pointIdx >= 0 && pointIdx < this.points.length -1)
        {
            var interpolation = (pathTime % PATH_TIMESTEP) / PATH_TIMESTEP;
