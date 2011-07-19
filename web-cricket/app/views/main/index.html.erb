@@ -167,13 +167,15 @@
             {
                 var vx = 4;
                 var vy = 3;
-                var vz = -ballModel.;
+                var vz = -2;
+//                var vz = -ballModel.path.velocityMatrix(ballModel.getPathTime());
             }
             else
             {
                 var vx = dx / 10;
                 var vy = -dy / 10;
-                var vz = -vz;
+                var vz = 5;
+//                var vz = -ballModel.path.velocityMatrix(ballModel.getPathTime());
             }
 
             ballModel.setProjectile(ballModel.currentLoc, [vx,vy,vz]);
@@ -185,7 +187,7 @@
                 return (gameTime - ballModel.pathStartTime) >= intersection['personTime'];
             }, function() {
                 pickUpAndReturnBall(intersection['person']);
-            }, 1.2);
+            });
 
             wk_runToStumps();
         }
