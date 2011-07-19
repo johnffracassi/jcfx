@@ -1,3 +1,11 @@
+var DEFAULT_PROXIMITY_TOLERANCE = 0.6;
+var PATH_RESOLUTION = 30;
+var PATH_TOTAL_TIME = 15; // in seconds
+var PATH_TIMESTEP = 1.0 / PATH_RESOLUTION;
+var KEEPER_TAKE_HEIGHT = 0.75;
+var GRAVITY = -9.8;
+var FIELDER_REACH_HEIGHT = 2.0;
+
 var BallModel = Class.extend({
    weight: 0.156,
    hardness: 1.0,
@@ -42,8 +50,7 @@ var BallModel = Class.extend({
        }
        else
        {
-           var pathTime = gameTime - this.pathStartTime;
-           this.currentLoc = this.path.location(pathTime);
+           this.currentLoc = this.path.location(this.getPathTime());
 
            if(this.proximityTriggers.length > 0)
            {
@@ -64,6 +71,11 @@ var BallModel = Class.extend({
    addProximityTrigger: function(trigger, callback, tolerance)
    {
        this.proximityTriggers.push(new ProximityTrigger(trigger, callback, tolerance));
+   },
+
+   getPathTime: function()
+   {
+       return gameTime - this.pathStartTime;
    }
 });
 
@@ -137,15 +149,28 @@ var BallRenderer = Class.extend({
             g.fillRect(sloc[0],sloc[1], 2, 2);
         }
 
-        var y = 14;
-        g.fillStyle = 'black';
-        g.fillText("Ball Location: [" + (0|this.model.currentLoc[0]) + "," + (0|this.model.currentLoc[1]) + "," + (0|this.model.currentLoc[2]) + "]" , 250, y += 20);
-        g.fillText("Proximity Triggers: " + this.model.proximityTriggers.length, 250, y += 20);
-        for(var idx=0; idx < this.model.proximityTriggers.length; idx++)
+        if(this.model.currentLoc == null)
         {
-            var d = distance2d(this.model.proximityTriggers[idx].location, ballModel.currentLoc);
-            var str = this.model.proximityTriggers[idx].shouldTrigger(ballModel.currentLoc) + " / " + this.model.proximityTriggers[idx].tolerance + " / " + (1|d);
-            g.fillText("proximityTriggers[" + idx + "]: " + str, 250, y += 20);
+            console.log("fuck it");
+        }
+        else
+        {
+            var y = 14;
+            g.fillStyle = 'black';
+            var msg = "Ball Location: [" + (0|this.model.currentLoc[0]) + "," + (0|this.model.currentLoc[1]) + "," + (0|this.model.currentLoc[2]) + "]";
+            msg += " (" + groundModel.contains(this.model.currentLoc) + ")";
+            g.fillText(msg , 250, y += 20);
+            g.fillText("Proximity Triggers: " + this.model.proximityTriggers.length, 250, y += 20);
+            for(var idx=0; idx < this.model.proximityTriggers.length; idx++)
+            {
+                var d = -1;
+                if(this.model.proximityTriggers[idx].location != null)
+                {
+                    d = distance2d(this.model.proximityTriggers[idx].location, ballModel.currentLoc);
+                }
+                var str = this.model.proximityTriggers[idx].shouldTrigger(ballModel.currentLoc) + " / " + this.model.proximityTriggers[idx].tolerance + " / " + (0|d);
+                g.fillText("proximityTriggers[" + idx + "]: " + str, 250, y += 20);
+            }
         }
     }
 });
@@ -156,13 +181,14 @@ var ProjectilePath = Class.extend({
    {
        this.points = points;
    },
-   indexForTime: function(time)
+   indexForTime: function(pathTime)
    {
        return Math.max(0, pathTime * PATH_RESOLUTION);
    },
-   velocityMatrix: function(time)
+   velocityMatrix: function(pathTime)
    {
-
+       var pointIdx = this.indexForTime(pathTime);
+       return this.velocityMatrixForIndex(pointIdx);
    },
    velocityMatrixForIndex: function(idx)
    {
@@ -171,8 +197,8 @@ var ProjectilePath = Class.extend({
            idx = 1;
        }
 
-       var p0 = locationForIndex(idx);
-       var p1 = locationForIndex(idx-1);
+       var p0 = this.locationForIndex(idx);
+       var p1 = this.locationForIndex(idx-1);
        var dx = (p0[0] - p1[0]) * PATH_RESOLUTION;
        var dy = (p0[1] - p1[1]) * PATH_RESOLUTION;
        var dz = (p0[2] - p1[2]) * PATH_RESOLUTION;
@@ -181,16 +207,17 @@ var ProjectilePath = Class.extend({
    },
    location: function(pathTime)
    {
-       var pointIdx = indexForTime(pathTime);
-       return locationForIndex(pointIdx);
+       var pointIdx = this.indexForTime(pathTime);
+       return this.locationForIndex(pointIdx);
    },
    locationForIndex: function(pointIdx)
    {
        if(pointIdx >= 0 && pointIdx < this.points.length -1)
        {
-           var interpolation = (pathTime % PATH_TIMESTEP) / PATH_TIMESTEP;
-           var p1 = this.points[pointIdx];
-           var p2 = this.points[pointIdx + 1];
+           var actualIdx = (0|pointIdx);
+           var interpolation = (pointIdx - actualIdx);
+           var p1 = this.points[actualIdx];
+           var p2 = this.points[actualIdx + 1];
            return interpolate(p1, p2, interpolation);
        }
        else if(pointIdx < 0)
@@ -239,14 +266,6 @@ var ProjectilePath = Class.extend({
 
 var ballModel = new BallModel();
 var ballRenderer = new BallRenderer(ballModel);
-
-var DEFAULT_PROXIMITY_TOLERANCE = 0.6;
-var PATH_RESOLUTION = 40;
-var PATH_TOTAL_TIME = 9; // in seconds
-var PATH_TIMESTEP = 1.0 / PATH_RESOLUTION;
-var KEEPER_TAKE_HEIGHT = 0.75;
-var GRAVITY = -9.8;
-var FIELDER_REACH_HEIGHT = 2.0;
 
 function projectBall()
 {
@@ -328,8 +347,6 @@ function fastestTimeToPath(personModel, projectilePath)
             }
         }
     }
-
-    console.log("idx=" + idx + " t(b)=" + ballTime + " t(f)=" + timeForPersonToRunToBallLoc + " loc(b)=" + ballLoc);
 
     var result = new Array();
     result['ballTime'] = projectilePath.duration();
