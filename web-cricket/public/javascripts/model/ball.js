@@ -76,6 +76,19 @@ var BallModel = Class.extend({
    getPathTime: function()
    {
        return gameTime - this.pathStartTime;
+   },
+
+   hasBounced: function()
+   {
+       if(this.path.firstBounceIndex == null)
+       {
+           return false;
+       }
+       else
+       {
+           var currentPathIdx = this.path.indexForTime(this.getPathTime());
+           return (currentPathIdx >= this.path.firstBounceIndex);
+       }
    }
 });
 
@@ -177,9 +190,13 @@ var BallRenderer = Class.extend({
 
 
 var ProjectilePath = Class.extend({
-   init: function(points)
+
+   firstBounceIndex: null,
+
+   init: function(points, firstBounceIdx)
    {
        this.points = points;
+       this.firstBounceIndex = firstBounceIdx;
    },
    indexForTime: function(pathTime)
    {
@@ -282,6 +299,8 @@ function projectBall()
 
 function calculateProjectilePath(iloc, vmatrix)
 {
+    console.log("====| new path |====================");
+
     var path = new Array();
     path.push(iloc);
     var lastLoc = [iloc[0],iloc[1],iloc[2]];
@@ -289,6 +308,7 @@ function calculateProjectilePath(iloc, vmatrix)
     var vy = vmatrix[1];
     var vz = vmatrix[2];
 
+    var firstBounceIdx = null;
     for(var idx = 0; idx < PATH_TOTAL_TIME * PATH_RESOLUTION; idx++)
     {
         var dx = PATH_TIMESTEP * vx;
@@ -304,13 +324,20 @@ function calculateProjectilePath(iloc, vmatrix)
             vx = applyEnergyChangeAfterBounce(vx, 0.7);
             vy = applyEnergyChangeAfterBounce(vy, 0.7);
             vz = applyEnergyChangeAfterBounce(-vz, 0.3);
+
+            if(firstBounceIdx == null)
+            {
+                console.log("first bounce #" + idx);
+                firstBounceIdx = idx;
+            }
         }
 
         var newLoc = [lastLoc[0]+dx, lastLoc[1]+dy, lastLoc[2]+dz];
         lastLoc = newLoc;
         path.push(newLoc);
     }
-    return new ProjectilePath(path);
+
+    return new ProjectilePath(path, firstBounceIdx);
 }
 
 
