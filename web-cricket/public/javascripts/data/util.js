@@ -85,3 +85,10 @@ function interpolate(p1, p2, percentage)
 
     return result;
 }
+
+function fuzzyLoc(loc, range)
+{
+    var newx = loc[0] - range + (2 * Math.random() * range);
+    var newy = loc[1] - range + (2 * Math.random() * range);
+    return [newx, newy, 0];
+}

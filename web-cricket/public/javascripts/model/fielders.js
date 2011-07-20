@@ -213,9 +213,17 @@ var PersonController = Class.extend({
 
         closestIntersection['person'].runTo(closestIntersection['location']);
         return closestIntersection;
+    },
+
+    congregate: function(loc)
+    {
+        var fs = this.fielderables();
+        for(var f=0; f<fs.length; f++)
+        {
+            fs[f].runTo(fuzzyLoc(loc, 2.5));
+        }
     }
 });
-
 
 var WicketKeeper = Fielder.extend({
     init: function() {

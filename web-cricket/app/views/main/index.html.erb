@@ -203,7 +203,16 @@
                 person.setState("PickingUpBall_R");
             }
             ballModel.visible = false;
-            setTimeout(throwBallToKeeper, 500);
+
+            if(ballModel.hasBounced())
+            {
+                setTimeout(throwBallToKeeper, 500);
+            }
+            else
+            {
+                console.log("yeah! you're out bitch");
+                personController.congregate(person.currentLoc);
+            }
         }
 
         function throwBallToKeeper()
